@@ -8,16 +8,15 @@ module two_tap_fir(
 // Coefficient values are pre-set to. This script just test the concept of the
 // FIR filter
 reg [7:0] input_x [0:2];
-reg [7:0] input_coef [0:2];
-reg [7:0] buffer [0:2]
-reg fifoCounter [0:2];       // A counter 3 bits wide
+reg [7:0] input_coef [0:1];
+reg [7:0] buffer [0:1];
+reg [2:0] counter;
 
 
-reg [2:0] state;
-reg [2:0] IDLE = 3'd0;
-reg [2:0] START = 3'd1;
-reg [2:0] STOP = 3'd2;
-reg [2:0] RESET = 3'd3;
+reg [1:0] state;
+reg [1:0] IDLE = 3'd0;
+reg [1:0] START = 3'd1;
+reg [1:0] STOP = 3'd2;
 
 
 
@@ -30,34 +29,48 @@ initial begin
 
 	input_coef[0] = 8'd5;
 	input_coef[1] = 8'd153;
-	input_coef[3] = 8'd98;
 
 	buffer[0] = 0;
 	buffer[1] = 0;
-	buffer[2] = 0;
 
-	fifoCounter = 0;
 
-	state = IDLE;
+	counter = 0;
+
+	state = 0;
 end
 
 always @(posedge clock) begin
- case(state)
-	IDLE: begin
-		if(startTransistion == 1) begin
-			state = START;
+	case(state)
+		IDLE: begin
+			if(startTransistion == 1) begin
+				state = START;
+			end
 		end
-	end
-	START: begin
+		START: begin
+			if(counter == 0) begin
+				buffer[0] = input_x[0];
+				buffer[1] = 0;
+			end
+			else if (counter == 3) begin
+				buffer[0] = 0;
+				buffer[1] = input_x[2];
+				state = STOP;
+			end
+			else begin
+				buffer[0] = input_x[counter];
+				buffer[1] = input_x[counter - 1];
+			end
 
-  end
-  STOP: begin
-
-  end
-  RESET: begin
-
-  end
-
-
+			dataOut = (input_coef[0] * buffer[0]) + (input_coef[1] * buffer[1]);
+			counter = counter + 3'd1;
+		end
+		STOP: begin
+			dataOut = 0;
+			buffer[0] = 0;
+			buffer[1] = 0;
+			counter = 0;
+		end
+	endcase
 end
+
 endmodule
