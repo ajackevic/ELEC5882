@@ -4,6 +4,9 @@ module n_tap_fir #(
 	input clock,
 	input load_coefficients_flag,
 	input [7:0] coefficient_in,
+	output reg [7:0] data_out1,
+	output reg [7:0] data_out2,
+	output reg [7:0] data_out3
 );
 
 reg [7:0] coeff_buffer [0:length - 1];
@@ -23,14 +26,18 @@ initial begin : init_values
 
 	state = 0;
 	coeff_counter = 0;
+
+	data_out1 = 0;
+	data_out2 = 0;
+	data_out3 = 0;
 end
 
 integer n;
 always @(posedge clock) begin
 	case(state)
 		IDLE: begin
-		// The IDLE state checks the LOAD_COEFFICIENTS value and only
-		// starts the FIR operation when the value becomes 1.
+			// The IDLE state checks the LOAD_COEFFICIENTS value and only
+			// starts the FIR operation when the value becomes 1.
 			if(load_coefficients_flag == 1) begin
 				state = LOAD_COEFFICIENTS;
 			end
@@ -51,6 +58,10 @@ always @(posedge clock) begin
 			if(coeff_counter == length + 1) begin
 				state = STOP;
 			end
+
+			data_out1 = coeff_buffer[0];
+			data_out2 = coeff_buffer[1];
+			data_out3 = coeff_buffer[9];
 		end
 
 		STOP: begin
