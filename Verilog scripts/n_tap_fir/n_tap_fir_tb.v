@@ -76,6 +76,8 @@ initial begin
 	repeat(1) @ (posedge clock);
 	sr_data_in = 8'd90;
 	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd100;
+	repeat(1) @ (posedge clock);
 	sr_data_in = 8'd110;
 	repeat(1) @ (posedge clock);
 	sr_data_in = 8'd120;

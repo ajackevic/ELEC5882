@@ -84,7 +84,7 @@ always @(posedge clock) begin
 				// A multiplication between the input data and the corresponding coefficients
 				// in the delayed buffer line. This for loop also sums all the components together.
 				fir_output = 0;
-				for (n = 0; n < length; n = n + 1) begin
+				for (n = 0; n <= length - 1; n = n + 1) begin
 					fir_output = fir_output + (input_data_buffer[n] * coeff_buffer[length - 1 - n]);
 				end
 			end
