@@ -15,7 +15,9 @@ wire [7:0] dataOut2;
 wire [18:0] dataOut3;
 
 // Connec the device under test
-n_tap_fir dut(
+n_tap_fir #(
+	.length			(20)
+	) dut(
 	.clock					(clock),
 	.load_coefficients_flag (load_coefficients_flag),
 	.load_data_flag			(load_data_flag),
@@ -36,23 +38,43 @@ initial begin
 	repeat(RST_CYCLES) @ (posedge clock);
 	load_coefficients_flag = 1;
 	repeat(1) @ (posedge clock);
-	sr_coeff_in = 8'd1;
+	sr_coeff_in = 8'd34;
 	repeat(1) @ (posedge clock);
-	sr_coeff_in = 8'd2;
+	sr_coeff_in = 8'd34;
 	repeat(1) @ (posedge clock);
-	sr_coeff_in = 8'd3;
+	sr_coeff_in = 8'd0;
 	repeat(1) @ (posedge clock);
-	sr_coeff_in = 8'd4;
+	sr_coeff_in = 8'd49;
 	repeat(1) @ (posedge clock);
-	sr_coeff_in = 8'd5;
+	sr_coeff_in = 8'd125;
 	repeat(1) @ (posedge clock);
-	sr_coeff_in = 8'd6;
+	sr_coeff_in = 8'd179;
 	repeat(1) @ (posedge clock);
-	sr_coeff_in = 8'd7;
+	sr_coeff_in = 8'd205;
 	repeat(1) @ (posedge clock);
 	sr_coeff_in = 8'd8;
 	repeat(1) @ (posedge clock);
+	sr_coeff_in = 8'd97;
+	repeat(1) @ (posedge clock);
+	sr_coeff_in = 8'd109;
+	repeat(1) @ (posedge clock);
+	sr_coeff_in = 8'd165;
+	repeat(1) @ (posedge clock);
+	sr_coeff_in = 8'd253;
+	repeat(1) @ (posedge clock);
 	sr_coeff_in = 8'd9;
+	repeat(1) @ (posedge clock);
+	sr_coeff_in = 8'd1;
+	repeat(1) @ (posedge clock);
+	sr_coeff_in = 8'd59;
+	repeat(1) @ (posedge clock);
+	sr_coeff_in = 8'd75;
+	repeat(1) @ (posedge clock);
+	sr_coeff_in = 8'd19;
+	repeat(1) @ (posedge clock);
+	sr_coeff_in = 8'd58;
+	repeat(1) @ (posedge clock);
+	sr_coeff_in = 8'd159;
 	repeat(1) @ (posedge clock);
 	sr_coeff_in = 8'd10;
 	repeat(20) @ (posedge clock);
@@ -85,6 +107,45 @@ initial begin
 	sr_data_in = 8'd130;
 	repeat(1) @ (posedge clock);
 	sr_data_in = 8'd140;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd150;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd160;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd170;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd180;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd190;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd200;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd140;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd150;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd160;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd140;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd120;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd0;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd190;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd145;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd142;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd13;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd163;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd111;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd169;
+
 
 end
 
