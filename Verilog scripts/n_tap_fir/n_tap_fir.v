@@ -4,6 +4,7 @@ module n_tap_fir #(
 	input clock,
 	input load_coefficients_flag,
 	input load_data_flag,
+	input stop_data_load_flag,
 	input [7:0] coefficient_in,
 	input [7:0] data_in,
 	output reg [7:0] data_out1,
@@ -87,6 +88,11 @@ always @(posedge clock) begin
 				for (n = 0; n <= length - 1; n = n + 1) begin
 					fir_output = fir_output + (input_data_buffer[n] * coeff_buffer[length - 1 - n]);
 				end
+			end
+
+			// Transition to stop state when stop_data_load_flag is 1.
+			if(stop_data_load_flag == 1) begin
+				state = STOP;
 			end
 
 			// Load data to the corresponding data_out so that they can be monitored in simulation.

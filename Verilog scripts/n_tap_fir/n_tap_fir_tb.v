@@ -8,19 +8,21 @@ localparam RST_CYCLES = 10;
 reg clock;
 reg load_coefficients_flag;
 reg load_data_flag;
+reg stop_data_load_flag;
 reg [7:0] sr_coeff_in;
 reg [7:0] sr_data_in;
 wire [7:0] dataOut1;
 wire [7:0] dataOut2;
 wire [18:0] dataOut3;
 
-// Connec the device under test
+// Connect the device under test
 n_tap_fir #(
 	.length			(20)
 	) dut(
 	.clock					(clock),
 	.load_coefficients_flag (load_coefficients_flag),
 	.load_data_flag			(load_data_flag),
+	.stop_data_load_flag	(stop_data_load_flag),
 	.coefficient_in	  		(sr_coeff_in),
 	.data_in				(sr_data_in),
 	.data_out1 				(dataOut1),
@@ -30,12 +32,19 @@ n_tap_fir #(
 
 
 initial begin
-	// Set the init values and then set the coefficient values every clock cycle
+
+	// Set the init values. Then send the coefficients and then the data in
+	// a serial manner, one clock cycle at a time.
 	sr_coeff_in = 0;
+	stop_data_load_flag = 0;
 	sr_data_in = 0;
 	load_coefficients_flag = 0;
 	load_data_flag = 0;
 	repeat(RST_CYCLES) @ (posedge clock);
+
+	// Set the coiefficient values. Make sure the number of coefficients is
+	// equal to the set length of the n_tap_fir module. In this case there are
+	// 20 set values,
 	load_coefficients_flag = 1;
 	repeat(1) @ (posedge clock);
 	sr_coeff_in = 8'd34;
@@ -79,6 +88,8 @@ initial begin
 	sr_coeff_in = 8'd10;
 	repeat(20) @ (posedge clock);
 	load_data_flag = 1;
+
+	// Set the input data values, in this case there are 51 values.
 	repeat(5) @ (posedge clock);
 	sr_data_in = 8'd10;
 	repeat(1) @ (posedge clock);
@@ -146,7 +157,49 @@ initial begin
 	repeat(1) @ (posedge clock);
 	sr_data_in = 8'd169;
 
-
+	// Need to add [length number entered to the n_tap_fir module - 1], in thus case
+	// that is 19 padded 0s. This is required by convolution opperation that the FIR
+	// filters achives.
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd0;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd0;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd0;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd0;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd0;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd0;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd0;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd0;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd0;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd0;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd0;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd0;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd0;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd0;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd0;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd0;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd0;
+	repeat(1) @ (posedge clock);`
+	sr_data_in = 8'd0;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd0;
+	repeat(1) @ (posedge clock);
+	stop_data_load_flag =1 ;
 end
 
 initial begin
