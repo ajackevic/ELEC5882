@@ -6,30 +6,35 @@ localparam CLOCK_FREQ = 50000000;
 localparam RST_CYCLES = 10;
 
 reg clock;
-reg startTransistion;
+reg load_coefficients_flag;
+reg load_data_flag;
 reg [7:0] sr_coeff_in;
+reg [7:0] sr_data_in;
 wire [7:0] dataOut1;
 wire [7:0] dataOut2;
-wire [7:0] dataOut3;
+wire [18:0] dataOut3;
 
 // Connec the device under test
 n_tap_fir dut(
 	.clock					(clock),
-	.load_coefficients_flag (startTransistion),
+	.load_coefficients_flag (load_coefficients_flag),
+	.load_data_flag			(load_data_flag),
 	.coefficient_in	  		(sr_coeff_in),
+	.data_in				(sr_data_in),
 	.data_out1 				(dataOut1),
 	.data_out2 				(dataOut2),
 	.data_out3 				(dataOut3)
 );
 
 
-
 initial begin
 	// Set the init values and then set the coefficient values every clock cycle
 	sr_coeff_in = 0;
-	startTransistion = 0;
+	sr_data_in = 0;
+	load_coefficients_flag = 0;
+	load_data_flag = 0;
 	repeat(RST_CYCLES) @ (posedge clock);
-	startTransistion = 1;
+	load_coefficients_flag = 1;
 	repeat(1) @ (posedge clock);
 	sr_coeff_in = 8'd1;
 	repeat(1) @ (posedge clock);
@@ -50,7 +55,35 @@ initial begin
 	sr_coeff_in = 8'd9;
 	repeat(1) @ (posedge clock);
 	sr_coeff_in = 8'd10;
+	repeat(20) @ (posedge clock);
+	load_data_flag = 1;
+	repeat(5) @ (posedge clock);
+	sr_data_in = 8'd10;
 	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd20;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd30;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd40;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd50;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd60;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd70;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd80;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd90;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd110;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd120;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd130;
+	repeat(1) @ (posedge clock);
+	sr_data_in = 8'd140;
+
 end
 
 initial begin
