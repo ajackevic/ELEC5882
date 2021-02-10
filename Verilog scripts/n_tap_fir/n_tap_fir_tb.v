@@ -1,6 +1,23 @@
+/*
+
+ n_tap_fir_tb.v
+ --------------
+ By: Augustas Jackevic
+ Date: 10th Feb 2021
+
+ Module Description:
+ -------------------
+ This module is a test bench for the module n_tap_fir.v. The script
+ sends the coefficients (sr_coeff_in) and the input data (sr_data_in)
+ to the test script, the output data (dataOut) is then observed in
+ ModelSim. The results are then confirmed through the convolution
+ operation in MATLAB, with the same inputs.
+
+*/
+
 module n_tap_fir_tb;
 
-// Parameters for creating the 50MHz clock signal
+// Parameters for creating the 50MHz clock signal.
 localparam NUM_CYCLES = 500;
 localparam CLOCK_FREQ = 50000000;
 localparam RST_CYCLES = 10;
@@ -9,15 +26,14 @@ reg clock;
 reg load_coefficients_flag;
 reg load_data_flag;
 reg stop_data_load_flag;
-reg [7:0] sr_coeff_in;
-reg [7:0] sr_data_in;
-wire [7:0] dataOut1;
-wire [7:0] dataOut2;
-wire [18:0] dataOut3;
+reg signed [7:0] sr_coeff_in;
+reg signed [7:0] sr_data_in;
+wire [18:0] dataOut;
+// Note the range of reg signed [7:0] is [-128 to 127].
 
-// Connect the device under test
+// Connect the device under test.
 n_tap_fir #(
-	.length			(20)
+	.length					(20)
 	) dut(
 	.clock					(clock),
 	.load_coefficients_flag (load_coefficients_flag),
@@ -25,9 +41,7 @@ n_tap_fir #(
 	.stop_data_load_flag	(stop_data_load_flag),
 	.coefficient_in	  		(sr_coeff_in),
 	.data_in				(sr_data_in),
-	.data_out1 				(dataOut1),
-	.data_out2 				(dataOut2),
-	.data_out3 				(dataOut3)
+	.data_out 				(dataOut)
 );
 
 
@@ -44,7 +58,7 @@ initial begin
 
 	// Set the coiefficient values. Make sure the number of coefficients is
 	// equal to the set length of the n_tap_fir module. In this case there are
-	// 20 set values,
+	// 20 set values.
 	load_coefficients_flag = 1;
 	repeat(1) @ (posedge clock);
 	sr_coeff_in = 8'd34;
@@ -57,9 +71,9 @@ initial begin
 	repeat(1) @ (posedge clock);
 	sr_coeff_in = 8'd125;
 	repeat(1) @ (posedge clock);
-	sr_coeff_in = 8'd179;
+	sr_coeff_in = -8'd77;
 	repeat(1) @ (posedge clock);
-	sr_coeff_in = 8'd205;
+	sr_coeff_in = -8'd51;
 	repeat(1) @ (posedge clock);
 	sr_coeff_in = 8'd8;
 	repeat(1) @ (posedge clock);
@@ -67,9 +81,9 @@ initial begin
 	repeat(1) @ (posedge clock);
 	sr_coeff_in = 8'd109;
 	repeat(1) @ (posedge clock);
-	sr_coeff_in = 8'd165;
+	sr_coeff_in = -8'd91;
 	repeat(1) @ (posedge clock);
-	sr_coeff_in = 8'd253;
+	sr_coeff_in = -8'd3;
 	repeat(1) @ (posedge clock);
 	sr_coeff_in = 8'd9;
 	repeat(1) @ (posedge clock);
@@ -83,7 +97,7 @@ initial begin
 	repeat(1) @ (posedge clock);
 	sr_coeff_in = 8'd58;
 	repeat(1) @ (posedge clock);
-	sr_coeff_in = 8'd159;
+	sr_coeff_in = -8'd97;
 	repeat(1) @ (posedge clock);
 	sr_coeff_in = 8'd10;
 	repeat(20) @ (posedge clock);
@@ -115,47 +129,47 @@ initial begin
 	repeat(1) @ (posedge clock);
 	sr_data_in = 8'd120;
 	repeat(1) @ (posedge clock);
-	sr_data_in = 8'd130;
+	sr_data_in = -8'd126;
 	repeat(1) @ (posedge clock);
-	sr_data_in = 8'd140;
+	sr_data_in = -8'd116;
 	repeat(1) @ (posedge clock);
-	sr_data_in = 8'd150;
+	sr_data_in = -8'd106;
 	repeat(1) @ (posedge clock);
-	sr_data_in = 8'd160;
+	sr_data_in = -8'd96;
 	repeat(1) @ (posedge clock);
-	sr_data_in = 8'd170;
+	sr_data_in = -8'd86;
 	repeat(1) @ (posedge clock);
-	sr_data_in = 8'd180;
+	sr_data_in = -8'd76;
 	repeat(1) @ (posedge clock);
-	sr_data_in = 8'd190;
+	sr_data_in = -8'd66;
 	repeat(1) @ (posedge clock);
-	sr_data_in = 8'd200;
+	sr_data_in = -8'd56;
 	repeat(1) @ (posedge clock);
-	sr_data_in = 8'd140;
+	sr_data_in = -8'd116;
 	repeat(1) @ (posedge clock);
-	sr_data_in = 8'd150;
+	sr_data_in = -8'd106;
 	repeat(1) @ (posedge clock);
-	sr_data_in = 8'd160;
+	sr_data_in = -8'd96;
 	repeat(1) @ (posedge clock);
-	sr_data_in = 8'd140;
+	sr_data_in = -8'd116;
 	repeat(1) @ (posedge clock);
 	sr_data_in = 8'd120;
 	repeat(1) @ (posedge clock);
 	sr_data_in = 8'd0;
 	repeat(1) @ (posedge clock);
-	sr_data_in = 8'd190;
+	sr_data_in = -8'd60;
 	repeat(1) @ (posedge clock);
-	sr_data_in = 8'd145;
+	sr_data_in = -8'd111;
 	repeat(1) @ (posedge clock);
-	sr_data_in = 8'd142;
+	sr_data_in = -8'd114;
 	repeat(1) @ (posedge clock);
 	sr_data_in = 8'd13;
 	repeat(1) @ (posedge clock);
-	sr_data_in = 8'd163;
+	sr_data_in = -8'd93;
 	repeat(1) @ (posedge clock);
 	sr_data_in = 8'd111;
 	repeat(1) @ (posedge clock);
-	sr_data_in = 8'd169;
+	sr_data_in = -8'd87;
 
 	// Need to add [length number entered to the n_tap_fir module - 1], in thus case
 	// that is 19 padded 0s. This is required by convolution opperation that the FIR
@@ -194,7 +208,7 @@ initial begin
 	sr_data_in = 8'd0;
 	repeat(1) @ (posedge clock);
 	sr_data_in = 8'd0;
-	repeat(1) @ (posedge clock);`
+	repeat(1) @ (posedge clock);
 	sr_data_in = 8'd0;
 	repeat(1) @ (posedge clock);
 	sr_data_in = 8'd0;

@@ -1,3 +1,19 @@
+/*
+
+ n_tap_fir.v
+ --------------
+ By: Augustas Jackevic
+ Date: 10th February 2021
+
+ Module Description:
+ -------------------
+ This module is a design of an n-type FIR (Finite Impulse Response)
+ filter. This filter is the convolution operation between the
+ input data (data_in) and the coefficient data (coefficient_in). The
+default length is 10.
+
+*/
+
 module n_tap_fir #(
 	parameter length = 10
 )(
@@ -5,21 +21,19 @@ module n_tap_fir #(
 	input load_coefficients_flag,
 	input load_data_flag,
 	input stop_data_load_flag,
-	input [7:0] coefficient_in,
-	input [7:0] data_in,
-	output reg [7:0] data_out1,
-	output reg [7:0] data_out2,
-	output reg [18:0] data_out3
+	input signed [7:0] coefficient_in,
+	input signed [7:0] data_in,
+	output reg signed [18:0] data_out
 );
 
-reg [7:0] coeff_buffer [0:length - 1];
-reg [7:0] input_data_buffer [0:length -1];
+reg signed [7:0] coeff_buffer [0:length - 1];
+reg signed [7:0] input_data_buffer [0:length -1];
 reg [9:0] coeff_counter;						// This can not be a constant. Will need to be dependant on n. Either that or make ir realy large
 // input data width + coefficient width + log(N) = output width
-reg [18:0] fir_output;
+reg signed [18:0] fir_output;
 
 
-
+// FSM states
 reg [2:0] state;
 reg [2:0] IDLE  			= 3'd0;
 reg [2:0] LOAD_COEFFICIENTS = 3'd1;
@@ -37,9 +51,7 @@ initial begin : init_values
 	state = 0;
 	coeff_counter = 0;
 
-	data_out1 = 0;
-	data_out2 = 0;
-	data_out3 = 0;
+	data_out = 0;
 	fir_output = 0;
 end
 
@@ -96,8 +108,6 @@ always @(posedge clock) begin
 			end
 
 			// Load data to the corresponding data_out so that they can be monitored in simulation.
-			data_out1 = coeff_buffer[9];
-			data_out2 = coeff_buffer[1];
 			data_out3 = fir_output;
 		end
 
