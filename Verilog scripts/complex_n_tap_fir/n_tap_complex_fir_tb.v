@@ -1,3 +1,21 @@
+/*
+
+ n_tap_complex_fir_tb.v
+ --------------
+ By: Augustas Jackevic
+ Date: 11th Feb 2021
+
+ Module Description:
+ -------------------
+ This module is a test bench for the module n_tap_complex_fir.v. The script
+ sends the coefficients (coefficient_in_I and coefficient_in_Q) and the
+ input data (sr_data_in_I and sr_data_in_Q) to the test script, the output
+ data (data_out_I and data_out_Q) is then observed in ModelSim. The results
+ are then confirmed through the convolution operation in MATLAB, with the same
+ inputs.
+
+*/
+
 module n_tap_complex_fir_tb;
 
 // Parameters for creating the 50MHz clock signal
@@ -15,9 +33,8 @@ reg signed [7:0] coefficient_in_Q;
 reg signed [7:0] sr_data_in_I;
 reg signed [7:0] sr_data_in_Q;
 
-wire [7:0] dataOut1;
-wire [7:0] dataOut2;
-wire [20:0] dataOut3;
+// Note the range of reg signed [7:0] is [-128 to 127].
+
 wire [20:0] data_out_I;
 wire [20:0] data_out_Q;
 
@@ -34,10 +51,7 @@ n_tap_complex_fir #(
 	.data_in_I				(sr_data_in_I),
 	.data_in_Q				(sr_data_in_Q),
 	.data_out_I				(data_out_I),
-	.data_out_Q				(data_out_Q),
-	.data_out1 				(dataOut1),
-	.data_out2 				(dataOut2),
-	.data_out3 				(dataOut3)
+	.data_out_Q				(data_out_Q)
 );
 
 
@@ -57,7 +71,7 @@ initial begin
 
 	// Set the coiefficient values. Make sure the number of coefficients is
 	// equal to the set length of the n_tap_fir module. In this case there are
-	// 20 set values,
+	// 4 set values,
 	load_coefficients_flag = 1;
 	repeat(1) @ (posedge clock);
 	coefficient_in_I = 8'd3;
@@ -75,7 +89,7 @@ initial begin
 
 	load_data_flag = 1;
 
-	// Set the input data values, in this case there are 51 values.
+	// Set the input data values, in this case there are 4 values.
 	repeat(5) @ (posedge clock);
 	sr_data_in_I = 8'd2;
 	sr_data_in_Q = 8'd3;
@@ -90,8 +104,8 @@ initial begin
 	sr_data_in_Q = -8'd6;
 	repeat(1) @ (posedge clock);
 
-	// Need to add [length number entered to the n_tap_fir module - 1], in thus case
-	// that is 19 padded 0s. This is required by convolution opperation that the FIR
+	// Need to add [length number entered to the n_tap_complex_fir module - 1], in thus case
+	// that is 3 padded 0s. This is required by convolution opperation that the FIR
 	// filters achives.
 	sr_data_in_I = 8'd0;
 	sr_data_in_Q = 8'd0;
