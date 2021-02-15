@@ -3,15 +3,18 @@
  n_tap_complex_fir.v
  --------------
  By: Augustas Jackevic
- Date: 11th February 2021
+ Date: February 2021
 
  Module Description:
  -------------------
  This module is a design of an n-type complex FIR (Finite Impulse Response)
  filter. This filter is the convolution operation between the complex
  input data (data_in) and the complex coefficient data (coefficient_in). The
- default length is 10. The FIR filter can be used to do the covelution opperation.
+ default length is 10. The FIR filter can be used to do the convolution operation.
  For this script, the convolution operation is of two inputs, data_in and coefficient_in.
+ It should be noted, to help understand the workings of the FIR_MAIN state, the PDF in:
+ The workings of an FIR filter\The workings of a FIR filter.pdf should be read.
+
 */
 
 module n_tap_complex_fir #(

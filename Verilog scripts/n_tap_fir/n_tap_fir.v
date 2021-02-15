@@ -3,14 +3,16 @@
  n_tap_fir.v
  --------------
  By: Augustas Jackevic
- Date: 10th February 2021
+ Date: February 2021
 
  Module Description:
  -------------------
  This module is a design of an n-type FIR (Finite Impulse Response)
  filter. This filter is the convolution operation between the
  input data (data_in) and the coefficient data (coefficient_in). The
-default length is 10.
+ default length is 10. It should be noted, to help understand the workings
+ of the FIR_MAIN state, the PDF in:
+ The workings of an FIR filter\The workings of a FIR filter.pdf should be read.
 
 */
 
