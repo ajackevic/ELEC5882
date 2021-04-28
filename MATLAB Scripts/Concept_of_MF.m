@@ -2,47 +2,133 @@
 % different plots to see the required signals at different stages of the
 % system.
 
+% Clear any saved vairable from MATLAB's workspace section.
+clear all
 
-% Sample the chirp signal at 10KHz for 1 second.
-t = 0:1/1e4:1;
-% Create a chirp signal going from 100Hz to 1KHz in a 1 sec duration.
-onlyChirpWave = chirp(t,100,1,1e3);
-% Creating a zero vector of 10000 values which is then padded on either
-% side of the chirp waveform.
-zeroVector = zeros(1,10000);
-chirpWave = [zeroVector onlyChirpWave zeroVector];
-% Adding a white gaussian noise of 2dB SNR to the chirp waveform.
-s_t_period = awgn(chirpWave, 2);
-% Repeating the noisy chirp waveform 5 times.
-s_t = [s_t_period s_t_period s_t_period s_t_period s_t_period];
-
-% The Matched Filter impulse response requires the time-reversed chirp
-% signal. This would be the FIR coefficients.
-h_t = flip(onlyChirpWave);
-
-% This is the filtering stage between the noisy input signal (s_t) and the
-% impulse response of the filter (h_t). Y_t is the output of the matched
-% filter.
-y_t = filter(h_t,1,s_t);
+% Setting the cirp waveform start and end frequency, as well as its
+% duration and the sampling frequency.
+chirpFreqStart = 10000;
+chirpFreqEnd = 50000;
+chirpDuration = 0.5;
+samplingFreqs = 1e5;
 
 
-% The plotting of 5 waveforms.
+% Sampling frequency of 100KHz for  second duration.
+tChirp = 0:1/samplingFreqs:chirpDuration-1/samplingFreqs;
+% Creating the time scale for x_t, this is used when plotting the graph.
+tInput = linspace(0,(chirpDuration*18),((samplingFreqs/2)*18));
+% Creating the time scale for y_t.
+tOut = linspace(0,(chirpDuration*18),((samplingFreqs/2)*18)+samplingFreqs/2-1);
+
+
+% Creating a linear chirp waveform 
+chirpWave = chirp(tChirp,chirpFreqStart,chirpDuration,chirpFreqEnd);
+
+
+% Creating padding of zeros before and after the chirp wave. These
+% paddings are of 0.1 sec duration and consists of amplitude reduction of 0.9,
+% 0.8, 0.7, and 0.6.
+paddedChirpWaveAmp1   = [zeros(1,samplingFreqs/2), chirpWave * 1.0, zeros(1,samplingFreqs/2)];
+paddedChirpWaveAmp0_9 = [zeros(1,samplingFreqs/2), chirpWave * 0.9, zeros(1,samplingFreqs/2)];
+paddedChirpWaveAmp0_8 = [zeros(1,samplingFreqs/2), chirpWave * 0.8, zeros(1,samplingFreqs/2)];
+paddedChirpWaveAmp0_7 = [zeros(1,samplingFreqs/2), chirpWave * 0.7, zeros(1,samplingFreqs/2)];
+paddedChirpWaveAmp0_6 = [zeros(1,samplingFreqs/2), chirpWave * 0.6, zeros(1,samplingFreqs/2)];
+
+
+% Creating chirp signals with different amount of noise.
+chirp1 = paddedChirpWaveAmp1;
+chirp2 = awgn(paddedChirpWaveAmp0_9,15);
+chirp3 = awgn(paddedChirpWaveAmp0_8,10);
+chirp4 = awgn(paddedChirpWaveAmp0_7,5);
+chirp5 = awgn(paddedChirpWaveAmp0_6,0.001);
+chirp6 = awgn(paddedChirpWaveAmp1,-5);
+
+
+% Summing up the different chirp waveforms into one continous long input signal.
+receivedSignalNoNoise = [paddedChirpWaveAmp1, paddedChirpWaveAmp0_9, paddedChirpWaveAmp0_8, ...
+                         paddedChirpWaveAmp0_7, paddedChirpWaveAmp0_6, paddedChirpWaveAmp1];
+receivedSignal = [chirp1, chirp2, chirp3, chirp4, chirp5, chirp6];
+
+% Creating the matched filter impulse response. This is equal to the complex
+% conjugate time reverse analytic signal of the chirp signal.
+h_t = flip(conj(hilbert(chirpWave)));
+% Creating an analytic signal from the input signal.
+x_t = hilbert(receivedSignal);
+
+
+% The matched filter opperation is a convelution between the input signal
+% and the matched filters impulse reponse.
+matchedFilterOut = conv(x_t,h_t);
+
+
+% Obtaining the abslute value of the matched filter output.
+y_t = (real(matchedFilterOut).^2 + imag(matchedFilterOut).^2).^(1/2);
+
+
+% Plotting the following graphs:
+%    Chirp waveform
+%    Received echoed back signal with no noise
+%    Received echoed back signal with noise
+
 figure(1)
-plot(chirpWave)
-title("Chirp waveform 100Hz to 1KHz")
+tiledlayout(3,1);
+
+nexttile
+plot(tChirp,chirpWave)
+title('Liniear Chirp Waveform from 10KHz to 50KHz')
+ylabel('Amplitude')
+xlabel('Time (S)')
+
+nexttile
+plot(tInput,receivedSignalNoNoise)
+title('Echoed back signal from the receiver with no noise')
+ylabel('Amplitude')
+xlabel('Time (S)')
+
+nexttile
+plot(tInput,receivedSignal)
+title('Echoed back signal from the receiver with noise')
+ylabel('Amplitude')
+xlabel('Time (S)')
+
+% Plotting the following graphs:
+%    Real part of the received after the hilbert transform
+%    Imaginary part of the received after the hilbert transform
+%    Real part of the matched filter impulse response after the hilbert transform
+%    Imaginary part of the matched filter impulse response after the hilbert transform
+%    Matched filter output waveform
 
 figure(2)
-plot(s_t_period)
-title("The chirp waveform with the addition of noise")
+tiledlayout(3,2);
 
-figure(3)
-plot(s_t)
-title("Input signal to the Mathced Filter")
+nexttile
+plot(tInput,real(x_t))
+title('Real part of the recivied signal XRe(t)')
+ylabel('Amplitude')
+xlabel('Time (S)')
 
-figure(4)
-plot(h_t)
-title("Matched filter impulse response signal")
+nexttile
+plot(tInput,imag(x_t))
+title('Imaginary part of the recivied signal XIm(t)')
+ylabel('Amplitude')
+xlabel('Time (S)')
 
-figure(5)
-plot(y_t)
-title("Matched filter output")
+nexttile
+plot(tChirp,real(h_t))
+title('Real part of the impulse reponse hRe(t)')
+ylabel('Amplitude')
+xlabel('Time (S)')
+
+nexttile
+plot(tChirp,imag(h_t))
+title('Imaginary part of the recivied signal hIm(t)')
+ylabel('Amplitude')
+xlabel('Time (S)')
+
+nexttile([1 2])
+plot(tOut,20*log(y_t))
+title('Matched filter output y(t)')
+ylabel('Magnitude (dB)')
+xlabel('Time (S)')
+
+
