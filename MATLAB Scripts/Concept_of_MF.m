@@ -1,9 +1,19 @@
+% pulseCompressionFilter.m
+% --------------
+% By: Augustas Jackevic
+% Date: April 2021
+% Script Description:
+% -------------------
 % This script shows the general concept of a matched filter. Observe the
 % different plots to see the required signals at different stages of the
 % system.
 
+
+
 % Clear any saved vairable from MATLAB's workspace section.
 clear all
+
+
 
 % Setting the cirp waveform start and end frequency, as well as its
 % duration and the sampling frequency.
@@ -61,8 +71,8 @@ x_t = hilbert(receivedSignal);
 matchedFilterOut = conv(x_t,h_t);
 
 
-% Obtaining the abslute value of the matched filter output.
-y_t = (real(matchedFilterOut).^2 + imag(matchedFilterOut).^2).^(1/2);
+% Obtaining the envelop value of the matched filter output.
+y_t = abs(matchedFilterOut);
 
 
 % Plotting the following graphs:
@@ -78,18 +88,24 @@ plot(tChirp,chirpWave)
 title('Liniear Chirp Waveform from 10KHz to 50KHz')
 ylabel('Amplitude')
 xlabel('Time (S)')
+xlim([0 0.5])
+ylim([-1.2 1.2])
 
 nexttile
 plot(tInput,receivedSignalNoNoise)
 title('Echoed back signal from the receiver with no noise')
 ylabel('Amplitude')
 xlabel('Time (S)')
+xlim([0 9])
+ylim([-1.2 1.2])
 
 nexttile
 plot(tInput,receivedSignal)
 title('Echoed back signal from the receiver with noise')
 ylabel('Amplitude')
 xlabel('Time (S)')
+xlim([0 9])
+ylim([-10 10])
 
 % Plotting the following graphs:
 %    Real part of the received after the hilbert transform
@@ -106,29 +122,38 @@ plot(tInput,real(x_t))
 title('Real part of the recivied signal XRe(t)')
 ylabel('Amplitude')
 xlabel('Time (S)')
+xlim([0 9])
+ylim([-10 10])
 
 nexttile
 plot(tInput,imag(x_t))
 title('Imaginary part of the recivied signal XIm(t)')
 ylabel('Amplitude')
 xlabel('Time (S)')
+xlim([0 9])
+ylim([-10 10])
 
 nexttile
 plot(tChirp,real(h_t))
 title('Real part of the impulse reponse hRe(t)')
 ylabel('Amplitude')
 xlabel('Time (S)')
+xlim([0 0.5])
+ylim([-1.2 1.2])
 
 nexttile
 plot(tChirp,imag(h_t))
 title('Imaginary part of the recivied signal hIm(t)')
 ylabel('Amplitude')
 xlabel('Time (S)')
+xlim([0 0.5])
+ylim([-2.2 2.2])
 
 nexttile([1 2])
-plot(tOut,20*log(y_t))
+plot(tOut,y_t)
 title('Matched filter output y(t)')
 ylabel('Magnitude (dB)')
 xlabel('Time (S)')
+xlim([0 9])
 
 
