@@ -30,7 +30,6 @@ module n_tap_fir #(
 );
 
 
-
 // Creating the internal buffers for the coefficients and data in,
 reg signed [DATA_WIDTH - 1:0] coeffBuffer [0:LENGTH - 1];
 reg signed [DATA_WIDTH - 1:0] inputDataBuffer [0:LENGTH -1];
@@ -74,6 +73,17 @@ initial begin : initalValues
 	firOutput = 0;
 end
 
+
+setupCoefficients #(
+	LENGTH = 20,
+	WIDTH = 8
+)Coefficients(
+	.clock			 (clock),
+	.enable			 (loadCoefficients),
+	
+	.filterSetFlag	 (coefficientsSetFlag),
+	.coefficientOut (coefficientIn)
+);
 
 
 
