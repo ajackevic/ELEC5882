@@ -150,7 +150,22 @@ always @(posedge clock) begin
 
 		end
 		
-		
+		// State default. This state is added just incase the FSM is in an unknown state, it resets all
+		// all the local parameter and sets state to IDLE.
+		default: begin
+			// Set all the values inside the coeff_buffer to 0.
+			integer k;
+			for (k = 0; k <= LENGTH - 1 ; k = k + 1) begin
+				coeff_buffer[k] = 0;
+				input_data_buffer[k] = 0;
+			end
+
+			// Set the internal variables and outputs to 0.
+			state = IDLE;
+			coeff_counter = 0;
+			data_out = 0;
+			fir_output = 0;
+		end
 
 	endcase
 
