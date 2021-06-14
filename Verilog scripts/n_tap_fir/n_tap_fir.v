@@ -17,8 +17,8 @@
 */
 
 module n_tap_fir #(
-	parameter LENGTH = 10
-	parameter DATA_WIDTH = 8;
+	parameter LENGTH = 10,
+	parameter DATA_WIDTH = 8
 )(
 	input clock,
 	input load_coefficients_flag,
@@ -128,7 +128,7 @@ always @(posedge clock) begin
 			end
 
 			// Load data to the corresponding data_out so that they can be monitored in simulation.
-			data_out3 = fir_output;
+			data_out = fir_output;
 		end
 
 		
