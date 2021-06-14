@@ -31,13 +31,16 @@ module n_tap_fir #(
 
 
 
-
+// Creating the internal buffers for the coefficients and data in,
 reg signed [DATA_WIDTH - 1:0] coeff_buffer [0:LENGTH - 1];
 reg signed [DATA_WIDTH - 1:0] input_data_buffer [0:LENGTH -1];
-reg [9:0] coeff_counter;						// This can not be a constant. Will need to be dependant on n. Either that or make ir realy large
-// input data width + coefficient width + log(N) = output width
-reg signed [18:0] fir_output;
 
+// Coefficient counter. Filter will only for 1023 ((2^10)-1) taps.
+reg [9:0] coeff_counter;
+
+// Local parameter to store the FIR filters output.
+// FIR output width = input data width + coefficient width + log2(LENGTH)
+reg signed [18:0] fir_output;
 
 
 
@@ -51,18 +54,19 @@ reg [2:0] STOP = 3'd3;
 
 
 
-
+// Setting the initial values.
 initial begin : init_values
-	// Set all the values inside the coeff_buffer to 0;
+
+	// Set all the values inside the coeff_buffer to 0.
 	integer k;
 	for (k = 0; k <= LENGTH - 1 ; k = k + 1) begin
 		coeff_buffer[k] = 0;
 		input_data_buffer[k] = 0;
 	end
 
-	state = 0;
+	// Set the internal variables and outputs to 0.
+	state = IDLE;
 	coeff_counter = 0;
-
 	data_out = 0;
 	fir_output = 0;
 end
@@ -76,34 +80,42 @@ always @(posedge clock) begin
 	case(state)
 	
 	
+		// State IDLE. This checks the load_coefficients_flag value and only
+		// transition to state LOAD_COEFFICIENTS when the flag is high.
 		IDLE: begin
-			// The IDLE state checks the LOAD_COEFFICIENTS value and only
-			// starts the FIR operation when the value becomes 1.
 			if(load_coefficients_flag == 1) begin
 				state = LOAD_COEFFICIENTS;
 			end
 		end
 		
-
+		
+		
+		// State LOAD_COEFFICIENTS. This state is responsiable for loading the
+		// coefficients to coeff_buffer. Once all the coefficients are loaded the
+		// state transitions to FIR_MAIN.
 		LOAD_COEFFICIENTS: begin
-			// Shift the values inside coeff_buffer by 1
+		
+			// A for loop that shifts the values inside coeff_buffer by 1 position.
 			for (n = LENGTH - 1; n > 0; n = n - 1) begin
 				coeff_buffer[n] <= coeff_buffer[n-1];
 			end
 
-			// Load the coefficient values to coeff_buffer
+			// Load the new coefficient value to the start of coeff_buffer.
 			coeff_buffer[0] <= coefficient_in;
 
-			// Increment coeff_counter, when it is equal to LENGTH + 1, the
-			// coeff_buffer is full, thus change to state STOP.
+			// Increment coeff_counter, when it is equal to LENGTH, the
+			// coeff_buffer is full, thus transition to state FIR_MAIN.
 			coeff_counter = coeff_counter + 10'd1;
 			if(coeff_counter == LENGTH) begin
 				state = FIR_MAIN;
 			end
 		end
 		
-
+		
+		// State FIR_MAIN. This state is responsiable for the main FIR opperation. It follows
+		// the logic outlined in the pdf "The workings of a FIR filter".
 		FIR_MAIN: begin
+		
 			// If the data input stream is ready, do the following.
 			if(load_data_flag == 1) begin
 				//Shift the values inside input_data_buffer by 1.
@@ -111,24 +123,26 @@ always @(posedge clock) begin
 					input_data_buffer[n] <= input_data_buffer[n - 1];
 				end
 
-				// Load the data_in values to input_data_buffer.
+				// Load the new data_in value to the start of input_data_buffer.
 				input_data_buffer[0] <= data_in;
-
+			
+				// fir_output is set to 0, as everytime FIR_MAIN loops, previous fir_output value is used, hence the first
+				// fir_output value that is used in the for loop would not be of the correct value.
+				fir_output = 0;
 				// A multiplication between the input data and the corresponding coefficients
 				// in the delayed buffer line. This for loop also sums all the components together.
-				fir_output = 0;
 				for (n = 0; n <= LENGTH - 1; n = n + 1) begin
 					fir_output = fir_output + (input_data_buffer[n] * coeff_buffer[LENGTH - 1 - n]);
 				end
 			end
 
+			// Load the output of the FIR to the output reg of the module, data_out.
+			data_out = fir_output;
+			
 			// Transition to stop state when stop_data_load_flag is 1.
 			if(stop_data_load_flag == 1) begin
 				state = STOP;
 			end
-
-			// Load data to the corresponding data_out so that they can be monitored in simulation.
-			data_out = fir_output;
 		end
 
 		
