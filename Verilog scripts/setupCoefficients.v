@@ -36,6 +36,7 @@ initial begin
 end
 
 always @(posedge clock) begin
+
 	if(enable) begin
 		integer k;
 		for (k = 0; k <= LENGTH - 1 ; k = k + 1) begin
@@ -44,6 +45,10 @@ always @(posedge clock) begin
 		
 		filterSetFlag <= 1'd1;
 	end
+	else begin
+		filterSetFlag <= 1'd0;
+	end
+	
 end
 
 
