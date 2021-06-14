@@ -50,10 +50,10 @@ reg signed [18:0] fir_output_QQ;
 
 // FSM states.
 reg [2:0] state;
-reg [2:0] IDLE  			= 3'd0;
+reg [2:0] IDLE = 3'd0;
 reg [2:0] LOAD_COEFFICIENTS = 3'd1;
-reg [2:0] FIR_MAIN 		    = 3'd2;
-reg [2:0] STOP  			= 3'd3;
+reg [2:0] FIR_MAIN = 3'd2;
+reg [2:0] STOP = 3'd3;
 
 initial begin : init_values
 	// Set all the values inside the coeff_buffer to 0.
