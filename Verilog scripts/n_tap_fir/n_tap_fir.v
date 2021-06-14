@@ -21,11 +21,10 @@ module n_tap_fir #(
 	parameter DATA_WIDTH = 8
 )(
 	input clock,
-	input loadCoefficientsFlag,
 	input loadDataFlag,
 	input stopDataLoadFlag,
-	input signed [DATA_WIDTH - 1:0] coefficientIn,
 	input signed [DATA_WIDTH - 1:0] dataIn,
+	
 	output reg signed [18:0] dataOut
 );
 
@@ -40,6 +39,10 @@ reg [9:0] coeffCounter;
 // Local parameter to store the FIR filters output.
 // FIR output width = input data width + coefficient width + log2(LENGTH)
 reg signed [18:0] firOutput;
+
+reg loadCoefficients;
+wire coefficientsSetFlag;
+wire signed [DATA_WIDTH - 1:0] coefficientIn;
 
 
 
@@ -62,21 +65,21 @@ initial begin : initalValues
 	// Set all the values inside the coeffBuffer to 0.
 	integer k;
 	for (k = 0; k <= LENGTH - 1 ; k = k + 1) begin
-		coeffBuffer[k] = 0;
-		inputDataBuffer[k] = 0;
+		coeffBuffer[k] <= 0;
+		inputDataBuffer[k] <= 0;
 	end
 
 	// Set the internal variables and outputs to 0.
-	state = IDLE;
-	coeffCounter = 0;
-	dataOut = 0;
-	firOutput = 0;
+	state <= IDLE;
+	coeffCounter <= 0;
+	dataOut <= 0;
+	firOutput <= 0;
 end
 
 
 setupCoefficients #(
-	LENGTH = 20,
-	WIDTH = 8
+	.LENGTH 			 (LENGTH),
+	.DATA_WIDTH 	 (DATA_WIDTH)
 )Coefficients(
 	.clock			 (clock),
 	.enable			 (loadCoefficients),
@@ -96,9 +99,9 @@ always @(posedge clock) begin
 		// State IDLE. This checks the loadCoefficientsFlag value and only
 		// transition to state LOAD_COEFFICIENTS when the flag is high.
 		IDLE: begin
-			if(loadCoefficientsFlag == 1) begin
-				state = LOAD_COEFFICIENTS;
-			end
+			
+			state <= LOAD_COEFFICIENTS;
+
 		end
 		
 		
@@ -107,6 +110,8 @@ always @(posedge clock) begin
 		// coefficients to coeffBuffer. Once all the coefficients are loaded the
 		// state transitions to FIR_MAIN.
 		LOAD_COEFFICIENTS: begin
+			
+			loadCoefficients <= 1'd1;
 		
 			// A for loop that shifts the values inside coeffBuffer by 1 position.
 			for (n = LENGTH - 1; n > 0; n = n - 1) begin
@@ -116,11 +121,10 @@ always @(posedge clock) begin
 			// Load the new coefficient value to the start of coeffBuffer.
 			coeffBuffer[0] <= coefficientIn;
 
-			// Increment coeffCounter, when it is equal to LENGTH, the
-			// coeffBuffer is full, thus transition to state FIR_MAIN.
-			coeffCounter = coeffCounter + 10'd1;
-			if(coeffCounter == LENGTH) begin
-				state = FIR_MAIN;
+			
+			if(coefficientsSetFlag) begin
+				state <= FIR_MAIN;
+				loadCoefficients <= 1'd0;
 			end
 		end
 		
@@ -141,20 +145,20 @@ always @(posedge clock) begin
 			
 				// firOutput is set to 0, as everytime FIR_MAIN loops, previous firOutput value is used, hence the first
 				// firOutput value that is used in the for loop would not be of the correct value.
-				firOutput = 0;
+				firOutput <= 0;
 				// A multiplication between the input data and the corresponding coefficients
 				// in the delayed buffer line. This for loop also sums all the components together.
 				for (n = 0; n <= LENGTH - 1; n = n + 1) begin
-					firOutput = firOutput + (inputDataBuffer[n] * coeffBuffer[LENGTH - 1 - n]);
+					firOutput <= firOutput + (inputDataBuffer[n] * coeffBuffer[LENGTH - 1 - n]);
 				end
 			end
 
 			// Load the output of the FIR to the output reg of the module, dataOut.
-			dataOut = firOutput;
+			dataOut <= firOutput;
 			
 			// Transition to stop state when stopDataLoadFlag is 1.
 			if(stopDataLoadFlag == 1) begin
-				state = STOP;
+				state <= STOP;
 			end
 		end
 		
@@ -168,16 +172,16 @@ always @(posedge clock) begin
 		// Empty states that transition to IDLE. These are added to remove any infered latched by Quartus 
 		// for the FSM.
 		EMPTY_STATE1: begin
-			state = IDLE;
+			state <= IDLE;
 		end
 		EMPTY_STATE2: begin
-			state = IDLE;
+			state <= IDLE;
 		end
 		EMPTY_STATE3: begin
-			state = IDLE;
+			state <= IDLE;
 		end
 		EMPTY_STATE4: begin
-			state = IDLE;
+			state <= IDLE;
 		end
 		
 		
@@ -187,15 +191,15 @@ always @(posedge clock) begin
 			// Set all the values inside the coeffBuffer to 0.
 			integer k;
 			for (k = 0; k <= LENGTH - 1 ; k = k + 1) begin
-				coeffBuffer[k] = 0;
-				inputDataBuffer[k] = 0;
+				coeffBuffer[k] <= 0;
+				inputDataBuffer[k] <= 0;
 			end
 
 			// Set the internal variables and outputs to 0.
-			state = IDLE;
-			coeffCounter = 0;
-			dataOut = 0;
-			firOutput = 0;
+			state <= IDLE;
+			coeffCounter <= 0;
+			dataOut <= 0;
+			firOutput <= 0;
 		end
 
 	endcase
