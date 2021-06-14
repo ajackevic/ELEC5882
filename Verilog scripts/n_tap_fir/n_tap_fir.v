@@ -50,7 +50,10 @@ reg [2:0] IDLE = 3'd0;
 reg [2:0] LOAD_COEFFICIENTS = 3'd1;
 reg [2:0] FIR_MAIN = 3'd2;
 reg [2:0] STOP = 3'd3;
-
+reg [2:0] EMPTY_STATE1 = 3'd4;
+reg [2:0] EMPTY_STATE2 = 3'd5;
+reg [2:0] EMPTY_STATE3 = 3'd6;
+reg [2:0] EMPTY_STATE4 = 3'd7;
 
 
 
@@ -148,6 +151,21 @@ always @(posedge clock) begin
 		
 		STOP: begin
 
+		end
+		
+		// Empty states that transition to IDLE. These are added to remove any infered latched by Quartus 
+		// for the FSM.
+		EMPTY_STATE1: begin
+			state = IDLE;
+		end
+		EMPTY_STATE2: begin
+			state = IDLE;
+		end
+		EMPTY_STATE3: begin
+			state = IDLE;
+		end
+		EMPTY_STATE4: begin
+			state = IDLE;
 		end
 		
 		// State default. This state is added just incase the FSM is in an unknown state, it resets all
