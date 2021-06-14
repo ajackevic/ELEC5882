@@ -10,14 +10,14 @@
  This module is a design of an n-type FIR (Finite Impulse Response)
  filter. This filter is the convolution operation between the
  input data (data_in) and the coefficient data (coefficient_in). The
- default LENGTH is 10. It should be noted, to help understand the workings
+ default length is 10. It should be noted, to help understand the workings
  of the FIR_MAIN state, the PDF in:
  The workings of an FIR filter\The workings of a FIR filter.pdf should be read.
 
 */
 
 module n_tap_fir #(
-	parameter LENGTH = 10
+	parameter length = 10
 )(
 	input clock,
 	input load_coefficients_flag,
@@ -28,8 +28,8 @@ module n_tap_fir #(
 	output reg signed [18:0] data_out
 );
 
-reg signed [7:0] coeff_buffer [0:LENGTH - 1];
-reg signed [7:0] input_data_buffer [0:LENGTH -1];
+reg signed [7:0] coeff_buffer [0:length - 1];
+reg signed [7:0] input_data_buffer [0:length -1];
 reg [9:0] coeff_counter;						// This can not be a constant. Will need to be dependant on n. Either that or make ir realy large
 // input data width + coefficient width + log(N) = output width
 reg signed [18:0] fir_output;
@@ -45,7 +45,7 @@ reg [2:0] STOP  			= 3'd3;
 initial begin : init_values
 	// Set all the values inside the coeff_buffer to 0;
 	integer k;
-	for (k = 0; k <= LENGTH - 1 ; k = k + 1) begin
+	for (k = 0; k <= length - 1 ; k = k + 1) begin
 		coeff_buffer[k] = 0;
 		input_data_buffer[k] = 0;
 	end
@@ -70,17 +70,17 @@ always @(posedge clock) begin
 
 		LOAD_COEFFICIENTS: begin
 			// Shift the values inside coeff_buffer by 1
-			for (n = LENGTH - 1; n > 0; n = n - 1) begin
+			for (n = length - 1; n > 0; n = n - 1) begin
 				coeff_buffer[n] <= coeff_buffer[n-1];
 			end
 
 			// Load the coefficient values to coeff_buffer
 			coeff_buffer[0] <= coefficient_in;
 
-			// Increment coeff_counter, when it is equal to LENGTH + 1, the
+			// Increment coeff_counter, when it is equal to length + 1, the
 			// coeff_buffer is full, thus change to state STOP.
 			coeff_counter = coeff_counter + 10'd1;
-			if(coeff_counter == LENGTH) begin
+			if(coeff_counter == length) begin
 				state = FIR_MAIN;
 			end
 		end
@@ -89,7 +89,7 @@ always @(posedge clock) begin
 			// If the data input stream is ready, do the following.
 			if(load_data_flag == 1) begin
 				//Shift the values inside input_data_buffer by 1.
-				for (n = LENGTH - 1; n > 0; n = n - 1) begin
+				for (n = length - 1; n > 0; n = n - 1) begin
 					input_data_buffer[n] <= input_data_buffer[n - 1];
 				end
 
@@ -99,8 +99,8 @@ always @(posedge clock) begin
 				// A multiplication between the input data and the corresponding coefficients
 				// in the delayed buffer line. This for loop also sums all the components together.
 				fir_output = 0;
-				for (n = 0; n <= LENGTH - 1; n = n + 1) begin
-					fir_output = fir_output + (input_data_buffer[n] * coeff_buffer[LENGTH - 1 - n]);
+				for (n = 0; n <= length - 1; n = n + 1) begin
+					fir_output = fir_output + (input_data_buffer[n] * coeff_buffer[length - 1 - n]);
 				end
 			end
 
