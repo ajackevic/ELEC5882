@@ -17,7 +17,7 @@
 */
 
 module n_tap_fir #(
-	parameter LENGTH = 10,
+	parameter LENGTH = 20,
 	parameter DATA_WIDTH = 8
 )(
 	input clock,
