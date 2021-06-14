@@ -5,7 +5,7 @@ module setupCoefficients #(
 	input clock,
 	input enable,
 	output reg filterSetFlag,
-	output reg signed [DATA_WIDTH - 1:0] coefficient_in
+	output reg signed [DATA_WIDTH - 1:0] coefficientOut
 );
 
 reg signed [DATA_WIDTH - 1:0] coefficients [0:LENGTH - 1];
@@ -40,7 +40,7 @@ always @(posedge clock) begin
 	if(enable) begin
 		integer k;
 		for (k = 0; k <= LENGTH - 1 ; k = k + 1) begin
-			coefficient_in <= coefficients[k];
+			coefficientOut <= coefficients[k];
 		end
 		
 		filterSetFlag <= 1'd1;
