@@ -1,9 +1,7 @@
 module setupFIRFilter #(
 	parameter LENGTH = 20,
 	parameter DATA_WIDTH = 8
-)
-
-(
+)(
 	input clock,
 	input enable,
 	output reg filterSetFlag,
@@ -35,6 +33,15 @@ initial begin
 	coefficients[17] = 8'd58;
 	coefficients[18] = -8'd97;
 	coefficients[19] = 8'd10;
+end
+
+always @(posedge clock) begin
+	if(enable) begin
+		integer k;
+		for (k = 0; k <= LENGTH - 1 ; k = k + 1) begin
+		
+		end
+	end
 end
 
 
