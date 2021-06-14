@@ -57,51 +57,7 @@ initial begin
 	load_data_flag = 0;
 	repeat(RST_CYCLES) @ (posedge clock);
 
-	// Set the coiefficient values. Make sure the number of coefficients is
-	// equal to the set length of the n_tap_fir module. In this case there are
-	// 20 set values.
-	load_coefficients_flag = 1;
-	repeat(1) @ (posedge clock);
-	sr_coeff_in = 8'd34;
-	repeat(1) @ (posedge clock);
-	sr_coeff_in = 8'd34;
-	repeat(1) @ (posedge clock);
-	sr_coeff_in = 8'd0;
-	repeat(1) @ (posedge clock);
-	sr_coeff_in = 8'd49;
-	repeat(1) @ (posedge clock);
-	sr_coeff_in = 8'd125;
-	repeat(1) @ (posedge clock);
-	sr_coeff_in = -8'd77;
-	repeat(1) @ (posedge clock);
-	sr_coeff_in = -8'd51;
-	repeat(1) @ (posedge clock);
-	sr_coeff_in = 8'd8;
-	repeat(1) @ (posedge clock);
-	sr_coeff_in = 8'd97;
-	repeat(1) @ (posedge clock);
-	sr_coeff_in = 8'd109;
-	repeat(1) @ (posedge clock);
-	sr_coeff_in = -8'd91;
-	repeat(1) @ (posedge clock);
-	sr_coeff_in = -8'd3;
-	repeat(1) @ (posedge clock);
-	sr_coeff_in = 8'd9;
-	repeat(1) @ (posedge clock);
-	sr_coeff_in = 8'd1;
-	repeat(1) @ (posedge clock);
-	sr_coeff_in = 8'd59;
-	repeat(1) @ (posedge clock);
-	sr_coeff_in = 8'd75;
-	repeat(1) @ (posedge clock);
-	sr_coeff_in = 8'd19;
-	repeat(1) @ (posedge clock);
-	sr_coeff_in = 8'd58;
-	repeat(1) @ (posedge clock);
-	sr_coeff_in = -8'd97;
-	repeat(1) @ (posedge clock);
-	sr_coeff_in = 8'd10;
-	repeat(20) @ (posedge clock);
+	repeat(100) @ (posedge clock);
 	load_data_flag = 1;
 
 	// Set the input data values, in this case there are 51 values.
