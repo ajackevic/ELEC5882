@@ -36,11 +36,11 @@ reg signed [DATA_WIDTH - 1:0] coeffBuffer [0:LENGTH - 1];
 reg signed [DATA_WIDTH - 1:0] inputDataBuffer [0:LENGTH -1];
 
 // Coefficient counter. Filter will only for 1023 ((2^10)-1) taps.
-reg [9:0] coeff_counter;
+reg [9:0] coeffCounter;
 
 // Local parameter to store the FIR filters output.
 // FIR output width = input data width + coefficient width + log2(LENGTH)
-reg signed [18:0] fir_output;
+reg signed [18:0] firOutput;
 
 
 
@@ -58,7 +58,7 @@ reg [2:0] EMPTY_STATE4 = 3'd7;
 
 
 // Setting the initial values.
-initial begin
+initial begin : initalValues
 
 	// Set all the values inside the coeffBuffer to 0.
 	integer k;
@@ -69,9 +69,9 @@ initial begin
 
 	// Set the internal variables and outputs to 0.
 	state = IDLE;
-	coeff_counter = 0;
+	coeffCounter = 0;
 	dataOut = 0;
-	fir_output = 0;
+	firOutput = 0;
 end
 
 
@@ -106,10 +106,10 @@ always @(posedge clock) begin
 			// Load the new coefficient value to the start of coeffBuffer.
 			coeffBuffer[0] <= coefficientIn;
 
-			// Increment coeff_counter, when it is equal to LENGTH, the
+			// Increment coeffCounter, when it is equal to LENGTH, the
 			// coeffBuffer is full, thus transition to state FIR_MAIN.
-			coeff_counter = coeff_counter + 10'd1;
-			if(coeff_counter == LENGTH) begin
+			coeffCounter = coeffCounter + 10'd1;
+			if(coeffCounter == LENGTH) begin
 				state = FIR_MAIN;
 			end
 		end
@@ -129,18 +129,18 @@ always @(posedge clock) begin
 				// Load the new dataIn value to the start of inputDataBuffer.
 				inputDataBuffer[0] <= dataIn;
 			
-				// fir_output is set to 0, as everytime FIR_MAIN loops, previous fir_output value is used, hence the first
-				// fir_output value that is used in the for loop would not be of the correct value.
-				fir_output = 0;
+				// firOutput is set to 0, as everytime FIR_MAIN loops, previous firOutput value is used, hence the first
+				// firOutput value that is used in the for loop would not be of the correct value.
+				firOutput = 0;
 				// A multiplication between the input data and the corresponding coefficients
 				// in the delayed buffer line. This for loop also sums all the components together.
 				for (n = 0; n <= LENGTH - 1; n = n + 1) begin
-					fir_output = fir_output + (inputDataBuffer[n] * coeffBuffer[LENGTH - 1 - n]);
+					firOutput = firOutput + (inputDataBuffer[n] * coeffBuffer[LENGTH - 1 - n]);
 				end
 			end
 
 			// Load the output of the FIR to the output reg of the module, dataOut.
-			dataOut = fir_output;
+			dataOut = firOutput;
 			
 			// Transition to stop state when stopDataLoadFlag is 1.
 			if(stopDataLoadFlag == 1) begin
@@ -173,7 +173,7 @@ always @(posedge clock) begin
 		
 		// State default. This state is added just incase the FSM is in an unknown state, it resets all
 		// all the local parameter and sets state to IDLE.
-		default: begin
+		default: begin: defaultValues
 			// Set all the values inside the coeffBuffer to 0.
 			integer k;
 			for (k = 0; k <= LENGTH - 1 ; k = k + 1) begin
@@ -183,9 +183,9 @@ always @(posedge clock) begin
 
 			// Set the internal variables and outputs to 0.
 			state = IDLE;
-			coeff_counter = 0;
+			coeffCounter = 0;
 			dataOut = 0;
-			fir_output = 0;
+			firOutput = 0;
 		end
 
 	endcase
