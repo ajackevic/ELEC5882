@@ -1,11 +1,11 @@
-module setupFIRFilter #(
+module setupCoefficients #(
 	parameter LENGTH = 20,
 	parameter DATA_WIDTH = 8
 )(
 	input clock,
 	input enable,
 	output reg filterSetFlag,
-	output reg signed [DATA_WIDTH - 1:0] coefficient_in;
+	output reg signed [DATA_WIDTH - 1:0] coefficient_in
 );
 
 reg signed [DATA_WIDTH - 1:0] coefficients [0:LENGTH - 1];
@@ -18,7 +18,7 @@ initial begin
 	coefficients[2] = 8'd0;
 	coefficients[3] = 8'd49;
 	coefficients[4] = 8'd125;
-	coefficients[5] = -8'd77
+	coefficients[5] = -8'd77;
 	coefficients[6] = -8'd51;
 	coefficients[7] = 8'd8;
 	coefficients[8] = 8'd97;
@@ -39,8 +39,10 @@ always @(posedge clock) begin
 	if(enable) begin
 		integer k;
 		for (k = 0; k <= LENGTH - 1 ; k = k + 1) begin
-		
+			coefficient_in <= coefficients[k];
 		end
+		
+		filterSetFlag <= 1'd1;
 	end
 end
 
