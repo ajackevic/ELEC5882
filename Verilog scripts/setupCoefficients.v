@@ -37,7 +37,7 @@ end
 
 always @(posedge clock) begin
 
-	if(enable) begin
+	if(enable) begin: setCoefficients
 		integer k;
 		for (k = 0; k <= LENGTH - 1 ; k = k + 1) begin
 			coefficientOut <= coefficients[k];
