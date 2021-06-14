@@ -147,11 +147,13 @@ always @(posedge clock) begin
 				state = STOP;
 			end
 		end
+		
 
 		
 		STOP: begin
 
 		end
+		
 		
 		// Empty states that transition to IDLE. These are added to remove any infered latched by Quartus 
 		// for the FSM.
@@ -167,6 +169,7 @@ always @(posedge clock) begin
 		EMPTY_STATE4: begin
 			state = IDLE;
 		end
+		
 		
 		// State default. This state is added just incase the FSM is in an unknown state, it resets all
 		// all the local parameter and sets state to IDLE.
