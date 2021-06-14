@@ -18,18 +18,19 @@
 
 module n_tap_fir #(
 	parameter LENGTH = 10
+	parameter DATA_WIDTH = 8;
 )(
 	input clock,
 	input load_coefficients_flag,
 	input load_data_flag,
 	input stop_data_load_flag,
-	input signed [7:0] coefficient_in,
-	input signed [7:0] data_in,
+	input signed [DATA_WIDTH - 1:0] coefficient_in,
+	input signed [DATA_WIDTH - 1:0] data_in,
 	output reg signed [18:0] data_out
 );
 
-reg signed [7:0] coeff_buffer [0:LENGTH - 1];
-reg signed [7:0] input_data_buffer [0:LENGTH -1];
+reg signed [DATA_WIDTH - 1:0] coeff_buffer [0:LENGTH - 1];
+reg signed [DATA_WIDTH - 1:0] input_data_buffer [0:LENGTH -1];
 reg [9:0] coeff_counter;						// This can not be a constant. Will need to be dependant on n. Either that or make ir realy large
 // input data width + coefficient width + log(N) = output width
 reg signed [18:0] fir_output;
