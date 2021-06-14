@@ -29,11 +29,16 @@ module n_tap_fir #(
 	output reg signed [18:0] data_out
 );
 
+
+
+
 reg signed [DATA_WIDTH - 1:0] coeff_buffer [0:LENGTH - 1];
 reg signed [DATA_WIDTH - 1:0] input_data_buffer [0:LENGTH -1];
 reg [9:0] coeff_counter;						// This can not be a constant. Will need to be dependant on n. Either that or make ir realy large
 // input data width + coefficient width + log(N) = output width
 reg signed [18:0] fir_output;
+
+
 
 
 // FSM states
@@ -42,6 +47,10 @@ reg [2:0] IDLE = 3'd0;
 reg [2:0] LOAD_COEFFICIENTS = 3'd1;
 reg [2:0] FIR_MAIN = 3'd2;
 reg [2:0] STOP = 3'd3;
+
+
+
+
 
 initial begin : init_values
 	// Set all the values inside the coeff_buffer to 0;
@@ -58,9 +67,15 @@ initial begin : init_values
 	fir_output = 0;
 end
 
+
+
+
+
 integer n;
 always @(posedge clock) begin
 	case(state)
+	
+	
 		IDLE: begin
 			// The IDLE state checks the LOAD_COEFFICIENTS value and only
 			// starts the FIR operation when the value becomes 1.
@@ -68,6 +83,7 @@ always @(posedge clock) begin
 				state = LOAD_COEFFICIENTS;
 			end
 		end
+		
 
 		LOAD_COEFFICIENTS: begin
 			// Shift the values inside coeff_buffer by 1
@@ -85,6 +101,7 @@ always @(posedge clock) begin
 				state = FIR_MAIN;
 			end
 		end
+		
 
 		FIR_MAIN: begin
 			// If the data input stream is ready, do the following.
@@ -114,12 +131,17 @@ always @(posedge clock) begin
 			data_out3 = fir_output;
 		end
 
+		
 		STOP: begin
 
 		end
+		
+		
 
 	endcase
 
 end
+
+
 
 endmodule
