@@ -37,10 +37,8 @@ n_tap_fir #(
 	.DATA_WIDTH					(8)
 	) dut(
 	.clock						(clock),
-	.loadCoefficientsFlag	(load_coefficients_flag),
 	.loadDataFlag				(load_data_flag),
 	.stopDataLoadFlag 		(stop_data_load_flag),
-	.coefficientIn	  			(sr_coeff_in),
 	.dataIn						(sr_data_in),
 	.dataOut 					(dataOut)
 );
