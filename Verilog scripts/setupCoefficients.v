@@ -13,6 +13,8 @@ reg [9:0] coeffCounter;
 // Designing the correct length of the coefficient array based on parameters LENGTH and DATA_WIDTH.
 reg signed [DATA_WIDTH - 1:0] coefficients [0:LENGTH - 1];
 
+
+
 // Setting the coefficients. When setting the coefficients, make sure all values are covered.
 // This should be from 0 to LENGTH - 1.
 initial begin
@@ -38,6 +40,7 @@ initial begin
 	coefficients[19] = 8'd10;
 end
 
+
 // Set the initial outputs to 0.
 initial begin
 	coefficientOut <= {(DATA_WIDTH){1'd0}};
@@ -46,15 +49,21 @@ initial begin
 end
 
 
+
 always @(posedge clock) begin
 
+	// If enable is set, set coefficientOut based on the coeffCounter and the array coefficients values.
+	// When all the coefficients were passed across, set the filterSetFlag high. If not enabled, set 
+	// filterSetFlag low and reset the coeffCounter.
 	if(enable) begin: setCoefficients
 
+		// Set coefficientOut to the corresponding coefficients array value.
 		coefficientOut <= coefficients[coeffCounter];
-
 		
+		// Increment coeffCounter each loop.
 		coeffCounter <= coeffCounter + 10'd1;
 		
+		// Set flag high when coeffCounter is equal to the filter length - 1.
 		if(coeffCounter == LENGTH - 1) begin
 			filterSetFlag <= 1'd1;
 		end
@@ -62,6 +71,7 @@ always @(posedge clock) begin
 	end
 	else begin
 		filterSetFlag <= 1'd0;
+		coeffCounter <= 10'd0;
 	end
 	
 end
