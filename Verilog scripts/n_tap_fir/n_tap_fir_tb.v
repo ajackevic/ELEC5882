@@ -55,11 +55,11 @@ initial begin
 	load_data_flag = 0;
 	repeat(RST_CYCLES) @ (posedge clock);
 
-	repeat(100) @ (posedge clock);
+	repeat(13) @ (posedge clock);
 	load_data_flag = 1;
 
 	// Set the input data values, in this case there are 51 values.
-	repeat(5) @ (posedge clock);
+	repeat(1) @ (posedge clock);
 	sr_data_in = 8'd10;
 	repeat(1) @ (posedge clock);
 	sr_data_in = 8'd20;
