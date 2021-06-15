@@ -8,6 +8,9 @@ module setupCoefficients #(
 	output reg signed [DATA_WIDTH - 1:0] coefficientOut
 );
 
+// Coefficient counter. Filter will only for 1023 ((2^10)-1) taps.
+reg [9:0] coeffCounter;
+// Designing the correct length of the coefficient array based on parameters LENGTH and DATA_WIDTH.
 reg signed [DATA_WIDTH - 1:0] coefficients [0:LENGTH - 1];
 
 // Setting the coefficients. When setting the coefficients, make sure all values are covered.
@@ -21,7 +24,7 @@ initial begin
 	coefficients[5] = -8'd77;
 	coefficients[6] = -8'd51;
 	coefficients[7] = 8'd8;
-	coefficients[8] = 8'd97;
+	coefficients[8] = 8'd98;
 	coefficients[9] = 8'd109;
 	coefficients[10] = -8'd91;
 	coefficients[11] = -8'd3;
@@ -39,18 +42,23 @@ end
 initial begin
 	coefficientOut <= {(DATA_WIDTH){1'd0}};
 	filterSetFlag <= 1'd0;
+	coeffCounter <= 10'd0;
 end
 
 
 always @(posedge clock) begin
 
 	if(enable) begin: setCoefficients
-		integer k;
-		for (k = 0; k <= LENGTH - 1 ; k = k + 1) begin
-			coefficientOut <= coefficients[k];
+
+		coefficientOut <= coefficients[coeffCounter];
+
+		
+		coeffCounter <= coeffCounter + 10'd1;
+		
+		if(coeffCounter == LENGTH - 1) begin
+			filterSetFlag <= 1'd1;
 		end
 		
-		filterSetFlag <= 1'd1;
 	end
 	else begin
 		filterSetFlag <= 1'd0;
