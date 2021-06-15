@@ -23,10 +23,8 @@ localparam CLOCK_FREQ = 50000000;
 localparam RST_CYCLES = 10;
 
 reg clock;
-reg load_coefficients_flag;
 reg load_data_flag;
 reg stop_data_load_flag;
-reg signed [7:0] sr_coeff_in;
 reg signed [7:0] sr_data_in;
 wire [18:0] dataOut;
 // Note the range of reg signed [7:0] is [-128 to 127].
@@ -48,10 +46,8 @@ initial begin
 
 	// Set the init values. Then send the coefficients and then the data in
 	// a serial manner, one clock cycle at a time.
-	sr_coeff_in = 0;
 	stop_data_load_flag = 0;
 	sr_data_in = 0;
-	load_coefficients_flag = 0;
 	load_data_flag = 0;
 	repeat(RST_CYCLES) @ (posedge clock);
 
