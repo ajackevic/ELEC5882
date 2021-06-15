@@ -35,6 +35,13 @@ initial begin
 	coefficients[19] = 8'd10;
 end
 
+// Set the initial outputs to 0.
+initial begin
+	coefficientOut <= {(DATA_WIDTH){1'd0}};
+	filterSetFlag <= 1'd0;
+end
+
+
 always @(posedge clock) begin
 
 	if(enable) begin: setCoefficients
