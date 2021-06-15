@@ -148,16 +148,16 @@ always @(posedge clock) begin
 			
 				// firOutput is set to 0, as everytime FIR_MAIN loops, previous firOutput value is used, hence the first
 				// firOutput value that is used in the for loop would not be of the correct value.
-				firOutput <= 0;
+				firOutput = 0;
 				// A multiplication between the input data and the corresponding coefficients
 				// in the delayed buffer line. This for loop also sums all the components together.
 				for (n = 0; n <= LENGTH - 1; n = n + 1) begin
-					firOutput <= firOutput + (inputDataBuffer[n] * coeffBuffer[LENGTH - 1 - n]);
+					firOutput = firOutput + (inputDataBuffer[n] * coeffBuffer[LENGTH - 1 - n]);
 				end
 			end
 
 			// Load the output of the FIR to the output reg of the module, dataOut.
-			dataOut <= firOutput;
+			dataOut = firOutput;
 			
 			// Transition to stop state when stopDataLoadFlag is 1.
 			if(stopDataLoadFlag == 1) begin
