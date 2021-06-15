@@ -72,8 +72,10 @@ initial begin : initalValues
 	// Set the internal variables and outputs to 0.
 	state <= IDLE;
 	coeffCounter <= 0;
+	loadCoefficients <= 0;
 	dataOut <= 0;
 	firOutput <= 0;
+	
 end
 
 
@@ -120,6 +122,7 @@ always @(posedge clock) begin
 
 			// Load the new coefficient value to the start of coeffBuffer.
 			coeffBuffer[0] <= coefficientIn;
+			coeffCounter <= coeffCounter + 10'd1;
 
 			
 			if(coefficientsSetFlag) begin
