@@ -116,12 +116,12 @@ always @(posedge clock) begin
 			loadCoefficients <= 1'd1;
 		
 			// A for loop that shifts the values inside coeffBuffer by 1 position.
-			//for (n = LENGTH - 1; n > 0; n = n - 1) begin
-			//	coeffBuffer[n] <= coeffBuffer[n-1];
-			//end
+			for (n = LENGTH - 1; n > 0; n = n - 1) begin
+				coeffBuffer[n] <= coeffBuffer[n-1];
+			end
 
 			// Load the new coefficient value to the start of coeffBuffer.
-			coeffBuffer[LENGTH - coeffCounter + 1] <= coefficientIn;
+			coeffBuffer[0] <= coefficientIn;
 			coeffCounter <= coeffCounter + 10'd1;
 
 			
