@@ -18,7 +18,8 @@
 */
 
 module n_tap_complex_fir #(
-	parameter LENGTH = 10
+	parameter LENGTH = 12,
+	parameter DATA_WIDTH = 8
 )(
 	input clock,
 	input loadDataFlag,
@@ -29,12 +30,13 @@ module n_tap_complex_fir #(
 	output reg signed [20:0] dataOutIm
 );
 
-// Creating the buffers to store the input data and coefficients.
 
-reg signed [7:0] coeffBufferRe [0:LENGTH - 1];
-reg signed [7:0] coeffBufferIm [0:LENGTH - 1];
-reg signed [7:0] inputDataBufferRe [0:LENGTH -1];
-reg signed [7:0] inputDataBufferIm [0:LENGTH -1];
+
+// Creating the buffers to store the input data and coefficients.
+reg signed [DATA_WIDTH - 1:0] coeffBufferRe [0:LENGTH - 1];
+reg signed [DATA_WIDTH - 1:0] coeffBufferIm [0:LENGTH - 1];
+reg signed [DATA_WIDTH - 1:0] inputDataBufferRe [0:LENGTH -1];
+reg signed [DATA_WIDTH - 1:0] inputDataBufferIm [0:LENGTH -1];
 // Note the range of reg signed [7:0] is [-128 to 127].
 
 
