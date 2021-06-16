@@ -164,7 +164,7 @@ initial begin
 	repeat(1) @ (posedge clock);
 	sr_data_in = 8'd0;
 	repeat(1) @ (posedge clock);
-	stop_data_load_flag =1 ;
+	//stop_data_load_flag = 1 ;
 end
 
 initial begin
