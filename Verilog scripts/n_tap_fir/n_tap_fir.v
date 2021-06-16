@@ -33,8 +33,6 @@ module n_tap_fir #(
 reg signed [DATA_WIDTH - 1:0] coeffBuffer [0:LENGTH - 1];
 reg signed [DATA_WIDTH - 1:0] inputDataBuffer [0:LENGTH -1];
 
-// Coefficient counter. Filter will only for 1023 ((2^10)-1) taps.
-reg [9:0] coeffCounter;
 
 // Local parameter to store the FIR filters output.
 // FIR output width = input data width + coefficient width + log2(LENGTH)
@@ -71,7 +69,6 @@ initial begin : initalValues
 
 	// Set the internal variables and outputs to 0.
 	state <= IDLE;
-	coeffCounter <= 0;
 	loadCoefficients <= 0;
 	dataOut <= 0;
 	firOutput <= 0;
@@ -102,9 +99,7 @@ always @(posedge clock) begin
 	
 		// State IDLE. This state transitions to LOAD_COEFFICIENTS.
 		IDLE: begin
-			
 			state <= LOAD_COEFFICIENTS;
-
 		end
 		
 		
@@ -123,7 +118,6 @@ always @(posedge clock) begin
 
 			// Load the new coefficient value to the start of coeffBuffer.
 			coeffBuffer[0] <= coefficientIn;
-			coeffCounter <= coeffCounter + 10'd1;
 
 			
 			if(coefficientsSetFlag) begin
@@ -201,7 +195,6 @@ always @(posedge clock) begin
 
 			// Set the internal variables and outputs to 0.
 			state <= IDLE;
-			coeffCounter <= 0;
 			dataOut <= 0;
 			firOutput <= 0;
 		end
