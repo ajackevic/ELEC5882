@@ -36,7 +36,7 @@ reg signed [7:0] coeffBufferIm [0:LENGTH - 1];
 reg signed [7:0] inputDataBufferRe [0:LENGTH -1];
 reg signed [7:0] inputDataBufferIm [0:LENGTH -1];
 // Note the range of reg signed [7:0] is [-128 to 127].
-reg [9:0] coeffCounter;		// This can not be a constant. Will need to be dependant on n. Either that or make ir realy large.
+
 
 // input data width + coefficient width + log(N) = output width.
 reg signed [18:0] firOutputReRe;
@@ -51,34 +51,41 @@ wire signed [DATA_WIDTH - 1:0] coefficientInRe;
 wire signed [DATA_WIDTH - 1:0] coefficientInIm;
 
 
+
 // FSM states.
 reg [2:0] state;
 reg [2:0] IDLE = 3'd0;
 reg [2:0] LOAD_COEFFICIENTS = 3'd1;
 reg [2:0] FIR_MAIN = 3'd2;
 reg [2:0] STOP = 3'd3;
+reg [2:0] EMPTY_STATE1 = 3'd4;
+reg [2:0] EMPTY_STATE2 = 3'd5;
+reg [2:0] EMPTY_STATE3 = 3'd6;
+reg [2:0] EMPTY_STATE4 = 3'd7;
+
+
+
 
 initial begin : init_values
 	// Set all the values inside the coeff_buffer to 0.
 	integer k;
 	for (k = 0; k <= LENGTH - 1 ; k = k + 1) begin
-		coeffBufferRe[k] = 0;
-		coeffBufferIm[k] = 0;
-		inputDataBufferRe[k] = 0;
-		inputDataBufferIm[k] = 0;
+		coeffBufferRe[k] <= 0;
+		coeffBufferIm[k] <= 0;
+		inputDataBufferRe[k] <= 0;
+		inputDataBufferIm[k] <= 0;
 	end
 
-	state = IDLE;
-	coeffCounter = 0;
+	state <= IDLE;
 	loadCoefficients <= 0;
 
-	firOutputReRe = 0;
-	firOutputReIm = 0;
-	firOutputImRe = 0;
-	firOutputImIm = 0;
+	firOutputReRe <= 0;
+	firOutputReIm <= 0;
+	firOutputImRe <= 0;
+	firOutputImIm <= 0;
 
-	dataOutRe = 0;
-	dataOutIm = 0;
+	dataOutRe <= 0;
+	dataOutIm <= 0;
 end
 
 
@@ -88,10 +95,10 @@ end
 // amount of coefficients through coefficientInRe and coefficientInIm.
 setupComplexCoefficients #(
 	.LENGTH 			 	(LENGTH),
-	.DATA_WIDTH 		 (DATA_WIDTH)
+	.DATA_WIDTH 		(DATA_WIDTH)
 )Coefficients(
-	.clock				 (clock),
-	.enable				 (loadCoefficients),
+	.clock				(clock),
+	.enable				(loadCoefficients),
 	
 	.filterSetFlag	 	(coefficientsSetFlag),
 	.coefficientOutRe (coefficientInRe),
@@ -105,40 +112,44 @@ setupComplexCoefficients #(
 integer n;
 always @(posedge clock) begin
 	case(state)
+	
+		// State IDLE. This state transitions to LOAD_COEFFICIENTS.
 		IDLE: begin
-			// The IDLE state checks the LOAD_COEFFICIENTS value and only
-			// starts the FIR operation when the value becomes 1 and all the
-			// coefficients have been loaded.
-			if(loadCoefficientsFlag == 1) begin
-				state = LOAD_COEFFICIENTS;
-			end
+			state = LOAD_COEFFICIENTS;
 		end
 
+		// State LOAD_COEFFICIENTS. This state is responsiable for loading the
+		// coefficients to coeffBufferRe and coeffBufferIn. Once all the coefficients 
+		// are loaded the state transitions to FIR_MAIN.
 		LOAD_COEFFICIENTS: begin
-			// Shift the values inside coeffBufferRe by 1.
+		
+			// Enable the loading of the coefficients.
+			loadCoefficients <= 1'd1;
+			
+			// Shift the values inside coeffBufferRe and coeffBufferIm by 1.
 			for (n = LENGTH - 1; n > 0; n = n - 1) begin
 				coeffBufferRe[n] <= coeffBufferRe[n-1];
-			end
-			// Load the coefficientInRe value to the start of the buffer.
-			coeffBufferRe[0] <= coefficientInRe;
-
-			// Shift the values inside coeffBufferIm by 1.
-			for (n = LENGTH - 1; n > 0; n = n - 1) begin
 				coeffBufferIm[n] <= coeffBufferIm[n-1];
 			end
-			// Load the coefficientInIm value to the start of the buffer.
+			
+			
+			// Load the coefficientInRe and coefficientInIm value to the start of the buffer.
+			coeffBufferRe[0] <= coefficientInRe;
 			coeffBufferIm[0] <= coefficientInIm;
-
-			// When the coeffCounter is eaual to the LENGTH parameter,
-			// all the coefficients have been loaded and the the FSM should
-			// transition to the next state, FIR_MAIN.
-			coeffCounter = coeffCounter + 10'd1;
-			if(coeffCounter == LENGTH) begin
-				state = FIR_MAIN;
+			
+			// If coefficientsSetFlag flag is set, transition to FIR_MAIN and disable the 
+			// loading of the coefficients.
+			if(coefficientsSetFlag) begin
+				state <= FIR_MAIN;
+				loadCoefficients <= 1'd0;
 			end
 		end
 
+		
+		// State FIR_MAIN. This state is responsiable for the main FIR opperation. It follows
+		// the logic outlined in the pdf "The workings of a complex FIR filter".
 		FIR_MAIN: begin
+		
 			// If the data input stream is ready, do the following.
 			if(loadDataFlag == 1) begin
 				// Shift the values inside inputDataBufferRe by 1.
@@ -156,10 +167,13 @@ always @(posedge clock) begin
 				inputDataBufferIm[0] <= dataInIm;
 
 
+				// firOutput is set to 0, as everytime FIR_MAIN loops, previous firOutput value is used, hence the first
+				// firOutput value that is used in the for loop would not be of the correct value.
 				firOutputReRe = 0;
 				firOutputReIm = 0;
 				firOutputImRe = 0;
 				firOutputImIm = 0;
+				
 
 				// This operation does the multiplication and summation between corresponding input data with
 				/// the corresponding coefficients.
@@ -182,8 +196,48 @@ always @(posedge clock) begin
 			end
 		end
 
+		
 		STOP: begin
+			state <= IDLE;
+		end
+		
+		
+		// Empty states that transition to IDLE. These are added to remove any infered latched by Quartus 
+		// for the FSM.
+		EMPTY_STATE1: begin
+			state <= IDLE;
+		end
+		EMPTY_STATE2: begin
+			state <= IDLE;
+		end
+		EMPTY_STATE3: begin
+			state <= IDLE;
+		end
+		EMPTY_STATE4: begin
+			state <= IDLE;
+		end
+		
+		
+		// State default. This state is added just incase the FSM is in an unknown state, it resets all
+		// all the local parameter and sets state to IDLE.
+		default: begin: defaultValues
+			// Set all the values inside the coeffBuffer to 0.
+			integer k;
+			for (k = 0; k <= LENGTH - 1 ; k = k + 1) begin
+				coeffBufferRe[k] <= 0;
+				coeffBufferIm[k] <= 0;
+				inputDataBufferRe[k] <= 0;
+				inputDataBufferIm[k] <= 0;
+			end
 
+			// Set the internal variables and outputs to 0.
+			state <= IDLE;
+			dataOutRe <= 0;
+			dataOutIm <= 0;
+			firOutputReRe <= 0;
+			firOutputReIm <= 0;
+			firOutputImRe <= 0;
+			firOutputImIm <= 0;
 		end
 
 	endcase
