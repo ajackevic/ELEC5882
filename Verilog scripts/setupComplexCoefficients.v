@@ -18,6 +18,7 @@ reg signed [DATA_WIDTH - 1:0] coefficientsRe [0:LENGTH - 1];
 reg signed [DATA_WIDTH - 1:0] coefficientsIm [0:LENGTH - 1];
 
 
+
 // Setting the coefficients. When setting the coefficients, make sure all values are covered.
 // This should include from 0 to LENGTH - 1.
 initial begin
@@ -48,6 +49,7 @@ initial begin
 end
 
 
+
 // Set the initial outputs to 0.
 initial begin
 	coefficientOutRe <= {(DATA_WIDTH){1'd0}};
@@ -55,6 +57,7 @@ initial begin
 	filterSetFlag <= 1'd0;
 	coeffCounter <= 10'd0;
 end
+
 
 
 
@@ -78,6 +81,8 @@ always @(posedge clock) begin
 		end
 		
 	end
+	
+	// Reset the values if enable is not set.
 	else begin
 		filterSetFlag <= 1'd0;
 		coeffCounter <= 10'd0;
