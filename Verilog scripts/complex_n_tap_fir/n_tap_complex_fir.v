@@ -13,7 +13,7 @@
  default LENGTH is 10. The FIR filter can be used to do the convolution operation.
  For this script, the convolution operation is of two inputs, data_in and coefficient_in.
  It should be noted, to help understand the workings of the FIR_MAIN state, the PDF in:
- The workings of an FIR filter\The workings of a FIR filter.pdf should be read.
+ The workings of an FIR filter\The workings of a complex FIR filter.pdf should be read.
 
 */
 
@@ -26,6 +26,7 @@ module n_tap_complex_fir #(
 	input stopDataLoadFlag,
 	input signed [7:0] dataInRe,
 	input signed [7:0] dataInIm,
+	
 	output reg signed [20:0] dataOutRe,
 	output reg signed [20:0] dataOutIm
 );
@@ -40,18 +41,19 @@ reg signed [DATA_WIDTH - 1:0] inputDataBufferIm [0:LENGTH -1];
 // Note the range of reg signed [7:0] is [-128 to 127].
 
 
-// input data width + coefficient width + log(N) = output width.
+// FIR = output width = input data width + coefficient width + log(N) 
 reg signed [18:0] firOutputReRe;
 reg signed [18:0] firOutputReIm;
 reg signed [18:0] firOutputImRe;
 reg signed [18:0] firOutputImIm;
 
 
+
+// Creating the parameters for the instantiated setupComplexCoefficients module.
 reg loadCoefficients;
 wire coefficientsSetFlag;
 wire signed [DATA_WIDTH - 1:0] coefficientInRe;
 wire signed [DATA_WIDTH - 1:0] coefficientInIm;
-
 
 
 // FSM states.
@@ -67,9 +69,10 @@ reg [2:0] EMPTY_STATE4 = 3'd7;
 
 
 
-
+// Setting the initial values.
 initial begin : init_values
-	// Set all the values inside the coeff_buffer to 0.
+
+	// Set all the values inside the buffers to 0.
 	integer k;
 	for (k = 0; k <= LENGTH - 1 ; k = k + 1) begin
 		coeffBufferRe[k] <= 0;
