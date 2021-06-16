@@ -79,6 +79,8 @@ initial begin : initalValues
 end
 
 
+// Instantiating the setup of the coefficient module. This module passes the LENGTH 
+// amount of coefficients through coefficientOut.
 setupCoefficients #(
 	.LENGTH 			 (LENGTH),
 	.DATA_WIDTH 	 (DATA_WIDTH)
@@ -168,7 +170,7 @@ always @(posedge clock) begin
 
 		
 		STOP: begin
-
+			state <= IDLE;
 		end
 		
 		
