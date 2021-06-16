@@ -21,11 +21,8 @@ module n_tap_complex_fir #(
 	parameter LENGTH = 10
 )(
 	input clock,
-	input loadCoefficientsFlag,
 	input loadDataFlag,
 	input stopDataLoadFlag,
-	input signed [7:0] coefficientInRe,
-	input signed [7:0] coefficientInIm,
 	input signed [7:0] dataInRe,
 	input signed [7:0] dataInIm,
 	output reg signed [20:0] dataOutRe,
@@ -46,6 +43,12 @@ reg signed [18:0] firOutputReRe;
 reg signed [18:0] firOutputReIm;
 reg signed [18:0] firOutputImRe;
 reg signed [18:0] firOutputImIm;
+
+
+reg loadCoefficients;
+wire coefficientsSetFlag;
+wire signed [DATA_WIDTH - 1:0] coefficientInRe;
+wire signed [DATA_WIDTH - 1:0] coefficientInIm;
 
 
 // FSM states.
@@ -76,6 +79,25 @@ initial begin : init_values
 	dataOutRe = 0;
 	dataOutIm = 0;
 end
+
+
+// Instantiating the setup of the coefficient module. This module passes the LENGTH 
+// amount of coefficients through coefficientInRe and coefficientInIm.
+setupComplexCoefficients #(
+	.LENGTH 			 	(LENGTH),
+	.DATA_WIDTH 		 (DATA_WIDTH)
+)Coefficients(
+	.clock				 (clock),
+	.enable				 (loadCoefficients),
+	
+	.filterSetFlag	 	(coefficientsSetFlag),
+	.coefficientOutRe (coefficientInRe),
+	.coefficientOutIm	(coefficientInIm)
+);
+
+
+
+
 
 integer n;
 always @(posedge clock) begin
