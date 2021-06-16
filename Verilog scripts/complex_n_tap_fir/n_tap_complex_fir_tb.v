@@ -8,8 +8,7 @@
  Module Description:
  -------------------
  This module is a test bench for the module n_tap_complex_fir.v. The script
- sends the coefficients (coefficientInRe and coefficientInIm) and the
- input data (srDataInRe and srDataInIm) to the test script, the output
+ sends the input data (srDataInRe and srDataInIm) to the test script, the output
  data (dataOutRe and dataOutIm) is then observed in ModelSim. The results
  are then confirmed through the convolution operation in MATLAB, with the same
  inputs.
@@ -18,25 +17,26 @@
 
 module n_tap_complex_fir_tb;
 
+
 // Parameters for creating the 50MHz clock signal
 localparam NUM_CYCLES = 500;
 localparam CLOCK_FREQ = 50000000;
 localparam RST_CYCLES = 10;
 
+
+
+// Local parameters.
 reg clock;
-reg loadCoefficientsFlag;
 reg loadDataFlag;
 reg stopDataLoadFlag;
-
-reg signed [7:0] coefficientInRe;
-reg signed [7:0] coefficientInIm;
 reg signed [7:0] srDataInRe;
 reg signed [7:0] srDataInIm;
-
 // Note the range of reg signed [7:0] is [-128 to 127].
-
 wire [20:0] dataOutRe;
 wire [20:0] dataOutIm;
+
+
+
 
 // Connect the device under test
 n_tap_complex_fir #(
@@ -57,8 +57,8 @@ n_tap_complex_fir #(
 
 initial begin
 
-	// Set the init values. Then send the coefficients and then the data in
-	// a serial manner, one clock cycle at a time.
+	// Set the init values. Then send the c the data in a serial manner, one clock 
+	// cycle at a time.
 	srDataInRe = 0;
 	srDataInIm = 0;
 
@@ -157,8 +157,8 @@ initial begin
 	srDataInIm = -8'd96;
 	repeat(1) @ (posedge clock);
 
-	// Need to add [length number entered to the n_tap_complex_fir module - 1], in thus case
-	// that is 3 padded 0s. This is required by convolution opperation that the FIR
+	// Need to add [length number entered to the n_tap_complex_fir module - 1], in this case
+	// that is 11 padded 0s. This is required by convolution opperation that the FIR
 	// filters achives.
 	srDataInRe = 8'd0;
 	srDataInIm = 8'd0;
@@ -198,13 +198,19 @@ initial begin
 	//stopDataLoadFlag = 1;
 end
 
+
+// Set the initial value of the clock.
 initial begin
 	clock = 0;
 end
 
+
+
 real HALF_CLOCK_PERIOD = (1000000000.0/$itor(CLOCK_FREQ))/2.0;
 integer half_cycles = 0;
 
+
+// Create the clock toggeling and stop it simulation when half_cycles == (2*NUM_CYCLES).
 always begin
 	#(HALF_CLOCK_PERIOD);
 	clock = ~clock;
