@@ -90,6 +90,7 @@ always @(posedge clock) begin
 	else begin
 		filterSetFlag <= 1'd0;
 		coeffCounter <= 10'd0;
+		coefficientOut <= {(DATA_WIDTH){1'd0}};
 	end
 	
 end
