@@ -120,6 +120,8 @@ always @(posedge clock) begin
 			coeffBuffer[0] <= coefficientIn;
 
 			
+			// If coefficientsSetFlag flag is set, transition to FIR_MAIN and disable the 
+			// loading of the coefficients.
 			if(coefficientsSetFlag) begin
 				state <= FIR_MAIN;
 				loadCoefficients <= 1'd0;
