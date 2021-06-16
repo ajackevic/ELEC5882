@@ -40,7 +40,7 @@ wire [20:0] dataOutIm;
 
 // Connect the device under test
 n_tap_complex_fir #(
-	.length					(12),
+	.LENGTH					(12),
 	.DATA_WIDTH				(8)
 	) dut(
 	.clock					(clock),
