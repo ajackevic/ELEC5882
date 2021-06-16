@@ -1,3 +1,21 @@
+/*
+
+ setupCoefficients.v
+ --------------
+ By: Augustas Jackevic
+ Date: June 2021
+
+ Module Description:
+ -------------------
+ This module sets up the coefficients for the FIR filter. When setting the coefficients 
+ make sure all the coefficient up to the value of LENGTH are set and are at a bit width 
+ of DATA_WIDTH. If more than 1023 coefficients are used, increase the bit width of 
+ coeffCounter. The coefficients will be passed on as soon as enable is set, and once all
+ the values are passed through coefficientOut the filterSetFlag is then set.
+ 
+ 
+*/
+
 module setupCoefficients #(
 	parameter LENGTH = 20,
 	parameter DATA_WIDTH = 8
