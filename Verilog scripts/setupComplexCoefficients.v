@@ -1,5 +1,5 @@
 module setupComplexCoefficients#(
-	parameter LENGTH = 20,
+	parameter LENGTH = 12,
 	parameter DATA_WIDTH = 8
 )(
 	input clock,
@@ -21,7 +21,30 @@ reg signed [DATA_WIDTH - 1:0] coefficientsIm [0:LENGTH - 1];
 // Setting the coefficients. When setting the coefficients, make sure all values are covered.
 // This should include from 0 to LENGTH - 1.
 initial begin
-
+	coefficientsRe[0] <= 8'd3;
+	coefficientsIm[0] <= 8'd7;
+	coefficientsRe[1] <= 8'd2;
+	coefficientsIm[1] <= 8'd0;
+	coefficientsRe[2] <= 8'd17;
+	coefficientsIm[2] <= 8'd5;
+	coefficientsRe[3] <= 8'd0;
+	coefficientsIm[3] <= -8'd3;
+	coefficientsRe[4] <= 8'd55;
+	coefficientsIm[4] <= -8'd103;
+	coefficientsRe[5] <= 8'd120;
+	coefficientsIm[5] <= -8'd111;
+	coefficientsRe[6] <= 8'd123;
+	coefficientsIm[6] <= -8'd24;
+	coefficientsRe[7] <= 8'd56;
+	coefficientsIm[7] <= 8'd96;
+	coefficientsRe[8] <= -8'd99;
+	coefficientsIm[8] <= -8'd32;
+	coefficientsRe[9] <= -8'd109;
+	coefficientsIm[9] <= -8'd76;
+	coefficientsRe[10] <= 8'd23;
+	coefficientsIm[10] <= -8'd14;
+	coefficientsRe[11] <= -8'd60;
+	coefficientsIm[11] <= 8'd10;
 end
 
 
