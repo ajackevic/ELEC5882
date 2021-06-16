@@ -24,28 +24,28 @@ module n_tap_complex_fir #(
 	input loadCoefficientsFlag,
 	input loadDataFlag,
 	input stopDataLoadFlag,
-	input signed [7:0] coefficientInI,
-	input signed [7:0] coefficientInQ,
-	input signed [7:0] dataInI,
-	input signed [7:0] dataInQ,
-	output reg signed [20:0] dataOutI,
-	output reg signed [20:0] dataOutQ
+	input signed [7:0] coefficientInRe,
+	input signed [7:0] coefficientInIm,
+	input signed [7:0] dataInRe,
+	input signed [7:0] dataInIm,
+	output reg signed [20:0] dataOutRe,
+	output reg signed [20:0] dataOutIm
 );
 
 // Creating the buffers to store the input data and coefficients.
 
-reg signed [7:0] coeffBufferI [0:LENGTH - 1];
-reg signed [7:0] coeffBufferQ [0:LENGTH - 1];
-reg signed [7:0] inputDataBufferI [0:LENGTH -1];
-reg signed [7:0] inputDataBufferQ [0:LENGTH -1];
+reg signed [7:0] coeffBufferRe [0:LENGTH - 1];
+reg signed [7:0] coeffBufferIm [0:LENGTH - 1];
+reg signed [7:0] inputDataBufferRe [0:LENGTH -1];
+reg signed [7:0] inputDataBufferIm [0:LENGTH -1];
 // Note the range of reg signed [7:0] is [-128 to 127].
 reg [9:0] coeffCounter;		// This can not be a constant. Will need to be dependant on n. Either that or make ir realy large.
 
 // input data width + coefficient width + log(N) = output width.
-reg signed [18:0] firOutputII;
-reg signed [18:0] firOutputIQ;
-reg signed [18:0] firOutputQI;
-reg signed [18:0] firOutputQQ;
+reg signed [18:0] firOutputReRe;
+reg signed [18:0] firOutputReIm;
+reg signed [18:0] firOutputImRe;
+reg signed [18:0] firOutputImIm;
 
 
 // FSM states.
@@ -59,22 +59,22 @@ initial begin : init_values
 	// Set all the values inside the coeff_buffer to 0.
 	integer k;
 	for (k = 0; k <= LENGTH - 1 ; k = k + 1) begin
-		coeffBufferI[k] = 0;
-		coeffBufferQ[k] = 0;
-		inputDataBufferI[k] = 0;
-		inputDataBufferQ[k] = 0;
+		coeffBufferRe[k] = 0;
+		coeffBufferIm[k] = 0;
+		inputDataBufferRe[k] = 0;
+		inputDataBufferIm[k] = 0;
 	end
 
 	state = 0;
 	coeffCounter = 0;
 
-	firOutputII = 0;
-	firOutputIQ = 0;
-	firOutputQI = 0;
-	firOutputQQ = 0;
+	firOutputReRe = 0;
+	firOutputReIm = 0;
+	firOutputImRe = 0;
+	firOutputImIm = 0;
 
-	dataOutI = 0;
-	dataOutQ = 0;
+	dataOutRe = 0;
+	dataOutIm = 0;
 end
 
 integer n;
@@ -90,19 +90,19 @@ always @(posedge clock) begin
 		end
 
 		LOAD_COEFFICIENTS: begin
-			// Shift the values inside coeffBufferI by 1.
+			// Shift the values inside coeffBufferRe by 1.
 			for (n = LENGTH - 1; n > 0; n = n - 1) begin
-				coeffBufferI[n] <= coeffBufferI[n-1];
+				coeffBufferRe[n] <= coeffBufferRe[n-1];
 			end
-			// Load the coefficientInI value to the start of the buffer.
-			coeffBufferI[0] <= coefficientInI;
+			// Load the coefficientInRe value to the start of the buffer.
+			coeffBufferRe[0] <= coefficientInRe;
 
-			// Shift the values inside coeffBufferQ by 1.
+			// Shift the values inside coeffBufferIm by 1.
 			for (n = LENGTH - 1; n > 0; n = n - 1) begin
-				coeffBufferQ[n] <= coeffBufferQ[n-1];
+				coeffBufferIm[n] <= coeffBufferIm[n-1];
 			end
-			// Load the coefficientInQ value to the start of the buffer.
-			coeffBufferQ[0] <= coefficientInQ;
+			// Load the coefficientInIm value to the start of the buffer.
+			coeffBufferIm[0] <= coefficientInIm;
 
 			// When the coeffCounter is eaual to the LENGTH parameter,
 			// all the coefficients have been loaded and the the FSM should
@@ -116,38 +116,38 @@ always @(posedge clock) begin
 		FIR_MAIN: begin
 			// If the data input stream is ready, do the following.
 			if(loadDataFlag == 1) begin
-				// Shift the values inside inputDataBufferI by 1.
+				// Shift the values inside inputDataBufferRe by 1.
 				for (n = LENGTH - 1; n > 0; n = n - 1) begin
-					inputDataBufferI[n] <= inputDataBufferI[n - 1];
+					inputDataBufferRe[n] <= inputDataBufferRe[n - 1];
 				end
-				// Load the inputDataBufferI value to the start of the buffer.
-				inputDataBufferI[0] <= dataInI;
+				// Load the inputDataBufferRe value to the start of the buffer.
+				inputDataBufferRe[0] <= dataInRe;
 
-				// Shift the values inside inputDataBufferQ by 1.
+				// Shift the values inside inputDataBufferIm by 1.
 				for (n = LENGTH - 1; n > 0; n = n - 1) begin
-					inputDataBufferQ[n] <= inputDataBufferQ[n - 1];
+					inputDataBufferIm[n] <= inputDataBufferIm[n - 1];
 				end
-				// Load the inputDataBufferQ value to the start of the buffer.
-				inputDataBufferQ[0] <= dataInQ;
+				// Load the inputDataBufferIm value to the start of the buffer.
+				inputDataBufferIm[0] <= dataInIm;
 
 
-				firOutputII = 0;
-				firOutputIQ = 0;
-				firOutputQI = 0;
-				firOutputQQ = 0;
+				firOutputReRe = 0;
+				firOutputReIm = 0;
+				firOutputImRe = 0;
+				firOutputImIm = 0;
 
 				// This operation does the multiplication and summation between corresponding input data with
 				/// the corresponding coefficients.
 				for (n = 0; n <= LENGTH - 1; n = n + 1) begin
-					firOutputII = firOutputII + (inputDataBufferI[n] * coeffBufferI[LENGTH - 1 - n]);
-					firOutputIQ = firOutputIQ + (inputDataBufferI[n] * coeffBufferQ[LENGTH - 1 - n]);
-					firOutputQI = firOutputQI + (inputDataBufferQ[n] * coeffBufferI[LENGTH - 1 - n]);
-					firOutputQQ = firOutputQQ + (inputDataBufferQ[n] * coeffBufferQ[LENGTH - 1 - n]);
+					firOutputReRe = firOutputReRe + (inputDataBufferRe[n] * coeffBufferRe[LENGTH - 1 - n]);
+					firOutputReIm = firOutputReIm + (inputDataBufferRe[n] * coeffBufferIm[LENGTH - 1 - n]);
+					firOutputImRe = firOutputImRe + (inputDataBufferIm[n] * coeffBufferRe[LENGTH - 1 - n]);
+					firOutputImIm = firOutputImIm + (inputDataBufferIm[n] * coeffBufferIm[LENGTH - 1 - n]);
 				end
 
 				// Addition / subtraction opperation required for the complex numbers.
-				dataOutI = firOutputII - firOutputQQ;
-				dataOutQ = firOutputIQ + firOutputQI;
+				dataOutRe = firOutputReRe - firOutputImIm;
+				dataOutIm = firOutputReIm + firOutputImRe;
 
 			end
 
