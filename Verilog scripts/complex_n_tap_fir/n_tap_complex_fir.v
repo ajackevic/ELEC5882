@@ -68,8 +68,9 @@ initial begin : init_values
 		inputDataBufferIm[k] = 0;
 	end
 
-	state = 0;
+	state = IDLE;
 	coeffCounter = 0;
+	loadCoefficients <= 0;
 
 	firOutputReRe = 0;
 	firOutputReIm = 0;
@@ -79,6 +80,8 @@ initial begin : init_values
 	dataOutRe = 0;
 	dataOutIm = 0;
 end
+
+
 
 
 // Instantiating the setup of the coefficient module. This module passes the LENGTH 

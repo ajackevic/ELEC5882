@@ -100,8 +100,7 @@ always @(posedge clock) begin
 	case(state)
 	
 	
-		// State IDLE. This checks the loadCoefficientsFlag value and only
-		// transition to state LOAD_COEFFICIENTS when the flag is high.
+		// State IDLE. This state transitions to LOAD_COEFFICIENTS.
 		IDLE: begin
 			
 			state <= LOAD_COEFFICIENTS;
