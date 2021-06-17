@@ -7,7 +7,7 @@
 
  Module Description:
  -------------------
- This module is a test bench for the script setupCoefficients.v. It tests wheather the set 
+ This module is a test bench for the script setup_coefficients.v. It tests wheather the set 
  coefficients of the DUT are outputted in the correct manner and if they are of the correct values.
  
  
@@ -102,8 +102,8 @@ end
 
 
 
-// Instantiating the module setupCoefficients.
-setupCoefficients # (
+// Instantiating the module setup_coefficients.
+setup_coefficients # (
 	.LENGTH				(LENGTH),
 	.DATA_WIDTH			(DATA_WIDTH)
 ) dut (
@@ -176,7 +176,7 @@ always @ (posedge clock) begin
 		// State DISPLAY_RESULTS. This state is reponsiable for displaying the transcript results of the 
 		// test bench. Once displayed, it will transistion to state STOP.
 		DISPLAY_RESULTS: begin
-			$display("This is a test script for the module setupCoefficients. \n",
+			$display("This is a test script for the module setup_coefficients. \n",
 						"It tests wheather the set coefficients of the DUT are outputted in the \n",
 						"correct manner and if they are of the correct values. \n \n",
 			);
