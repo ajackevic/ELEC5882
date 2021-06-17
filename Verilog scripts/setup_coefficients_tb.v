@@ -20,6 +20,13 @@ wire signed [DATA_WIDTH-1:0] coefficientOut;
 
 
 
+// FSM states.
+reg [1:0] state;
+localparam [1:0] IDLE = 2'd0;
+localparam [1:0] CHECK_COEFFICIENTS = 2'd1;
+localparam [1:0] DISPLAY_RESULTS = 2'd2;
+
+
 
 // Set the initial value of the clock.
 initial begin
