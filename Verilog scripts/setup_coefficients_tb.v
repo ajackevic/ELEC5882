@@ -95,7 +95,9 @@ end
 always @ (posedge clock) begin
 	case(state)
 		IDLE: begin
-
+			if(enableModule) begin
+				state <= CHECK_COEFFICIENTS;
+			end
 		end
 		
 		CHECK_COEFFICIENTS: begin
