@@ -31,23 +31,25 @@ reg [1:0] state;
 localparam [1:0] IDLE = 2'd0;
 localparam [1:0] CHECK_COEFFICIENTS = 2'd1;
 localparam [1:0] DISPLAY_RESULTS = 2'd2;
+localparam [1:0] STOP = 2'd3;
 
 
 
 // Set the initial value of the clock.
-initial begin
-	clock = 0;
-	enableModule = 0;
-	testFailedFlag = 0;
-	state = IDLE;
-	coefficientCounter = 5'd0;
-	
-	
+initial begin : init_values
+
 	// Set all the values inside the buffer to 0.
 	integer k;
 	for (k = 0; k <= LENGTH - 1 ; k = k + 1) begin
 		obtainedValues[k] = 0;
 	end
+	
+
+	clock = 0;
+	enableModule = 0;
+	testFailedFlag = 0;
+	state = IDLE;
+	coefficientCounter = 5'd0;
 	
 	
 	// Set the expected outputs. Make sure all values (from 0 to LENGTH -1) of the array are covered.
@@ -108,7 +110,7 @@ always begin
 end
 
 
-
+integer n;
 always @ (posedge clock) begin
 	case(state)
 		IDLE: begin
@@ -132,7 +134,27 @@ always @ (posedge clock) begin
 		end
 		
 		DISPLAY_RESULTS: begin
+			$display("This is a test script for the module setupCoefficients. \n",
+						"It tests wheather the set coefficients of the DUT are outputted in the \n",
+						"correct manner and if they are of the correct values. \n \n",
+			);
 		
+			if(testFailedFlag) begin
+				$display("Test results: FAILED \n \n");
+			end
+			else begin
+				$display("Test results: PASSED \n \n");
+			end
+			
+			for (n = 0; n <= LENGTH - 1; n = n + 1) begin
+				$display("Coefficient:%d   Expected Value:%d   Obtained Value:%d \n", n+1, expectedOutputs[n], obtainedValues[n]);
+			end
+			
+			state = STOP;
+		end
+		
+		STOP: begin
+			$stop;
 		end
 		
 		default: begin
