@@ -87,4 +87,28 @@ always begin
 end
 
 
+
+always @ (posedge clock) begin
+	case(state)
+		IDLE: begin
+		
+		end
+		
+		CHECK_COEFFICIENTS: begin
+		
+		end
+		
+		DISPLAY_RESULTS: begin
+		
+		end
+		
+		default: beign
+		
+		end
+	
+	endcase
+end
+
+
+
 endmodule
