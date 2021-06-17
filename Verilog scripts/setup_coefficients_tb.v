@@ -38,6 +38,8 @@ initial begin
 	clock = 0;
 	enableModule = 0;
 	testFailedFlag = 0;
+	state = IDLE;
+	coefficientCounter = 5'd0;
 	
 	// Set the expected outputs
 	expectedOutputs[0] = 8'd34;
