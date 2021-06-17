@@ -1,5 +1,19 @@
-module setup_complex_coefficients_tb;
+/*
 
+ setup_complex_coefficients_tb.v
+ --------------
+ By: Augustas Jackevic
+ Date: June 2021
+
+ Module Description:
+ -------------------
+ This module is a test bench for the script setupComplexCoefficients.v. It tests wheather the set 
+ coefficients of the DUT are outputted in the correct manner and if they are of the correct values.
+ 
+ 
+*/
+
+module setup_complex_coefficients_tb;
 
 
 // Parameters for creating the 50MHz clock signal
