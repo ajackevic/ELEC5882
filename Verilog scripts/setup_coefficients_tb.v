@@ -6,14 +6,15 @@ localparam NUM_CYCLES = 500;
 localparam CLOCK_FREQ = 50000000;
 localparam RST_CYCLES = 10;
 
+localparam LENGTH = 20;
+localparam DATA_WIDTH = 8;
+
 
 // Local parameters.
 reg clock;
-
-
-
-
-
+reg enableModule;
+wire filterSetFlag;
+wire signed [DATA_WIDTH-1:0] coefficientOut;
 
 
 
@@ -26,14 +27,14 @@ end
 
 
 setupCoefficients # (
-	.LENGTH				(),
-	.DATA_WIDTH			(),
+	.LENGTH				(LENGTH),
+	.DATA_WIDTH			(DATA_WIDTH),
 ) dut (
-	.clock				(),
-	.enable				(),
+	.clock				(clock),
+	.enable				(enableModule),
 	
-	.filterSetFlag		(),
-	.coefficientOut	()
+	.filterSetFlag		(filterSetFlag),
+	.coefficientOut	(coefficientOut)
 );
 
 
