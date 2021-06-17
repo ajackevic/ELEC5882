@@ -13,11 +13,15 @@ localparam DATA_WIDTH = 8;
 
 // Local parameters for the dut module.
 reg clock;
-reg enableModule;
-reg signed [DATA_WIDTH - 1:0] expectedOutputs [0:LENGTH - 1]; 
+reg enableModule; 
 wire filterSetFlag;
 wire signed [DATA_WIDTH-1:0] coefficientOut;
 
+
+// Local parameters for interacting with the dut output.
+// Counter length should be log2(LENGTH).
+reg [4:0] coefficientCounter
+reg signed [DATA_WIDTH - 1:0] expectedOutputs [0:LENGTH - 1];
 
 
 // FSM states.
@@ -101,7 +105,7 @@ always @ (posedge clock) begin
 		end
 		
 		CHECK_COEFFICIENTS: begin
-		
+			
 		end
 		
 		DISPLAY_RESULTS: begin
