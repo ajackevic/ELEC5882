@@ -22,6 +22,7 @@ wire signed [DATA_WIDTH-1:0] coefficientOut;
 // Counter length should be log2(LENGTH).
 reg [4:0] coefficientCounter;
 reg signed [DATA_WIDTH - 1:0] expectedOutputs [0:LENGTH - 1];
+reg signed [DATA_WIDTH - 1:0] obtainedValues [0:LENGTH - 1];
 reg testFailedFlag;
 
 
@@ -41,7 +42,7 @@ initial begin
 	state = IDLE;
 	coefficientCounter = 5'd0;
 	
-	// Set the expected outputs
+	// Set the expected outputs. Make sure all values (from 0 to LENGTH -1) of the array are covered.
 	expectedOutputs[0] = 8'd34;
 	expectedOutputs[1] = 8'd34;
 	expectedOutputs[2] = 8'd0;
