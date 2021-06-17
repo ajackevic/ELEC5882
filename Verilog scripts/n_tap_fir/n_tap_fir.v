@@ -78,7 +78,7 @@ end
 
 // Instantiating the setup of the coefficient module. This module passes the LENGTH 
 // amount of coefficients through coefficientOut.
-setupCoefficients #(
+setup_coefficients #(
 	.LENGTH 			 (LENGTH),
 	.DATA_WIDTH 	 (DATA_WIDTH)
 )Coefficients(
