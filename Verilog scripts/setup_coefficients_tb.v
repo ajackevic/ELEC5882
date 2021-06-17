@@ -118,13 +118,15 @@ always @ (posedge clock) begin
 		end
 		
 		CHECK_COEFFICIENTS: begin
-		
+			obtainedValues[coefficientCounter] = coefficientOut;
+			
 			if(coefficientOut != expectedOutputs[coefficientCounter]) begin
 				testFailedFlag = 1'd1;
 			end
+			
 			coefficientCounter = coefficientCounter + 5'd1;
 			
-			if(coefficientCounter == LENGTH - 1) begin
+			if(coefficientCounter == LENGTH) begin
 				state = DISPLAY_RESULTS;
 			end
 		end
