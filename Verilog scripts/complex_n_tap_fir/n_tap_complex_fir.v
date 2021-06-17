@@ -49,7 +49,7 @@ reg signed [18:0] firOutputImIm;
 
 
 
-// Creating the parameters for the instantiated setupComplexCoefficients module.
+// Creating the parameters for the instantiated setup_complex_coefficients module.
 reg loadCoefficients;
 wire coefficientsSetFlag;
 wire signed [DATA_WIDTH - 1:0] coefficientInRe;
@@ -98,7 +98,7 @@ end
 
 // Instantiating the setup of the coefficient module. This module passes the LENGTH 
 // amount of coefficients through coefficientInRe and coefficientInIm.
-setupComplexCoefficients #(
+setup_complex_coefficients #(
 	.LENGTH 			 	(LENGTH),
 	.DATA_WIDTH 		(DATA_WIDTH)
 )Coefficients(
