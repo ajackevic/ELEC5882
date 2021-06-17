@@ -25,6 +25,20 @@ end
 
 
 
+setupCoefficients # (
+	.LENGTH				(),
+	.DATA_WIDTH			(),
+) dut (
+	.clock				(),
+	.enable				(),
+	
+	.filterSetFlag		(),
+	.coefficientOut	()
+);
+
+
+
+
 real HALF_CLOCK_PERIOD = (1000000000.0/$itor(CLOCK_FREQ))/2.0;
 integer half_cycles = 0;
 
