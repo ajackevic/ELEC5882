@@ -6,13 +6,15 @@ localparam NUM_CYCLES = 500;
 localparam CLOCK_FREQ = 50000000;
 localparam RST_CYCLES = 10;
 
+// Parameters for the dut module.
 localparam LENGTH = 20;
 localparam DATA_WIDTH = 8;
 
 
-// Local parameters.
+// Local parameters for the dut module.
 reg clock;
 reg enableModule;
+reg signed [DATA_WIDTH - 1:0] expectedOutputs [0:LENGTH - 1]; 
 wire filterSetFlag;
 wire signed [DATA_WIDTH-1:0] coefficientOut;
 
@@ -22,6 +24,7 @@ wire signed [DATA_WIDTH-1:0] coefficientOut;
 // Set the initial value of the clock.
 initial begin
 	clock = 0;
+	enableModule = 0;
 end
 
 
@@ -36,7 +39,6 @@ setupCoefficients # (
 	.filterSetFlag		(filterSetFlag),
 	.coefficientOut	(coefficientOut)
 );
-
 
 
 
