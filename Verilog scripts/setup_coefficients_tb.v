@@ -25,6 +25,28 @@ wire signed [DATA_WIDTH-1:0] coefficientOut;
 initial begin
 	clock = 0;
 	enableModule = 0;
+	
+	// Set the expected outputs
+	expectedOutputs[0] <= 8'd34;
+	expectedOutputs[1] <= 8'd34;
+	expectedOutputs[2] <= 8'd0;
+	expectedOutputs[3] <= 8'd49;
+	expectedOutputs[4] <= 8'd125;
+	expectedOutputs[5] <= -8'd77;
+	expectedOutputs[6] <= -8'd51;
+	expectedOutputs[7] <= 8'd8;
+	expectedOutputs[8] <= 8'd98;
+	expectedOutputs[9] <= 8'd109;
+	expectedOutputs[10] <= -8'd91;
+	expectedOutputs[11] <= -8'd3;
+	expectedOutputs[12] <= 8'd9;
+	expectedOutputs[13] <= 8'd1;
+	expectedOutputs[14] <= 8'd59;
+	expectedOutputs[15] <= 8'd75;
+	expectedOutputs[16] <= 8'd19;
+	expectedOutputs[17] <= 8'd58;
+	expectedOutputs[18] <= -8'd97;
+	expectedOutputs[19] <= 8'd10;
 end
 
 
