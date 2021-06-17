@@ -20,8 +20,9 @@ wire signed [DATA_WIDTH-1:0] coefficientOut;
 
 // Local parameters for interacting with the dut output.
 // Counter length should be log2(LENGTH).
-reg [4:0] coefficientCounter
+reg [4:0] coefficientCounter;
 reg signed [DATA_WIDTH - 1:0] expectedOutputs [0:LENGTH - 1];
+reg testFailedFlag;
 
 
 // FSM states.
@@ -36,6 +37,7 @@ localparam [1:0] DISPLAY_RESULTS = 2'd2;
 initial begin
 	clock = 0;
 	enableModule = 0;
+	testFailedFlag = 0;
 	
 	// Set the expected outputs
 	expectedOutputs[0] = 8'd34;
@@ -105,7 +107,15 @@ always @ (posedge clock) begin
 		end
 		
 		CHECK_COEFFICIENTS: begin
+		
+			if(coefficientOut != expectedOutputs[coefficientCounter]) begin
+				testFailedFlag = 1'd1;
+			end
+			coefficientCounter = coefficientCounter + 5'd1;
 			
+			if(coefficientCounter == LENGTH - 1) begin
+				state = DISPLAY_RESULTS;
+			end
 		end
 		
 		DISPLAY_RESULTS: begin
