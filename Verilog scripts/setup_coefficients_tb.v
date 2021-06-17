@@ -70,7 +70,7 @@ end
 
 setupCoefficients # (
 	.LENGTH				(LENGTH),
-	.DATA_WIDTH			(DATA_WIDTH),
+	.DATA_WIDTH			(DATA_WIDTH)
 ) dut (
 	.clock				(clock),
 	.enable				(enableModule),
@@ -122,7 +122,7 @@ always @ (posedge clock) begin
 		
 		end
 		
-		default: beign
+		default: begin
 		
 		end
 	
