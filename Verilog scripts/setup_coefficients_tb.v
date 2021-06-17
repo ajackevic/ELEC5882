@@ -188,8 +188,19 @@ always @ (posedge clock) begin
 		end
 		
 		
+		// Reseting all the values of the local variables. This default state is added just incase the FSM
+		// is in an unkown state.
 		default: begin
 		
+			for (n = 0; n <= LENGTH - 1 ; n = n + 1) begin
+				obtainedValues[n] = 0;
+			end
+		
+			enableModule = 0;
+			testFailedFlag = 0;
+			state = IDLE;
+			coefficientCounter = 5'd0;
+			state = IDLE;
 		end
 	endcase
 end
