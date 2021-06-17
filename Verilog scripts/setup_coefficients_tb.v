@@ -42,6 +42,14 @@ initial begin
 	state = IDLE;
 	coefficientCounter = 5'd0;
 	
+	
+	// Set all the values inside the buffer to 0.
+	integer k;
+	for (k = 0; k <= LENGTH - 1 ; k = k + 1) begin
+		obtainedValues[k] = 0;
+	end
+	
+	
 	// Set the expected outputs. Make sure all values (from 0 to LENGTH -1) of the array are covered.
 	expectedOutputs[0] = 8'd34;
 	expectedOutputs[1] = 8'd34;
