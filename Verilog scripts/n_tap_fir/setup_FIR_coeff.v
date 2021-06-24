@@ -1,22 +1,22 @@
 /*
 
- setup_coefficients.v
+ setup_FIR_coeff.v
  --------------
  By: Augustas Jackevic
  Date: June 2021
 
  Module Description:
  -------------------
- This module sets up the coefficients for the FIR filter. When setting the coefficients 
- make sure all the coefficient up to the value of LENGTH are set and are at a bit width 
- of DATA_WIDTH. If more than 1023 coefficients are used, increase the bit width of 
+ This module sets up the coefficients for the FIR filter. When setting the coefficients
+ make sure all the coefficient up to the value of LENGTH are set and are at a bit width
+ of DATA_WIDTH. If more than 1023 coefficients are used, increase the bit width of
  coeffCounter. The coefficients will be passed on as soon as enable is set, and once all
  the values are passed through coefficientOut the filterSetFlag is then set.
- 
- 
+
+
 */
 
-module setup_coefficients #(
+module setup_FIR_coeff #(
 	parameter LENGTH = 20,
 	parameter DATA_WIDTH = 8
 )(
@@ -71,28 +71,28 @@ end
 always @(posedge clock) begin
 
 	// If enable is set, set coefficientOut based on the coeffCounter and the array coefficients values.
-	// When all the coefficients were passed across, set the filterSetFlag high. If not enabled, set 
+	// When all the coefficients were passed across, set the filterSetFlag high. If not enabled, set
 	// filterSetFlag low and reset the coeffCounter.
 	if(enable) begin: setCoefficients
 
 		// Set coefficientOut to the corresponding coefficients array value.
 		coefficientOut <= coefficients[coeffCounter];
-		
+
 		// Increment coeffCounter each loop.
 		coeffCounter <= coeffCounter + 10'd1;
-		
+
 		// Set flag high when coeffCounter is equal to the filter length - 1.
 		if(coeffCounter == LENGTH - 1) begin
 			filterSetFlag <= 1'd1;
 		end
-		
+
 	end
 	else begin
 		filterSetFlag <= 1'd0;
 		coeffCounter <= 10'd0;
 		coefficientOut <= {(DATA_WIDTH){1'd0}};
 	end
-	
+
 end
 
 

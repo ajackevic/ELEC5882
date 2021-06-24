@@ -1,19 +1,19 @@
 /*
 
- setup_complex_coefficients_tb.v
+ setup_complex_FIR_coeff_tb.v
  --------------
  By: Augustas Jackevic
  Date: June 2021
 
  Module Description:
  -------------------
- This module is a test bench for the script setupComplexCoefficients.v. It tests wheather the set 
+ This module is a test bench for the script setupComplexCoefficients.v. It tests wheather the set
  coefficients of the DUT are outputted in the correct manner and if they are of the correct values.
- 
- 
+
+
 */
 
-module setup_complex_coefficients_tb;
+module setup_complex_FIR_coeff_tb;
 
 
 // Parameters for creating the 50MHz clock signal
@@ -31,7 +31,7 @@ localparam DATA_WIDTH = 8;
 
 // Local parameters for the dut module.
 reg clock;
-reg enableModule; 
+reg enableModule;
 wire filterSetFlag;
 wire signed [DATA_WIDTH-1:0] coefficientOutRe;
 wire signed [DATA_WIDTH-1:0] coefficientOutIm;
@@ -67,14 +67,14 @@ initial begin : init_values
 		obtainedValuesRe[k] = 0;
 		obtainedValuesIm[k] = 0;
 	end
-	
+
 	// Setting the local variables in the module to 0.
 	clock = 0;
 	enableModule = 0;
 	testFailedFlag = 0;
 	state = IDLE;
 	coefficientCounter = 5'd0;
-	
+
 	// Set the expected outputs. Make sure all values (from 0 to LENGTH -1) of the array are covered.
 	expectedOutputsRe[0] <= 8'd3;
 	expectedOutputsIm[0] <= 8'd7;
@@ -100,7 +100,7 @@ initial begin : init_values
 	expectedOutputsIm[10] <= -8'd14;
 	expectedOutputsRe[11] <= -8'd60;
 	expectedOutputsIm[11] <= 8'd10;
-	
+
 	// Set enableModule to 1 after RST_CYCLES clock cycles.
 	repeat(RST_CYCLES) @ (posedge clock);
 	enableModule = 1'd1;
@@ -116,7 +116,7 @@ setupComplexCoefficients # (
 ) dut (
 	.clock				(clock),
 	.enable				(enableModule),
-	
+
 	.filterSetFlag		(filterSetFlag),
 	.coefficientOutRe	(coefficientOutRe),
 	.coefficientOutIm	(coefficientOutIm)
@@ -149,80 +149,80 @@ end
 integer n;
 always @ (posedge clock) begin
 	case(state)
-	
+
 		// State IDLE. This state waits until enableModule is set before transistioning to CHECK_COEFFICIENTS.
 		IDLE: begin
 			if(enableModule) begin
 				state <= CHECK_COEFFICIENTS;
 			end
 		end
-		
-		
+
+
 		// State CHECK_COEFFICIENTS. This state stores the obtained coefficients, checks if the obtained
 		// coefficient is equal to the expect values and finally transistioning to state DISPLAY_RESULTS
 		// once all the coefficients are checked.
 		CHECK_COEFFICIENTS: begin
-		
+
 			// Store the obtained coefficient outputs to the variable obtainedValues Re and Im.
 			obtainedValuesRe[coefficientCounter] = coefficientOutRe;
 			obtainedValuesIm[coefficientCounter] = coefficientOutIm;
-			
-			// Check if the current coefficient is equal to the expected coefficient values. If they are 
+
+			// Check if the current coefficient is equal to the expected coefficient values. If they are
 			// not identical set testFailedFlag high.
 			if((coefficientOutRe != expectedOutputsRe[coefficientCounter]) | (coefficientOutIm != expectedOutputsIm[coefficientCounter])) begin
 				testFailedFlag = 1'd1;
 			end
-			
+
 			// Increment coefficientCounter.
 			coefficientCounter = coefficientCounter + 5'd1;
-			
+
 			// Once all the coefficient are checked, transistion to DISPLAY_RESULTS.
 			if(coefficientCounter == LENGTH) begin
 				state = DISPLAY_RESULTS;
 			end
 		end
-		
-		
-		// State DISPLAY_RESULTS. This state is reponsiable for displaying the transcript results of the 
+
+
+		// State DISPLAY_RESULTS. This state is reponsiable for displaying the transcript results of the
 		// test bench. Once displayed, it will transistion to state STOP.
 		DISPLAY_RESULTS: begin
 			$display("This is a test script for the module setupComplexCoefficients. \n",
 						"It tests wheather the set coefficients of the DUT are outputted in the \n",
 						"correct manner and if they are of the correct values. \n \n",
 			);
-		
+
 			if(testFailedFlag) begin
 				$display("Test results: FAILED \n \n");
 			end
 			else begin
 				$display("Test results: PASSED \n \n");
 			end
-			
+
 			// Display all expected and the obtained coefficient values.
 			for (n = 0; n <= LENGTH - 1; n = n + 1) begin
 				$display("Coefficient:%d   Expected Value:%d+j%d   Obtained Value:%d+j%d \n", n+1, expectedOutputsRe[n], expectedOutputsIm[n], obtainedValuesRe[n], obtainedValuesIm[n]);
 			end
-			
+
 			// Transistion to state STOP.
 			state = STOP;
 		end
-		
-		
+
+
 		// State STOP. This state is responsiable stoping the simulation.
 		STOP: begin
 			$stop;
 		end
-		
-		
+
+
 		// Reseting all the values of the local variables. This default state is added just incase the FSM
 		// is in an unkown state.
 		default: begin
-		
+
 			for (n = 0; n <= LENGTH - 1 ; n = n + 1) begin
 				obtainedValuesRe[n] = 0;
 				obtainedValuesIm[n] = 0;
 			end
-		
+
 			enableModule = 0;
 			testFailedFlag = 0;
 			state = IDLE;
