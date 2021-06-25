@@ -61,6 +61,8 @@ setup_HT_coeff #(
 
 
 
+// Instantiating the FIR module. This module performs the convelution opperation
+// between coeffIn and dataIn. The output product is dataOut.
 n_tap_fir #(
 	.LENGTH					(),
 	.DATA_WIDTH				(),
@@ -70,6 +72,7 @@ n_tap_fir #(
 	.coefficientsSetFlag	(),
 	.loadDataFlag			(),
 	.stopDataLoadFlag		(),
+	.coeffIn					(),
 	.dataIn					(),
 	
 	.dataOut					()
