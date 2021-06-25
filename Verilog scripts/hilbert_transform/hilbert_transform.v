@@ -61,6 +61,22 @@ setup_HT_coeff #(
 
 
 
+n_tap_fir #(
+	.LENGTH					(),
+	.DATA_WIDTH				(),
+)FIRFilter(
+	.clock					(),
+	.loadCoefficients		(),
+	.coefficientsSetFlag	(),
+	.loadDataFlag			(),
+	.stopDataLoadFlag		(),
+	.dataIn					(),
+	
+	.dataOut					()
+);
+
+
+
 always @ (posedge clock) begin
 	case(state)
 	
