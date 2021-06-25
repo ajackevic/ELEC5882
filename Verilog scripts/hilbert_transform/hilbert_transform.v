@@ -38,6 +38,18 @@ initial begin
 end
 
 
+// Instantiating the setup of the hilber transfer coefficient module. This 
+// module passes the LENGTH amount of coefficients through coefficientOut.
+setup_HT_coeff #(
+	.LENGTH 			 (),
+	.DATA_WIDTH 	 ()
+)Coefficients(
+	.clock			 (),
+	.enable			 (),
+	
+	.coeffSetFlag	 (),
+	.coefficientOut ()
+);
 
 
 
