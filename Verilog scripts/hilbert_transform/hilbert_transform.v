@@ -1,4 +1,20 @@
-module hilbert_transform
+module hilbert_transform #(
+	parameter LENGTH = 27,
+	parameter DATA_WIDTH = 18
+)(
+	input clock,
+	input enable,
+	input dataIn,
+	input stopDataIn,
+	
+	output reg [DATA_WIDTH - 1:0] dataOutRe,
+	output reg [DATA_WIDTH - 1:0] dataOutIm
+);
+
+
+
+
+
 /* Need to find out if the HT is only needed for the input signal or if it
    will also be needed for the impulse response. Though I think it doesn't
 	really change the opperation of this script. An FSM is needed, the 
