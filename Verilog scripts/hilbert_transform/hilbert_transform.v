@@ -12,12 +12,17 @@ module hilbert_transform #(
 );
 
 
+
+// Create the FSM.
 reg [2:0] state;
 localparam IDLE = 3'd0;
 localparam LOAD_FIR_COEFF = 3'd0;
 localparam MAIN_OPP = 3'd0;
 localparam STOP = 3'd0;
 
+
+
+// Set the initial local parameters and outputs.
 initial begin
 	state <= IDLE;
 	dataOutRe <= {(DATA_WIDTH){1'd0}};
