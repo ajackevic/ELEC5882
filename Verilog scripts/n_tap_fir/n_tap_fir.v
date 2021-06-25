@@ -25,6 +25,7 @@ module n_tap_fir #(
 	input coefficientsSetFlag,
 	input loadDataFlag,
 	input stopDataLoadFlag,
+	input signed [DATA_WIDTH - 1:0] coefficientIn,
 	input signed [DATA_WIDTH - 1:0] dataIn,
 	
 	output reg signed [18:0] dataOut
@@ -39,8 +40,6 @@ reg signed [DATA_WIDTH - 1:0] inputDataBuffer [0:LENGTH -1];
 // Local parameter to store the FIR filters output.
 // FIR output width = input data width + coefficient width + log2(LENGTH)
 reg signed [18:0] firOutput;
-
-wire signed [DATA_WIDTH - 1:0] coefficientIn;
 
 
 
