@@ -21,6 +21,8 @@ module n_tap_fir #(
 	parameter DATA_WIDTH = 8
 )(
 	input clock,
+	input loadCoefficients,
+	input coefficientsSetFlag,
 	input loadDataFlag,
 	input stopDataLoadFlag,
 	input signed [DATA_WIDTH - 1:0] dataIn,
@@ -38,8 +40,6 @@ reg signed [DATA_WIDTH - 1:0] inputDataBuffer [0:LENGTH -1];
 // FIR output width = input data width + coefficient width + log2(LENGTH)
 reg signed [18:0] firOutput;
 
-reg loadCoefficients;
-wire coefficientsSetFlag;
 wire signed [DATA_WIDTH - 1:0] coefficientIn;
 
 
@@ -69,27 +69,10 @@ initial begin : initalValues
 
 	// Set the internal variables and outputs to 0.
 	state <= IDLE;
-	loadCoefficients <= 0;
 	dataOut <= 0;
 	firOutput <= 0;
 	
 end
-
-
-// Instantiating the setup of the coefficient module. This module passes the LENGTH 
-// amount of coefficients through coefficientOut.
-setup_coefficients #(
-	.LENGTH 			 (LENGTH),
-	.DATA_WIDTH 	 (DATA_WIDTH)
-)Coefficients(
-	.clock			 (clock),
-	.enable			 (loadCoefficients),
-	
-	.coeffSetFlag	 (coefficientsSetFlag),
-	.coefficientOut (coefficientIn)
-);
-
-
 
 
 integer n;
