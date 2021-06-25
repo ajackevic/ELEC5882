@@ -54,8 +54,37 @@ end
 // Set the initial outputs to 0.
 initial begin
 	coefficientOut <= {(DATA_WIDTH){1'd0}};
-	filterSetFlag <= 1'd0;
+	coeffSetFlag <= 1'd0;
 	coeffCounter <= 10'd0;
+end
+
+
+
+always @(posedge clock) begin
+
+	// If enable is set, set coefficientOut based on the coeffCounter and the array coefficients values.
+	// When all the coefficients were passed across, set the coeffSetFlag high. If not enabled, set
+	// coeffSetFlag low and reset the coeffCounter.
+	if(enable) begin: setCoefficients
+
+		// Set coefficientOut to the corresponding coefficients array value.
+		coefficientOut <= coefficients[coeffCounter];
+
+		// Increment coeffCounter each loop.
+		coeffCounter <= coeffCounter + 10'd1;
+
+		// Set flag high when coeffCounter is equal to the filter length - 1.
+		if(coeffCounter == LENGTH - 1) begin
+			coeffSetFlag <= 1'd1;
+		end
+
+	end
+	else begin
+		coeffSetFlag <= 1'd0;
+		coeffCounter <= 10'd0;
+		coefficientOut <= {(DATA_WIDTH){1'd0}};
+	end
+
 end
 
 
