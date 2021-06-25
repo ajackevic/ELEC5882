@@ -30,6 +30,10 @@ always @ (posedge clock) begin
 			if(enable) begin
 				state <= LOAD_FIR_COEFF;
 			end
+			else begin
+				dataOutRe <= {(DATA_WIDTH){1'd0}};
+				dataOutIm <= {(DATA_WIDTH){1'd0}};
+			end
 		end
 		
 		LOAD_FIR_COEFF: begin
