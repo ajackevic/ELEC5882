@@ -27,7 +27,9 @@ end
 always @ (posedge clock) begin
 	case(state)
 		IDLE: begin
-		
+			if(enable) begin
+				state <= LOAD_FIR_COEFF;
+			end
 		end
 		
 		LOAD_FIR_COEFF: begin
