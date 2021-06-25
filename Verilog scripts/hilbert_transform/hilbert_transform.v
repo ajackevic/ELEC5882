@@ -26,6 +26,9 @@ end
 
 always @ (posedge clock) begin
 	case(state)
+	
+		// State IDLE. This state waits till enable is set high before transistioning
+		// to LOAD_FIR_COEFF. If enable is set low, it sets the outputs to low.
 		IDLE: begin
 			if(enable) begin
 				state <= LOAD_FIR_COEFF;
