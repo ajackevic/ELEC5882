@@ -47,6 +47,7 @@ always @ (posedge clock) begin
 		IDLE: begin
 			if(enable) begin
 				state <= LOAD_FIR_COEFF;
+				enableCoeff <= 1'd1;
 			end
 			else begin
 				dataOutRe <= {(DATA_WIDTH){1'd0}};
