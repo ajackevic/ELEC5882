@@ -21,6 +21,7 @@ module n_tap_fir #(
 	parameter DATA_WIDTH = 8
 )(
 	input clock,
+	input enable,
 	input loadCoefficients,
 	input coefficientsSetFlag,
 	input loadDataFlag,
@@ -81,7 +82,9 @@ always @(posedge clock) begin
 	
 		// State IDLE. This state transitions to LOAD_COEFFICIENTS.
 		IDLE: begin
-			state <= LOAD_COEFFICIENTS;
+			if(enable) begin
+				state <= LOAD_COEFFICIENTS;
+			end
 		end
 		
 		
@@ -90,9 +93,7 @@ always @(posedge clock) begin
 		// coefficients to coeffBuffer. Once all the coefficients are loaded the
 		// state transitions to FIR_MAIN.
 		LOAD_COEFFICIENTS: begin
-			
-			loadCoefficients <= 1'd1;
-		
+				
 			// A for loop that shifts the values inside coeffBuffer by 1 position.
 			for (n = LENGTH - 1; n > 0; n = n - 1) begin
 				coeffBuffer[n] <= coeffBuffer[n-1];
