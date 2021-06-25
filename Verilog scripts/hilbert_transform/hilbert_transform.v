@@ -14,7 +14,7 @@ module hilbert_transform #(
 
 
 // Local parameters.
-reg enableCoeff;
+reg loadCoeff;
 
 
 
@@ -30,12 +30,16 @@ localparam STOP = 3'd0;
 // Set the initial local parameters and outputs.
 initial begin
 	state <= IDLE;
-	enableCoeff <= 1'd0;
+	loadCoeff <= 1'd0;
 	
 	
 	dataOutRe <= {(DATA_WIDTH){1'd0}};
 	dataOutIm <= {(DATA_WIDTH){1'd0}};
 end
+
+
+
+
 
 
 
@@ -47,7 +51,7 @@ always @ (posedge clock) begin
 		IDLE: begin
 			if(enable) begin
 				state <= LOAD_FIR_COEFF;
-				enableCoeff <= 1'd1;
+				loadCoeff <= 1'd1;
 			end
 			else begin
 				dataOutRe <= {(DATA_WIDTH){1'd0}};
