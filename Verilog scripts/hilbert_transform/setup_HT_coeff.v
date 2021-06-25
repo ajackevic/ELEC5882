@@ -9,7 +9,10 @@ module setup_HT_coeff
 );
 
 
-
+// Coefficient counter. Filter will only for 1023 ((2^10)-1) taps.
+reg [9:0] coeffCounter;
+// Designing the correct length of the coefficient array based on parameters LENGTH and DATA_WIDTH.
+reg signed [DATA_WIDTH - 1:0] coefficients [0:LENGTH - 1];
 
 
 
