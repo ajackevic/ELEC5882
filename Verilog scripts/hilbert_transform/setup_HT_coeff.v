@@ -21,7 +21,7 @@
 */
 
 
-module setup_HT_coeff
+module setup_HT_coeff#(
 	parameter LENGTH = 27,
 	parameter DATA_WIDTH = 18
 )(
