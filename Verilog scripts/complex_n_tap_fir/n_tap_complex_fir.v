@@ -105,7 +105,7 @@ setup_complex_coefficients #(
 	.clock				(clock),
 	.enable				(loadCoefficients),
 	
-	.filterSetFlag	 	(coefficientsSetFlag),
+	.coeffSetFlag	 	(coefficientsSetFlag),
 	.coefficientOutRe (coefficientInRe),
 	.coefficientOutIm	(coefficientInIm)
 );

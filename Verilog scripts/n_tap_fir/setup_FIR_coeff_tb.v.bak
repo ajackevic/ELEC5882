@@ -33,7 +33,7 @@ localparam DATA_WIDTH = 8;
 // Local parameters for the dut module.
 reg clock;
 reg enableModule;
-wire coeffSetFlag;
+wire filterSetFlag;
 wire signed [DATA_WIDTH-1:0] coefficientOut;
 
 
@@ -110,7 +110,7 @@ setup_FIR_coeff # (
 	.clock				(clock),
 	.enable				(enableModule),
 
-	.coeffSetFlag		(coeffSetFlag),
+	.filterSetFlag		(filterSetFlag),
 	.coefficientOut	(coefficientOut)
 );
 
