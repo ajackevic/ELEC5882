@@ -13,6 +13,11 @@ module hilbert_transform #(
 
 
 
+// Local parameters.
+reg enableCoeff;
+
+
+
 // Create the FSM.
 reg [2:0] state;
 localparam IDLE = 3'd0;
@@ -25,6 +30,9 @@ localparam STOP = 3'd0;
 // Set the initial local parameters and outputs.
 initial begin
 	state <= IDLE;
+	enableCoeff <= 1'd0;
+	
+	
 	dataOutRe <= {(DATA_WIDTH){1'd0}};
 	dataOutIm <= {(DATA_WIDTH){1'd0}};
 end
@@ -46,17 +54,21 @@ always @ (posedge clock) begin
 			end
 		end
 		
-		LOAD_FIR_COEFF: begin
 		
+		LOAD_FIR_COEFF: begin
+			
 		end
+		
 		
 		MAIN_OPP: begin
 		
 		end
 		
+		
 		STOP: begin
 		
 		end
+		
 		
 		default: begin
 		
