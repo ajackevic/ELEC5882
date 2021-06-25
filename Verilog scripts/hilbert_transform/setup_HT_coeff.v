@@ -23,7 +23,7 @@
 
 module setup_HT_coeff
 	parameter LENGTH = 27,
-	parameter DATA_WIDTH = 17
+	parameter DATA_WIDTH = 18
 )(
 	input clock,
 	input enable,
