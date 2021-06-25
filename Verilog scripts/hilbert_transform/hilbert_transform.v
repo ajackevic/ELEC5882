@@ -13,8 +13,10 @@ module hilbert_transform #(
 
 
 
-// Local parameters.
+// Local parameters for the module setup_HT_coeff.
 reg loadCoeff;
+wire coeffSetFlag;
+wire [DATA_WIDTH - 1:0] HTCoeffOut;
 
 
 
@@ -31,7 +33,7 @@ localparam STOP = 3'd0;
 initial begin
 	state <= IDLE;
 	loadCoeff <= 1'd0;
-	
+
 	
 	dataOutRe <= {(DATA_WIDTH){1'd0}};
 	dataOutIm <= {(DATA_WIDTH){1'd0}};
@@ -41,14 +43,14 @@ end
 // Instantiating the setup of the hilber transfer coefficient module. This 
 // module passes the LENGTH amount of coefficients through coefficientOut.
 setup_HT_coeff #(
-	.LENGTH 			 (),
-	.DATA_WIDTH 	 ()
+	.LENGTH 			 (LENGTH),
+	.DATA_WIDTH 	 (DATA_WIDTH)
 )Coefficients(
-	.clock			 (),
-	.enable			 (),
+	.clock			 (clock),
+	.enable			 (loadCoeff),
 	
-	.coeffSetFlag	 (),
-	.coefficientOut ()
+	.coeffSetFlag	 (coeffSetFlag),
+	.coefficientOut (HTCoeffOut)
 );
 
 
