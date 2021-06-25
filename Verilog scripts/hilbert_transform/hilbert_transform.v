@@ -20,9 +20,33 @@ localparam STOP = 3'd0;
 
 initial begin
 	state <= IDLE;
-
 end
 
+
+
+always @ (posedge clock) begin
+	case(state)
+		IDLE: begin
+		
+		end
+		
+		LOAD_FIR_COEFF: begin
+		
+		end
+		
+		MAIN_OPP: begin
+		
+		end
+		
+		STOP: begin
+		
+		end
+		
+		default: begin
+		
+		end
+	endcase
+end
 
 
 
