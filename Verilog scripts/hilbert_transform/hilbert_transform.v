@@ -1,3 +1,6 @@
+
+
+
 module hilbert_transform #(
 	parameter LENGTH = 27,
 	parameter DATA_WIDTH = 18
@@ -26,6 +29,7 @@ localparam IDLE = 3'd0;
 localparam LOAD_FIR_COEFF = 3'd0;
 localparam MAIN_OPP = 3'd0;
 localparam STOP = 3'd0;
+
 
 
 
@@ -78,10 +82,10 @@ always @ (posedge clock) begin
 		
 		
 		
-		if(coeffSetFlag) begin
-			state <= MAIN_OPP;
-			loadCoeff <= 1'd0;
-		end
+			if(coeffSetFlag) begin
+				state <= MAIN_OPP;
+				loadCoeff <= 1'd0;
+			end
 			
 		end
 		
