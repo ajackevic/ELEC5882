@@ -20,6 +20,8 @@ localparam STOP = 3'd0;
 
 initial begin
 	state <= IDLE;
+	dataOutRe <= {(DATA_WIDTH){1'd0}};
+	dataOutIm <= {(DATA_WIDTH){1'd0}};
 end
 
 
