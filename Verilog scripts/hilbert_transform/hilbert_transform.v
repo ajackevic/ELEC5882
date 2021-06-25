@@ -7,8 +7,8 @@ module hilbert_transform #(
 )(
 	input clock,
 	input enable,
-	input dataIn,
-	input stopDataIn,
+	input stopDataInFlag,
+	input [7:0] dataIn,
 	
 	output reg [DATA_WIDTH - 1:0] dataOutRe,
 	output reg [DATA_WIDTH - 1:0] dataOutIm
@@ -23,6 +23,13 @@ wire [DATA_WIDTH - 1:0] HTCoeffOut;
 
 
 
+// Local parameter for the module n_tap_fir.
+reg loadFIRDataFlag;
+reg stopFIRDataFlag;
+wire [DATA_WIDTH - 1:0] FIRDataOut;
+
+
+
 // Create the FSM.
 reg [2:0] state;
 localparam IDLE = 3'd0;
@@ -32,11 +39,12 @@ localparam STOP = 3'd0;
 
 
 
-
 // Set the initial local parameters and outputs.
 initial begin
 	state <= IDLE;
 	loadCoeff <= 1'd0;
+	loadFIRDataFlag <= 1'd0;
+	stopFIRDataFlag <= 1'd0;
 
 	
 	dataOutRe <= {(DATA_WIDTH){1'd0}};
@@ -64,18 +72,18 @@ setup_HT_coeff #(
 // Instantiating the FIR module. This module performs the convelution opperation
 // between coeffIn and dataIn. The output product is dataOut.
 n_tap_fir #(
-	.LENGTH					(),
-	.DATA_WIDTH				(),
+	.LENGTH					(LENGTH),
+	.DATA_WIDTH				(DATA_WIDTH),
 )FIRFilter(
-	.clock					(),
-	.loadCoefficients		(),
-	.coefficientsSetFlag	(),
-	.loadDataFlag			(),
-	.stopDataLoadFlag		(),
-	.coeffIn					(),
-	.dataIn					(),
+	.clock					(clock),
+	.loadCoefficients		(loadCoeff), // This might need to be one clock cycle behind.
+	.coefficientsSetFlag	(coeffSetFlag),
+	.loadDataFlag			(loadFIRDataFlag),
+	.stopDataLoadFlag		(stopFIRDataFlag),
+	.coeffIn					(HTCoeffOut),
+	.dataIn					(dataIn),
 	
-	.dataOut					()
+	.dataOut					(FIRDataOut)
 );
 
 
