@@ -18,6 +18,10 @@ localparam LOAD_FIR_COEFF = 3'd0;
 localparam MAIN_OPP = 3'd0;
 localparam STOP = 3'd0;
 
+initial begin
+	state <= IDLE;
+
+end
 
 
 
