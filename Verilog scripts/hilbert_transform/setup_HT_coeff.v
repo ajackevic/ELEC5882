@@ -51,6 +51,12 @@ initial begin
 end
 
 
+// Set the initial outputs to 0.
+initial begin
+	coefficientOut <= {(DATA_WIDTH){1'd0}};
+	filterSetFlag <= 1'd0;
+	coeffCounter <= 10'd0;
+end
 
 
 /* This shoud be done in a normal way. As in have the setting of the
