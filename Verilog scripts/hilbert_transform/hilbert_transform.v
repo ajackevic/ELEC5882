@@ -40,6 +40,8 @@ initial begin
 end
 
 
+
+
 // Instantiating the setup of the hilber transfer coefficient module. This 
 // module passes the LENGTH amount of coefficients through coefficientOut.
 setup_HT_coeff #(
@@ -52,8 +54,6 @@ setup_HT_coeff #(
 	.coeffSetFlag	 (coeffSetFlag),
 	.coefficientOut (HTCoeffOut)
 );
-
-
 
 
 
@@ -75,6 +75,13 @@ always @ (posedge clock) begin
 		
 		
 		LOAD_FIR_COEFF: begin
+		
+		
+		
+		if(coeffSetFlag) begin
+			state <= MAIN_OPP;
+			loadCoeff <= 1'd0;
+		end
 			
 		end
 		
