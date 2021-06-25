@@ -85,7 +85,7 @@ setup_coefficients #(
 	.clock			 (clock),
 	.enable			 (loadCoefficients),
 	
-	.filterSetFlag	 (coefficientsSetFlag),
+	.coeffSetFlag	 (coefficientsSetFlag),
 	.coefficientOut (coefficientIn)
 );
 
