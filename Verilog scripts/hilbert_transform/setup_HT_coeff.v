@@ -1,3 +1,26 @@
+/*
+
+ setup_HT_coeff.v
+ --------------
+ By: Augustas Jackevic
+ Date: June 2021
+
+ Module Description:
+ -------------------
+ This module sets up the coefficients for the hilbert transform filter. When setting 
+ the coefficients make sure all the coefficient up to the value of LENGTH are set 
+ and are at a bit width of DATA_WIDTH. If more than 1023 coefficients are used, 
+ increase the bit width of coeffCounter. The coefficients will be passed on as 
+ soon as enable is set, and once all the values are passed through coefficientOut 
+ the filterSetFlag is then set.
+ 
+ The hilbert transform coefficients are obtained from MATLAB through the function
+ firpm (Parks-McClellan optimal FIR filter design). These values are then muiltiplied
+ by 100000 to change the values from decimal to integers.
+
+*/
+
+
 module setup_HT_coeff
 	parameter LENGTH = 27,
 	parameter DATA_WIDTH = 17
@@ -47,7 +70,6 @@ initial begin
 	coefficients[24] <= 17'd1582;
 	coefficients[25] <= 17'd0;
 	coefficients[26] <= 17'd775;
-	
 end
 
 
