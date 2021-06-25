@@ -77,7 +77,7 @@ n_tap_fir #(
 )FIRFilter(
 	.clock					(clock),
 	.loadCoefficients		(loadCoeff), // This might need to be one clock cycle behind.
-	.coefficientsSetFlag	(coeffSetFlag),
+	.coefficientsSetFlag	(coeffSetFlag), // All ref to coefficients should be changed to coeff. This applies not just to this module.
 	.loadDataFlag			(loadFIRDataFlag),
 	.stopDataLoadFlag		(stopFIRDataFlag),
 	.coeffIn					(HTCoeffOut),
