@@ -12,6 +12,13 @@ module hilbert_transform #(
 );
 
 
+reg [2:0] state;
+localparam IDLE = 3'd0;
+localparam  = 3'd0;
+localparam  = 3'd0;
+localparam  STOP = 3'd0;
+
+
 
 
 
