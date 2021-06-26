@@ -73,7 +73,7 @@ setup_HT_coeff #(
 // between coeffIn and dataIn. The output product is dataOut.
 n_tap_fir #(
 	.LENGTH					(LENGTH),
-	.DATA_WIDTH				(DATA_WIDTH),
+	.DATA_WIDTH				(DATA_WIDTH)
 )FIRFilter(
 	.clock					(clock),
 	.loadCoefficients		(loadCoeff), // This might need to be one clock cycle behind.
