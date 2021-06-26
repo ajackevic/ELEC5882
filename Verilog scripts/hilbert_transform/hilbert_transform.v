@@ -123,6 +123,10 @@ always @ (posedge clock) begin
 		end
 		
 		
+		// State MAIN_OPP. This state passes through the dataIn values to the FIR 
+		// module through the variabel dataFIRIn. These values are then conveluted
+		// with the coefficients. If stopDataInFlag is set high, the state will 
+		// transistion to STOP.
 		MAIN_OPP: begin		
 			if(stopDataInFlag) begin
 				state <= STOP;
