@@ -22,7 +22,7 @@ wire signed [DATA_WIDTH - 1:0] dataOutIm;
 hilbert_transform #(
 	.LENGTH 					(LENGTH)
 	.DATA_WIDTH 			(DATA_WIDTH),
-)(
+) dut (
 	.clock					(clock),
 	.enable					(enable),
 	.stopDataInFlag		(stopDataInFlag),
