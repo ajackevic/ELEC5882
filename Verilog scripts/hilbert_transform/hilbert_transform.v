@@ -90,7 +90,7 @@ n_tap_fir #(
 );
 
 
-
+integer n;
 always @ (posedge clock) begin
 	case(state)
 	
@@ -136,6 +136,13 @@ always @ (posedge clock) begin
 			else begin
 				dataFIRIn <= dataIn;
 				dataOutIm <= FIRDataOut;
+				dataInBuf[0] <= dataIn;
+				dataFIRIn <= dataInBuf[2];
+				
+				for (n = 0; n < 2; n = n + 1) begin
+					
+					dataInBuf[n+1] <= dataInBuf[n];
+				end
 			end
 		end
 		
