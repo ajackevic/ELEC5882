@@ -10,8 +10,8 @@ module hilbert_transform #(
 	input stopDataInFlag,
 	input [DATA_WIDTH - 1:0] dataIn,
 	
-	output reg [DATA_WIDTH - 1:0] dataOutRe,
-	output reg [DATA_WIDTH - 1:0] dataOutIm
+	output reg [(DATA_WIDTH * 2) - 1:0] dataOutRe,
+	output reg [(DATA_WIDTH * 2) - 1:0] dataOutIm
 );
 
 
@@ -26,7 +26,7 @@ wire [DATA_WIDTH - 1:0] HTCoeffOut;
 // Local parameter for the module n_tap_fir.
 reg loadFIRDataFlag;
 reg stopFIRDataFlag;
-wire [DATA_WIDTH - 1:0] FIRDataOut;
+wire [(DATA_WIDTH * 2) - 1:0] FIRDataOut;
 
 
 

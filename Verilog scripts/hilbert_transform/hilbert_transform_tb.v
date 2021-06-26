@@ -14,8 +14,8 @@ reg clock;
 reg enable;
 reg stopDataInFlag;
 reg signed [DATA_WIDTH - 1:0] dataIn;
-wire signed [DATA_WIDTH - 1:0] dataOutRe;
-wire signed [DATA_WIDTH - 1:0] dataOutIm;
+wire signed [(DATA_WIDTH * 2) - 1:0] dataOutRe;
+wire signed [(DATA_WIDTH * 2) - 1:0] dataOutIm;
 
 
 // Connect the device under test.

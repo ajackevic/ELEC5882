@@ -25,8 +25,8 @@ module n_tap_fir #(
 	input coefficientsSetFlag,
 	input loadDataFlag,
 	input stopDataLoadFlag,
-	input signed [DATA_WIDTH - 1:0] coeffIn,
-	input signed [DATA_WIDTH - 1:0] dataIn,
+	input signed [(DATA_WIDTH * 2) - 1:0] coeffIn,
+	input signed [(DATA_WIDTH * 2) - 1:0] dataIn,
 	
 	output reg signed [18:0] dataOut
 );
