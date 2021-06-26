@@ -26,6 +26,7 @@ wire [DATA_WIDTH - 1:0] HTCoeffOut;
 // Local parameter for the module n_tap_fir.
 reg loadFIRDataFlag;
 reg stopFIRDataFlag;
+reg [DATA_WIDTH - 1:0] dataFIRIn;
 wire [(DATA_WIDTH * 2) - 1:0] FIRDataOut;
 
 
@@ -45,6 +46,7 @@ initial begin
 	loadCoeff <= 1'd0;
 	loadFIRDataFlag <= 1'd0;
 	stopFIRDataFlag <= 1'd0;
+	dataFIRIn <= {(DATA_WIDTH){1'd0}};
 
 	
 	dataOutRe <= {(DATA_WIDTH){1'd0}};
@@ -81,7 +83,7 @@ n_tap_fir #(
 	.loadDataFlag			(loadFIRDataFlag),
 	.stopDataLoadFlag		(stopFIRDataFlag),
 	.coeffIn					(HTCoeffOut),
-	.dataIn					(dataIn),
+	.dataIn					(dataFIRIn),
 	
 	.dataOut					(FIRDataOut)
 );
