@@ -134,6 +134,7 @@ always @ (posedge clock) begin
 			end
 			else begin
 				dataFIRIn <= dataIn;
+				dataOutIm <= FIRDataOut;
 			end
 		end
 		
