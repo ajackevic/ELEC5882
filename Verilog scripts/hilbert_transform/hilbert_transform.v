@@ -123,14 +123,18 @@ always @ (posedge clock) begin
 		end
 		
 		
-		MAIN_OPP: begin
-			dataFIRIn <= dataIn;
-		
+		MAIN_OPP: begin		
+			if(stopDataInFlag) begin
+				state <= STOP;
+			end
+			else begin
+				dataFIRIn <= dataIn;
+			end
 		end
 		
 		
 		STOP: begin
-		
+			
 		end
 		
 		
