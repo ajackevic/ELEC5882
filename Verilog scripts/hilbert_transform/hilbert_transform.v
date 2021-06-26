@@ -42,7 +42,13 @@ localparam STOP = 3'd3;
 
 
 // Set the initial local parameters and outputs.
-initial begin
+initial begin: init_values
+
+	integer k;
+	for (k = 0; k < 2 ; k = k + 1) begin
+		dataInBuf[k] <= 0;
+	end
+
 	state <= IDLE;
 	loadCoeff <= 1'd0;
 	loadFIRDataFlag <= 1'd0;
@@ -137,7 +143,7 @@ always @ (posedge clock) begin
 				dataFIRIn <= dataIn;
 				dataOutIm <= FIRDataOut;
 				dataInBuf[0] <= dataIn;
-				dataFIRIn <= dataInBuf[2];
+				dataOutRe <= dataInBuf[2];
 				
 				for (n = 0; n < 2; n = n + 1) begin
 					
