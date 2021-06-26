@@ -8,13 +8,13 @@ module hilbert_transform #(
 	input clock,
 	input enable,
 	input stopDataInFlag,
-	input [DATA_WIDTH - 1:0] dataIn,
+	input signed [DATA_WIDTH - 1:0] dataIn,
 	
 	output reg [(DATA_WIDTH * 2) - 1:0] dataOutRe,
 	output reg [(DATA_WIDTH * 2) - 1:0] dataOutIm
 );
 
-assign dataIn = dataOutRe;
+assign dataOutRe = dataIn;
 
 // Local parameters for the module setup_HT_coeff.
 reg loadCoeff;
