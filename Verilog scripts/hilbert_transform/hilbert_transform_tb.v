@@ -20,8 +20,8 @@ wire signed [DATA_WIDTH - 1:0] dataOutIm;
 
 // Connect the device under test.
 hilbert_transform #(
-	.LENGTH 					(LENGTH)
-	.DATA_WIDTH 			(DATA_WIDTH),
+	.LENGTH 					(LENGTH),
+	.DATA_WIDTH 			(DATA_WIDTH)
 ) dut (
 	.clock					(clock),
 	.enable					(enable),
@@ -29,7 +29,7 @@ hilbert_transform #(
 	.dataIn					(dataIn),
 	
 	.dataOutRe				(dataOutRe),
-	,dataOutIm				(dataOutIm)
+	.dataOutIm				(dataOutIm)
 );
 
 initial begin
