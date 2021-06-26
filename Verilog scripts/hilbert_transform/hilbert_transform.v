@@ -14,7 +14,7 @@ module hilbert_transform #(
 	output reg [(DATA_WIDTH * 2) - 1:0] dataOutIm
 );
 
-
+assign dataIn = dataOutRe;
 
 // Local parameters for the module setup_HT_coeff.
 reg loadCoeff;
