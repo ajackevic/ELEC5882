@@ -107,7 +107,6 @@ always @(posedge clock) begin
 			// loading of the coefficients.
 			if(coefficientsSetFlag) begin
 				state <= FIR_MAIN;
-				loadCoefficients <= 1'd0;
 			end
 		end
 		
