@@ -149,8 +149,18 @@ always @ (posedge clock) begin
 		end
 		
 		
+		// State Default. This state exsists purley just incase the FSM is in
+		// an unkown state. It resets the initial values.
 		default: begin
-		
+			state <= IDLE;
+			loadCoeff <= 1'd0;
+			loadFIRDataFlag <= 1'd0;
+			stopFIRDataFlag <= 1'd0;
+			dataFIRIn <= {(DATA_WIDTH){1'd0}};
+
+			
+			dataOutRe <= {(DATA_WIDTH * 2){1'd0}};
+			dataOutIm <= {(DATA_WIDTH * 2){1'd0}};
 		end
 	endcase
 end
