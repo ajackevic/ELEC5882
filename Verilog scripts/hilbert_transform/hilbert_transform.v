@@ -137,6 +137,7 @@ always @ (posedge clock) begin
 		end
 		
 		
+		// State STOP. This state sets all the local variables and outputs to 0.
 		STOP: begin
 			dataOutRe <= {(DATA_WIDTH * 2){1'd0}};
 			dataOutIm <= {(DATA_WIDTH * 2){1'd0}};
