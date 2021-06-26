@@ -49,8 +49,8 @@ initial begin
 	dataFIRIn <= {(DATA_WIDTH){1'd0}};
 
 	
-	dataOutRe <= {(DATA_WIDTH){1'd0}};
-	dataOutIm <= {(DATA_WIDTH){1'd0}};
+	dataOutRe <= {(DATA_WIDTH * 2){1'd0}};
+	dataOutIm <= {(DATA_WIDTH * 2){1'd0}};
 end
 
 
