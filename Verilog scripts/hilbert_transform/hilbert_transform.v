@@ -107,15 +107,15 @@ always @ (posedge clock) begin
 		end
 		
 		
+		// State LOAD_FIR_COEFF. This state waits until the coeffSetFlag is set high 
+		// before transistioning to state MAIN_OPP, whilst setting loadCoeff low. 
+		// Hence this state only transistions to the next state once all the coefficients
+		// have been passed through to the FIR module.
 		LOAD_FIR_COEFF: begin
-		
-		
-		
 			if(coeffSetFlag) begin
 				state <= MAIN_OPP;
 				loadCoeff <= 1'd0;
 			end
-			
 		end
 		
 		
