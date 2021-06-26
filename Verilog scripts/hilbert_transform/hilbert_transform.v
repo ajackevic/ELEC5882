@@ -124,6 +124,7 @@ always @ (posedge clock) begin
 		
 		
 		MAIN_OPP: begin
+			dataFIRIn <= dataIn;
 		
 		end
 		
