@@ -21,7 +21,6 @@ module n_tap_fir #(
 	parameter DATA_WIDTH = 8
 )(
 	input clock,
-	input enable,
 	input loadCoefficients,
 	input coefficientsSetFlag,
 	input loadDataFlag,
@@ -82,7 +81,7 @@ always @(posedge clock) begin
 	
 		// State IDLE. This state transitions to LOAD_COEFFICIENTS.
 		IDLE: begin
-			if(enable) begin
+			if(loadCoefficients) begin
 				state <= LOAD_COEFFICIENTS;
 			end
 		end
