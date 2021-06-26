@@ -134,7 +134,8 @@ always @ (posedge clock) begin
 		
 		
 		STOP: begin
-			
+			dataOutRe <= {(DATA_WIDTH * 2){1'd0}};
+			dataOutIm <= {(DATA_WIDTH * 2){1'd0}};
 		end
 		
 		
