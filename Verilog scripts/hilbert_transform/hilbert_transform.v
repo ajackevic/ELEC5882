@@ -116,6 +116,10 @@ always @ (posedge clock) begin
 				state <= MAIN_OPP;
 				loadCoeff <= 1'd0;
 			end
+			else begin
+				dataOutRe <= {(DATA_WIDTH * 2){1'd0}};
+				dataOutIm <= {(DATA_WIDTH * 2){1'd0}};
+			end
 		end
 		
 		
