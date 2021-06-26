@@ -13,7 +13,7 @@ localparam DATA_WIDTH = 18;
 reg clock;
 reg enable;
 reg stopDataInFlag;
-reg signed [7:0] dataIn;
+reg signed [DATA_WIDTH - 1:0] dataIn;
 wire signed [DATA_WIDTH - 1:0] dataOutRe;
 wire signed [DATA_WIDTH - 1:0] dataOutIm;
 

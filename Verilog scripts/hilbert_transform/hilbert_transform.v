@@ -8,7 +8,7 @@ module hilbert_transform #(
 	input clock,
 	input enable,
 	input stopDataInFlag,
-	input [7:0] dataIn,
+	input [DATA_WIDTH - 1:0] dataIn,
 	
 	output reg [DATA_WIDTH - 1:0] dataOutRe,
 	output reg [DATA_WIDTH - 1:0] dataOutIm
