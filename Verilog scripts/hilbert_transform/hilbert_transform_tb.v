@@ -39,7 +39,7 @@ initial begin
 	repeat(RST_CYCLES) @ (posedge clock);
 	enable = 1'd1;
 	
-	repeat(30) @ (posedge clock);
+	repeat(50) @ (posedge clock);
 	repeat(1) @ (posedge clock);
 	dataIn = 18'd10;
 	repeat(1) @ (posedge clock);
