@@ -114,6 +114,7 @@ always @ (posedge clock) begin
 		LOAD_FIR_COEFF: begin
 			if(coeffSetFlag) begin
 				state <= MAIN_OPP;
+				loadFIRDataFlag <= 1'd1;
 				loadCoeff <= 1'd0;
 			end
 			else begin
@@ -137,8 +138,12 @@ always @ (posedge clock) begin
 		end
 		
 		
-		// State STOP. This state sets all the local variables and outputs to 0.
+		// State STOP. This state stops the FIR and HT opperation as well as 
+		// setting some of the local variables and outputs to 0.
 		STOP: begin
+			loadFIRDataFlag <= 1'd0;
+			stopFIRDataFlag <= 1'd1;
+			dataFIRIn <= {(DATA_WIDTH){1'd0}};
 			dataOutRe <= {(DATA_WIDTH * 2){1'd0}};
 			dataOutIm <= {(DATA_WIDTH * 2){1'd0}};
 		end
