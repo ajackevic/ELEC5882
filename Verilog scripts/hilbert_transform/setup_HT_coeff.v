@@ -43,33 +43,33 @@ reg signed [DATA_WIDTH - 1:0] coefficients [0:LENGTH - 1];
 // Setting the coefficients. When setting the coefficients, make sure all values are covered.
 // This should be from 0 to LENGTH - 1.
 initial begin
-	coefficients[0] <= -17'd775;
-	coefficients[1] <= 17'd0;
-	coefficients[2] <= -17'd1582;
-	coefficients[3] <= 17'd0;
-	coefficients[4] <= -17'd3114;
-	coefficients[5] <= 17'd0;
-	coefficients[6] <= -17'd5642;
-	coefficients[7] <= 17'd0;
-	coefficients[8] <= -17'd10043;
-	coefficients[9] <= 17'd0;
-	coefficients[10] <= -17'd19511;
-	coefficients[11] <= 17'd0;
-	coefficients[12] <= -17'd63075;
-	coefficients[13] <= 17'd0;
-	coefficients[14] <= 17'd63075;
-	coefficients[15] <= 17'd0;
-	coefficients[16] <= 17'd19511;
-	coefficients[17] <= 17'd0;
-	coefficients[18] <= 17'd10043;
-	coefficients[19] <= 17'd0;
-	coefficients[20] <= 17'd5642;
-	coefficients[21] <= 17'd0;
-	coefficients[22] <= 17'd3114;
-	coefficients[23] <= 17'd0;
-	coefficients[24] <= 17'd1582;
-	coefficients[25] <= 17'd0;
-	coefficients[26] <= 17'd775;
+	coefficients[0] <= -18'd775;
+	coefficients[1] <= 18'd0;
+	coefficients[2] <= -18'd1582;
+	coefficients[3] <= 18'd0;
+	coefficients[4] <= -18'd3114;
+	coefficients[5] <= 18'd0;
+	coefficients[6] <= -18'd5642;
+	coefficients[7] <= 18'd0;
+	coefficients[8] <= -18'd10043;
+	coefficients[9] <= 18'd0;
+	coefficients[10] <= -18'd19511;
+	coefficients[11] <= 18'd0;
+	coefficients[12] <= -18'd63075;
+	coefficients[13] <= 18'd0;
+	coefficients[14] <= 18'd63075;
+	coefficients[15] <= 18'd0;
+	coefficients[16] <= 18'd19511;
+	coefficients[17] <= 18'd0;
+	coefficients[18] <= 18'd10043;
+	coefficients[19] <= 18'd0;
+	coefficients[20] <= 18'd5642;
+	coefficients[21] <= 18'd0;
+	coefficients[22] <= 18'd3114;
+	coefficients[23] <= 18'd0;
+	coefficients[24] <= 18'd1582;
+	coefficients[25] <= 18'd0;
+	coefficients[26] <= 18'd775;
 end
 
 
