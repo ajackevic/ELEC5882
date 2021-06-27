@@ -39,7 +39,7 @@ reg signed [DATA_WIDTH - 1:0] inputDataBuffer [0:LENGTH -1];
 
 // Local parameter to store the FIR filters output.
 // FIR output width = input data width + coefficient width + log2(LENGTH)
-reg signed [18:0] firOutput;
+reg signed [(DATA_WIDTH * 2) - 1:0] firOutput;
 
 
 
