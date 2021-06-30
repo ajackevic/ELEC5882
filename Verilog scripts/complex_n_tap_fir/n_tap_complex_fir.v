@@ -86,7 +86,6 @@ initial begin : init_values
 	end
 
 	state <= IDLE;
-	loadCoefficients <= 0;
 
 	firOutputReRe <= 0;
 	firOutputReIm <= 0;
