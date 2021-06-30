@@ -1,4 +1,19 @@
+/*
 
+ hilbert_transform.v
+ --------------
+ By: Augustas Jackevic
+ Date: June 2021
+
+ Module Description:
+ -------------------
+ This module is the design of a hilbert transform through the use of FIR filters.
+ From the input signal dataIn, an analytic signal (shift by +90 degrees) is created,
+ thus forming the real output signal dataOutRe and the imaginary output signal dataOutIm.
+ The module setup_HT_coeff is used to load the coefficients to the module n_tap_fir. An FIR
+ of 27 taps is used as that is considered sufficient for the required results.
+
+*/
 
 
 module hilbert_transform #(
