@@ -1,3 +1,18 @@
+/*
+
+ hilbert_transform_tb.v
+ --------------
+ By: Augustas Jackevic
+ Date: June 2021
+
+ Module Description:
+ -------------------
+ This module is a test bench for the script hilbert_transform.v. It tests 
+ wheather the DUT module outputs the correct output values for the applied data.
+
+*/
+
+
 module hilbert_transform_tb;
 
 
