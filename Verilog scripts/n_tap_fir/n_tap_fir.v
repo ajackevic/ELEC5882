@@ -10,7 +10,7 @@
  This module is a design of an n-type FIR (Finite Impulse Response)
  filter. This filter is the convolution operation between the
  input data (dataIn) and the coefficient data (coeffIn). The
- default LENGTH is 10. It should be noted, to help understand the workings
+ default LENGTH is 20. It should be noted, to help understand the workings
  of the FIR_MAIN state, the PDF in:
  The workings of an FIR filter\The workings of a FIR filter.pdf should be read.
 
