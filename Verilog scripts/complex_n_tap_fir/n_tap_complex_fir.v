@@ -106,7 +106,9 @@ always @(posedge clock) begin
 	
 		// State IDLE. This state transitions to LOAD_COEFFICIENTS.
 		IDLE: begin
-			state = LOAD_COEFFICIENTS;
+			if(loadCoefficients) begin
+				state = LOAD_COEFFICIENTS;
+			end
 		end
 
 		// State LOAD_COEFFICIENTS. This state is responsiable for loading the
