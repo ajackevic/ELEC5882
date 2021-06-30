@@ -100,23 +100,6 @@ end
 
 
 
-// Instantiating the setup of the coefficient module. This module passes the LENGTH 
-// amount of coefficients through coefficientInRe and coefficientInIm.
-setup_complex_coefficients #(
-	.LENGTH 			 	(LENGTH),
-	.DATA_WIDTH 		(DATA_WIDTH)
-)Coefficients(
-	.clock				(clock),
-	.enable				(loadCoefficients),
-	
-	.coeffSetFlag	 	(coefficientsSetFlag),
-	.coefficientOutRe (coefficientInRe),
-	.coefficientOutIm	(coefficientInIm)
-);
-
-
-
-
 
 integer n;
 always @(posedge clock) begin
