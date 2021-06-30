@@ -48,11 +48,11 @@ wire [(DATA_WIDTH * 2) - 1:0] FIRDataOut;
 
 
 // Create the FSM.
-reg [2:0] state;
-localparam IDLE = 3'd0;
-localparam LOAD_FIR_COEFF = 3'd1;
-localparam MAIN_OPP = 3'd2;
-localparam STOP = 3'd3;
+reg [1:0] state;
+localparam IDLE = 2'd0;
+localparam LOAD_FIR_COEFF = 2'd1;
+localparam MAIN_OPP = 2'd2;
+localparam STOP = 2'd3;
 
 
 
