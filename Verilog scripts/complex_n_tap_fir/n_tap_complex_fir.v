@@ -115,9 +115,6 @@ always @(posedge clock) begin
 		// coefficients to coeffBufferRe and coeffBufferIn. Once all the coefficients 
 		// are loaded the state transitions to FIR_MAIN.
 		LOAD_COEFFICIENTS: begin
-		
-			// Enable the loading of the coefficients.
-			loadCoefficients <= 1'd1;
 			
 			// Shift the values inside coeffBufferRe and coeffBufferIm by 1.
 			for (n = LENGTH - 1; n > 0; n = n - 1) begin
