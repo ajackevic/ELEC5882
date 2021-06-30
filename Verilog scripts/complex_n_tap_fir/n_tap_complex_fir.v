@@ -10,7 +10,7 @@
  This module is a design of an n-type complex FIR (Finite Impulse Response)
  filter. This filter is the convolution operation between the complex
  input data (dataIn) and the complex coefficient data (coefficientIn). The
- default LENGTH is 10. The FIR filter can be used to do the convolution operation.
+ default LENGTH is 12. The FIR filter can be used to do the convolution operation.
  For this script, the convolution operation is of two inputs, data_in and coefficient_in.
  It should be noted, to help understand the workings of the FIR_MAIN state, the PDF in:
  The workings of an FIR filter\The workings of a complex FIR filter.pdf should be read.
@@ -22,13 +22,17 @@ module n_tap_complex_fir #(
 	parameter DATA_WIDTH = 8
 )(
 	input clock,
+	input loadCoefficients,
+	input coefficientsSetFlag,
 	input loadDataFlag,
 	input stopDataLoadFlag,
-	input signed [7:0] dataInRe,
-	input signed [7:0] dataInIm,
+	input signed [DATA_WIDTH - 1:0] dataInRe,
+	input signed [DATA_WIDTH - 1:0] dataInIm,
+	input signed [DATA_WIDTH - 1:0] coeffInRe,
+	input signed [DATA_WIDTH - 1:0] coeffInIm,
 	
-	output reg signed [20:0] dataOutRe,
-	output reg signed [20:0] dataOutIm
+	output reg signed [(DATA_WIDTH * 2) - 1:0] dataOutRe,
+	output reg signed [(DATA_WIDTH * 2) - 1:0] dataOutIm
 );
 
 
