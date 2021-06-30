@@ -9,8 +9,8 @@
  -------------------
  This module is a design of an n-type FIR (Finite Impulse Response)
  filter. This filter is the convolution operation between the
- input data (dataIn) and the coefficient data (coefficientIn). The
- default LENGTH is 10. It should be noted, to help understand the workings
+ input data (dataIn) and the coefficient data (coeffIn). The
+ default LENGTH is 20. It should be noted, to help understand the workings
  of the FIR_MAIN state, the PDF in:
  The workings of an FIR filter\The workings of a FIR filter.pdf should be read.
 
@@ -21,11 +21,14 @@ module n_tap_fir #(
 	parameter DATA_WIDTH = 8
 )(
 	input clock,
+	input loadCoefficients,
+	input coefficientsSetFlag,
 	input loadDataFlag,
 	input stopDataLoadFlag,
+	input signed [DATA_WIDTH - 1:0] coeffIn,
 	input signed [DATA_WIDTH - 1:0] dataIn,
 	
-	output reg signed [18:0] dataOut
+	output reg signed [(DATA_WIDTH * 2) - 1:0] dataOut
 );
 
 
@@ -36,11 +39,7 @@ reg signed [DATA_WIDTH - 1:0] inputDataBuffer [0:LENGTH -1];
 
 // Local parameter to store the FIR filters output.
 // FIR output width = input data width + coefficient width + log2(LENGTH)
-reg signed [18:0] firOutput;
-
-reg loadCoefficients;
-wire coefficientsSetFlag;
-wire signed [DATA_WIDTH - 1:0] coefficientIn;
+reg signed [(DATA_WIDTH * 2) - 1:0] firOutput;
 
 
 
@@ -69,27 +68,10 @@ initial begin : initalValues
 
 	// Set the internal variables and outputs to 0.
 	state <= IDLE;
-	loadCoefficients <= 0;
 	dataOut <= 0;
 	firOutput <= 0;
 	
 end
-
-
-// Instantiating the setup of the coefficient module. This module passes the LENGTH 
-// amount of coefficients through coefficientOut.
-setup_coefficients #(
-	.LENGTH 			 (LENGTH),
-	.DATA_WIDTH 	 (DATA_WIDTH)
-)Coefficients(
-	.clock			 (clock),
-	.enable			 (loadCoefficients),
-	
-	.filterSetFlag	 (coefficientsSetFlag),
-	.coefficientOut (coefficientIn)
-);
-
-
 
 
 integer n;
@@ -99,7 +81,9 @@ always @(posedge clock) begin
 	
 		// State IDLE. This state transitions to LOAD_COEFFICIENTS.
 		IDLE: begin
-			state <= LOAD_COEFFICIENTS;
+			if(loadCoefficients) begin
+				state <= LOAD_COEFFICIENTS;
+			end
 		end
 		
 		
@@ -108,23 +92,20 @@ always @(posedge clock) begin
 		// coefficients to coeffBuffer. Once all the coefficients are loaded the
 		// state transitions to FIR_MAIN.
 		LOAD_COEFFICIENTS: begin
-			
-			loadCoefficients <= 1'd1;
-		
+				
 			// A for loop that shifts the values inside coeffBuffer by 1 position.
 			for (n = LENGTH - 1; n > 0; n = n - 1) begin
 				coeffBuffer[n] <= coeffBuffer[n-1];
 			end
 
 			// Load the new coefficient value to the start of coeffBuffer.
-			coeffBuffer[0] <= coefficientIn;
+			coeffBuffer[0] <= coeffIn;
 
 			
 			// If coefficientsSetFlag flag is set, transition to FIR_MAIN and disable the 
 			// loading of the coefficients.
 			if(coefficientsSetFlag) begin
 				state <= FIR_MAIN;
-				loadCoefficients <= 1'd0;
 			end
 		end
 		

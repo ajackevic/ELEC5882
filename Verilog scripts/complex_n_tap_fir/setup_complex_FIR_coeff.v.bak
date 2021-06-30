@@ -1,24 +1,24 @@
 /*
 
- setup_complex_coefficients.v
+ setup_complex_FIR_coeff.v
  --------------
  By: Augustas Jackevic
  Date: June 2021
 
  Module Description:
  -------------------
- This module sets up the coefficients for the complex FIR filter. When setting the coefficients 
- make sure all the coefficients up to the value of LENGTH are set and are at a bit width 
- of DATA_WIDTH. If more than 1023 coefficients are used, increase the bit width of 
+ This module sets up the coefficients for the complex FIR filter. When setting the coefficients
+ make sure all the coefficients up to the value of LENGTH are set and are at a bit width
+ of DATA_WIDTH. If more than 1023 coefficients are used, increase the bit width of
  coeffCounter. The coefficients will be passed on as soon as enable is set, and once all
  the values are passed through coefficientOutRe and coefficientOutIm the filterSetFlag is then set.
- 
- 
+
+
 */
 
 
 
-module setup_complex_coefficients#(
+module setup_complex_FIR_coeff#(
 	parameter LENGTH = 12,
 	parameter DATA_WIDTH = 8
 )(
@@ -84,24 +84,24 @@ end
 always @(posedge clock) begin
 
 	// If enable is set, set coefficientOut based on the coeffCounter and the array coefficients values.
-	// When all the coefficients were passed across, set the filterSetFlag high. If not enabled, set 
+	// When all the coefficients were passed across, set the filterSetFlag high. If not enabled, set
 	// filterSetFlag low and reset the coeffCounter.
 	if(enable) begin: setCoefficients
 
 		// Set coefficientOut to the corresponding coefficients array value.
 		coefficientOutRe <= coefficientsRe[coeffCounter];
 		coefficientOutIm <= coefficientsIm[coeffCounter];
-		
+
 		// Increment coeffCounter each loop.
 		coeffCounter <= coeffCounter + 10'd1;
-		
+
 		// Set flag high when coeffCounter is equal to the filter length - 1.
 		if(coeffCounter == LENGTH - 1) begin
 			filterSetFlag <= 1'd1;
 		end
-		
+
 	end
-	
+
 	// Reset the values if enable is not set.
 	else begin
 		filterSetFlag <= 1'd0;
@@ -109,9 +109,8 @@ always @(posedge clock) begin
 		coefficientOutRe <= {(DATA_WIDTH){1'd0}};
 		coefficientOutIm <= {(DATA_WIDTH){1'd0}};
 	end
-	
+
 end
 
 
 endmodule
-
