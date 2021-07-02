@@ -43,4 +43,13 @@ memoryWidth = 16;
 MIFCounter = 0;
 
 % Create or open (if file already exsists) the MIF file.
-fileID = fopen(MIFFileName,'w');
+fileID = fopen(MIFFile,'w');
+
+%Write the following info. This is the standard template of a MIF file.
+fprintf(fileID,'WIDTH = %u;\n',memoryWidth);
+fprintf(fileID,'DEPTH = %u;\n\n',memoryDepth);
+
+fprintf(fileID,'ADDRESS_RADIX = UNS;\n');
+fprintf(fileID,'DATA_RADIX = DEC;\n\n');
+
+fprintf(fileID,'CONTENT BEGIN\n');
