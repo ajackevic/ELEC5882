@@ -37,7 +37,7 @@ h_t = flip(conj(hilbert(chirpWave))) * 1000;
 
 
 %%
-%The following section is for the creation of the MIF file.
+% The following section is for the creation of the MIF file.
 
 % Info about the MIF file.
 MIFFile = 'MFImpulseCoeff.mif';
@@ -48,7 +48,7 @@ MIFCounter = 0;
 % Create or open (if file already exsists) the MIF file.
 fileID = fopen(MIFFile,'w');
 
-%Write the following info. This is the standard template of a MIF file.
+% Write the following info. This is the standard template of a MIF file.
 fprintf(fileID,'WIDTH = %u;\n',width);
 fprintf(fileID,'DEPTH = %u;\n\n',depth);
 
@@ -57,6 +57,7 @@ fprintf(fileID,'DATA_RADIX = DEC;\n\n');
 
 fprintf(fileID,'CONTENT BEGIN\n');
 
+% Print the coefficients (h_t) to the MIF file.
 for i = 1:1:length(h_t)
     fprintf(fileID,'        %u : %d;\n',MIFCounter,floor(round(real(h_t(i)))));
     fprintf(fileID,'        %u : %d;\n',MIFCounter+1,floor(round(imag(h_t(i)))));
