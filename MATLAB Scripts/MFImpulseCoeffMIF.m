@@ -53,3 +53,11 @@ fprintf(fileID,'ADDRESS_RADIX = UNS;\n');
 fprintf(fileID,'DATA_RADIX = DEC;\n\n');
 
 fprintf(fileID,'CONTENT BEGIN\n');
+
+
+
+
+
+% Close the opened MIF file.
+fprintf(fileID,'END;\n');
+fclose(fileID);
