@@ -18,7 +18,7 @@ end
 
 
 
-MFImpulseResponseCoeff(
+MFImpulseResponseCoeff MIFData(
 	.clock		(clock),
 	.address		(MIFAdress),
 	.q				(outputValue)
