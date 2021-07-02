@@ -1,3 +1,8 @@
+// Setting the time unit for this module.
+`timescale 1 ns/100 ps
+
+
+
 module testMIFRead_tb;
 
 
