@@ -1,3 +1,19 @@
+% 
+% MPImpulseCoeffMIF 
+% ------------------------
+% By: Augustas Jackevic
+% For: University of Leeds
+% Date: 
+%
+% Short Description
+% -----------------
+% 
+%
+%
+
+% Clear all of MATLAB's workspace variables.
+clear all
+
 
 % Setting the cirp waveform start and end frequency, as well as its
 % duration and the sampling frequency.
