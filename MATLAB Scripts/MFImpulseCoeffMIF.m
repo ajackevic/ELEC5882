@@ -54,10 +54,10 @@ fprintf(fileID,'DATA_RADIX = DEC;\n\n');
 
 fprintf(fileID,'CONTENT BEGIN\n');
 
-
 for i = 1:1:length(h_t)
-    
-    
+    fprintf(fileID,'        %u : %u;\n',MIFCounter,real(h_t(i)));
+    fprintf(fileID,'        %u : %u;\n',MIFCounter+1,imag(h_t(i)));
+    MIFCounter = MIFCounter + 2; 
 end
 
 
