@@ -6,14 +6,14 @@ module testMIFRead #(
 	input clock,
 	input enable,
 	
-	output reg signed [DATA_WIDTH - 1:0] outputValue
+	output signed [DATA_WIDTH - 1:0] outputValue
 );
 
 reg [14:0] MIFAdress;
 
 initial begin
 	MIFAdress <= 15'd0;
-	outputValue <= {(DATA_WIDTH){1'd0}};
+	//outputValue <= {(DATA_WIDTH){1'd0}};
 end
 
 
