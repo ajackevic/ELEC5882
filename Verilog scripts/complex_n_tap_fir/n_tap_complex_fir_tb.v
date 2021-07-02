@@ -44,7 +44,7 @@ wire [20:0] dataOutIm;
 
 
 // Instantiating the module.
-setupComplexCoefficients # (
+setup_complex_FIR_coeff # (
 	.LENGTH				(LENGTH),
 	.DATA_WIDTH			(DATA_WIDTH)
 ) dut_coeff (
