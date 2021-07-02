@@ -38,8 +38,8 @@ reg loadCoeff;
 
 
 // Note the range of reg signed [7:0] is [-128 to 127].
-wire signed [(DATA_WIDTH * 2) - 1:0] dataOutRe;
-wire signed [(DATA_WIDTH * 2) - 1:0] dataOutIm;
+wire signed [(DATA_WIDTH * 3) - 1:0] dataOutRe;
+wire signed [(DATA_WIDTH * 3) - 1:0] dataOutIm;
 wire signed [DATA_WIDTH - 1:0] coefficientOutRe;
 wire signed [DATA_WIDTH - 1:0] coefficientOutIm;
 
