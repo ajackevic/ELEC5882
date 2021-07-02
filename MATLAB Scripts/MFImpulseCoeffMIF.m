@@ -30,7 +30,7 @@ chirpWave = chirp(tChirp,chirpFreqStart,chirpDuration,chirpFreqEnd);
 
 % Impulse response of the matched filter. This is equal to the complex
 % conjugate time reversal of the transmitted signal (chirpWave).
-h_t = flip(conj(hilbert(chirpWave)));
+h_t = flip(conj(hilbert(chirpWave))) * 1000;
 
 
 %%
@@ -38,8 +38,8 @@ h_t = flip(conj(hilbert(chirpWave)));
 
 % Info about the MIF file.
 MIFFile = 'MFImpulseCoeff.mif';
-depth = length(h_t * 2);
-width = 16;
+depth = length(h_t) * 2;
+width = 13;
 MIFCounter = 0;
 
 % Create or open (if file already exsists) the MIF file.
@@ -55,8 +55,8 @@ fprintf(fileID,'DATA_RADIX = DEC;\n\n');
 fprintf(fileID,'CONTENT BEGIN\n');
 
 for i = 1:1:length(h_t)
-    fprintf(fileID,'        %u : %u;\n',MIFCounter,real(h_t(i)));
-    fprintf(fileID,'        %u : %u;\n',MIFCounter+1,imag(h_t(i)));
+    fprintf(fileID,'        %u : %d;\n',MIFCounter,floor(round(real(h_t(i)))));
+    fprintf(fileID,'        %u : %d;\n',MIFCounter+1,floor(round(imag(h_t(i)))));
     MIFCounter = MIFCounter + 2; 
 end
 
