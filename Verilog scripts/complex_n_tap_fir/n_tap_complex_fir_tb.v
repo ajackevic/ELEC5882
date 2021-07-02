@@ -51,11 +51,10 @@ setup_complex_FIR_coeff # (
 	.clock				(clock),
 	.enable				(loadCoeff),
 
-	.filterSetFlag		(filterSetFlag),
+	.coeffSetFlag		(filterSetFlag),
 	.coefficientOutRe	(coefficientOutRe),
 	.coefficientOutIm	(coefficientOutIm)
 );
-
 
 
 
