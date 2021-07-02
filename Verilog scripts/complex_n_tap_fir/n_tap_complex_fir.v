@@ -54,8 +54,6 @@ reg signed [18:0] firOutputImIm;
 
 
 // Creating the parameters for the instantiated setup_complex_coefficients module.
-reg loadCoefficients;
-wire coefficientsSetFlag;
 wire signed [DATA_WIDTH - 1:0] coefficientInRe;
 wire signed [DATA_WIDTH - 1:0] coefficientInIm;
 
