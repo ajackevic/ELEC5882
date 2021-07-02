@@ -6,3 +6,6 @@ filter on the FPGA.
 
 Furthermore, the folder 'Verilog scripts' currently contains an n-tap FIR filter and an
 n-tap complex FIR implmentation in Verilog.
+
+
+# THIS IS STILL WORK IN PROGRESS
