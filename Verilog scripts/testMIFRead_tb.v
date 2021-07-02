@@ -35,7 +35,7 @@ testMIFRead #(
 	.LENGTH 			(LENGTH),
 	.DATA_WIDTH 	(DATA_WIDTH)
 
-)(
+) dut (
 	.clock			(clock),
 	.enable			(enableModule),
 	
