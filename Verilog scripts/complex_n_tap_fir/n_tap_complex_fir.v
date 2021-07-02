@@ -31,8 +31,8 @@ module n_tap_complex_fir #(
 	input signed [DATA_WIDTH - 1:0] coeffInRe,
 	input signed [DATA_WIDTH - 1:0] coeffInIm,
 	
-	output reg signed [(DATA_WIDTH * 2) - 1:0] dataOutRe,
-	output reg signed [(DATA_WIDTH * 2) - 1:0] dataOutIm
+	output reg signed [(DATA_WIDTH * 3) - 1:0] dataOutRe,
+	output reg signed [(DATA_WIDTH * 3) - 1:0] dataOutIm
 );
 
 
@@ -122,8 +122,8 @@ always @(posedge clock) begin
 			
 			
 			// Load the coefficientInRe and coefficientInIm value to the start of the buffer.
-			coeffBufferRe[0] <= coefficientInRe;
-			coeffBufferIm[0] <= coefficientInIm;
+			coeffBufferRe[0] <= coeffInRe;
+			coeffBufferIm[0] <= coeffInIm;
 			
 			// If coefficientsSetFlag flag is set, transition to FIR_MAIN and disable the 
 			// loading of the coefficients.
