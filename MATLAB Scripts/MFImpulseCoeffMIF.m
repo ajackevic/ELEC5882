@@ -37,9 +37,10 @@ h_t = flip(conj(hilbert(chirpWave)));
 %The following section is for the creation of the MIF file.
 
 % Info about the MIF file.
-MIFFile = 'PressKey4.mif';
+MIFFile = 'MFImpulseCoeff.mif';
 memoryDepth = length(h_t * 2);
 memoryWidth = 16;
 MIFCounter = 0;
 
-
+% Create or open (if file already exsists) the MIF file.
+fileID = fopen(MIFFileName,'w');
