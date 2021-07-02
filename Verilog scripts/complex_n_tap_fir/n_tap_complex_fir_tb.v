@@ -22,6 +22,8 @@ module n_tap_complex_fir_tb;
 localparam NUM_CYCLES = 500;
 localparam CLOCK_FREQ = 50000000;
 localparam RST_CYCLES = 10;
+localparam LENGTH = 12;
+localparam DATA_WIDTH = 8;
 
 
 
@@ -31,28 +33,54 @@ reg loadDataFlag;
 reg stopDataLoadFlag;
 reg signed [7:0] srDataInRe;
 reg signed [7:0] srDataInIm;
-// Note the range of reg signed [7:0] is [-128 to 127].
-wire [20:0] dataOutRe;
-wire [20:0] dataOutIm;
 
+reg loadCoeff;
+
+
+// Note the range of reg signed [7:0] is [-128 to 127].
+wire signed [(DATA_WIDTH * 3) - 1:0] dataOutRe;
+wire signed [(DATA_WIDTH * 3) - 1:0] dataOutIm;
+wire signed [DATA_WIDTH - 1:0] coefficientOutRe;
+wire signed [DATA_WIDTH - 1:0] coefficientOutIm;
+
+
+
+// Instantiating the module.
+setup_complex_FIR_coeff # (
+	.LENGTH				(LENGTH),
+	.DATA_WIDTH			(DATA_WIDTH)
+) dut_coeff (
+	.clock				(clock),
+	.enable				(loadCoeff),
+
+	.coeffSetFlag		(filterSetFlag),
+	.coefficientOutRe	(coefficientOutRe),
+	.coefficientOutIm	(coefficientOutIm)
+);
 
 
 
 // Connect the device under test
 n_tap_complex_fir #(
-	.LENGTH					(12),
-	.DATA_WIDTH				(8)
-	) dut(
+	.LENGTH					(LENGTH),
+	.DATA_WIDTH				(DATA_WIDTH)
+	) dut_fir (
 	.clock					(clock),
+	.loadCoefficients		(loadCoeff),
+	.coefficientsSetFlag	(filterSetFlag),
 	
 	.loadDataFlag			(loadDataFlag),
 	.stopDataLoadFlag		(stopDataLoadFlag),
 	.dataInRe				(srDataInRe),
 	.dataInIm				(srDataInIm),
+	.coeffInRe				(coefficientOutRe),
+	.coeffInIm				(coefficientOutIm),
 	
 	.dataOutRe				(dataOutRe),
 	.dataOutIm				(dataOutIm)
 );
+
+
 
 
 initial begin
@@ -64,9 +92,13 @@ initial begin
 
 	loadDataFlag = 0;
 	stopDataLoadFlag = 0;
+	
+	loadCoeff = 0;
 	repeat(RST_CYCLES) @ (posedge clock);
 	repeat(20) @ (posedge clock);
-
+	loadCoeff = 1;
+	repeat(20) @ (posedge clock);
+	loadCoeff = 0;
 
 	loadDataFlag = 1;
 

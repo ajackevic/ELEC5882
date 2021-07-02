@@ -31,8 +31,8 @@ module n_tap_complex_fir #(
 	input signed [DATA_WIDTH - 1:0] coeffInRe,
 	input signed [DATA_WIDTH - 1:0] coeffInIm,
 	
-	output reg signed [(DATA_WIDTH * 2) - 1:0] dataOutRe,
-	output reg signed [(DATA_WIDTH * 2) - 1:0] dataOutIm
+	output reg signed [(DATA_WIDTH * 3) - 1:0] dataOutRe,
+	output reg signed [(DATA_WIDTH * 3) - 1:0] dataOutIm
 );
 
 
@@ -54,8 +54,6 @@ reg signed [18:0] firOutputImIm;
 
 
 // Creating the parameters for the instantiated setup_complex_coefficients module.
-reg loadCoefficients;
-wire coefficientsSetFlag;
 wire signed [DATA_WIDTH - 1:0] coefficientInRe;
 wire signed [DATA_WIDTH - 1:0] coefficientInIm;
 
@@ -86,7 +84,6 @@ initial begin : init_values
 	end
 
 	state <= IDLE;
-	loadCoefficients <= 0;
 
 	firOutputReRe <= 0;
 	firOutputReIm <= 0;
@@ -100,23 +97,6 @@ end
 
 
 
-// Instantiating the setup of the coefficient module. This module passes the LENGTH 
-// amount of coefficients through coefficientInRe and coefficientInIm.
-setup_complex_coefficients #(
-	.LENGTH 			 	(LENGTH),
-	.DATA_WIDTH 		(DATA_WIDTH)
-)Coefficients(
-	.clock				(clock),
-	.enable				(loadCoefficients),
-	
-	.coeffSetFlag	 	(coefficientsSetFlag),
-	.coefficientOutRe (coefficientInRe),
-	.coefficientOutIm	(coefficientInIm)
-);
-
-
-
-
 
 integer n;
 always @(posedge clock) begin
@@ -124,16 +104,15 @@ always @(posedge clock) begin
 	
 		// State IDLE. This state transitions to LOAD_COEFFICIENTS.
 		IDLE: begin
-			state = LOAD_COEFFICIENTS;
+			if(loadCoefficients) begin
+				state = LOAD_COEFFICIENTS;
+			end
 		end
 
 		// State LOAD_COEFFICIENTS. This state is responsiable for loading the
 		// coefficients to coeffBufferRe and coeffBufferIn. Once all the coefficients 
 		// are loaded the state transitions to FIR_MAIN.
 		LOAD_COEFFICIENTS: begin
-		
-			// Enable the loading of the coefficients.
-			loadCoefficients <= 1'd1;
 			
 			// Shift the values inside coeffBufferRe and coeffBufferIm by 1.
 			for (n = LENGTH - 1; n > 0; n = n - 1) begin
@@ -143,14 +122,13 @@ always @(posedge clock) begin
 			
 			
 			// Load the coefficientInRe and coefficientInIm value to the start of the buffer.
-			coeffBufferRe[0] <= coefficientInRe;
-			coeffBufferIm[0] <= coefficientInIm;
+			coeffBufferRe[0] <= coeffInRe;
+			coeffBufferIm[0] <= coeffInIm;
 			
 			// If coefficientsSetFlag flag is set, transition to FIR_MAIN and disable the 
 			// loading of the coefficients.
 			if(coefficientsSetFlag) begin
 				state <= FIR_MAIN;
-				loadCoefficients <= 1'd0;
 			end
 		end
 
