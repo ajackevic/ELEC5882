@@ -6,11 +6,15 @@ localparam NUM_CYCLES = 500;
 localparam CLOCK_FREQ = 50000000;
 localparam RST_CYCLES = 10;
 
+localparam LENGTH = 20000;
+localparam DATA_WIDTH = 13;
 
 
 // Local parameters for the dut module.
 reg clock;
 reg enableModule;
+
+wire signed [DATA_WIDTH-1:0] outputValue;
 
 
 
@@ -22,6 +26,21 @@ initial begin
 	repeat(RST_CYCLES) @ (posedge clock);
 	enableModule = 1'd1;
 end
+
+
+
+
+
+testMIFRead #(
+	.LENGTH 			(LENGTH),
+	.DATA_WIDTH 	(DATA_WIDTH)
+
+)(
+	.clock			(clock),
+	.enable			(enableModule),
+	
+	.outputValue	(outputValue)
+);
 
 
 
