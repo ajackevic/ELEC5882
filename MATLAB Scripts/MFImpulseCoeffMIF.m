@@ -29,3 +29,4 @@ tChirp = 0:1/samplingFreqs:chirpDuration-1/samplingFreqs;
 
 % Creating a linear chirp waveform 
 chirpWave = chirp(tChirp,chirpFreqStart,chirpDuration,chirpFreqEnd);
+h_t = flip(conj(hilbert(chirpWave)));
