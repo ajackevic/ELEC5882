@@ -19,7 +19,7 @@ clear all
 % duration and the sampling frequency.
 chirpFreqStart = 10000;
 chirpFreqEnd = 50000;
-chirpDuration = 0.5;
+chirpDuration = 0.1;
 samplingFreqs = 1e5;
 
 
