@@ -13,6 +13,7 @@ reg [14:0] MIFAdress;
 
 initial begin
 	MIFAdress <= 15'd0;
+	outputValue <= {(DATA_WIDTH){1'd0}};
 end
 
 
