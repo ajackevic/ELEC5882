@@ -3,11 +3,14 @@
 % ------------------------
 % By: Augustas Jackevic
 % For: University of Leeds
-% Date: 
+% Date: July 2021
 %
 % Short Description
 % -----------------
-% 
+% This script creates a MIF file containting the mathced filter impulse
+% response coefficients. 10,000 coefficients are generated and loaded to
+% the MIF file. The generating to the coefficients h_t is identical to the
+% way its created in the script pulseCompressionFilter.m.
 %
 %
 
