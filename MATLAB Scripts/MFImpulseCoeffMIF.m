@@ -38,16 +38,16 @@ h_t = flip(conj(hilbert(chirpWave)));
 
 % Info about the MIF file.
 MIFFile = 'MFImpulseCoeff.mif';
-memoryDepth = length(h_t * 2);
-memoryWidth = 16;
+depth = length(h_t * 2);
+width = 16;
 MIFCounter = 0;
 
 % Create or open (if file already exsists) the MIF file.
 fileID = fopen(MIFFile,'w');
 
 %Write the following info. This is the standard template of a MIF file.
-fprintf(fileID,'WIDTH = %u;\n',memoryWidth);
-fprintf(fileID,'DEPTH = %u;\n\n',memoryDepth);
+fprintf(fileID,'WIDTH = %u;\n',width);
+fprintf(fileID,'DEPTH = %u;\n\n',depth);
 
 fprintf(fileID,'ADDRESS_RADIX = UNS;\n');
 fprintf(fileID,'DATA_RADIX = DEC;\n\n');
