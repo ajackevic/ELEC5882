@@ -34,4 +34,12 @@ h_t = flip(conj(hilbert(chirpWave)));
 
 
 %%
-%The following script section is for the creation of the MIf file.
+%The following section is for the creation of the MIF file.
+
+% Info about the MIF file.
+MIFFile = 'PressKey4.mif';
+memoryDepth = length(h_t * 2);
+memoryWidth = 16;
+MIFCounter = 0;
+
+
