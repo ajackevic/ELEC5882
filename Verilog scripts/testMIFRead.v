@@ -17,5 +17,12 @@ end
 
 
 
+MFImpulseResponseCoeff(
+	.clock		(clock),
+	.address		(MIFAdress),
+	.q				(outputValue)
+);
+
+
 
 endmodule
