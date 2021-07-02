@@ -47,7 +47,7 @@ wire [20:0] dataOutIm;
 setupComplexCoefficients # (
 	.LENGTH				(LENGTH),
 	.DATA_WIDTH			(DATA_WIDTH)
-) dut (
+) dut_coeff (
 	.clock				(clock),
 	.enable				(loadCoeff),
 
@@ -63,7 +63,7 @@ setupComplexCoefficients # (
 n_tap_complex_fir #(
 	.LENGTH					(LENGTH),
 	.DATA_WIDTH				(DATA_WIDTH)
-	) dut(
+	) dut_fir (
 	.clock					(clock),
 	.loadCoefficients		(loadCoeff),
 	.coefficientsSetFlag	(filterSetFlag),
