@@ -106,8 +106,11 @@ always @ (posedge clock) begin
 		// the state MOVE_COEFF. If not set, the outputs of the module are set to 0.
 		IDLE: begin
 		
-			if(enable) begin
+			if(enable && DATA_MIF == 1) begin
 				state <= MOVE_COEFF;
+			end
+			else if(enable && DATA_MIF == 2) begin
+				state <= EMPTY_STATE;
 			end
 			else begin
 				coeffOutRe <=  {(DATA_WIDTH){1'd0}};
