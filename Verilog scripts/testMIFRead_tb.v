@@ -44,7 +44,8 @@ testMIFRead #(
 	.clock			(clock),
 	.enable			(enableModule),
 	
-	.outputValue	(outputValue)
+	.coeffSetFlag	(),
+	.coeffOut		(outputValue)
 );
 
 

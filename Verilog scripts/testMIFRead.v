@@ -6,7 +6,8 @@ module testMIFRead #(
 	input clock,
 	input enable,
 	
-	output signed [DATA_WIDTH - 1:0] outputValue
+	output reg coeffSetFlag,	
+	output signed [DATA_WIDTH - 1:0] coeffOut
 );
 
 
