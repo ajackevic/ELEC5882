@@ -10,7 +10,9 @@
 % This script creates a MIF file containting the mathced filter impulse
 % response coefficients. 10,000 coefficients are generated and loaded to
 % the MIF file. The generating to the coefficients h_t is identical to the
-% way its created in the script pulseCompressionFilter.m.
+% way its created in the script pulseCompressionFilter.m. The 2's
+% compliment binary values that are loaded to the created file are of 16
+% bit width.
 %
 %
 
@@ -39,7 +41,7 @@ h_t = flip(conj(hilbert(chirpWave))) * 1000;
 %%
 % The following section is for the creation of the MIF file.
 
-% Info about the MIF file.
+% Name of the MIF file.
 MIFFile = 'MFImpulseCoeff.mif';
 
 % Create or open (if file already exsists) the MIF file.
@@ -47,7 +49,8 @@ fileID = fopen(MIFFile,'w');
 
 
 % Print the coefficients (h_t) to the MIF file. The values that are printed
-% are the rounded real and imaginary parts.
+% are the rounded real and imaginary parts. They are printed in 2's
+% compliment format. The length of each value is 16 bits.
 for i = 1:1:length(h_t)
     fprintf(fileID,'%s\n', dec2bin(round(real(h_t(i))),16));
     fprintf(fileID,'%s\n', dec2bin(round(imag(h_t(i))),16));
