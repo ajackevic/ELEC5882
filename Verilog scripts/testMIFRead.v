@@ -14,6 +14,9 @@ module testMIFRead #(
 
 reg signed [DATA_WIDTH-1:0] MIFBuffer [0:(LENGTH * 2) - 1];
 
+reg signed [DATA_WIDTH-1:0] realCoeffBuffer [0:LENGTH - 1];
+reg signed [DATA_WIDTH-1:0] imagCoeffBuffer [0:LENGTH - 1];
+
 
 initial begin
 	$readmemb("MFImpulseCoeff.mif", MIFBuffer);
