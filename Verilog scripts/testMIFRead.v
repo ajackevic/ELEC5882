@@ -19,7 +19,7 @@ reg signed [DATA_WIDTH-1:0] imagCoeffBuffer [0:LENGTH - 1];
 // Width is log2(LENGTH) rounded up
 reg [13:0] coeffBufferCounter; 
 
-initial begin
+initial begin: initValues
 	integer k;
 	
 	$readmemb("MFImpulseCoeff.mif", MIFBuffer);
