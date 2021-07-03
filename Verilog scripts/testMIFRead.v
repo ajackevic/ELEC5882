@@ -1,6 +1,6 @@
 module testMIFRead #(
 	parameter LENGTH = 20000,
-	parameter DATA_WIDTH = 13
+	parameter DATA_WIDTH = 16
 
 )(
 	input clock,
@@ -9,20 +9,13 @@ module testMIFRead #(
 	output signed [DATA_WIDTH - 1:0] outputValue
 );
 
-reg [14:0] MIFAdress;
+
+reg signed [DATA_WIDTH-1:0] myMemory [0:LENGTH - 1];
+
 
 initial begin
-	MIFAdress <= 15'd0;
-	//outputValue <= {(DATA_WIDTH){1'd0}};
+	$readmemb("MFImpulseCoeff.mif", myMemory);
 end
-
-
-
-MFImpulseResponseCoeff MIFData(
-	.clock		(clock),
-	.address		(MIFAdress),
-	.q				(outputValue)
-);
 
 
 
