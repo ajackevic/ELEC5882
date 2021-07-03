@@ -55,7 +55,9 @@ end
 always @ (posedge clock) begin
 	case(state)
 	
+	
 		IDLE: begin
+		
 			if(enable) begin
 				state <= MOVE_COEFF;
 			end
@@ -64,6 +66,7 @@ always @ (posedge clock) begin
 				coeffOutIm <=  {(DATA_WIDTH){1'd0}};
 				coeffSetFlag <= 1'd0;
 			end
+			
 		end
 		
 		MOVE_COEFF: begin
@@ -81,18 +84,26 @@ always @ (posedge clock) begin
 		end
 		
 		STOP: begin
+		
 			coeffOutRe <=  {(DATA_WIDTH){1'd0}};
 			coeffOutIm <=  {(DATA_WIDTH){1'd0}};
 			coeffSetFlag <= 1'd1;
 			coeffBufferCounter <= 14'd0;
+			
 		end
 		
 		EMPTY_STATE: begin
-		
+			
 		end
 		
 		default: begin
 		
+			coeffOutRe <=  {(DATA_WIDTH){1'd0}};
+			coeffOutIm <=  {(DATA_WIDTH){1'd0}};
+			coeffBufferCounter <= 14'd0;
+			coeffSetFlag <= 1'd0;
+			state <= IDLE;
+			
 		end
 		
 	endcase
