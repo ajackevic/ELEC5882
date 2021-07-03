@@ -1,5 +1,5 @@
 module testMIFRead #(
-	parameter LENGTH = 20000,
+	parameter LENGTH = 10000,
 	parameter DATA_WIDTH = 16
 
 )(
@@ -12,7 +12,7 @@ module testMIFRead #(
 );
 
 
-reg signed [DATA_WIDTH-1:0] MIFBuffer [0:LENGTH - 1];
+reg signed [DATA_WIDTH-1:0] MIFBuffer [0:(LENGTH * 2) - 1];
 
 
 initial begin

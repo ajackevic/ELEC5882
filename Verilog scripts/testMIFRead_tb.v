@@ -11,7 +11,7 @@ localparam NUM_CYCLES = 500;
 localparam CLOCK_FREQ = 50000000;
 localparam RST_CYCLES = 10;
 
-localparam LENGTH = 20000;
+localparam LENGTH = 10000;
 localparam DATA_WIDTH = 16;
 
 
