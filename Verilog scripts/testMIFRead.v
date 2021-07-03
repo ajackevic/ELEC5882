@@ -47,10 +47,11 @@ initial begin: initValues
 		
 		coeffBufferCounter = coeffBufferCounter + 14'd1;
 	end
+	
+	coeffBufferCounter = 14'd0;
 end
 
 
-integer n;
 always @ (posedge clock) begin
 	case(state)
 	
@@ -67,9 +68,7 @@ always @ (posedge clock) begin
 		
 		MOVE_COEFF: begin
 		
-			for(n = 0; n <= LENGTH-1; n=n+1) begin
-			
-			end
+			if(
 			
 		end
 		
