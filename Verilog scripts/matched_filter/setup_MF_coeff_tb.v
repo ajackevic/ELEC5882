@@ -74,8 +74,8 @@ setup_MF_coeff #(
 	.enable			(enableModule),
 	
 	.coeffSetFlag	(coeffSetFlag),
-	.coeffOutRe		(outputValueRe),
-	.coeffOutIm		(outputValueIm)
+	.outputRe		(outputValueRe),
+	.outputIm		(outputValueIm)
 );
 
 

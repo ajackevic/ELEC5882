@@ -10,8 +10,8 @@
  This module sets up the coefficients for the matched filter impulse response. When
  FIR filter. The coefficients are aquired through the MIF file MFImpulseCoeff.mif. The
  MIF file was produced by the script MFImpulseCoeffMIF.m. The coefficients will be 
- passed on as soon as enable is set, and once all the values are passed through coeffOutRe 
- and coeffOutIm the coeffSetFlag is then set.
+ passed on as soon as enable is set, and once all the values are passed through outputRe 
+ and outputIm the coeffSetFlag is then set.
 
 
 */
@@ -26,8 +26,8 @@ module setup_MF_coeff #(
 	input enable,
 	
 	output reg coeffSetFlag,	
-	output reg signed [DATA_WIDTH - 1:0] coeffOutRe,
-	output reg signed [DATA_WIDTH - 1:0] coeffOutIm
+	output reg signed [DATA_WIDTH - 1:0] outputRe,
+	output reg signed [DATA_WIDTH - 1:0] outputIm
 );
 
 // Local buffer parameters.
@@ -58,8 +58,8 @@ initial begin: initValues
 	coeffBufferCounter = 20'd0;
 	state = IDLE;
 	coeffSetFlag = 1'd0;
-	coeffOutRe =  {(DATA_WIDTH){1'd0}};
-	coeffOutIm =  {(DATA_WIDTH){1'd0}};
+	outputRe =  {(DATA_WIDTH){1'd0}};
+	outputIm =  {(DATA_WIDTH){1'd0}};
 	
 	
 	
@@ -113,8 +113,8 @@ always @ (posedge clock) begin
 				state <= MOVE_DATA_IN;
 			end
 			else begin
-				coeffOutRe <=  {(DATA_WIDTH){1'd0}};
-				coeffOutIm <=  {(DATA_WIDTH){1'd0}};
+				outputRe <=  {(DATA_WIDTH){1'd0}};
+				outputIm <=  {(DATA_WIDTH){1'd0}};
 				coeffSetFlag <= 1'd0;
 			end
 			
@@ -122,7 +122,7 @@ always @ (posedge clock) begin
 		
 		
 		// State MOVE_COEFF. This state is repsponsiable for pushing through the values from real 
-		// and imag CoeffBuffer to the output coeffOutRe and coeffOutIm. Once all the coeff have 
+		// and imag CoeffBuffer to the output outputRe and outputIm. Once all the coeff have 
 		// been passed through the state transistions to STOP.
 		MOVE_COEFF: begin
 		
@@ -131,8 +131,8 @@ always @ (posedge clock) begin
 				coeffSetFlag <= 1'd1;
 			end
 			else begin
-				coeffOutRe <= realCoeffBuffer[coeffBufferCounter];
-				coeffOutIm <= imagCoeffBuffer[coeffBufferCounter];
+				outputRe <= realCoeffBuffer[coeffBufferCounter];
+				outputIm <= imagCoeffBuffer[coeffBufferCounter];
 				coeffBufferCounter <= coeffBufferCounter + 20'd1;
 			end
 			
@@ -140,7 +140,7 @@ always @ (posedge clock) begin
 		
 		
 		// State MOVE_DATA_IN. This state is similar to MOVE_COEFF, except it pushes the value in
-		// realCoeffBuffer to coeffOutRe and sets coeffOutIm to 0. Once all the values are passed 
+		// realCoeffBuffer to outputRe and sets outputIm to 0. Once all the values are passed 
 		// through it transistions to state STOP.	
 		MOVE_DATA_IN: begin
 		
@@ -149,8 +149,8 @@ always @ (posedge clock) begin
 				coeffSetFlag <= 1'd1;
 			end
 			else begin
-				coeffOutRe <= realCoeffBuffer[coeffBufferCounter];
-				coeffOutIm <= {(DATA_WIDTH){1'd0}};
+				outputRe <= realCoeffBuffer[coeffBufferCounter];
+				outputIm <= {(DATA_WIDTH){1'd0}};
 				coeffBufferCounter <= coeffBufferCounter + 20'd1;
 			end
 			
@@ -161,8 +161,8 @@ always @ (posedge clock) begin
 		// State STOP. This state is responsiable for setting the oputputs to 0 (appart from coeffSetFlag).
 		STOP: begin
 		
-			coeffOutRe <=  {(DATA_WIDTH){1'd0}};
-			coeffOutIm <=  {(DATA_WIDTH){1'd0}};
+			outputRe <=  {(DATA_WIDTH){1'd0}};
+			outputIm <=  {(DATA_WIDTH){1'd0}};
 			coeffSetFlag <= 1'd1;
 			coeffBufferCounter <= 20'd0;
 			
@@ -173,8 +173,8 @@ always @ (posedge clock) begin
 		// in an undefined state.
 		default: begin
 		
-			coeffOutRe <=  {(DATA_WIDTH){1'd0}};
-			coeffOutIm <=  {(DATA_WIDTH){1'd0}};
+			outputRe <=  {(DATA_WIDTH){1'd0}};
+			outputIm <=  {(DATA_WIDTH){1'd0}};
 			coeffBufferCounter <= 20'd0;
 			coeffSetFlag <= 1'd0;
 			state <= IDLE;
