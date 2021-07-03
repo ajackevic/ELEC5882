@@ -19,8 +19,8 @@ localparam DATA_WIDTH = 16;
 reg clock;
 reg enableModule;
 
-wire signed [DATA_WIDTH-1:0] outputValue;
-
+wire signed [DATA_WIDTH-1:0] outputValueRe;
+wire signed [DATA_WIDTH-1:0] outputValueIm;
 
 
 
@@ -45,7 +45,8 @@ testMIFRead #(
 	.enable			(enableModule),
 	
 	.coeffSetFlag	(),
-	.coeffOut		(outputValue)
+	.coeffOutRe		(outputValueRe),
+	.coeffOutRe		(outputValueIm)
 );
 
 
