@@ -25,7 +25,8 @@ initial begin
 	
 	
 	for (k = 0; k <= LENGTH - 1 ; k = k + 1) begin
-		obtainedValues[k] = {(DATA_WIDTH){1'd0}};
+		realCoeffBuffer[k] = {(DATA_WIDTH){1'd0}};
+		imagCoeffBuffer[k] = {(DATA_WIDTH){1'd0}};
 	end
 end
 
