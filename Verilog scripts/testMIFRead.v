@@ -7,8 +7,8 @@ module testMIFRead #(
 	input enable,
 	
 	output reg coeffSetFlag,	
-	output signed [DATA_WIDTH - 1:0] coeffOutRe,
-	output signed [DATA_WIDTH - 1:0] coeffOutIm
+	output reg signed [DATA_WIDTH - 1:0] coeffOutRe,
+	output reg signed [DATA_WIDTH - 1:0] coeffOutIm
 );
 
 
@@ -22,7 +22,7 @@ reg [13:0] coeffBufferCounter;
 
 
 reg [1:0] state;
-localparam IDLE = 2'0;
+localparam IDLE = 2'd0;
 localparam MOVE_COEFF = 2'd1;
 localparam STOP = 2'd2;
 localparam EMPTY_STATE = 2'd3;
@@ -57,7 +57,7 @@ always @ (posedge clock) begin
 	
 		IDLE: begin
 			if(enable) begin
-				sate <= MOVE_COEFF;
+				state <= MOVE_COEFF;
 			end
 			else begin
 				coeffOutRe <=  {(DATA_WIDTH){1'd0}};
