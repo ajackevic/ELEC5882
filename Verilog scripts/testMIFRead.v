@@ -70,6 +70,7 @@ always @ (posedge clock) begin
 		
 			if(coeffBufferCounter == LENGTH) begin
 				state <= STOP;
+				coeffSetFlag <= 1'd1;
 			end
 			else begin
 				coeffOutRe <= realCoeffBuffer[coeffBufferCounter];
@@ -80,7 +81,10 @@ always @ (posedge clock) begin
 		end
 		
 		STOP: begin
-		
+			coeffOutRe <=  {(DATA_WIDTH){1'd0}};
+			coeffOutIm <=  {(DATA_WIDTH){1'd0}};
+			coeffSetFlag <= 1'd1;
+			coeffBufferCounter <= 14'd0;
 		end
 		
 		EMPTY_STATE: begin
