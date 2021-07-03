@@ -28,12 +28,12 @@ module setup_MF_coeff_tb;
 
 
 // Parameters for creating the 50MHz clock signal.
-localparam NUM_CYCLES = 50000;
+localparam NUM_CYCLES = 500000;
 localparam CLOCK_FREQ = 50000000;
 localparam RST_CYCLES = 10;
 
 // Parameters for the dut module.
-localparam LENGTH = 10000;
+localparam LENGTH = 33000;
 localparam DATA_WIDTH = 16;
 
 
@@ -65,7 +65,7 @@ end
 setup_MF_coeff #(
 	.LENGTH 			(LENGTH),
 	.DATA_WIDTH 	(DATA_WIDTH),
-	.DATA_MIF		(1)
+	.DATA_MIF		(2)
 
 ) dut (
 	.clock			(clock),
