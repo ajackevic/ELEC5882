@@ -63,7 +63,8 @@ end
 // Connecting the instantiated dut module.
 setup_MF_coeff #(
 	.LENGTH 			(LENGTH),
-	.DATA_WIDTH 	(DATA_WIDTH)
+	.DATA_WIDTH 	(DATA_WIDTH),
+	.DATA_MIF		(0)
 
 ) dut (
 	.clock			(clock),
