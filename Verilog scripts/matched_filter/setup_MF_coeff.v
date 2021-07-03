@@ -139,7 +139,9 @@ always @ (posedge clock) begin
 		end
 		
 		
-		
+		// State MOVE_DATA_IN. This state is similar to MOVE_COEFF, except it pushes the value in
+		// realCoeffBuffer to coeffOutRe and sets coeffOutIm to 0. Once all the values are passed 
+		// through it transistions to state STOP.	
 		MOVE_DATA_IN: begin
 		
 			if(coeffBufferCounter == LENGTH * 2) begin
