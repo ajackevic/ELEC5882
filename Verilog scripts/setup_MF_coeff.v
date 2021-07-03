@@ -1,4 +1,4 @@
-module testMIFRead #(
+module setup_MF_coeff #(
 	parameter LENGTH = 10000,
 	parameter DATA_WIDTH = 16
 

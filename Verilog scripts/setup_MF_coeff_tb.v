@@ -3,7 +3,7 @@
 
 
 
-module testMIFRead_tb;
+module setup_MF_coeff_tb;
 
 
 // Parameters for creating the 50MHz clock signal
@@ -36,7 +36,7 @@ end
 
 
 
-testMIFRead #(
+setup_MF_coeff #(
 	.LENGTH 			(LENGTH),
 	.DATA_WIDTH 	(DATA_WIDTH)
 
