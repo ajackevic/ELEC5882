@@ -24,7 +24,7 @@ initial begin
 	$readmemb("MFImpulseCoeff.mif", MIFBuffer);
 	
 	
-	for (k = 0; k <= LENGTH - 1 ; k = k + 1) begin
+	for (k = 0; k <= (LENGTH * 2) - 1 ; k = k + 2) begin
 		realCoeffBuffer[k] = {(DATA_WIDTH){1'd0}};
 		imagCoeffBuffer[k] = {(DATA_WIDTH){1'd0}};
 	end
