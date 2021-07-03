@@ -44,8 +44,8 @@ reg [19:0] coeffBufferCounter;
 reg [1:0] state;
 localparam IDLE = 2'd0;
 localparam MOVE_COEFF = 2'd1;
-localparam STOP = 2'd2;
-localparam EMPTY_STATE = 2'd3;
+localparam MOVE_DATA_IN = 2'd2;
+localparam STOP = 2'd3;
 
 
 
@@ -110,7 +110,7 @@ always @ (posedge clock) begin
 				state <= MOVE_COEFF;
 			end
 			else if(enable && DATA_MIF == 2) begin
-				state <= EMPTY_STATE;
+				state <= MOVE_DATA_IN;
 			end
 			else begin
 				coeffOutRe <=  {(DATA_WIDTH){1'd0}};
@@ -139,6 +139,13 @@ always @ (posedge clock) begin
 		end
 		
 		
+		
+		MOVE_DATA_IN: begin
+			
+		end
+		
+		
+		
 		// State STOP. This state is responsiable for setting the oputputs to 0 (appart from coeffSetFlag).
 		STOP: begin
 		
@@ -146,12 +153,6 @@ always @ (posedge clock) begin
 			coeffOutIm <=  {(DATA_WIDTH){1'd0}};
 			coeffSetFlag <= 1'd1;
 			coeffBufferCounter <= 20'd0;
-			
-		end
-		
-		
-		// State EMPTY_STATE. This state was added to removed any infered latched from quartus.
-		EMPTY_STATE: begin
 			
 		end
 		
