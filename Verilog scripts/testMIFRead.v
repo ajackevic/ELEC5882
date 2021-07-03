@@ -69,7 +69,12 @@ always @ (posedge clock) begin
 		MOVE_COEFF: begin
 		
 			if(coeffBufferCounter == LENGTH) begin
-				state <= STOP;
+				state = STOP;
+			end
+			else begin
+				coeffOutRe <= realCoeffBuffer[coeffBufferCounter];
+				coeffOutIm <= imagCoeffBuffer[coeffBufferCounter];
+				coeffBufferCounter <= coeffBufferCounter + 14'd1;
 			end
 			
 		end
