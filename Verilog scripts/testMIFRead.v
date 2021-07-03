@@ -48,8 +48,29 @@ end
 
 
 always @ (posedge clock) begin
-
-
+	case(state)
+	
+		IDLE: begin
+		
+		end
+		
+		MOVE_COEFF: begin
+		
+		end
+		
+		STOP: begin
+		
+		end
+		
+		EMPTY_STATE: begin
+		
+		end
+		
+		default: begin
+		
+		end
+		
+	endcase
 end
 
 
