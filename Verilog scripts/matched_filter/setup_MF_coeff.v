@@ -19,7 +19,7 @@
 module setup_MF_coeff #(
 	parameter LENGTH = 10000,
 	parameter DATA_WIDTH = 16,
-	parameter DATA_MIF = 0
+	parameter DATA_MIF = 1			// 1 is for coefficient, 2 is for input data.
 
 )(
 	input clock,
@@ -32,8 +32,8 @@ module setup_MF_coeff #(
 
 // Local buffer parameters.
 reg signed [DATA_WIDTH-1:0] MIFBuffer [0:(LENGTH * 2) - 1];
-reg signed [DATA_WIDTH-1:0] realCoeffBuffer [0:LENGTH - 1];
-reg signed [DATA_WIDTH-1:0] imagCoeffBuffer [0:LENGTH - 1];
+reg signed [DATA_WIDTH-1:0] realCoeffBuffer [0:(LENGTH*(DATA_MIF)) - 1];
+reg signed [DATA_WIDTH-1:0] imagCoeffBuffer [0:(LENGTH*(2-DATA_MIF)) - 1];
 
 
 // Width is equal to log2(LENGTH). The value is then rounded up.
@@ -54,7 +54,7 @@ initial begin: initValues
 	integer k;
 	
 	// Read the MIF file and transfer is contents to the variable MIFBuffer.
-	if(DATA_MIF) begin
+	if(DATA_MIF == 2) begin
 		$readmemb("MFInputData.mif", MIFBuffer);
 	end
 	else begin
