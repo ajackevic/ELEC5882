@@ -19,7 +19,14 @@ reg signed [DATA_WIDTH-1:0] imagCoeffBuffer [0:LENGTH - 1];
 
 
 initial begin
+	integer k;
+
 	$readmemb("MFImpulseCoeff.mif", MIFBuffer);
+	
+	
+	for (k = 0; k <= LENGTH - 1 ; k = k + 1) begin
+		obtainedValues[k] = {(DATA_WIDTH){1'd0}};
+	end
 end
 
 
