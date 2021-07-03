@@ -54,7 +54,12 @@ initial begin: initValues
 	integer k;
 	
 	// Read the MIF file and transfer is contents to the variable MIFBuffer.
-	$readmemb("MFImpulseCoeff.mif", MIFBuffer);
+	if(DATA_MIF) begin
+		$readmemb("MFInputData.mif", MIFBuffer);
+	end
+	else begin
+		$readmemb("MFImpulseCoeff.mif", MIFBuffer);
+	end
 	
 	// Setting the local parameters + ouputs to 0.
 	coeffBufferCounter = 14'd0;
