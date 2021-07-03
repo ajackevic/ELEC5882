@@ -53,6 +53,16 @@ localparam EMPTY_STATE = 2'd3;
 initial begin: initValues
 	integer k;
 	
+	
+	// Setting the local parameters + ouputs to 0.
+	coeffBufferCounter = 20'd0;
+	state = IDLE;
+	coeffSetFlag = 1'd0;
+	coeffOutRe =  {(DATA_WIDTH){1'd0}};
+	coeffOutIm =  {(DATA_WIDTH){1'd0}};
+	
+	
+	
 	// Read the MIF file and transfer is contents to the variable MIFBuffer.
 	if(DATA_MIF == 2) begin
 		$readmemb("MFInputData.mif", MIFBuffer);
@@ -81,15 +91,7 @@ initial begin: initValues
 			coeffBufferCounter = coeffBufferCounter + 20'd1;
 		end
 		
-	end
-	
-	// Setting the local parameters + ouputs to 0.
-	coeffBufferCounter = 20'd0;
-	state = IDLE;
-	coeffSetFlag = 1'd0;
-	coeffOutRe =  {(DATA_WIDTH){1'd0}};
-	coeffOutIm =  {(DATA_WIDTH){1'd0}};
-	
+	end	
 	
 	
 	// Reset coeffBufferCounter once more so that it can then be used in the FSM.
