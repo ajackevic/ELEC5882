@@ -12,6 +12,8 @@
  in ModelSim. It is vital that the MIF file is placed in <project directory>\simulation\modelsim, 
  otherwise ModelSim will no read the MIF data. To compile successfully in Quartus have a copy
  of the MIF file in <project directory>\ELEC5882\Verilog scripts\matched_filter too.
+ 
+ Set DATA_MIF to 1 to load the coeff and 2 to load the input data.
 
 
 */
