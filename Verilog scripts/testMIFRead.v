@@ -37,6 +37,10 @@ initial begin: initValues
 	
 	coeffBufferCounter = 14'd0;
 	state = IDLE;
+	coeffSetFlag = 1'd0;
+	coeffOutRe =  {(DATA_WIDTH){1'd0}};
+	coeffOutIm =  {(DATA_WIDTH){1'd0}};
+	
 	for (k = 0; k <= (LENGTH * 2) - 1 ; k = k + 2) begin
 		realCoeffBuffer[coeffBufferCounter] = MIFBuffer[k];
 		imagCoeffBuffer[coeffBufferCounter] = MIFBuffer[k+1];
