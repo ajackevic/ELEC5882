@@ -21,7 +21,7 @@ reg enableModule;
 
 wire signed [DATA_WIDTH-1:0] outputValueRe;
 wire signed [DATA_WIDTH-1:0] outputValueIm;
-
+wire coeffSetFlag;
 
 
 initial begin
@@ -44,7 +44,7 @@ testMIFRead #(
 	.clock			(clock),
 	.enable			(enableModule),
 	
-	.coeffSetFlag	(),
+	.coeffSetFlag	(coeffSetFlag),
 	.coeffOutRe		(outputValueRe),
 	.coeffOutIm		(outputValueIm)
 );
