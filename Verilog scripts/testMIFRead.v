@@ -68,7 +68,9 @@ always @ (posedge clock) begin
 		
 		MOVE_COEFF: begin
 		
-			if(
+			if(coeffBufferCounter == LENGTH) begin
+				state <= STOP;
+			end
 			
 		end
 		
