@@ -51,7 +51,14 @@ always @ (posedge clock) begin
 	case(state)
 	
 		IDLE: begin
-		
+			if(enable) begin
+				sate <= MOVE_COEFF;
+			end
+			else begin
+				coeffOutRe <=  {(DATA_WIDTH){1'd0}};
+				coeffOutIm <=  {(DATA_WIDTH){1'd0}};
+				coeffSetFlag <= 1'd0;
+			end
 		end
 		
 		MOVE_COEFF: begin
