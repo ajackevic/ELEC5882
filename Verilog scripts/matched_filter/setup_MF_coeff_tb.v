@@ -10,7 +10,8 @@
  This module is a test bench for the module setup_MF_coeff. It connects to the instantiated 
  module. The test bench as of now does not do any self-testing, only observing the signals 
  in ModelSim. It is vital that the MIF file is placed in <project directory>\simulation\modelsim, 
- otherwise ModelSim will no read the MIF data.
+ otherwise ModelSim will no read the MIF data. To compile successfully in Quartus have a copy
+ of the MIF file in <project directory>\ELEC5882\Verilog scripts\matched_filter too.
 
 
 */
