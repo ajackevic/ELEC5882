@@ -141,6 +141,16 @@ always @ (posedge clock) begin
 		
 		
 		MOVE_DATA_IN: begin
+		
+			if(coeffBufferCounter == LENGTH * 2) begin
+				state <= STOP;
+				coeffSetFlag <= 1'd1;
+			end
+			else begin
+				coeffOutRe <= realCoeffBuffer[coeffBufferCounter];
+				coeffOutIm <= {(DATA_WIDTH){1'd0}};
+				coeffBufferCounter <= coeffBufferCounter + 20'd1;
+			end
 			
 		end
 		
