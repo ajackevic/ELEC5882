@@ -56,9 +56,31 @@ initial begin: initValues
 	// Read the MIF file and transfer is contents to the variable MIFBuffer.
 	if(DATA_MIF == 2) begin
 		$readmemb("MFInputData.mif", MIFBuffer);
+		
+		// Transfer the values of MIFBuffer to the buffer variables realCoeffBuffer 
+		// and imagCoeffBuffer. This is done for LENGTH*2 amount of times. Only need
+		// realCoeffBuffer, hence imagCoeffBuffer is set to 0.
+		for (k = 0; k <= (LENGTH * 2) - 1 ; k = k + 1) begin
+			realCoeffBuffer[coeffBufferCounter] = MIFBuffer[k];
+			imagCoeffBuffer[coeffBufferCounter] = {(DATA_WIDTH){1'd0}};
+		
+			coeffBufferCounter = coeffBufferCounter + 20'd1;
+		end
+		
 	end
 	else begin
 		$readmemb("MFImpulseCoeff.mif", MIFBuffer);
+		
+		// Transfer the values in MIFBuffer to the variables realCoeffBuffer and imagCoeffBuffer.
+		// The MIF file is structured real coeff then imag coeff (one coefficient set) then repeat 
+		// 9999 times more.
+		for (k = 0; k <= (LENGTH * 2) - 1 ; k = k + 2) begin
+			realCoeffBuffer[coeffBufferCounter] = MIFBuffer[k];
+			imagCoeffBuffer[coeffBufferCounter] = MIFBuffer[k+1];
+		
+			coeffBufferCounter = coeffBufferCounter + 20'd1;
+		end
+		
 	end
 	
 	// Setting the local parameters + ouputs to 0.
@@ -68,15 +90,7 @@ initial begin: initValues
 	coeffOutRe =  {(DATA_WIDTH){1'd0}};
 	coeffOutIm =  {(DATA_WIDTH){1'd0}};
 	
-	// Transfer the values in MIFBuffer to the variables realCoeffBuffer and imagCoeffBuffer.
-	// The MIF file is structured real coeff then imag coeff (one coefficient set) then repeat 
-	// 9999 times more.
-	for (k = 0; k <= (LENGTH * 2) - 1 ; k = k + 2) begin
-		realCoeffBuffer[coeffBufferCounter] = MIFBuffer[k];
-		imagCoeffBuffer[coeffBufferCounter] = MIFBuffer[k+1];
-		
-		coeffBufferCounter = coeffBufferCounter + 20'd1;
-	end
+	
 	
 	// Reset coeffBufferCounter once more so that it can then be used in the FSM.
 	coeffBufferCounter = 20'd0;
