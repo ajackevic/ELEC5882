@@ -34,7 +34,8 @@ tChirp = 0:1/samplingFreqs:chirpDuration-1/samplingFreqs;
 chirpWave = chirp(tChirp,chirpFreqStart,chirpDuration,chirpFreqEnd);
 
 % Impulse response of the matched filter. This is equal to the complex
-% conjugate time reversal of the transmitted signal (chirpWave).
+% conjugate time reversal of the transmitted signal (chirpWave). The
+% impulse reponse is muiltiplied by 1000 to aquire integers.
 h_t = flip(conj(hilbert(chirpWave))) * 1000;
 
 
