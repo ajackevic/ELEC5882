@@ -7,7 +7,7 @@ module testMIFRead_tb;
 
 
 // Parameters for creating the 50MHz clock signal
-localparam NUM_CYCLES = 500;
+localparam NUM_CYCLES = 50000;
 localparam CLOCK_FREQ = 50000000;
 localparam RST_CYCLES = 10;
 
