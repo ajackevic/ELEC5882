@@ -26,9 +26,9 @@ samplingFreqs = 1e5;
 % Sampling frequency of 100KHz for  second duration.
 tChirp = 0:1/samplingFreqs:chirpDuration-1/samplingFreqs;
 % Creating the time scale for x_t, this is used when plotting the graph.
-tInput = linspace(0,(chirpDuration*18),((samplingFreqs/2)*18));
+tInput = linspace(0,(chirpDuration*18),((samplingFreqs/2)*13.2));
 % Creating the time scale for y_t.
-tOut = linspace(0,(chirpDuration*18),((samplingFreqs/2)*18)+samplingFreqs/2-1);
+tOut = linspace(0,(chirpDuration*18),((samplingFreqs/2)*12.4)+samplingFreqs/2-1);
 
 
 % Creating a linear chirp waveform 

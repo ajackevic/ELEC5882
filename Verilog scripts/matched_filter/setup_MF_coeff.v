@@ -37,7 +37,7 @@ reg signed [DATA_WIDTH-1:0] imagCoeffBuffer [0:LENGTH - 1];
 
 
 // Width is equal to log2(LENGTH). The value is then rounded up.
-reg [13:0] coeffBufferCounter; 
+reg [19:0] coeffBufferCounter; 
 
 
 // FSM.
@@ -62,7 +62,7 @@ initial begin: initValues
 	end
 	
 	// Setting the local parameters + ouputs to 0.
-	coeffBufferCounter = 14'd0;
+	coeffBufferCounter = 20'd0;
 	state = IDLE;
 	coeffSetFlag = 1'd0;
 	coeffOutRe =  {(DATA_WIDTH){1'd0}};
@@ -75,11 +75,11 @@ initial begin: initValues
 		realCoeffBuffer[coeffBufferCounter] = MIFBuffer[k];
 		imagCoeffBuffer[coeffBufferCounter] = MIFBuffer[k+1];
 		
-		coeffBufferCounter = coeffBufferCounter + 14'd1;
+		coeffBufferCounter = coeffBufferCounter + 20'd1;
 	end
 	
 	// Reset coeffBufferCounter once more so that it can then be used in the FSM.
-	coeffBufferCounter = 14'd0;
+	coeffBufferCounter = 20'd0;
 end
 
 
@@ -114,7 +114,7 @@ always @ (posedge clock) begin
 			else begin
 				coeffOutRe <= realCoeffBuffer[coeffBufferCounter];
 				coeffOutIm <= imagCoeffBuffer[coeffBufferCounter];
-				coeffBufferCounter <= coeffBufferCounter + 14'd1;
+				coeffBufferCounter <= coeffBufferCounter + 20'd1;
 			end
 			
 		end
@@ -126,7 +126,7 @@ always @ (posedge clock) begin
 			coeffOutRe <=  {(DATA_WIDTH){1'd0}};
 			coeffOutIm <=  {(DATA_WIDTH){1'd0}};
 			coeffSetFlag <= 1'd1;
-			coeffBufferCounter <= 14'd0;
+			coeffBufferCounter <= 20'd0;
 			
 		end
 		
@@ -143,7 +143,7 @@ always @ (posedge clock) begin
 		
 			coeffOutRe <=  {(DATA_WIDTH){1'd0}};
 			coeffOutIm <=  {(DATA_WIDTH){1'd0}};
-			coeffBufferCounter <= 14'd0;
+			coeffBufferCounter <= 20'd0;
 			coeffSetFlag <= 1'd0;
 			state <= IDLE;
 			
