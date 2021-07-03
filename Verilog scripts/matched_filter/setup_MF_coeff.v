@@ -58,7 +58,7 @@ initial begin: initValues
 		$readmemb("MFInputData.mif", MIFBuffer);
 	end
 	else begin
-		$readmemb("MFImpulseCoeff.mif", MIFBuffer);
+		$readmemb("simulation/modelsim/MFImpulseCoeff.mif", MIFBuffer);
 	end
 	
 	// Setting the local parameters + ouputs to 0.
