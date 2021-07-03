@@ -65,7 +65,7 @@ end
 setup_MF_coeff #(
 	.LENGTH 			(LENGTH),
 	.DATA_WIDTH 	(DATA_WIDTH),
-	.DATA_MIF		(0)
+	.DATA_MIF		(1)
 
 ) dut (
 	.clock			(clock),
