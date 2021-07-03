@@ -46,7 +46,7 @@ testMIFRead #(
 	
 	.coeffSetFlag	(),
 	.coeffOutRe		(outputValueRe),
-	.coeffOutRe		(outputValueIm)
+	.coeffOutIm		(outputValueIm)
 );
 
 
