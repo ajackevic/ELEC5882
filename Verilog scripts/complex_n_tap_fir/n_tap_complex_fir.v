@@ -113,22 +113,25 @@ always @(posedge clock) begin
 		// coefficients to coeffBufferRe and coeffBufferIn. Once all the coefficients 
 		// are loaded the state transitions to FIR_MAIN.
 		LOAD_COEFFICIENTS: begin
-			
-			// Shift the values inside coeffBufferRe and coeffBufferIm by 1.
-			for (n = LENGTH - 1; n > 0; n = n - 1) begin
-				coeffBufferRe[n] <= coeffBufferRe[n-1];
-				coeffBufferIm[n] <= coeffBufferIm[n-1];
-			end
-			
-			
-			// Load the coefficientInRe and coefficientInIm value to the start of the buffer.
-			coeffBufferRe[0] <= coeffInRe;
-			coeffBufferIm[0] <= coeffInIm;
+				
 			
 			// If coefficientsSetFlag flag is set, transition to FIR_MAIN and disable the 
 			// loading of the coefficients.
 			if(coefficientsSetFlag) begin
 				state <= FIR_MAIN;
+			end
+			else begin
+			
+				// Shift the values inside coeffBufferRe and coeffBufferIm by 1.
+				for (n = LENGTH - 1; n > 0; n = n - 1) begin
+					coeffBufferRe[n] <= coeffBufferRe[n-1];
+					coeffBufferIm[n] <= coeffBufferIm[n-1];
+				end
+			
+			
+				// Load the coefficientInRe and coefficientInIm value to the start of the buffer.
+				coeffBufferRe[0] <= coeffInRe;
+				coeffBufferIm[0] <= coeffInIm;
 			end
 		end
 
