@@ -19,7 +19,7 @@
 module read_MIF_file #(
 	parameter LENGTH = 10000,
 	parameter DATA_WIDTH = 16,
-	parameter DATA_MIF = 1			// 1 is for coefficient, 2 is for input data.
+	parameter DATA_TYPE = 1			// 1 is for coefficient, 2 is for input data.
 
 )(
 	input clock,
@@ -32,8 +32,8 @@ module read_MIF_file #(
 
 // Local buffer parameters.
 reg signed [DATA_WIDTH-1:0] MIFBuffer [0:(LENGTH * 2) - 1];
-reg signed [DATA_WIDTH-1:0] realCoeffBuffer [0:(LENGTH*(DATA_MIF)) - 1];
-reg signed [DATA_WIDTH-1:0] imagCoeffBuffer [0:(LENGTH*(2-DATA_MIF)) - 1];
+reg signed [DATA_WIDTH-1:0] realCoeffBuffer [0:(LENGTH*(DATA_TYPE)) - 1];
+reg signed [DATA_WIDTH-1:0] imagCoeffBuffer [0:(LENGTH*(2-DATA_TYPE)) - 1];
 
 
 // Width is equal to log2(LENGTH). The value is then rounded up.
@@ -64,7 +64,7 @@ initial begin: initValues
 	
 	
 	// Read the MIF file and transfer is contents to the variable MIFBuffer.
-	if(DATA_MIF == 2) begin
+	if(DATA_TYPE == 2) begin
 		$readmemb("MFInputData.mif", MIFBuffer);
 		
 		// Transfer the values of MIFBuffer to the buffer variables realCoeffBuffer 
@@ -106,10 +106,10 @@ always @ (posedge clock) begin
 		// the state MOVE_COEFF. If not set, the outputs of the module are set to 0.
 		IDLE: begin
 		
-			if(enable && DATA_MIF == 1) begin
+			if(enable && DATA_TYPE == 1) begin
 				state <= MOVE_COEFF;
 			end
-			else if(enable && DATA_MIF == 2) begin
+			else if(enable && DATA_TYPE == 2) begin
 				state <= MOVE_DATA_IN;
 			end
 			else begin

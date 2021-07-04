@@ -29,7 +29,7 @@ end
 read_MIF_file #(
 	.LENGTH 				(COEFF_LENGTH),
 	.DATA_WIDTH 		(DATA_WIDTH),
-	.DATA_MIF 			(COEFF)
+	.DATA_TYPE 			(COEFF)
 
 ) MFCoeff (
 	.clock				(),
@@ -45,7 +45,7 @@ read_MIF_file #(
 read_MIF_file #(
 	.LENGTH 				(COEFF_LENGTH),
 	.DATA_WIDTH 		(DATA_WIDTH),
-	.DATA_MIF 			(DATA_IN)
+	.DATA_TYPE 			(DATA_IN)
 
 ) MFDataIn (
 	.clock				(),

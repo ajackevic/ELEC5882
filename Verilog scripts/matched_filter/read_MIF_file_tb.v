@@ -13,7 +13,7 @@
  otherwise ModelSim will no read the MIF data. To compile successfully in Quartus have a copy
  of the MIF file in <project directory>\ELEC5882\Verilog scripts\matched_filter too.
  
- Set DATA_MIF to 1 to load the coeff and 2 to load the input data.
+ Set DATA_TYPE to 1 to load the coeff and 2 to load the input data.
 
 
 */
@@ -67,7 +67,7 @@ end
 setup_MF_coeff #(
 	.LENGTH 			(LENGTH),
 	.DATA_WIDTH 	(DATA_WIDTH),
-	.DATA_MIF		(2)
+	.DATA_TYPE		(2)
 
 ) dut (
 	.clock			(clock),
