@@ -9,7 +9,16 @@ module matched_filter #(
 	output reg signed [DATA_WIDTH - 1:0] filterOut
 );
 
+initial begin
 
+
+end
+
+
+
+always @ (posedge clock) begin
+
+end
 
 /*
  Right in this script I need to instantiate the n_tap_complex_fir module and setup_MF_coeff.
