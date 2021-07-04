@@ -27,6 +27,8 @@ initial begin
 	enableMFCoeff <= 1'd0;
 	enableMFDataIn <= 1'd0;
 	enablecomplexFIR <= 1'd0;
+	
+	filterOut <= {(DATA_WIDTH){1'd0}};
 end
 
 
