@@ -96,7 +96,7 @@ always @(posedge clock) begin
 		coeffCounter <= coeffCounter + 10'd1;
 
 		// Set flag high when coeffCounter is equal to the filter length - 1.
-		if(coeffCounter == LENGTH - 1) begin
+		if(coeffCounter == LENGTH) begin
 			coeffSetFlag <= 1'd1;
 		end
 
