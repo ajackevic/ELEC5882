@@ -1,6 +1,6 @@
 module matched_filter #(
 	parameter COEFF_LENGTH = 10000,
-	parameter DATA_LENGTH = 33000,
+	parameter DATA_LENGTH = 330000,
 	parameter HT_COEFF_LENGTH = 27,
 	parameter HT_DATA_WIDTH = 18,
 	parameter DATA_WIDTH = 18
