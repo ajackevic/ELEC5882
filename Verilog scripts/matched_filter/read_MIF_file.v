@@ -33,7 +33,7 @@ module read_MIF_file #(
 // Local buffer parameters.
 reg signed [DATA_WIDTH-1:0] MIFBuffer [0:(LENGTH * 2) - 1];
 reg signed [DATA_WIDTH-1:0] realCoeffBuffer [0:(LENGTH*(DATA_TYPE)) - 1];
-reg signed [DATA_WIDTH-1:0] imagCoeffBuffer [0:(LENGTH*(2-DATA_TYPE)) - 1];
+reg signed [DATA_WIDTH-1:0] imagCoeffBuffer [0:(LENGTH*(2-DATA_TYPE)) + (DATA_TYPE - 2)];
 
 
 // Width is equal to log2(LENGTH). The value is then rounded up.
