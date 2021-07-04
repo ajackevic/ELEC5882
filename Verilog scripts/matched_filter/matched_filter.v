@@ -136,7 +136,7 @@ always @ (posedge clock) begin
 		
 		IDLE: begin
 			if(enable) begin
-			
+				state <= LOAD_COEFF;
 			end
 			else begin
 			
