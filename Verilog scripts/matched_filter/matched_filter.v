@@ -164,11 +164,11 @@ always @ (posedge clock) begin
 		LOAD_COEFF: begin
 						
 			if(coeffFinishedFlag) begin
+			
 				enableMFCoeff <= 1'd0;
 				state <= LOAD_DATA;
 				enableMFDataIn <= 1'd1;
 				enableHT <= 1'd1;
-				
 				
 			end
 			else begin
