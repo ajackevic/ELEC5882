@@ -120,7 +120,7 @@ fileID = fopen(MIFFile,'w');
 % are the rounded to int values. They are printed in 2's
 % compliment format. The length of each value is 16 bits.
 for i = 1:1:length(receivedSignal)
-    fprintf(fileID,'%s\n', dec2bin(round(receivedSignal(i)),16));
+    fprintf(fileID,'%s\n', dec2bin(round(receivedSignal(i)),18));
 end
 
 
