@@ -40,7 +40,7 @@ read_MIF_file #(
 
 ) MFCoeff (
 	.clock				(clock),
-	.enable				(),
+	.enable				(enableMFCoeff),
 	
 	.coeffSetFlag		(),	
 	.outputRe			(),
@@ -56,7 +56,7 @@ read_MIF_file #(
 
 ) MFDataIn (
 	.clock				(clock),
-	.enable				(),
+	.enable				(enableMFDataIn),
 	
 	.coeffSetFlag		(),	
 	.outputRe			(),
@@ -71,7 +71,7 @@ setup_complex_FIR_coeff #(
 	.DATA_WIDTH 		(DATA_WIDTH)
 ) coplexFIR (
 	.clock				(clock),
-	.enable				(),
+	.enable				(enablecomplexFIR),
 	.coeffSetFlag		(),
 	
 	.coefficientOutRe	(),
