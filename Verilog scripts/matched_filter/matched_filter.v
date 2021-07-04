@@ -115,8 +115,8 @@ n_tap_complex_fir #(
 	.coefficientsSetFlag	(dataFinishedFlag),
 	.loadDataFlag			(loadDataFlag),
 	.stopDataLoadFlag		(stopDataLoadFlag),
-	.dataInRe				(dataMIFOutRe),
-	.dataInIm				(dataMIFOutIm),
+	.dataInRe				(),
+	.dataInIm				(),
 	.coeffInRe				(coeffMIFOutRe),
 	.coeffInIm				(coeffMIFOutIm),
 	
