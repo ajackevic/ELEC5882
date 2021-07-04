@@ -179,11 +179,11 @@ always @ (posedge clock) begin
 		
 		end
 		
-		STOP: beign
+		STOP: begin
 		
 		end
 		
-		default: beign
+		default: begin
 		
 		end
 		
