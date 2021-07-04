@@ -45,7 +45,7 @@ reg [2:0] state;
 localparam IDLE = 1;
 localparam LOAD_COEFF = 2;
 localparam LOAD_DATA = 3;
-localparam STOP;
+localparam STOP = 4;
 
 
 
@@ -132,7 +132,29 @@ n_tap_complex_fir #(
 
 
 always @ (posedge clock) begin
-
+	case(state)
+		
+		IDLE: begin
+		
+		end
+		
+		LOAD_COEFF: begin
+		
+		end
+		
+		LOAD_DATA: begin
+		
+		end
+		
+		STOP: beign
+		
+		end
+		
+		default: beign
+		
+		end
+		
+	endcase
 end
 
 /*
