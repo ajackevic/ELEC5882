@@ -20,7 +20,7 @@ localparam DATA_IN = 2;
 reg enableMFCoeff;
 reg enableMFDataIn;
 reg enablecomplexFIR;
-
+reg enableHT;
 
 
 reg loadDataFlag;
@@ -56,6 +56,7 @@ initial begin
 	enableMFCoeff <= 1'd0;
 	enableMFDataIn <= 1'd0;
 	enablecomplexFIR <= 1'd0;
+	enableHT <= 1'd0;
 	
 	
 	loadDataFlag <= 1'd0;
@@ -131,8 +132,8 @@ n_tap_complex_fir #(
 	.LENGTH 				(HT_COEFF_LENGTH),
 	.DATA_WIDTH 		(HT_DATA_WIDTH)
 ) hilbertTransform (
-	.clock				(),
-	.enable				(),
+	.clock				(clock),
+	.enable				(enableHT),
 	.stopDataInFlag	(),
 	.dataIn				(),
 	
