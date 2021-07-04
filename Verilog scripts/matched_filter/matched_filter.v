@@ -9,10 +9,39 @@ module matched_filter #(
 	output reg signed [DATA_WIDTH - 1:0] filterOut
 );
 
+
+
+
+
+
+
+
+
+
 initial begin
 
 
 end
+
+setup_complex_FIR_coeff #(
+	.LENGTH				(),
+	.DATA_WIDTH 		()
+)(
+	.clock				(),
+	.enable				(),
+	.coeffSetFlag		(),
+	.coefficientOutRe	(),
+	.coefficientOutIm	()
+);
+
+
+
+
+
+
+
+
+
 
 
 
