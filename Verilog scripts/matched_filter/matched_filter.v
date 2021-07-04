@@ -29,7 +29,8 @@ wire signed [DATA_WIDTH - 1:0] dataMIFOutRe;
 wire signed [DATA_WIDTH - 1:0] dataMIFOutIm;
 
 
-
+reg loadDataFlag;
+reg stopDataLoadFlag;
 
 
 initial begin
@@ -37,6 +38,11 @@ initial begin
 	enableMFCoeff <= 1'd0;
 	enableMFDataIn <= 1'd0;
 	enablecomplexFIR <= 1'd0;
+	
+	
+	loadDataFlag <= 1'd0;
+	stopDataLoadFlag <= 1'd0;
+	
 	
 	filterOut <= {(DATA_WIDTH){1'd0}};
 end
@@ -85,8 +91,8 @@ n_tap_complex_fir #(
 	.clock					(clock),
 	.loadCoefficients		(enablecomplexFIR),
 	.coefficientsSetFlag	(dataFinishedFlag),
-	.loadDataFlag			(),
-	.stopDataLoadFlag		(),
+	.loadDataFlag			(loadDataFlag),
+	.stopDataLoadFlag		(stopDataLoadFlag),
 	.dataInRe				(dataMIFOutRe),
 	.dataInIm				(dataMIFOutIm),
 	.coeffInRe				(coeffMIFOutRe),
