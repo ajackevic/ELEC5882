@@ -135,7 +135,12 @@ always @ (posedge clock) begin
 	case(state)
 		
 		IDLE: begin
-		
+			if(enable) begin
+			
+			end
+			else begin
+			
+			end
 		end
 		
 		LOAD_COEFF: begin
