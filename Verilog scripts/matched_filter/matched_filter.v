@@ -39,8 +39,8 @@ wire signed [(HT_DATA_WIDTH * 2) - 1:0] HTOutRe;
 wire signed [(HT_DATA_WIDTH * 2) - 1:0] HTOutIm;
 
 
-wire MFOutputRe;
-wire MFOutputIm;
+wire signed [(DATA_WIDTH * 3) - 1:0] MFOutputRe;
+wire signed [(DATA_WIDTH * 3) - 1:0] MFOutputIm;
 
 
 
