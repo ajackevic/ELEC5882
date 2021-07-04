@@ -3,7 +3,7 @@ module matched_filter #(
 	parameter DATA_LENGTH = 33000,
 	parameter HT_COEFF_LENGTH = 27,
 	parameter HT_DATA_WIDTH = 18,
-	parameter DATA_WIDTH = 16
+	parameter DATA_WIDTH = 18
 )(
 	input clock,
 	input enable,
