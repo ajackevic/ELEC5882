@@ -10,7 +10,7 @@ localparam COEFF_LENGTH = 10000;
 localparam DATA_LENGTH = 33000;
 localparam HT_COEFF_LENGTH = 27;
 localparam HT_DATA_WIDTH = 18;
-localparam DATA_WIDTH = 16;
+localparam DATA_WIDTH = 18;
 
 
 
