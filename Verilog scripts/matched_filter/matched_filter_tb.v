@@ -2,7 +2,7 @@ module matched_filter_tb;
 
 
 // Parameters for creating the 50MHz clock signal.
-localparam NUM_CYCLES = 500;
+localparam NUM_CYCLES = 500000;
 localparam CLOCK_FREQ = 50000000;
 localparam RST_CYCLES = 20;
 
