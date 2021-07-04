@@ -26,9 +26,9 @@ end
 
 
 setup_MF_coeff #(
-	.LENGTH 				(),
-	.DATA_WIDTH 		(),
-	.DATA_MIF 			()
+	.LENGTH 				(COEFF_LENGTH),
+	.DATA_WIDTH 		(DATA_WIDTH),
+	.DATA_MIF 			(1)
 
 ) MFCoeff (
 	.clock				(),
@@ -44,8 +44,8 @@ setup_MF_coeff #(
 
 
 setup_complex_FIR_coeff #(
-	.LENGTH				(),
-	.DATA_WIDTH 		()
+	.LENGTH				(DATA_LENGTH),
+	.DATA_WIDTH 		(DATA_WIDTH)
 ) coplexFIR (
 	.clock				(),
 	.enable				(),
