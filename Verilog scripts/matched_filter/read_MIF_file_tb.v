@@ -35,8 +35,8 @@ localparam CLOCK_FREQ = 50000000;
 localparam RST_CYCLES = 10;
 
 // Parameters for the dut module.
-localparam LENGTH = 33000;
-localparam DATA_WIDTH = 16;
+localparam LENGTH = 10000;
+localparam DATA_WIDTH = 18;
 
 
 
@@ -64,10 +64,10 @@ end
 
 
 // Connecting the instantiated dut module.
-setup_MF_coeff #(
+read_MIF_file #(
 	.LENGTH 				(LENGTH),
 	.DATA_WIDTH 		(DATA_WIDTH),
-	.DATA_TYPE			(2)
+	.DATA_TYPE			(1)
 
 ) dut (
 	.clock				(clock),
