@@ -19,7 +19,7 @@ localparam DATA_IN = 2;
 
 reg enableMFCoeff;
 reg enableMFDataIn;
-reg enablecomplexFIR;
+reg enablecomplexFIRCoeff;
 reg enableHT;
 
 
@@ -57,7 +57,7 @@ initial begin
 
 	enableMFCoeff <= 1'd0;
 	enableMFDataIn <= 1'd0;
-	enablecomplexFIR <= 1'd0;
+	enablecomplexFIRCoeff <= 1'd0;
 	enableHT <= 1'd0;
 	
 	
@@ -113,8 +113,8 @@ n_tap_complex_fir #(
 	.DATA_WIDTH 			(DATA_WIDTH)
 ) coplexFIR (
 	.clock					(clock),
-	.loadCoefficients		(enablecomplexFIR),
-	.coefficientsSetFlag	(dataFinishedFlag),
+	.loadCoefficients		(enablecomplexFIRCoeff),
+	.coefficientsSetFlag	(coeffFinishedFlag),
 	.loadDataFlag			(loadDataFlag),
 	.stopDataLoadFlag		(stopDataLoadFlag),
 	.dataInRe				(),
@@ -169,9 +169,11 @@ always @ (posedge clock) begin
 				enableMFDataIn <= 1'd1;
 				enableHT <= 1'd1;
 				
+				
 			end
 			else begin
 				enableMFCoeff <= 1'd1;
+				enablecomplexFIRCoeff <= 1'd1;
 			end
 		end
 		
