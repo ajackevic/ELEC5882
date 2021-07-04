@@ -162,7 +162,9 @@ always @ (posedge clock) begin
 		end
 		
 		LOAD_COEFF: begin
-		
+			enableMFCoeff <= 1'd1;
+			
+			
 		end
 		
 		LOAD_DATA: begin
