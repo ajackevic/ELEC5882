@@ -1,6 +1,8 @@
 module matched_filter #(
 	parameter COEFF_LENGTH = 10000,
 	parameter DATA_LENGTH = 33000,
+	parameter HT_COEFF_LENGTH = 27,
+	parameter HT_DATA_WIDTH = 18,
 	parameter DATA_WIDTH = 16
 )(
 	input clock,
@@ -122,9 +124,12 @@ n_tap_complex_fir #(
 );
 
 
+
+
+
  hilbert_transform #(
-	.LENGTH 				(),
-	.DATA_WIDTH 		()
+	.LENGTH 				(HT_COEFF_LENGTH),
+	.DATA_WIDTH 		(HT_DATA_WIDTH)
 ) hilbertTransform (
 	.clock				(),
 	.enable				(),
