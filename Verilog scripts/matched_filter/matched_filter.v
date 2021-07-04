@@ -139,7 +139,7 @@ always @ (posedge clock) begin
 				state <= LOAD_COEFF;
 			end
 			else begin
-			
+				filterOut <= {(DATA_WIDTH){1'd0}};
 			end
 		end
 		
