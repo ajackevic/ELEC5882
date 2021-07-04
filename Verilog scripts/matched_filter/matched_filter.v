@@ -6,7 +6,7 @@ module matched_filter #(
 	input clock,
 	input enable,
 	
-	output reg signed [DATA_WIDTH - 1:0] filterOut
+	output reg signed [DATA_WIDTH - 1:0] filterOut  // This will need to be *3 ot *4?
 );
 
 
@@ -139,7 +139,7 @@ always @ (posedge clock) begin
 				state <= LOAD_COEFF;
 			end
 			else begin
-				filterOut <= {(DATA_WIDTH){1'd0}};
+				filterOut <= {(DATA_WIDTH){1'd0}}; // This will need to be *3 ot *4?
 			end
 		end
 		
