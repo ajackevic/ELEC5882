@@ -21,7 +21,7 @@ reg enablecomplexFIR;
 
 
 
-wire dataFinishedFlag;
+wire coeffFinishedFlag;
 wire signed [DATA_WIDTH - 1:0] coeffMIFOutRe;
 wire signed [DATA_WIDTH - 1:0] coeffMIFOutIm;
 
@@ -51,7 +51,7 @@ read_MIF_file #(
 	.clock				(clock),
 	.enable				(enableMFCoeff),
 	
-	.dataFinishedFlag	(dataFinishedFlag),	
+	.dataFinishedFlag	(coeffFinishedFlag),	
 	.outputRe			(coeffMIFOutRe),
 	.outputIm			(coeffMIFOutIm)
 );
