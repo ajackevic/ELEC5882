@@ -21,7 +21,7 @@ reg enablecomplexFIR;
 
 
 
-wire coeffSetFlag;
+wire dataFinishedFlag;
 
 
 initial begin
@@ -44,7 +44,7 @@ read_MIF_file #(
 	.clock				(clock),
 	.enable				(enableMFCoeff),
 	
-	.coeffSetFlag		(coeffSetFlag),	
+	.dataFinishedFlag	(dataFinishedFlag),	
 	.outputRe			(),
 	.outputIm			()
 );
@@ -60,7 +60,7 @@ read_MIF_file #(
 	.clock				(clock),
 	.enable				(enableMFDataIn),
 	
-	.coeffSetFlag		(),	
+	.dataFinishedFlag	(),	
 	.outputRe			(),
 	.outputIm			()
 );
@@ -74,7 +74,7 @@ setup_complex_FIR_coeff #(
 ) coplexFIR (
 	.clock				(clock),
 	.enable				(enablecomplexFIR),
-	.coeffSetFlag		(coeffSetFlag),
+	.dataFinishedFlag		(dataFinishedFlag),
 	
 	.coefficientOutRe	(),
 	.coefficientOutIm	()

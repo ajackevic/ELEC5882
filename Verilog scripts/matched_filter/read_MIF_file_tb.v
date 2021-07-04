@@ -46,7 +46,7 @@ reg clock;
 reg enableModule;
 wire signed [DATA_WIDTH-1:0] outputValueRe;
 wire signed [DATA_WIDTH-1:0] outputValueIm;
-wire coeffSetFlag;
+wire dataFinishedFlag;
 
 
 
@@ -65,17 +65,17 @@ end
 
 // Connecting the instantiated dut module.
 setup_MF_coeff #(
-	.LENGTH 			(LENGTH),
-	.DATA_WIDTH 	(DATA_WIDTH),
-	.DATA_TYPE		(2)
+	.LENGTH 				(LENGTH),
+	.DATA_WIDTH 		(DATA_WIDTH),
+	.DATA_TYPE			(2)
 
 ) dut (
-	.clock			(clock),
-	.enable			(enableModule),
+	.clock				(clock),
+	.enable				(enableModule),
 	
-	.coeffSetFlag	(coeffSetFlag),
-	.outputRe		(outputValueRe),
-	.outputIm		(outputValueIm)
+	.dataFinishedFlag	(dataFinishedFlag),
+	.outputRe			(outputValueRe),
+	.outputIm			(outputValueIm)
 );
 
 

@@ -11,7 +11,7 @@
  FIR filter. The coefficients are aquired through the MIF file MFImpulseCoeff.mif. The
  MIF file was produced by the script MFImpulseCoeffMIF.m. The coefficients will be 
  passed on as soon as enable is set, and once all the values are passed through outputRe 
- and outputIm the coeffSetFlag is then set.
+ and outputIm the dataFinishedFlag is then set.
 
 
 */
@@ -25,7 +25,7 @@ module read_MIF_file #(
 	input clock,
 	input enable,
 	
-	output reg coeffSetFlag,	
+	output reg dataFinishedFlag,	
 	output reg signed [DATA_WIDTH - 1:0] outputRe,
 	output reg signed [DATA_WIDTH - 1:0] outputIm
 );
@@ -57,9 +57,9 @@ initial begin: initValues
 	// Setting the local parameters + ouputs to 0.
 	coeffBufferCounter = 20'd0;
 	state = IDLE;
-	coeffSetFlag = 1'd0;
-	outputRe =  {(DATA_WIDTH){1'd0}};
-	outputIm =  {(DATA_WIDTH){1'd0}};
+	dataFinishedFlag = 1'd0;
+	outputRe = {(DATA_WIDTH){1'd0}};
+	outputIm = {(DATA_WIDTH){1'd0}};
 	
 	
 	
@@ -115,7 +115,7 @@ always @ (posedge clock) begin
 			else begin
 				outputRe <=  {(DATA_WIDTH){1'd0}};
 				outputIm <=  {(DATA_WIDTH){1'd0}};
-				coeffSetFlag <= 1'd0;
+				dataFinishedFlag <= 1'd0;
 			end
 			
 		end
@@ -128,7 +128,7 @@ always @ (posedge clock) begin
 		
 			if(coeffBufferCounter == LENGTH) begin
 				state <= STOP;
-				coeffSetFlag <= 1'd1;
+				dataFinishedFlag <= 1'd1;
 			end
 			else begin
 				outputRe <= realCoeffBuffer[coeffBufferCounter];
@@ -146,7 +146,7 @@ always @ (posedge clock) begin
 		
 			if(coeffBufferCounter == LENGTH * 2) begin
 				state <= STOP;
-				coeffSetFlag <= 1'd1;
+				dataFinishedFlag <= 1'd1;
 			end
 			else begin
 				outputRe <= realCoeffBuffer[coeffBufferCounter];
@@ -158,12 +158,12 @@ always @ (posedge clock) begin
 		
 		
 		
-		// State STOP. This state is responsiable for setting the oputputs to 0 (appart from coeffSetFlag).
+		// State STOP. This state is responsiable for setting the oputputs to 0 (appart from dataFinishedFlag).
 		STOP: begin
 		
 			outputRe <=  {(DATA_WIDTH){1'd0}};
 			outputIm <=  {(DATA_WIDTH){1'd0}};
-			coeffSetFlag <= 1'd1;
+			dataFinishedFlag <= 1'd1;
 			coeffBufferCounter <= 20'd0;
 			
 		end
@@ -176,7 +176,7 @@ always @ (posedge clock) begin
 			outputRe <=  {(DATA_WIDTH){1'd0}};
 			outputIm <=  {(DATA_WIDTH){1'd0}};
 			coeffBufferCounter <= 20'd0;
-			coeffSetFlag <= 1'd0;
+			dataFinishedFlag <= 1'd0;
 			state <= IDLE;
 			
 		end
