@@ -36,7 +36,7 @@ localparam RST_CYCLES = 10;
 
 // Parameters for the dut module.
 localparam LENGTH = 330000;
-localparam DATA_WIDTH = 16;
+localparam DATA_WIDTH = 18;
 
 
 
