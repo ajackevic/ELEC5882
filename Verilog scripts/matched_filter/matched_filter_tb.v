@@ -37,7 +37,7 @@ end
 	.HT_COEFF_LENGTH 	(HT_COEFF_LENGTH),
 	.HT_DATA_WIDTH 	(HT_DATA_WIDTH),
 	.DATA_WIDTH 		(DATA_WIDTH)
-)(
+) dut (
 	.clock				(clock),
 	.enable				(enableModule),
 	
