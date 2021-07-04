@@ -25,7 +25,7 @@ end
 
 
 
-setup_MF_coeff #(
+read_MIF_file #(
 	.LENGTH 				(COEFF_LENGTH),
 	.DATA_WIDTH 		(DATA_WIDTH),
 	.DATA_MIF 			(1)

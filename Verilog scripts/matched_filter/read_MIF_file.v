@@ -1,6 +1,6 @@
 /*
 
- setup_MF_coeff.v
+ read_MIF_file.v
  --------------
  By: Augustas Jackevic
  Date: July 2021
@@ -16,7 +16,7 @@
 
 */
 
-module setup_MF_coeff #(
+module read_MIF_file #(
 	parameter LENGTH = 10000,
 	parameter DATA_WIDTH = 16,
 	parameter DATA_MIF = 1			// 1 is for coefficient, 2 is for input data.

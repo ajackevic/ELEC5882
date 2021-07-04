@@ -1,6 +1,6 @@
 /*
 
- setup_MF_coeff_tb.v
+ read_MIF_file_tb.v
  --------------
  By: Augustas Jackevic
  Date: June 2021
@@ -24,7 +24,7 @@
 `timescale 1 ns/100 ps
 
 
-module setup_MF_coeff_tb;
+module read_MIF_file_tb;
 
 
 
