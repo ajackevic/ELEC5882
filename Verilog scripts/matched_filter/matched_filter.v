@@ -15,13 +15,18 @@ localparam DATA_IN = 2;
 
 
 
+reg enableMFCoeff;
+reg enableMFDataIn;
+reg enablecomplexFIR;
 
 
 
 
 initial begin
 
-
+	enableMFCoeff <= 1'd0;
+	enableMFDataIn <= 1'd0;
+	enablecomplexFIR <= 1'd0;
 end
 
 
