@@ -1,3 +1,8 @@
+// Setting the time unit used in this module.
+`timescale 1 ns/100 ps
+
+
+
 module matched_filter_tb;
 
 
