@@ -21,6 +21,11 @@ reg enablecomplexFIR;
 
 
 
+reg loadDataFlag;
+reg stopDataLoadFlag;
+
+
+
 wire coeffFinishedFlag;
 wire dataInFinishedFlag;
 wire signed [DATA_WIDTH - 1:0] coeffMIFOutRe;
@@ -29,8 +34,9 @@ wire signed [DATA_WIDTH - 1:0] dataMIFOutRe;
 wire signed [DATA_WIDTH - 1:0] dataMIFOutIm;
 
 
-reg loadDataFlag;
-reg stopDataLoadFlag;
+
+wire MFOutputRe;
+wire MFOutputIm;
 
 
 initial begin
@@ -98,8 +104,8 @@ n_tap_complex_fir #(
 	.coeffInRe				(coeffMIFOutRe),
 	.coeffInIm				(coeffMIFOutIm),
 	
-	.dataOutRe				(),
-	.dataOutIm				()
+	.dataOutRe				(MFOutputRe),
+	.dataOutIm				(MFOutputIm)
 );
 
 
