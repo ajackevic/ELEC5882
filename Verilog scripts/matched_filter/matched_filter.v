@@ -22,6 +22,8 @@ reg enablecomplexFIR;
 
 
 wire dataFinishedFlag;
+wire signed [DATA_WIDTH - 1:0] coeffMIFOutRe;
+wire signed [DATA_WIDTH - 1:0] coeffMIFOutIm;
 
 
 initial begin
