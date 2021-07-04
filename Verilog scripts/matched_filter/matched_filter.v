@@ -32,7 +32,7 @@ read_MIF_file #(
 	.DATA_TYPE 			(COEFF)
 
 ) MFCoeff (
-	.clock				(),
+	.clock				(clock),
 	.enable				(),
 	
 	.coeffSetFlag		(),	
@@ -48,7 +48,7 @@ read_MIF_file #(
 	.DATA_TYPE 			(DATA_IN)
 
 ) MFDataIn (
-	.clock				(),
+	.clock				(clock),
 	.enable				(),
 	
 	.coeffSetFlag		(),	
@@ -63,9 +63,10 @@ setup_complex_FIR_coeff #(
 	.LENGTH				(DATA_LENGTH),
 	.DATA_WIDTH 		(DATA_WIDTH)
 ) coplexFIR (
-	.clock				(),
+	.clock				(clock),
 	.enable				(),
 	.coeffSetFlag		(),
+	
 	.coefficientOutRe	(),
 	.coefficientOutIm	()
 );
