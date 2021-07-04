@@ -1,6 +1,12 @@
-module matched_filter(
-
-
+module matched_filter #(
+	parameter COEFF_LENGTH = 10000,
+	parameter DATA_LENGTH = 33000,
+	parameter DATA_WIDTH = 16
+)(
+	input clock,
+	input enable,
+	
+	output reg signed [DATA_WIDTH - 1:0] filterOut
 );
 
 
