@@ -122,7 +122,17 @@ n_tap_complex_fir #(
 );
 
 
-
+ hilbert_transform #(
+	.LENGTH 				(),
+	.DATA_WIDTH 		()
+) hilbertTransform (
+	.clock				(),
+	.enable				(),
+	.stopDataInFlag	(),
+	.dataIn				(),
+	
+	.dataOutRe			(),
+	.dataOutIm			()
 
 
 
