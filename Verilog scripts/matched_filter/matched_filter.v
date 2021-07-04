@@ -33,7 +33,6 @@ wire dataInFinishedFlag;
 wire signed [DATA_WIDTH - 1:0] coeffMIFOutRe;
 wire signed [DATA_WIDTH - 1:0] coeffMIFOutIm;
 wire signed [DATA_WIDTH - 1:0] dataMIFOutRe;
-wire signed [DATA_WIDTH - 1:0] dataMIFOutIm;
 
 
 
@@ -100,7 +99,7 @@ read_MIF_file #(
 	
 	.dataFinishedFlag	(dataInFinishedFlag),	
 	.outputRe			(dataMIFOutRe),
-	.outputIm			(dataMIFOutIm)
+	.outputIm			()
 );
 
 
