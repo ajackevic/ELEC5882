@@ -6,16 +6,49 @@ localparam NUM_CYCLES = 500;
 localparam CLOCK_FREQ = 50000000;
 localparam RST_CYCLES = 20;
 
+localparam COEFF_LENGTH = 10000;
+localparam DATA_LENGTH = 33000;
+localparam HT_COEFF_LENGTH = 27;
+localparam HT_DATA_WIDTH = 18;
+localparam DATA_WIDTH = 16;
+
+
+
 
 // Creating the lcoal parameters.
 reg clock;
-
+reg enableModule;
 
 
 // Set the initial value of the clock.
 initial begin
-	clock = 0;
+	clock = 1'd0;
+	enableModule = 1'd0;
+	
+	repeat(RST_CYCLES) @ (posedge clock);
+	enableModule = 1'd1;
 end
+
+
+
+ matched_filter #(
+	.COEFF_LENGTH 		(COEFF_LENGTH),
+	.DATA_LENGTH 		(DATA_LENGTH),
+	.HT_COEFF_LENGTH 	(HT_COEFF_LENGTH),
+	.HT_DATA_WIDTH 	(HT_DATA_WIDTH),
+	.DATA_WIDTH 		(DATA_WIDTH)
+)(
+	.clock				(clock),
+	.enable				(enableModule),
+	
+	.filterOut  		()
+);
+
+
+
+
+
+
 
 
 real HALF_CLOCK_PERIOD = (1000000000.0/$itor(CLOCK_FREQ))/2.0;
