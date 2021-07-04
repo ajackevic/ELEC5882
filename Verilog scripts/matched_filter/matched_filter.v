@@ -109,7 +109,7 @@ read_MIF_file #(
 
 
 n_tap_complex_fir #(
-	.LENGTH					(COEFF_LENGTH),
+	.LENGTH					(DATA_LENGTH),
 	.DATA_WIDTH 			(DATA_WIDTH)
 ) coplexFIR (
 	.clock					(clock),
