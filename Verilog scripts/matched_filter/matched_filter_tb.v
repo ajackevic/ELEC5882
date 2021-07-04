@@ -7,7 +7,7 @@ localparam CLOCK_FREQ = 50000000;
 localparam RST_CYCLES = 20;
 
 localparam COEFF_LENGTH = 10000;
-localparam DATA_LENGTH = 330000;
+localparam DATA_LENGTH = 33000;
 localparam HT_COEFF_LENGTH = 27;
 localparam HT_DATA_WIDTH = 18;
 localparam DATA_WIDTH = 18;
