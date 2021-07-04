@@ -134,7 +134,7 @@ n_tap_complex_fir #(
 	.clock				(clock),
 	.enable				(enableHT),
 	.stopDataInFlag	(),
-	.dataIn				(),
+	.dataIn				(dataMIFOutRe),
 	
 	.dataOutRe			(),
 	.dataOutIm			()
