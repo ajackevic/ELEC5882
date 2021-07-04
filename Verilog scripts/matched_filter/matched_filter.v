@@ -92,7 +92,7 @@ read_MIF_file #(
 
 
 read_MIF_file #(
-	.LENGTH 				(COEFF_LENGTH),
+	.LENGTH 				(DATA_LENGTH),
 	.DATA_WIDTH 		(DATA_WIDTH),
 	.DATA_TYPE 			(DATA_IN)
 
