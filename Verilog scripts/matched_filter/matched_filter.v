@@ -68,20 +68,23 @@ read_MIF_file #(
 
 
 
-setup_complex_FIR_coeff #(
-	.LENGTH				(DATA_LENGTH),
-	.DATA_WIDTH 		(DATA_WIDTH)
+n_tap_complex_fir #(
+	.LENGTH					(DATA_LENGTH),
+	.DATA_WIDTH 			(DATA_WIDTH)
 ) coplexFIR (
-	.clock				(clock),
-	.enable				(enablecomplexFIR),
-	.dataFinishedFlag		(dataFinishedFlag),
+	.clock					(clock),
+	.loadCoefficients		(enablecomplexFIR),
+	.coefficientsSetFlag	(dataFinishedFlag),
+	.loadDataFlag			(),
+	.stopDataLoadFlag		(),
+	.dataInRe				(),
+	.dataInIm				(),
+	.coeffInRe				(),
+	.coeffInIm				(),
 	
-	.coefficientOutRe	(),
-	.coefficientOutIm	()
+	.dataOutRe				(),
+	.dataOutIm				()
 );
-
-
-
 
 
 
