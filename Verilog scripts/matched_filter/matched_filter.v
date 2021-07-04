@@ -10,7 +10,8 @@ module matched_filter #(
 );
 
 
-
+localparam COEFF = 1;
+localparam DATA_IN = 2;
 
 
 
