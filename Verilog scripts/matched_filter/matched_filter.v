@@ -35,8 +35,8 @@ wire signed [DATA_WIDTH - 1:0] coeffMIFOutIm;
 wire signed [DATA_WIDTH - 1:0] dataMIFOutRe;
 
 
-wire signed [(HT_DATA_WIDTH * 2) - 1:0] HTOutRe;
-wire signed [(HT_DATA_WIDTH * 2) - 1:0] HTOutIm;
+wire signed [(DATA_WIDTH * 2) - 1:0] HTOutRe;
+wire signed [(DATA_WIDTH * 2) - 1:0] HTOutIm;
 
 
 wire signed [(DATA_WIDTH * 3) - 1:0] MFOutputRe;
@@ -132,7 +132,7 @@ n_tap_complex_fir #(
 
  hilbert_transform #(
 	.LENGTH 				(HT_COEFF_LENGTH),
-	.DATA_WIDTH 		(HT_DATA_WIDTH)
+	.DATA_WIDTH 		(DATA_WIDTH)
 ) hilbertTransform (
 	.clock				(clock),
 	.enable				(enableHT),
