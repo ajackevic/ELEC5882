@@ -26,6 +26,9 @@ wire signed [DATA_WIDTH - 1:0] coeffMIFOutRe;
 wire signed [DATA_WIDTH - 1:0] coeffMIFOutIm;
 
 
+
+
+
 initial begin
 
 	enableMFCoeff <= 1'd0;
@@ -34,6 +37,8 @@ initial begin
 	
 	filterOut <= {(DATA_WIDTH){1'd0}};
 end
+
+
 
 
 
@@ -47,8 +52,8 @@ read_MIF_file #(
 	.enable				(enableMFCoeff),
 	
 	.dataFinishedFlag	(dataFinishedFlag),	
-	.outputRe			(),
-	.outputIm			()
+	.outputRe			(coeffMIFOutRe),
+	.outputIm			(coeffMIFOutIm)
 );
 
 
@@ -81,8 +86,8 @@ n_tap_complex_fir #(
 	.stopDataLoadFlag		(),
 	.dataInRe				(),
 	.dataInIm				(),
-	.coeffInRe				(),
-	.coeffInIm				(),
+	.coeffInRe				(coeffMIFOutRe),
+	.coeffInIm				(coeffMIFOutIm),
 	
 	.dataOutRe				(),
 	.dataOutIm				()
