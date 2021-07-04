@@ -35,6 +35,9 @@ wire signed [DATA_WIDTH - 1:0] coeffMIFOutIm;
 wire signed [DATA_WIDTH - 1:0] dataMIFOutRe;
 
 
+wire signed [(HT_DATA_WIDTH * 2) - 1:0] HTOutRe;
+wire signed [(HT_DATA_WIDTH * 2) - 1:0] HTOutIm;
+
 
 wire MFOutputRe;
 wire MFOutputIm;
@@ -136,9 +139,9 @@ n_tap_complex_fir #(
 	.stopDataInFlag	(),
 	.dataIn				(dataMIFOutRe),
 	
-	.dataOutRe			(),
-	.dataOutIm			()
-
+	.dataOutRe			(HTOutRe),
+	.dataOutIm			(HTOutIm)
+);
 
 
 
