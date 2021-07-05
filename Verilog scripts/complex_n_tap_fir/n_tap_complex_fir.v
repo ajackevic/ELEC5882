@@ -53,6 +53,9 @@ reg signed [18:0] firOutputImIm;
 
 
 
+reg [19:0] coeffBufferCounter; 
+
+
 // Creating the parameters for the instantiated setup_complex_coefficients module.
 wire signed [DATA_WIDTH - 1:0] coefficientInRe;
 wire signed [DATA_WIDTH - 1:0] coefficientInIm;
@@ -83,6 +86,7 @@ initial begin : init_values
 		inputDataBufferIm[k] <= 0;
 	end
 
+	coeffBufferCounter <= 20'd0;
 	state <= IDLE;
 
 	firOutputReRe <= 0;
@@ -109,36 +113,33 @@ always @(posedge clock) begin
 			end
 		end
 
-		// State LOAD_COEFFICIENTS. This state is responsiable for loading the
-		// coefficients to coeffBufferRe and coeffBufferIn. Once all the coefficients 
-		// are loaded the state transitions to FIR_MAIN.
+		// State LOAD_COEFFICIENTS. This state is responsiable for loading the initial
+		// coefficients to coeffBufferRe and coeffBufferIn. Once the initial values are 
+		// set it tranistions to state FIR_MAIN.
 		LOAD_COEFFICIENTS: begin
 				
-			
-			// If coefficientsSetFlag flag is set, transition to FIR_MAIN and disable the 
-			// loading of the coefficients.
-			if(coefficientsSetFlag) begin
-				state <= FIR_MAIN;
-			end
-			else begin
-			
-				// Shift the values inside coeffBufferRe and coeffBufferIm by 1.
-				for (n = LENGTH - 1; n > 0; n = n - 1) begin
-					coeffBufferRe[n] <= coeffBufferRe[n-1];
-					coeffBufferIm[n] <= coeffBufferIm[n-1];
-				end
-			
-			
 				// Load the coefficientInRe and coefficientInIm value to the start of the buffer.
-				coeffBufferRe[0] <= coeffInRe;
-				coeffBufferIm[0] <= coeffInIm;
-			end
+				coeffBufferRe[LENGTH - coeffBufferCounter - 1] = coeffInRe;
+				coeffBufferIm[LENGTH - coeffBufferCounter - 1] = coeffInIm;
+				
+				coeffBufferCounter = coeffBufferCounter + 20'd1;
+				state = FIR_MAIN;
 		end
 
 		
 		// State FIR_MAIN. This state is responsiable for the main FIR opperation. It follows
-		// the logic outlined in the pdf "The workings of a complex FIR filter".
+		// the logic outlined in the pdf "The workings of a complex FIR filter". It also load 
+		// the coefficients in parallel to the FIR opperation.
 		FIR_MAIN: begin
+		
+			// Continoue loading the coefficients.
+			if(coeffBufferCounter <= LENGTH) begin
+				coeffBufferRe[LENGTH - coeffBufferCounter - 1] <= coeffInRe;
+				coeffBufferIm[LENGTH - coeffBufferCounter - 1] <= coeffInIm;
+				
+				coeffBufferCounter <= coeffBufferCounter + 20'd1;
+			end
+		
 		
 			// If the data input stream is ready, do the following.
 			if(loadDataFlag == 1) begin
