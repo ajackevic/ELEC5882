@@ -26,8 +26,8 @@ module n_tap_complex_fir #(
 	input coefficientsSetFlag,
 	input loadDataFlag,
 	input stopDataLoadFlag,
-	input signed [DATA_WIDTH - 1:0] dataInRe,
-	input signed [DATA_WIDTH - 1:0] dataInIm,
+	input signed [(DATA_WIDTH * 2) - 1:0] dataInRe,
+	input signed [(DATA_WIDTH * 2) - 1:0] dataInIm,
 	input signed [DATA_WIDTH - 1:0] coeffInRe,
 	input signed [DATA_WIDTH - 1:0] coeffInIm,
 	
@@ -40,16 +40,16 @@ module n_tap_complex_fir #(
 // Creating the buffers to store the input data and coefficients.
 reg signed [DATA_WIDTH - 1:0] coeffBufferRe [0:LENGTH - 1];
 reg signed [DATA_WIDTH - 1:0] coeffBufferIm [0:LENGTH - 1];
-reg signed [DATA_WIDTH - 1:0] inputDataBufferRe [0:LENGTH -1];
-reg signed [DATA_WIDTH - 1:0] inputDataBufferIm [0:LENGTH -1];
+reg signed [(DATA_WIDTH * 2) - 1:0] inputDataBufferRe [0:LENGTH -1];
+reg signed [(DATA_WIDTH * 2) - 1:0] inputDataBufferIm [0:LENGTH -1];
 // Note the range of reg signed [7:0] is [-128 to 127].
 
 
 // FIR = output width = input data width + coefficient width + log(N) 
-reg signed [18:0] firOutputReRe;
-reg signed [18:0] firOutputReIm;
-reg signed [18:0] firOutputImRe;
-reg signed [18:0] firOutputImIm;
+reg signed [19:0] firOutputReRe;
+reg signed [19:0] firOutputReIm;
+reg signed [19:0] firOutputImRe;
+reg signed [19:0] firOutputImIm;
 
 
 
