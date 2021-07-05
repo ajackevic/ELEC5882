@@ -89,15 +89,19 @@ always @(posedge clock) begin
 	// coeffSetFlag low and reset the coeffCounter.
 	if(enable) begin: setCoefficients
 
-		// Set coefficientOut to the corresponding coefficients array value.
-		coefficientOut <= coefficients[coeffCounter];
-
-		// Increment coeffCounter each loop.
-		coeffCounter <= coeffCounter + 10'd1;
-
 		// Set flag high when coeffCounter is equal to the filter length - 1.
 		if(coeffCounter == LENGTH - 1) begin
 			coeffSetFlag <= 1'd1;
+			coefficientOut <= coefficients[coeffCounter];
+		end
+		else begin
+			// Set coefficientOut to the corresponding coefficients array value.
+			coefficientOut <= coefficients[coeffCounter];
+
+			// Increment coeffCounter each loop.
+			coeffCounter <= coeffCounter + 10'd1;
+		
+			coeffSetFlag <= 1'd0;
 		end
 
 	end
