@@ -22,8 +22,8 @@ module n_tap_complex_fir #(
 	parameter DATA_WIDTH = 8
 )(
 	input clock,
-	input loadCoefficients,
-	input coefficientsSetFlag,
+	input loadCoeff,
+	input coeffSetFlag,
 	input loadDataFlag,
 	input stopDataLoadFlag,
 	input signed [(DATA_WIDTH * 2) - 1:0] dataInRe,
@@ -117,7 +117,7 @@ always @(posedge clock) begin
 	
 		// State IDLE. This state transitions to LOAD_COEFFICIENTS.
 		IDLE: begin
-			if(loadCoefficients) begin
+			if(loadCoeff) begin
 				state = LOAD_COEFFICIENTS;
 			end
 		end
