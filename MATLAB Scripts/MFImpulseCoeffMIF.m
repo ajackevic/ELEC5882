@@ -62,7 +62,7 @@ paddedChirpWaveAmp0_6 = [zeros(1,samplingFreqs/2), chirpWave * 0.6, zeros(1,samp
 
 
 % Creating chirp signals with different amount of noise.
-chirp1 = paddedChirpWaveAmp1;
+chirp1 = awgn(paddedChirpWaveAmp1, 25);
 chirp2 = awgn(paddedChirpWaveAmp0_9,15);
 chirp3 = awgn(paddedChirpWaveAmp0_8,10);
 chirp4 = awgn(paddedChirpWaveAmp0_7,5);

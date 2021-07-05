@@ -21,9 +21,9 @@ reg enableMFCoeff;
 reg enableMFDataIn;
 reg enablecomplexFIRCoeff;
 reg enableHT;
+reg enableComplexFIRData;
 
 
-reg loadDataFlag;
 reg stopDataLoadFlag;
 
 
@@ -61,7 +61,7 @@ initial begin
 	enableHT <= 1'd0;
 	
 	
-	loadDataFlag <= 1'd0;
+	enableComplexFIRData <= 1'd0;
 	stopDataLoadFlag <= 1'd0;
 	
 	
@@ -115,10 +115,10 @@ n_tap_complex_fir #(
 	.clock					(clock),
 	.loadCoefficients		(enablecomplexFIRCoeff),
 	.coefficientsSetFlag	(coeffFinishedFlag),
-	.loadDataFlag			(loadDataFlag),
+	.loadDataFlag			(enableComplexFIRData),
 	.stopDataLoadFlag		(stopDataLoadFlag),
-	.dataInRe				(),
-	.dataInIm				(),
+	.dataInRe				(HTOutRe),
+	.dataInIm				(HTOutIm),
 	.coeffInRe				(coeffMIFOutRe),
 	.coeffInIm				(coeffMIFOutIm),
 	
@@ -175,7 +175,8 @@ always @ (posedge clock) begin
 				enableMFCoeff <= 1'd1;
 				enableMFDataIn <= 1'd1;
 				enablecomplexFIRCoeff <= 1'd1;
-				enablecomplexFIRCoeff <= 1'd0;
+				enableHT <= 1'd1;
+				enableComplexFIRData <= 1'd1;
 			end
 		end
 		
