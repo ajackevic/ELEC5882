@@ -173,7 +173,9 @@ always @ (posedge clock) begin
 			end
 			else begin
 				enableMFCoeff <= 1'd1;
+				enableMFDataIn <= 1'd1;
 				enablecomplexFIRCoeff <= 1'd1;
+				enablecomplexFIRCoeff <= 1'd0;
 			end
 		end
 		
