@@ -92,9 +92,8 @@ always @(posedge clock) begin
 		
 		
 		
-		// State LOAD_COEFF. This state is responsiable for loading the
-		// coefficients to coeffBuffer. Once all the coefficients are loaded the
-		// state transitions to FIR_MAIN.
+		// State LOAD_COEFF. This state is responsiable for loading the coefficients to coeffBuffer 
+		// init value. Once set, it will tranistion to the state FIR_MAIN.
 		LOAD_COEFF: begin
 			
 			coeffBuffer[LENGTH - coeffBufferCounter - 1] = coeffIn;
@@ -106,7 +105,8 @@ always @(posedge clock) begin
 		
 		
 		// State FIR_MAIN. This state is responsiable for the main FIR opperation. It follows
-		// the logic outlined in the pdf "The workings of a FIR filter".
+		// the logic outlined in the pdf "The workings of a FIR filter". The rest of the coefficients are 
+		// loaded in parallel to the main FIR opperation.
 		FIR_MAIN: begin
 		
 			// Continoue loading the coefficients.
