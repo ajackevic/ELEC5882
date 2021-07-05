@@ -113,8 +113,8 @@ n_tap_complex_fir #(
 	.DATA_WIDTH 			(DATA_WIDTH)
 ) coplexFIR (
 	.clock					(clock),
-	.loadCoefficients		(enablecomplexFIRCoeff),
-	.coefficientsSetFlag	(coeffFinishedFlag),
+	.loadCoeff				(enablecomplexFIRCoeff),
+	.coeffSetFlag			(coeffFinishedFlag),
 	.loadDataFlag			(enableComplexFIRData),
 	.stopDataLoadFlag		(stopDataLoadFlag),
 	.dataInRe				(HTOutRe),
