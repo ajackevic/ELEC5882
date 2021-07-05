@@ -43,6 +43,7 @@ wire [DATA_WIDTH - 1:0] HTCoeffOut;
 reg loadFIRDataFlag;
 reg stopFIRDataFlag;
 reg [DATA_WIDTH - 1:0] dataFIRIn;
+reg loadCoeffFIRFlag;
 wire [(DATA_WIDTH * 2) - 1:0] FIRDataOut;
 
 
@@ -68,6 +69,7 @@ initial begin: init_values
 	loadCoeff <= 1'd0;
 	loadFIRDataFlag <= 1'd0;
 	stopFIRDataFlag <= 1'd0;
+	loadCoeffFIRFlag <= 1'd0;
 	dataFIRIn <= {(DATA_WIDTH){1'd0}};
 
 	
@@ -101,7 +103,7 @@ n_tap_fir #(
 )FIRFilter(
 	.clock					(clock),
 	.loadCoefficients		(loadCoeff), // This might need to be one clock cycle behind.
-	.coefficientsSetFlag	(coeffSetFlag), // All ref to coefficients should be changed to coeff. This applies not just to this module.
+	.coefficientsSetFlag	(loadCoeffFIRFlag), // All ref to coefficients should be changed to coeff. This applies not just to this module.
 	.loadDataFlag			(loadFIRDataFlag),
 	.stopDataLoadFlag		(stopFIRDataFlag),
 	.coeffIn					(HTCoeffOut),
@@ -121,6 +123,7 @@ always @ (posedge clock) begin
 			if(enable) begin
 				state <= LOAD_FIR_COEFF;
 				loadCoeff <= 1'd1;
+				loadCoeffFIRFlag <= 1'd1;
 			end
 			else begin
 				dataOutRe <= {(DATA_WIDTH * 2){1'd0}};
@@ -134,17 +137,18 @@ always @ (posedge clock) begin
 		// Hence this state only transistions to the next state once all the coefficients
 		// have been passed through to the FIR module.
 		LOAD_FIR_COEFF: begin
-			if(coeffSetFlag) begin
+			//if(coeffSetFlag) begin
 				state <= MAIN_OPP;
 				loadFIRDataFlag <= 1'd1;
-				loadCoeff <= 1'd0;
+				loadCoeffFIRFlag <= 1'd0;
+			//	loadCoeff <= 1'd0;
 				dataOutRe <= {(DATA_WIDTH * 2){1'd0}};
 				dataOutIm <= {(DATA_WIDTH * 2){1'd0}};
-			end
-			else begin
-				dataOutRe <= {(DATA_WIDTH * 2){1'd0}};
-				dataOutIm <= {(DATA_WIDTH * 2){1'd0}};
-			end
+			//end
+			//else begin
+			//	dataOutRe <= {(DATA_WIDTH * 2){1'd0}};
+			//	dataOutIm <= {(DATA_WIDTH * 2){1'd0}};
+			//end
 		end
 		
 		
@@ -153,6 +157,11 @@ always @ (posedge clock) begin
 		// with the coefficients. If stopDataInFlag is set high, the state will 
 		// transistion to STOP.
 		MAIN_OPP: begin		
+			if(coeffSetFlag) begin
+				loadCoeff <= 1'd0;
+			end
+		
+		
 			if(stopDataInFlag) begin
 				state <= STOP;
 			end
