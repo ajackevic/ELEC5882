@@ -21,8 +21,8 @@ module n_tap_fir #(
 	parameter DATA_WIDTH = 8
 )(
 	input clock,
-	input loadCoefficients,
-	input coefficientsSetFlag,
+	input loadCoeff,
+	input coeffSetFlag,
 	input loadDataFlag,
 	input stopDataLoadFlag,
 	input signed [DATA_WIDTH - 1:0] coeffIn,
@@ -48,7 +48,7 @@ reg [19:0] coeffBufferCounter;
 // FSM states
 reg [2:0] state;
 reg [2:0] IDLE = 3'd0;
-reg [2:0] LOAD_COEFFICIENTS = 3'd1;
+reg [2:0] LOAD_COEFF = 3'd1;
 reg [2:0] FIR_MAIN = 3'd2;
 reg [2:0] STOP = 3'd3;
 reg [2:0] EMPTY_STATE1 = 3'd4;
@@ -83,19 +83,19 @@ always @(posedge clock) begin
 	case(state)
 	
 	
-		// State IDLE. This state transitions to LOAD_COEFFICIENTS.
+		// State IDLE. This state transitions to LOAD_COEFF.
 		IDLE: begin
-			if(loadCoefficients) begin
-				state <= LOAD_COEFFICIENTS;
+			if(loadCoeff) begin
+				state <= LOAD_COEFF;
 			end
 		end
 		
 		
 		
-		// State LOAD_COEFFICIENTS. This state is responsiable for loading the
+		// State LOAD_COEFF. This state is responsiable for loading the
 		// coefficients to coeffBuffer. Once all the coefficients are loaded the
 		// state transitions to FIR_MAIN.
-		LOAD_COEFFICIENTS: begin
+		LOAD_COEFF: begin
 			
 			coeffBuffer[LENGTH - coeffBufferCounter - 1] = coeffIn;
 			coeffBufferCounter = coeffBufferCounter + 20'd1;

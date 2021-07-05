@@ -104,8 +104,8 @@ n_tap_fir #(
 	.DATA_WIDTH				(DATA_WIDTH)
 )FIRFilter(
 	.clock					(clock),
-	.loadCoefficients		(loadCoeff), 
-	.coefficientsSetFlag	(loadCoeffFIRFlag), 
+	.loadCoeff				(loadCoeff), 
+	.coeffSetFlag			(loadCoeffFIRFlag), 
 	.loadDataFlag			(loadFIRDataFlag),
 	.stopDataLoadFlag		(stopFIRDataFlag),
 	.coeffIn					(HTCoeffOut),
