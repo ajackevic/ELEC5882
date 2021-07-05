@@ -30,7 +30,9 @@ module hilbert_transform #(
 );
 
 
+// Local parameter used in this module.
 reg signed [DATA_WIDTH - 1:0] dataInBuf [0:2];
+
 
 // Local parameters for the module setup_HT_coeff.
 reg loadCoeff;
@@ -103,7 +105,7 @@ n_tap_fir #(
 )FIRFilter(
 	.clock					(clock),
 	.loadCoefficients		(loadCoeff), 
-	.coefficientsSetFlag	(loadCoeffFIRFlag), // All ref to coefficients should be changed to coeff. This applies not just to this module.
+	.coefficientsSetFlag	(loadCoeffFIRFlag), 
 	.loadDataFlag			(loadFIRDataFlag),
 	.stopDataLoadFlag		(stopFIRDataFlag),
 	.coeffIn					(HTCoeffOut),
@@ -132,7 +134,7 @@ always @ (posedge clock) begin
 		end
 		
 		
-		// State LOAD_FIR_COEFF. This state waits sets the corresponding flags and tranistions to 
+		// State LOAD_FIR_COEFF. This state sets the corresponding flags and tranistions to 
 		// the state MAIN_OPP.
 		LOAD_FIR_COEFF: begin
 				state <= MAIN_OPP;
