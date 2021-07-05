@@ -97,13 +97,11 @@ initial begin
 	repeat(RST_CYCLES) @ (posedge clock);
 	repeat(20) @ (posedge clock);
 	loadCoeff = 1;
-	repeat(20) @ (posedge clock);
-	loadCoeff = 0;
-
 	loadDataFlag = 1;
+	
 
 	// Set the input data values, in this case there are 4 values.
-	repeat(5) @ (posedge clock);
+	repeat(2) @ (posedge clock);
 	srDataInRe = 8'd2;
 	srDataInIm = 8'd3;
 	repeat(1) @ (posedge clock);
