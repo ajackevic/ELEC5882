@@ -31,8 +31,8 @@ localparam DATA_WIDTH = 8;
 reg clock;
 reg loadDataFlag;
 reg stopDataLoadFlag;
-reg signed [7:0] srDataInRe;
-reg signed [7:0] srDataInIm;
+reg signed [(DATA_WIDTH * 2) - 1:0] srDataInRe;
+reg signed [(DATA_WIDTH * 2) - 1:0] srDataInIm;
 
 reg loadCoeff;
 
