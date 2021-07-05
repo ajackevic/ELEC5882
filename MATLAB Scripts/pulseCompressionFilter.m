@@ -169,3 +169,25 @@ xlim([0 9])
 
 
 
+
+%%
+% The following section is for the creation of the x_t MIF file.
+
+% Name of the MIF file.
+MIFFile = 'MFInputData.mif';
+
+% Create or open (if file already exsists) the MIF file.
+fileID = fopen(MIFFile,'w');
+
+
+% Print the input data (x_t) to the MIF file. The values that are printed
+% are the rounded to int values. They are printed in 2's
+% compliment format. The length of each value is 16 bits.
+for i = 1:1:length(receivedSignal)
+    fprintf(fileID,'%s\n', dec2bin(round(receivedSignal(i)),18));
+end
+
+
+% Close the opened MIF file.
+fclose(fileID);
+
