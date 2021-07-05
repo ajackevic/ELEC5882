@@ -103,7 +103,7 @@ setup_HT_coeff #(
 	.enable				(enableModule),
 
 	.coeffSetFlag		(coeffSetFlag),
-	.coefficientOut	(coefficientOut)
+	.coeffOut			(coefficientOut)
 );
 
 

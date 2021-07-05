@@ -90,7 +90,7 @@ setup_HT_coeff #(
 	.enable			 (loadCoeff),
 	
 	.coeffSetFlag	 (coeffSetFlag),
-	.coefficientOut (HTCoeffOut)
+	.coeffOut		 (HTCoeffOut)
 );
 
 
