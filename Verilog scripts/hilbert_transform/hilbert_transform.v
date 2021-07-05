@@ -60,7 +60,7 @@ localparam STOP = 2'd3;
 initial begin: init_values
 
 	integer k;
-	for (k = 0; k < 2 ; k = k + 1) begin
+	for (k = 0; k <= 2 ; k = k + 1) begin
 		dataInBuf[k] <= 0;
 	end
 
@@ -138,6 +138,8 @@ always @ (posedge clock) begin
 				state <= MAIN_OPP;
 				loadFIRDataFlag <= 1'd1;
 				loadCoeff <= 1'd0;
+				dataOutRe <= {(DATA_WIDTH * 2){1'd0}};
+				dataOutIm <= {(DATA_WIDTH * 2){1'd0}};
 			end
 			else begin
 				dataOutRe <= {(DATA_WIDTH * 2){1'd0}};
