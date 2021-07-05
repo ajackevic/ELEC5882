@@ -58,7 +58,7 @@ chirp6 = awgn(paddedChirpWaveAmp1,-5);
 receivedSignalNoNoise = [paddedChirpWaveAmp1, paddedChirpWaveAmp0_9, paddedChirpWaveAmp0_8, ...
                          paddedChirpWaveAmp0_7, paddedChirpWaveAmp0_6, paddedChirpWaveAmp1];
 receivedSignal = [chirp1, chirp2, chirp3, chirp4, chirp5, chirp6];
-receivedSignal = receivedSignal * 1000;
+receivedSignal = round(receivedSignal * 1000);
 
 % Creating the matched filter impulse response. This is equal to the complex
 % conjugate time reverse analytic signal of the chirp signal.
@@ -67,8 +67,8 @@ h_t = round(flip(conj(hilbert(chirpWave))) * 1000);
 
 
 HTCoeff = [-775 0 -1582 0  -3114 0 -5642 0 -10043 0 -19511 0 -63075 0 63075 0 19511 0 10043 0 5642 0 3114 0 1582 0 775];
-x_t_real = round(receivedSignal);
-x_t_imag = round(conv(HTCoeff, receivedSignal));
+x_t_real = receivedSignal;
+x_t_imag = conv(HTCoeff, receivedSignal);
 x_t = complex(x_t_real, x_t_imag(1:660000));
 % x_t = hilbert(receivedSignal);
 
