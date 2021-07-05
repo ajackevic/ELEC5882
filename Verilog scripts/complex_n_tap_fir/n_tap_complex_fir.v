@@ -45,20 +45,20 @@ reg signed [(DATA_WIDTH * 2) - 1:0] inputDataBufferIm [0:LENGTH -1];
 // Note the range of reg signed [7:0] is [-128 to 127].
 
 
+reg signed [DATA_WIDTH - 1:0] coeffPreBufferRe [0:2];
+reg signed [DATA_WIDTH - 1:0] coeffPreBufferIm [0:2];
+
+
+
 // FIR = output width = input data width + coefficient width + log(N) 
-reg signed [19:0] firOutputReRe;
-reg signed [19:0] firOutputReIm;
-reg signed [19:0] firOutputImRe;
-reg signed [19:0] firOutputImIm;
+reg signed [49:0] firOutputReRe;
+reg signed [49:0] firOutputReIm;
+reg signed [49:0] firOutputImRe;
+reg signed [49:0] firOutputImIm;
 
 
 
 reg [19:0] coeffBufferCounter; 
-
-
-// Creating the parameters for the instantiated setup_complex_coefficients module.
-wire signed [DATA_WIDTH - 1:0] coefficientInRe;
-wire signed [DATA_WIDTH - 1:0] coefficientInIm;
 
 
 // FSM states.
@@ -88,6 +88,15 @@ initial begin : init_values
 
 	coeffBufferCounter <= 20'd0;
 	state <= IDLE;
+	
+	
+	coeffPreBufferRe[0] <= {(DATA_WIDTH){1'd0}};
+	coeffPreBufferIm[0] <= {(DATA_WIDTH){1'd0}};
+	coeffPreBufferRe[1] <= {(DATA_WIDTH){1'd0}};
+	coeffPreBufferIm[1] <= {(DATA_WIDTH){1'd0}};
+	coeffPreBufferRe[2] <= {(DATA_WIDTH){1'd0}};
+	coeffPreBufferIm[2] <= {(DATA_WIDTH){1'd0}};
+	
 
 	firOutputReRe <= 0;
 	firOutputReIm <= 0;
@@ -119,10 +128,10 @@ always @(posedge clock) begin
 		LOAD_COEFFICIENTS: begin
 				
 				// Load the coefficientInRe and coefficientInIm value to the start of the buffer.
-				coeffBufferRe[LENGTH - coeffBufferCounter - 1] = coeffInRe;
-				coeffBufferIm[LENGTH - coeffBufferCounter - 1] = coeffInIm;
+				//coeffBufferRe[LENGTH - coeffBufferCounter - 1] = coeffInRe;
+				//coeffBufferIm[LENGTH - coeffBufferCounter - 1] = coeffInIm;
 				
-				coeffBufferCounter = coeffBufferCounter + 20'd1;
+				//coeffBufferCounter = coeffBufferCounter + 20'd1;
 				state = FIR_MAIN;
 		end
 
@@ -134,8 +143,17 @@ always @(posedge clock) begin
 		
 			// Continoue loading the coefficients.
 			if(coeffBufferCounter <= LENGTH) begin
-				coeffBufferRe[LENGTH - coeffBufferCounter - 1] <= coeffInRe;
-				coeffBufferIm[LENGTH - coeffBufferCounter - 1] <= coeffInIm;
+				coeffPreBufferRe[0] <= coeffInRe;
+				coeffPreBufferIm[0] <= coeffInIm;
+			
+				for (n = 0; n < 2; n = n + 1) begin
+					
+					coeffPreBufferRe[n+1] <= coeffPreBufferRe[n];
+					coeffPreBufferIm[n+1] <= coeffPreBufferIm[n];
+				end
+			
+				coeffBufferRe[LENGTH - coeffBufferCounter - 1 + 3] <= coeffPreBufferRe[2];
+				coeffBufferIm[LENGTH - coeffBufferCounter - 1 + 3] <= coeffPreBufferIm[2];
 				
 				coeffBufferCounter <= coeffBufferCounter + 20'd1;
 			end
