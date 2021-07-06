@@ -215,7 +215,17 @@ always @ (posedge clock) begin
 		
 		// State default. This state sets the default values just incase the FSM is in an unknown state.
 		default: begin
-		
+			enableMFCoeff <= 1'd0;
+			enableMFDataIn <= 1'd0;
+			enablecomplexFIRCoeff <= 1'd0;
+			enableHT <= 1'd0;
+			
+			
+			enableComplexFIRData <= 1'd0;
+			stopDataLoadFlag <= 1'd0;
+			
+			
+			state <= IDLE;
 		end
 		
 	endcase
