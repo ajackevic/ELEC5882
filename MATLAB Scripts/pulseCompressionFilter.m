@@ -23,7 +23,7 @@ chirpDuration = 10e-6;  %10uS
 samplingFreqs = 80e6;   %80MHz
 
 
-% Sampling frequency of 100KHz for  second duration.
+% Sampling frequency of samplingFreqs for chirpDuration duration.
 tChirp = 0:1/samplingFreqs:chirpDuration-1/samplingFreqs;
 % Creating the time scale for x_t, this is used when plotting the graph.
 tInput = linspace(0,(chirpDuration*18),((samplingFreqs/2)*13.2));
@@ -38,11 +38,11 @@ chirpWave = chirp(tChirp,chirpFreqStart,chirpDuration,chirpFreqEnd);
 % Creating padding of zeros before and after the chirp wave. These
 % paddings are of 0.1 sec duration and consists of amplitude reduction of 0.9,
 % 0.8, 0.7, and 0.6.
-paddedChirpWaveAmp1   = [zeros(1,samplingFreqs/2), chirpWave * 1.0, zeros(1,samplingFreqs/2)];
-paddedChirpWaveAmp0_9 = [zeros(1,samplingFreqs/2), chirpWave * 0.9, zeros(1,samplingFreqs/2)];
-paddedChirpWaveAmp0_8 = [zeros(1,samplingFreqs/2), chirpWave * 0.8, zeros(1,samplingFreqs/2)];
-paddedChirpWaveAmp0_7 = [zeros(1,samplingFreqs/2), chirpWave * 0.7, zeros(1,samplingFreqs/2)];
-paddedChirpWaveAmp0_6 = [zeros(1,samplingFreqs/2), chirpWave * 0.6, zeros(1,samplingFreqs/2)];
+paddedChirpWaveAmp1   = [zeros(1,length(chirpWave)), chirpWave * 1.0, zeros(1,length(chirpWave))];
+paddedChirpWaveAmp0_9 = [zeros(1,length(chirpWave)), chirpWave * 0.9, zeros(1,length(chirpWave))];
+paddedChirpWaveAmp0_8 = [zeros(1,length(chirpWave)), chirpWave * 0.8, zeros(1,length(chirpWave))];
+paddedChirpWaveAmp0_7 = [zeros(1,length(chirpWave)), chirpWave * 0.7, zeros(1,length(chirpWave))];
+paddedChirpWaveAmp0_6 = [zeros(1,length(chirpWave)), chirpWave * 0.6, zeros(1,length(chirpWave))];
 
 
 % Creating chirp signals with different amount of noise.
