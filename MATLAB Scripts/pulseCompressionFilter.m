@@ -17,10 +17,10 @@ clear all
 
 % Setting the cirp waveform start and end frequency, as well as its
 % duration and the sampling frequency.
-chirpFreqStart = 10000;
-chirpFreqEnd = 50000;
-chirpDuration = 0.1;
-samplingFreqs = 1e5;
+chirpFreqStart = 1e6;   %1MHz
+chirpFreqEnd = 10e6;    %10MHz
+chirpDuration = 10e-6;  %10uS
+samplingFreqs = 80e6;   %80MHz
 
 
 % Sampling frequency of 100KHz for  second duration.
