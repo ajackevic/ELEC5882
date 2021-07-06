@@ -27,13 +27,13 @@ module matched_filter #(
 	parameter COEFF_LENGTH = 10000,
 	parameter DATA_LENGTH = 330000,
 	parameter HT_COEFF_LENGTH = 27,
-	parameter HT_DATA_WIDTH = 18,
 	parameter DATA_WIDTH = 18
+	// It should be noted the stated parameters must match the values in the MATLAB script. 
 )(
 	input clock,
 	input enable,
 	
-	output reg signed [DATA_WIDTH - 1:0] filterOut  // This will need to be *3 ot *4?
+	output reg signed [DATA_WIDTH - 1:0] filterOut 
 );
 
 
