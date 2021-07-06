@@ -91,7 +91,8 @@ initial begin
 	
 	
 	state <= IDLE;
-	filterOut <= {(DATA_WIDTH){1'd0}};
+	MFOutputRe <= {(DATA_WIDTH * 3){1'd0}};
+	MFOutputIm <= {(DATA_WIDTH * 3){1'd0}};
 end
 
 
@@ -127,7 +128,7 @@ read_MIF_file #(
 	
 	.dataFinishedFlag	(dataInFinishedFlag),	
 	.outputRe			(dataMIFOutRe),
-	.outputIm			()
+	.outputIm			() // This port is ignored as all data is passed through outputRe.
 );
 
 
