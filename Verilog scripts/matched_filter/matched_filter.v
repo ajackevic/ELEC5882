@@ -33,7 +33,8 @@ module matched_filter #(
 	input clock,
 	input enable,
 	
-	output reg signed [DATA_WIDTH - 1:0] filterOut 
+	output reg signed [(DATA_WIDTH * 3) - 1:0] MFOutputRe,
+	output reg signed [(DATA_WIDTH * 3) - 1:0] MFOutputIm
 );
 
 
@@ -63,9 +64,6 @@ wire signed [DATA_WIDTH - 1:0] dataMIFOutRe;
 
 wire signed [(DATA_WIDTH * 2) - 1:0] HTOutRe;
 wire signed [(DATA_WIDTH * 2) - 1:0] HTOutIm;
-
-wire signed [(DATA_WIDTH * 3) - 1:0] MFOutputRe;
-wire signed [(DATA_WIDTH * 3) - 1:0] MFOutputIm;
 
 
 

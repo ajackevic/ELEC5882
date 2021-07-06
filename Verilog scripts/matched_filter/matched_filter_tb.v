@@ -46,7 +46,8 @@ end
 	.clock				(clock),
 	.enable				(enableModule),
 	
-	.filterOut  		()
+	.MFOutputRe  		(),
+	.MFOutputIm			()
 );
 
 
