@@ -26,9 +26,9 @@ samplingFreqs = 80e6;   %80MHz
 % Sampling frequency of samplingFreqs for chirpDuration duration.
 tChirp = 0:1/samplingFreqs:chirpDuration-1/samplingFreqs;
 % Creating the time scale for x_t, this is used when plotting the graph.
-tInput = linspace(0,(chirpDuration*18),((samplingFreqs/2)*13.2));
+tInput = 0:1/samplingFreqs:(chirpDuration * 18) -1/samplingFreqs;
 % Creating the time scale for y_t.
-tOut = linspace(0,(chirpDuration*18),((samplingFreqs/2)*12.4)+samplingFreqs/2-1);
+tOut = 0:1/samplingFreqs:(chirpDuration * 19) -1/samplingFreqs;
 
 
 % Creating a linear chirp waveform 
@@ -77,14 +77,14 @@ h_t = round(flip(conj(hilbert(chirpWave))) * 1000);
 % to create the HTCoeff array. Every second coefficient should be 0,
 % however due to the muiltiplication by 100000, some coefficients end up 1
 % or -1, hence have been changed to 0.
-% coefficientes = round(firpm(26,[0.1 0.9],[1 1],'hilbert') * 100000)
+% HTCoeff = round(firpm(26,[0.1 0.9],[1 1],'hilbert') * 100000);
 HTCoeff = [-775 0 -1582 0  -3114 0 -5642 0 -10043 0 -19511 0 -63075 0 63075 0 19511 0 10043 0 5642 0 3114 0 1582 0 775];
 
 
 % Creating the complex input signal.
 x_t_real = receivedSignal;
 x_t_imag = conv(HTCoeff, receivedSignal);
-x_t = complex(x_t_real, x_t_imag(1:660000));
+x_t = complex(x_t_real, x_t_imag(1:length(x_t_real)));
 % x_t = hilbert(receivedSignal);
 
 
@@ -110,24 +110,21 @@ plot(tChirp,chirpWave)
 title('Liniear Chirp Waveform from 10KHz to 50KHz')
 ylabel('Amplitude')
 xlabel('Time (S)')
-xlim([0 0.5])
-ylim([-1.2 1.2])
+
 
 nexttile
 plot(tInput,receivedSignalNoNoise)
 title('Echoed back signal from the receiver with no noise')
 ylabel('Amplitude')
 xlabel('Time (S)')
-xlim([0 9])
-ylim([-1.2 1.2])
+
 
 nexttile
 plot(tInput,receivedSignal)
 title('Echoed back signal from the receiver with noise')
 ylabel('Amplitude')
 xlabel('Time (S)')
-xlim([0 9])
-ylim([-10 10])
+
 
 % Plotting the following graphs:
 %    Real part of the received after the hilbert transform
@@ -144,39 +141,35 @@ plot(tInput,real(x_t))
 title('Real part of the recivied signal XRe(t)')
 ylabel('Amplitude')
 xlabel('Time (S)')
-xlim([0 9])
-ylim([-10 10])
+
 
 nexttile
 plot(tInput,imag(x_t))
 title('Imaginary part of the recivied signal XIm(t)')
 ylabel('Amplitude')
 xlabel('Time (S)')
-xlim([0 9])
-ylim([-10 10])
+
 
 nexttile
 plot(tChirp,real(h_t))
 title('Real part of the impulse reponse hRe(t)')
 ylabel('Amplitude')
 xlabel('Time (S)')
-xlim([0 0.5])
-ylim([-1.2 1.2])
+
 
 nexttile
 plot(tChirp,imag(h_t))
 title('Imaginary part of the recivied signal hIm(t)')
 ylabel('Amplitude')
 xlabel('Time (S)')
-xlim([0 0.5])
-ylim([-2.2 2.2])
+
 
 nexttile([1 2])
-plot(tOut,y_t)
+plot(tOut(1:end-1),y_t)
 title('Matched filter output y(t)')
 ylabel('Magnitude (dB)')
 xlabel('Time (S)')
-xlim([0 9])
+
 
 
 
