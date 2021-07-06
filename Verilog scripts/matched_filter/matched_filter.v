@@ -207,10 +207,13 @@ always @ (posedge clock) begin
 		end
 		
 		
+		// State STOP. 
 		STOP: begin
 		
 		end
 		
+		
+		// State default. This state sets the default values just incase the FSM is in an unknown state.
 		default: begin
 		
 		end
