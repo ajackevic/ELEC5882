@@ -83,12 +83,12 @@ end
 
 always @(posedge clock) begin
 
-	// If enable is set, set coefficientOut based on the coeffCounter and the array coefficients values.
+	// If enable is set, set coeffOut Re and Im based on the coeffCounter and the array coefficients values.
 	// When all the coefficients were passed across, set the coeffSetFlag high. If not enabled, set
 	// coeffSetFlag low and reset the coeffCounter.
 	if(enable) begin: setCoefficients
 
-		// Set coefficientOut to the corresponding coefficients array value.
+		// Set coeffOut Re and Im to the corresponding coefficients array value.
 		coeffOutRe <= coeffRe[coeffCounter];
 		coeffOutIm <= coeffIm[coeffCounter];
 
