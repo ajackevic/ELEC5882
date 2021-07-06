@@ -7,15 +7,15 @@
 
  Module Description:
  -------------------
- This module creates the matched filter. The matched filter is the convelution opperation
- between the input data and the matched filter impulse response (very over-simplifyied). Both
- signals are applied through a hilbert transform filter (removed the negative frequencies) and then
- conveluted. The hilbert transform is required to avoide alliasying. Due to the hiolbert transform, a
- complex signal is aquired thus a comple FIR filter is utalised for the convelution.
+This module creates the matched filter. The matched filter is the convolution operation
+between the input data and the matched filter impulse response (very over-simplified). Both
+ signals are applied through a hilbert transform filter (removed the negative frequencies) and then 
+convoluted. The hilbert transform is required to avoid aliasing. Due to the hilbert transform, a
+ complex signal is acquired thus a complex FIR filter is utilised for the convolution.
  
- In this module, the matched filter coefficients are aquired from the MFImpulseCoeff MIF file (coefficients
+ In this module, the matched filter coefficients are acquired from the MFImpulseCoeff MIF file (coefficients
  are obtained from MATLAB), and the input data is read from the MFInputData MIF file. This data is then applied
- through the hilbert transform module to aquire a complex signal. The coefficients are loaded to the complex
+ through the hilbert transform module to acquire a complex signal. The coefficients are loaded to the complex
  FIR filter and the data in complex signal is then applied to the FIR filter, with the output being the convelution
  product between the matched filter impulse response coefficients and the applied data in.
 
