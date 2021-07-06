@@ -55,33 +55,19 @@ chirp6 = awgn(paddedChirpWaveAmp1,-5);
 
 
 % Summing up the different chirp waveforms into one continous long input signal.
-receivedSignalNoNoise = [paddedChirpWaveAmp1, paddedChirpWaveAmp0_9, ... 
-                         paddedChirpWaveAmp0_8, paddedChirpWaveAmp0_7, ...
-                         paddedChirpWaveAmp0_6, paddedChirpWaveAmp1];
+receivedSignalNoNoise = [paddedChirpWaveAmp1, paddedChirpWaveAmp0_9, paddedChirpWaveAmp0_8, ...
+                         paddedChirpWaveAmp0_7, paddedChirpWaveAmp0_6, paddedChirpWaveAmp1];
 receivedSignal = [chirp1, chirp2, chirp3, chirp4, chirp5, chirp6];
-
-
-% Multiplying and rounding the receivedSignal so that the aquired signal in
-% FPGA can be comfirmed with the MATLAB results.
+% Multiplying the 
 receivedSignal = round(receivedSignal * 1000);
 
-
 % Creating the matched filter impulse response. This is equal to the complex
-% conjugate time reverse analytic signal of the chirp signal. Its
-% muiltiplied by 1000 and rounded so that the results from FPGA can be
-% comfirmed in MATLAB.
+% conjugate time reverse analytic signal of the chirp signal.
 h_t = round(flip(conj(hilbert(chirpWave))) * 1000);
+% Creating an analytic signal from the input signal.
 
 
-% Creating the hilbert transform coefficients. This uses the firpm function
-% to create the HTCoeff array. Every second coefficient should be 0,
-% however due to the muiltiplication by 100000, some coefficients end up 1
-% or -1, hence have been changed to 0.
-% coefficientes = round(firpm(26,[0.1 0.9],[1 1],'hilbert') * 100000)
 HTCoeff = [-775 0 -1582 0  -3114 0 -5642 0 -10043 0 -19511 0 -63075 0 63075 0 19511 0 10043 0 5642 0 3114 0 1582 0 775];
-
-
-% Creating the complex input signal.
 x_t_real = receivedSignal;
 x_t_imag = conv(HTCoeff, receivedSignal);
 x_t = complex(x_t_real, x_t_imag(1:660000));
