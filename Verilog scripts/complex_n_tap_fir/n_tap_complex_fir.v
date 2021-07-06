@@ -64,7 +64,7 @@ reg [19:0] coeffBufferCounter;
 // FSM states.
 reg [2:0] state;
 reg [2:0] IDLE = 3'd0;
-reg [2:0] LOAD_COEFFICIENTS = 3'd1;
+reg [2:0] WAIT_1_CYCLE = 3'd1;
 reg [2:0] FIR_MAIN = 3'd2;
 reg [2:0] STOP = 3'd3;
 reg [2:0] EMPTY_STATE1 = 3'd4;
@@ -115,24 +115,16 @@ integer n;
 always @(posedge clock) begin
 	case(state)
 	
-		// State IDLE. This state transitions to LOAD_COEFFICIENTS.
+		// State IDLE. This state transitions to WAIT_1_CYCLE.
 		IDLE: begin
 			if(loadCoeff) begin
-				state = LOAD_COEFFICIENTS;
+				state <= WAIT_1_CYCLE;
 			end
 		end
 
-		// State LOAD_COEFFICIENTS. This state is responsiable for loading the initial
-		// coefficients to coeffBufferRe and coeffBufferIn. Once the initial values are 
-		// set it tranistions to state FIR_MAIN.
-		LOAD_COEFFICIENTS: begin
-				
-				// Load the coefficientInRe and coefficientInIm value to the start of the buffer.
-				//coeffBufferRe[LENGTH - coeffBufferCounter - 1] = coeffInRe;
-				//coeffBufferIm[LENGTH - coeffBufferCounter - 1] = coeffInIm;
-				
-				//coeffBufferCounter = coeffBufferCounter + 20'd1;
-				state = FIR_MAIN;
+		// State WAIT_1_CYCLE. This state is waits for 1 clock cyle.
+		WAIT_1_CYCLE: begin
+				state <= FIR_MAIN;
 		end
 
 		
