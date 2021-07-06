@@ -58,7 +58,6 @@ end
  matched_filter #(
 	.COEFF_LENGTH 		(COEFF_LENGTH),
 	.DATA_LENGTH 		(DATA_LENGTH),
-	.HT_DATA_WIDTH 	(HT_DATA_WIDTH),
 	.DATA_WIDTH 		(DATA_WIDTH)
 ) dut (
 	.clock				(clock),
