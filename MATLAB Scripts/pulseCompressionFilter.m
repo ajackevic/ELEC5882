@@ -107,7 +107,7 @@ tiledlayout(3,1);
 
 nexttile
 plot(tChirp,chirpWave)
-title('Liniear Chirp Waveform from 10KHz to 50KHz')
+title('Liniear Chirp Waveform from 1MHz to 10MHz')
 ylabel('Amplitude')
 xlabel('Time (S)')
 
@@ -167,7 +167,7 @@ xlabel('Time (S)')
 nexttile([1 2])
 plot(tOut(1:end-1),y_t)
 title('Matched filter output y(t)')
-ylabel('Magnitude (dB)')
+ylabel('Magnitude')
 xlabel('Time (S)')
 
 
