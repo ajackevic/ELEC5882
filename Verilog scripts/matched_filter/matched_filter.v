@@ -12,11 +12,12 @@ module matched_filter #(
 );
 
 
+// Local parameters for the module read_MIF_file.
 localparam COEFF = 1;
 localparam DATA_IN = 2;
 
 
-
+// Enable regs for the instantiated modules.
 reg enableMFCoeff;
 reg enableMFDataIn;
 reg enablecomplexFIRCoeff;
@@ -24,27 +25,26 @@ reg enableHT;
 reg enableComplexFIRData;
 
 
+// A reg for informing the complex FIR filter when the data is about to be stopped.
 reg stopDataLoadFlag;
 
 
-
+// Output ports for the instantiated modules.
 wire coeffFinishedFlag;
 wire dataInFinishedFlag;
 wire signed [DATA_WIDTH - 1:0] coeffMIFOutRe;
 wire signed [DATA_WIDTH - 1:0] coeffMIFOutIm;
 wire signed [DATA_WIDTH - 1:0] dataMIFOutRe;
 
-
 wire signed [(DATA_WIDTH * 2) - 1:0] HTOutRe;
 wire signed [(DATA_WIDTH * 2) - 1:0] HTOutIm;
-
 
 wire signed [(DATA_WIDTH * 3) - 1:0] MFOutputRe;
 wire signed [(DATA_WIDTH * 3) - 1:0] MFOutputIm;
 
 
 
-
+// FSM
 reg [2:0] state;
 localparam IDLE = 1;
 localparam LOAD_COEFF = 2;
@@ -53,6 +53,8 @@ localparam STOP = 4;
 
 
 
+
+// Set the initial values of the local parameters.
 initial begin
 
 	enableMFCoeff <= 1'd0;
@@ -72,7 +74,7 @@ end
 
 
 
-
+// Instantiating the module read_MIF_file. This is used to read the coefficients from the MFImpulseCoeff.mif file.
 read_MIF_file #(
 	.LENGTH 				(COEFF_LENGTH),
 	.DATA_WIDTH 		(DATA_WIDTH),
@@ -90,7 +92,7 @@ read_MIF_file #(
 
 
 
-
+// Instantiating the module read_MIF_file. This is used to read the data in from the MFInputData.mif file. 
 read_MIF_file #(
 	.LENGTH 				(DATA_LENGTH),
 	.DATA_WIDTH 		(DATA_WIDTH),
@@ -108,6 +110,9 @@ read_MIF_file #(
 
 
 
+
+// Instantiating the module n_tap_complex_fir. This is used for the main opperation of the matched filter
+// between the complex input data and the complex impulse reponse of the matched filter.
 n_tap_complex_fir #(
 	.LENGTH					(COEFF_LENGTH * 2),
 	.DATA_WIDTH 			(DATA_WIDTH)
@@ -130,6 +135,8 @@ n_tap_complex_fir #(
 
 
 
+// Instantiating the module hilbert_transform. This is used to aquire a complex signal from a real signal 
+// by performing hilbert transform filtering of the data aquired from MFInputData.mif.
  hilbert_transform #(
 	.LENGTH 				(HT_COEFF_LENGTH),
 	.DATA_WIDTH 		(DATA_WIDTH)
@@ -152,6 +159,7 @@ n_tap_complex_fir #(
 always @ (posedge clock) begin
 	case(state)
 		
+		// State IDLE. This state waits until enable is set before transistioning to LOAD_COEFF.
 		IDLE: begin
 			if(enable) begin
 				state <= LOAD_COEFF;
@@ -161,6 +169,8 @@ always @ (posedge clock) begin
 			end
 		end
 		
+		
+		// State LOAD_COEFF. This state enables the majority of the enable regs for the instantiated modules.
 		LOAD_COEFF: begin
 						
 			if(coeffFinishedFlag) begin
