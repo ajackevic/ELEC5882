@@ -70,9 +70,8 @@ wire signed [(DATA_WIDTH * 2) - 1:0] HTOutIm;
 // FSM
 reg [2:0] state;
 localparam IDLE = 1;
-localparam LOAD_COEFF = 2;
-localparam LOAD_DATA = 3;
-localparam STOP = 4;
+localparam SET_ENABLE = 2;
+localparam STOP = 3;
 
 
 
@@ -184,7 +183,7 @@ always @ (posedge clock) begin
 		// State IDLE. This state waits until enable is set before transistioning to LOAD_COEFF.
 		IDLE: begin
 			if(enable) begin
-				state <= LOAD_COEFF;
+				state <= SET_ENABLE;
 			end
 			else begin
 				filterOut <= {(DATA_WIDTH){1'd0}}; // This will need to be *3 ot *4?
@@ -193,7 +192,7 @@ always @ (posedge clock) begin
 		
 		
 		// State LOAD_COEFF. This state enables the majority of the enable regs for the instantiated modules.
-		LOAD_COEFF: begin
+		SET_ENABLE: begin
 						
 			if(coeffFinishedFlag) begin
 			
@@ -212,9 +211,6 @@ always @ (posedge clock) begin
 			end
 		end
 		
-		LOAD_DATA: begin
-		
-		end
 		
 		STOP: begin
 		
