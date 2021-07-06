@@ -33,8 +33,8 @@ module matched_filter #(
 	input clock,
 	input enable,
 	
-	output reg signed [(DATA_WIDTH * 3) - 1:0] MFOutputRe,
-	output reg signed [(DATA_WIDTH * 3) - 1:0] MFOutputIm
+	output signed [(DATA_WIDTH * 3) - 1:0] MFOutputRe,
+	output signed [(DATA_WIDTH * 3) - 1:0] MFOutputIm
 );
 
 
@@ -90,8 +90,6 @@ initial begin
 	
 	
 	state <= IDLE;
-	MFOutputRe <= {(DATA_WIDTH * 3){1'd0}};
-	MFOutputIm <= {(DATA_WIDTH * 3){1'd0}};
 end
 
 
@@ -185,9 +183,6 @@ always @ (posedge clock) begin
 			if(enable) begin
 				state <= SET_ENABLE;
 			end
-			else begin
-				filterOut <= {(DATA_WIDTH){1'd0}}; // This will need to be *3 ot *4?
-			end
 		end
 		
 		
@@ -197,7 +192,7 @@ always @ (posedge clock) begin
 			if(coeffFinishedFlag) begin
 			
 				enableMFCoeff <= 1'd0;
-				state <= LOAD_DATA;
+				state <= STOP;
 				enableMFDataIn <= 1'd1;
 				enableHT <= 1'd1;
 				
