@@ -1,3 +1,19 @@
+/*
+
+ matched_filter_tb.v
+ --------------
+ By: Augustas Jackevic
+ Date: July 2021
+
+ Module Description:
+ -------------------
+ This module is a test bench for the module matched_filter_tb.v. The script
+ as of now only enables the matched filter and observes the modules output in
+ ModelSim.
+
+*/
+
+
 // Setting the time unit used in this module.
 `timescale 1 ns/100 ps
 
