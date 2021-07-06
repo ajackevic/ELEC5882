@@ -11,10 +11,11 @@ localparam NUM_CYCLES = 500000;
 localparam CLOCK_FREQ = 50000000;
 localparam RST_CYCLES = 20;
 
+
+// Creating the local parameters for the DUT module
 localparam COEFF_LENGTH = 10000;
 localparam DATA_LENGTH = 330000;
 localparam HT_COEFF_LENGTH = 27;
-localparam HT_DATA_WIDTH = 18;
 localparam DATA_WIDTH = 18;
 
 
@@ -36,10 +37,11 @@ end
 
 
 
+
+// Instantiated DUT module.
  matched_filter #(
 	.COEFF_LENGTH 		(COEFF_LENGTH),
 	.DATA_LENGTH 		(DATA_LENGTH),
-	.HT_COEFF_LENGTH 	(HT_COEFF_LENGTH),
 	.HT_DATA_WIDTH 	(HT_DATA_WIDTH),
 	.DATA_WIDTH 		(DATA_WIDTH)
 ) dut (
@@ -52,13 +54,11 @@ end
 
 
 
-
-
-
-
-
+// Calculating the parameters for the 50MHz clock.
 real HALF_CLOCK_PERIOD = (1000000000.0/$itor(CLOCK_FREQ))/2.0;
 integer half_cycles = 0;
+
+
 
 // Create the clock toggeling and stop it simulation when half_cycles == (2*NUM_CYCLES).
 always begin
