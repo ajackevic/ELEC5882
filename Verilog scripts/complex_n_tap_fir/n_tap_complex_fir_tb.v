@@ -31,8 +31,8 @@ localparam DATA_WIDTH = 8;
 reg clock;
 reg loadDataFlag;
 reg stopDataLoadFlag;
-reg signed [7:0] srDataInRe;
-reg signed [7:0] srDataInIm;
+reg signed [(DATA_WIDTH * 2) - 1:0] srDataInRe;
+reg signed [(DATA_WIDTH * 2) - 1:0] srDataInIm;
 
 reg loadCoeff;
 
@@ -40,8 +40,8 @@ reg loadCoeff;
 // Note the range of reg signed [7:0] is [-128 to 127].
 wire signed [(DATA_WIDTH * 3) - 1:0] dataOutRe;
 wire signed [(DATA_WIDTH * 3) - 1:0] dataOutIm;
-wire signed [DATA_WIDTH - 1:0] coefficientOutRe;
-wire signed [DATA_WIDTH - 1:0] coefficientOutIm;
+wire signed [DATA_WIDTH - 1:0] coeffOutRe;
+wire signed [DATA_WIDTH - 1:0] coeffOutIm;
 
 
 
@@ -54,8 +54,8 @@ setup_complex_FIR_coeff # (
 	.enable				(loadCoeff),
 
 	.coeffSetFlag		(filterSetFlag),
-	.coefficientOutRe	(coefficientOutRe),
-	.coefficientOutIm	(coefficientOutIm)
+	.coeffOutRe			(coeffOutRe),
+	.coeffOutIm			(coeffOutIm)
 );
 
 
@@ -66,15 +66,15 @@ n_tap_complex_fir #(
 	.DATA_WIDTH				(DATA_WIDTH)
 	) dut_fir (
 	.clock					(clock),
-	.loadCoefficients		(loadCoeff),
-	.coefficientsSetFlag	(filterSetFlag),
+	.loadCoeff				(loadCoeff),
+	.coeffSetFlag			(filterSetFlag),
 	
 	.loadDataFlag			(loadDataFlag),
 	.stopDataLoadFlag		(stopDataLoadFlag),
 	.dataInRe				(srDataInRe),
 	.dataInIm				(srDataInIm),
-	.coeffInRe				(coefficientOutRe),
-	.coeffInIm				(coefficientOutIm),
+	.coeffInRe				(coeffOutRe),
+	.coeffInIm				(coeffOutIm),
 	
 	.dataOutRe				(dataOutRe),
 	.dataOutIm				(dataOutIm)
@@ -97,13 +97,11 @@ initial begin
 	repeat(RST_CYCLES) @ (posedge clock);
 	repeat(20) @ (posedge clock);
 	loadCoeff = 1;
-	repeat(20) @ (posedge clock);
-	loadCoeff = 0;
-
 	loadDataFlag = 1;
+	
 
 	// Set the input data values, in this case there are 4 values.
-	repeat(5) @ (posedge clock);
+	repeat(2) @ (posedge clock);
 	srDataInRe = 8'd2;
 	srDataInIm = 8'd3;
 	repeat(1) @ (posedge clock);

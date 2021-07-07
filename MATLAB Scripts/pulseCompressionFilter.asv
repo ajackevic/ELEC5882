@@ -26,9 +26,9 @@ samplingFreqs = 80e6;   %80MHz
 % Sampling frequency of samplingFreqs for chirpDuration duration.
 tChirp = 0:1/samplingFreqs:chirpDuration-1/samplingFreqs;
 % Creating the time scale for x_t, this is used when plotting the graph.
-tInput = 0:1/samplingFreqs:(chirpDuration * 18) -1/samplingFreqs;
+tInput = linspace(0,(chirpDuration*18),((samplingFreqs/2)*13.2));
 % Creating the time scale for y_t.
-tOut = 0:1/samplingFreqs:(chirpDuration * 19) -1/samplingFreqs;
+tOut = linspace(0,(chirpDuration*18),((samplingFreqs/2)*12.4)+samplingFreqs/2-1);
 
 
 % Creating a linear chirp waveform 
@@ -55,36 +55,22 @@ chirp6 = awgn(paddedChirpWaveAmp1,-5);
 
 
 % Summing up the different chirp waveforms into one continous long input signal.
-receivedSignalNoNoise = [paddedChirpWaveAmp1, paddedChirpWaveAmp0_9, ... 
-                         paddedChirpWaveAmp0_8, paddedChirpWaveAmp0_7, ...
-                         paddedChirpWaveAmp0_6, paddedChirpWaveAmp1];
+receivedSignalNoNoise = [paddedChirpWaveAmp1, paddedChirpWaveAmp0_9, paddedChirpWaveAmp0_8, ...
+                         paddedChirpWaveAmp0_7, paddedChirpWaveAmp0_6, paddedChirpWaveAmp1];
 receivedSignal = [chirp1, chirp2, chirp3, chirp4, chirp5, chirp6];
-
-
-% Multiplying and rounding the receivedSignal so that the aquired signal in
-% FPGA can be comfirmed with the MATLAB results.
+% Multiplying the 
 receivedSignal = round(receivedSignal * 1000);
 
-
 % Creating the matched filter impulse response. This is equal to the complex
-% conjugate time reverse analytic signal of the chirp signal. Its
-% muiltiplied by 1000 and rounded so that the results from FPGA can be
-% comfirmed in MATLAB.
+% conjugate time reverse analytic signal of the chirp signal.
 h_t = round(flip(conj(hilbert(chirpWave))) * 1000);
+% Creating an analytic signal from the input signal.
 
 
-% Creating the hilbert transform coefficients. This uses the firpm function
-% to create the HTCoeff array. Every second coefficient should be 0,
-% however due to the muiltiplication by 100000, some coefficients end up 1
-% or -1, hence have been changed to 0.
-% HTCoeff = round(firpm(26,[0.1 0.9],[1 1],'hilbert') * 100000);
 HTCoeff = [-775 0 -1582 0  -3114 0 -5642 0 -10043 0 -19511 0 -63075 0 63075 0 19511 0 10043 0 5642 0 3114 0 1582 0 775];
-
-
-% Creating the complex input signal.
 x_t_real = receivedSignal;
 x_t_imag = conv(HTCoeff, receivedSignal);
-x_t = complex(x_t_real, x_t_imag(1:length(x_t_real)));
+x_t = complex(x_t_real, x_t_imag(1:660000));
 % x_t = hilbert(receivedSignal);
 
 
@@ -107,24 +93,27 @@ tiledlayout(3,1);
 
 nexttile
 plot(tChirp,chirpWave)
-title('Liniear Chirp Waveform from 1MHz to 10MHz')
+title('Liniear Chirp Waveform from 10KHz to 50KHz')
 ylabel('Amplitude')
 xlabel('Time (S)')
-
+xlim([0 0.5])
+ylim([-1.2 1.2])
 
 nexttile
 plot(tInput,receivedSignalNoNoise)
 title('Echoed back signal from the receiver with no noise')
 ylabel('Amplitude')
 xlabel('Time (S)')
-
+xlim([0 9])
+ylim([-1.2 1.2])
 
 nexttile
 plot(tInput,receivedSignal)
 title('Echoed back signal from the receiver with noise')
 ylabel('Amplitude')
 xlabel('Time (S)')
-
+xlim([0 9])
+ylim([-10 10])
 
 % Plotting the following graphs:
 %    Real part of the received after the hilbert transform
@@ -141,35 +130,39 @@ plot(tInput,real(x_t))
 title('Real part of the recivied signal XRe(t)')
 ylabel('Amplitude')
 xlabel('Time (S)')
-
+xlim([0 9])
+ylim([-10 10])
 
 nexttile
 plot(tInput,imag(x_t))
 title('Imaginary part of the recivied signal XIm(t)')
 ylabel('Amplitude')
 xlabel('Time (S)')
-
+xlim([0 9])
+ylim([-10 10])
 
 nexttile
 plot(tChirp,real(h_t))
 title('Real part of the impulse reponse hRe(t)')
 ylabel('Amplitude')
 xlabel('Time (S)')
-
+xlim([0 0.5])
+ylim([-1.2 1.2])
 
 nexttile
 plot(tChirp,imag(h_t))
 title('Imaginary part of the recivied signal hIm(t)')
 ylabel('Amplitude')
 xlabel('Time (S)')
-
+xlim([0 0.5])
+ylim([-2.2 2.2])
 
 nexttile([1 2])
-plot(tOut(1:end-1),y_t)
+plot(tOut,y_t)
 title('Matched filter output y(t)')
-ylabel('Magnitude')
+ylabel('Magnitude (dB)')
 xlabel('Time (S)')
-
+xlim([0 9])
 
 
 

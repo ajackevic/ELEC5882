@@ -30,7 +30,9 @@ module hilbert_transform #(
 );
 
 
+// Local parameter used in this module.
 reg signed [DATA_WIDTH - 1:0] dataInBuf [0:2];
+
 
 // Local parameters for the module setup_HT_coeff.
 reg loadCoeff;
@@ -43,6 +45,7 @@ wire [DATA_WIDTH - 1:0] HTCoeffOut;
 reg loadFIRDataFlag;
 reg stopFIRDataFlag;
 reg [DATA_WIDTH - 1:0] dataFIRIn;
+reg loadCoeffFIRFlag;
 wire [(DATA_WIDTH * 2) - 1:0] FIRDataOut;
 
 
@@ -60,7 +63,7 @@ localparam STOP = 2'd3;
 initial begin: init_values
 
 	integer k;
-	for (k = 0; k < 2 ; k = k + 1) begin
+	for (k = 0; k <= 2 ; k = k + 1) begin
 		dataInBuf[k] <= 0;
 	end
 
@@ -68,6 +71,7 @@ initial begin: init_values
 	loadCoeff <= 1'd0;
 	loadFIRDataFlag <= 1'd0;
 	stopFIRDataFlag <= 1'd0;
+	loadCoeffFIRFlag <= 1'd0;
 	dataFIRIn <= {(DATA_WIDTH){1'd0}};
 
 	
@@ -88,7 +92,7 @@ setup_HT_coeff #(
 	.enable			 (loadCoeff),
 	
 	.coeffSetFlag	 (coeffSetFlag),
-	.coefficientOut (HTCoeffOut)
+	.coeffOut		 (HTCoeffOut)
 );
 
 
@@ -100,8 +104,8 @@ n_tap_fir #(
 	.DATA_WIDTH				(DATA_WIDTH)
 )FIRFilter(
 	.clock					(clock),
-	.loadCoefficients		(loadCoeff), // This might need to be one clock cycle behind.
-	.coefficientsSetFlag	(coeffSetFlag), // All ref to coefficients should be changed to coeff. This applies not just to this module.
+	.loadCoeff				(loadCoeff), 
+	.coeffSetFlag			(loadCoeffFIRFlag), 
 	.loadDataFlag			(loadFIRDataFlag),
 	.stopDataLoadFlag		(stopFIRDataFlag),
 	.coeffIn					(HTCoeffOut),
@@ -121,6 +125,7 @@ always @ (posedge clock) begin
 			if(enable) begin
 				state <= LOAD_FIR_COEFF;
 				loadCoeff <= 1'd1;
+				loadCoeffFIRFlag <= 1'd1;
 			end
 			else begin
 				dataOutRe <= {(DATA_WIDTH * 2){1'd0}};
@@ -129,28 +134,27 @@ always @ (posedge clock) begin
 		end
 		
 		
-		// State LOAD_FIR_COEFF. This state waits until the coeffSetFlag is set high 
-		// before transistioning to state MAIN_OPP, whilst setting loadCoeff low. 
-		// Hence this state only transistions to the next state once all the coefficients
-		// have been passed through to the FIR module.
+		// State LOAD_FIR_COEFF. This state sets the corresponding flags and tranistions to 
+		// the state MAIN_OPP.
 		LOAD_FIR_COEFF: begin
-			if(coeffSetFlag) begin
 				state <= MAIN_OPP;
 				loadFIRDataFlag <= 1'd1;
-				loadCoeff <= 1'd0;
-			end
-			else begin
-				dataOutRe <= {(DATA_WIDTH * 2){1'd0}};
-				dataOutIm <= {(DATA_WIDTH * 2){1'd0}};
-			end
+				loadCoeffFIRFlag <= 1'd0;
 		end
 		
 		
 		// State MAIN_OPP. This state passes through the dataIn values to the FIR 
 		// module through the variabel dataFIRIn. These values are then conveluted
 		// with the coefficients. If stopDataInFlag is set high, the state will 
-		// transistion to STOP.
+		// transistion to STOP. The coefficient will finish loading in this state hence
+		// an if statment was added to set the flag loadCoeff once all of the coefficients
+		// are passed through.
 		MAIN_OPP: begin		
+			if(coeffSetFlag) begin
+				loadCoeff <= 1'd0;
+			end
+		
+		
 			if(stopDataInFlag) begin
 				state <= STOP;
 			end
@@ -160,6 +164,7 @@ always @ (posedge clock) begin
 				dataInBuf[0] <= dataIn;
 				dataOutRe <= dataInBuf[2];
 				
+				// Shift the values inside the buffer by one position.
 				for (n = 0; n < 2; n = n + 1) begin
 					
 					dataInBuf[n+1] <= dataInBuf[n];

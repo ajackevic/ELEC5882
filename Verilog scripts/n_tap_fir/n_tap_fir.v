@@ -21,8 +21,8 @@ module n_tap_fir #(
 	parameter DATA_WIDTH = 8
 )(
 	input clock,
-	input loadCoefficients,
-	input coefficientsSetFlag,
+	input loadCoeff,
+	input coeffSetFlag,
 	input loadDataFlag,
 	input stopDataLoadFlag,
 	input signed [DATA_WIDTH - 1:0] coeffIn,
@@ -42,11 +42,13 @@ reg signed [DATA_WIDTH - 1:0] inputDataBuffer [0:LENGTH -1];
 reg signed [(DATA_WIDTH * 2) - 1:0] firOutput;
 
 
+reg [19:0] coeffBufferCounter; 
+
 
 // FSM states
 reg [2:0] state;
 reg [2:0] IDLE = 3'd0;
-reg [2:0] LOAD_COEFFICIENTS = 3'd1;
+reg [2:0] LOAD_COEFF = 3'd1;
 reg [2:0] FIR_MAIN = 3'd2;
 reg [2:0] STOP = 3'd3;
 reg [2:0] EMPTY_STATE1 = 3'd4;
@@ -71,6 +73,8 @@ initial begin : initalValues
 	dataOut <= 0;
 	firOutput <= 0;
 	
+	coeffBufferCounter <= 20'd0;
+	
 end
 
 
@@ -79,40 +83,38 @@ always @(posedge clock) begin
 	case(state)
 	
 	
-		// State IDLE. This state transitions to LOAD_COEFFICIENTS.
+		// State IDLE. This state transitions to LOAD_COEFF.
 		IDLE: begin
-			if(loadCoefficients) begin
-				state <= LOAD_COEFFICIENTS;
+			if(loadCoeff) begin
+				state <= LOAD_COEFF;
 			end
 		end
 		
 		
 		
-		// State LOAD_COEFFICIENTS. This state is responsiable for loading the
-		// coefficients to coeffBuffer. Once all the coefficients are loaded the
-		// state transitions to FIR_MAIN.
-		LOAD_COEFFICIENTS: begin
-				
-			// A for loop that shifts the values inside coeffBuffer by 1 position.
-			for (n = LENGTH - 1; n > 0; n = n - 1) begin
-				coeffBuffer[n] <= coeffBuffer[n-1];
-			end
-
-			// Load the new coefficient value to the start of coeffBuffer.
-			coeffBuffer[0] <= coeffIn;
-
+		// State LOAD_COEFF. This state is responsiable for loading the coefficients to coeffBuffer 
+		// init value. Once set, it will tranistion to the state FIR_MAIN.
+		LOAD_COEFF: begin
 			
-			// If coefficientsSetFlag flag is set, transition to FIR_MAIN and disable the 
-			// loading of the coefficients.
-			if(coefficientsSetFlag) begin
-				state <= FIR_MAIN;
-			end
+			coeffBuffer[LENGTH - coeffBufferCounter - 1] = coeffIn;
+			coeffBufferCounter = coeffBufferCounter + 20'd1;
+			
+			state = FIR_MAIN;
+			
 		end
 		
 		
 		// State FIR_MAIN. This state is responsiable for the main FIR opperation. It follows
-		// the logic outlined in the pdf "The workings of a FIR filter".
+		// the logic outlined in the pdf "The workings of a FIR filter". The rest of the coefficients are 
+		// loaded in parallel to the main FIR opperation.
 		FIR_MAIN: begin
+		
+			// Continoue loading the coefficients.
+			if(coeffBufferCounter <= LENGTH) begin
+				coeffBuffer[LENGTH - coeffBufferCounter - 1] = coeffIn;
+				coeffBufferCounter = coeffBufferCounter + 20'd1;
+			end
+		
 		
 			// If the data input stream is ready, do the following.
 			if(loadDataFlag == 1) begin

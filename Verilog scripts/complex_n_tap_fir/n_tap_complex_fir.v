@@ -22,12 +22,12 @@ module n_tap_complex_fir #(
 	parameter DATA_WIDTH = 8
 )(
 	input clock,
-	input loadCoefficients,
-	input coefficientsSetFlag,
+	input loadCoeff,
+	input coeffSetFlag,
 	input loadDataFlag,
 	input stopDataLoadFlag,
-	input signed [DATA_WIDTH - 1:0] dataInRe,
-	input signed [DATA_WIDTH - 1:0] dataInIm,
+	input signed [(DATA_WIDTH * 2) - 1:0] dataInRe,
+	input signed [(DATA_WIDTH * 2) - 1:0] dataInIm,
 	input signed [DATA_WIDTH - 1:0] coeffInRe,
 	input signed [DATA_WIDTH - 1:0] coeffInIm,
 	
@@ -40,28 +40,31 @@ module n_tap_complex_fir #(
 // Creating the buffers to store the input data and coefficients.
 reg signed [DATA_WIDTH - 1:0] coeffBufferRe [0:LENGTH - 1];
 reg signed [DATA_WIDTH - 1:0] coeffBufferIm [0:LENGTH - 1];
-reg signed [DATA_WIDTH - 1:0] inputDataBufferRe [0:LENGTH -1];
-reg signed [DATA_WIDTH - 1:0] inputDataBufferIm [0:LENGTH -1];
+reg signed [(DATA_WIDTH * 2) - 1:0] inputDataBufferRe [0:LENGTH -1];
+reg signed [(DATA_WIDTH * 2) - 1:0] inputDataBufferIm [0:LENGTH -1];
 // Note the range of reg signed [7:0] is [-128 to 127].
 
 
+reg signed [DATA_WIDTH - 1:0] coeffPreBufferRe [0:2];
+reg signed [DATA_WIDTH - 1:0] coeffPreBufferIm [0:2];
+
+
+
 // FIR = output width = input data width + coefficient width + log(N) 
-reg signed [18:0] firOutputReRe;
-reg signed [18:0] firOutputReIm;
-reg signed [18:0] firOutputImRe;
-reg signed [18:0] firOutputImIm;
+reg signed [49:0] firOutputReRe;
+reg signed [49:0] firOutputReIm;
+reg signed [49:0] firOutputImRe;
+reg signed [49:0] firOutputImIm;
 
 
 
-// Creating the parameters for the instantiated setup_complex_coefficients module.
-wire signed [DATA_WIDTH - 1:0] coefficientInRe;
-wire signed [DATA_WIDTH - 1:0] coefficientInIm;
+reg [19:0] coeffBufferCounter; 
 
 
 // FSM states.
 reg [2:0] state;
 reg [2:0] IDLE = 3'd0;
-reg [2:0] LOAD_COEFFICIENTS = 3'd1;
+reg [2:0] WAIT_1_CYCLE = 3'd1;
 reg [2:0] FIR_MAIN = 3'd2;
 reg [2:0] STOP = 3'd3;
 reg [2:0] EMPTY_STATE1 = 3'd4;
@@ -83,7 +86,17 @@ initial begin : init_values
 		inputDataBufferIm[k] <= 0;
 	end
 
+	coeffBufferCounter <= 20'd0;
 	state <= IDLE;
+	
+	
+	coeffPreBufferRe[0] <= {(DATA_WIDTH){1'd0}};
+	coeffPreBufferIm[0] <= {(DATA_WIDTH){1'd0}};
+	coeffPreBufferRe[1] <= {(DATA_WIDTH){1'd0}};
+	coeffPreBufferIm[1] <= {(DATA_WIDTH){1'd0}};
+	coeffPreBufferRe[2] <= {(DATA_WIDTH){1'd0}};
+	coeffPreBufferIm[2] <= {(DATA_WIDTH){1'd0}};
+	
 
 	firOutputReRe <= 0;
 	firOutputReIm <= 0;
@@ -102,40 +115,41 @@ integer n;
 always @(posedge clock) begin
 	case(state)
 	
-		// State IDLE. This state transitions to LOAD_COEFFICIENTS.
+		// State IDLE. This state transitions to WAIT_1_CYCLE.
 		IDLE: begin
-			if(loadCoefficients) begin
-				state = LOAD_COEFFICIENTS;
+			if(loadCoeff) begin
+				state <= WAIT_1_CYCLE;
 			end
 		end
 
-		// State LOAD_COEFFICIENTS. This state is responsiable for loading the
-		// coefficients to coeffBufferRe and coeffBufferIn. Once all the coefficients 
-		// are loaded the state transitions to FIR_MAIN.
-		LOAD_COEFFICIENTS: begin
-			
-			// Shift the values inside coeffBufferRe and coeffBufferIm by 1.
-			for (n = LENGTH - 1; n > 0; n = n - 1) begin
-				coeffBufferRe[n] <= coeffBufferRe[n-1];
-				coeffBufferIm[n] <= coeffBufferIm[n-1];
-			end
-			
-			
-			// Load the coefficientInRe and coefficientInIm value to the start of the buffer.
-			coeffBufferRe[0] <= coeffInRe;
-			coeffBufferIm[0] <= coeffInIm;
-			
-			// If coefficientsSetFlag flag is set, transition to FIR_MAIN and disable the 
-			// loading of the coefficients.
-			if(coefficientsSetFlag) begin
+		// State WAIT_1_CYCLE. This state is waits for 1 clock cyle.
+		WAIT_1_CYCLE: begin
 				state <= FIR_MAIN;
-			end
 		end
 
 		
 		// State FIR_MAIN. This state is responsiable for the main FIR opperation. It follows
-		// the logic outlined in the pdf "The workings of a complex FIR filter".
+		// the logic outlined in the pdf "The workings of a complex FIR filter". It also load 
+		// the coefficients in parallel to the FIR opperation.
 		FIR_MAIN: begin
+		
+			// Continoue loading the coefficients.
+			if(coeffBufferCounter <= LENGTH) begin
+				coeffPreBufferRe[0] <= coeffInRe;
+				coeffPreBufferIm[0] <= coeffInIm;
+			
+				for (n = 0; n < 2; n = n + 1) begin
+					
+					coeffPreBufferRe[n+1] <= coeffPreBufferRe[n];
+					coeffPreBufferIm[n+1] <= coeffPreBufferIm[n];
+				end
+			
+				coeffBufferRe[LENGTH - coeffBufferCounter - 1 + 3] <= coeffPreBufferRe[2];
+				coeffBufferIm[LENGTH - coeffBufferCounter - 1 + 3] <= coeffPreBufferIm[2];
+				
+				coeffBufferCounter <= coeffBufferCounter + 20'd1;
+			end
+		
 		
 			// If the data input stream is ready, do the following.
 			if(loadDataFlag == 1) begin

@@ -11,7 +11,7 @@
  the coefficients make sure all the coefficient up to the value of LENGTH are set 
  and are at a bit width of DATA_WIDTH. If more than 1023 coefficients are used, 
  increase the bit width of coeffCounter. The coefficients will be passed on as 
- soon as enable is set, and once all the values are passed through coefficientOut 
+ soon as enable is set, and once all the values are passed through coeffOut 
  the filterSetFlag is then set.
  
  The hilbert transform coefficients are obtained from MATLAB through the function
@@ -28,7 +28,7 @@ module setup_HT_coeff#(
 	input clock,
 	input enable,
 	output reg coeffSetFlag,
-	output reg signed [DATA_WIDTH - 1:0] coefficientOut
+	output reg signed [DATA_WIDTH - 1:0] coeffOut
 );
 
 
@@ -75,7 +75,7 @@ end
 
 // Set the initial outputs to 0.
 initial begin
-	coefficientOut <= {(DATA_WIDTH){1'd0}};
+	coeffOut <= {(DATA_WIDTH){1'd0}};
 	coeffSetFlag <= 1'd0;
 	coeffCounter <= 10'd0;
 end
@@ -84,27 +84,31 @@ end
 
 always @(posedge clock) begin
 
-	// If enable is set, set coefficientOut based on the coeffCounter and the array coefficients values.
+	// If enable is set, set coeffOut based on the coeffCounter and the array coefficients values.
 	// When all the coefficients were passed across, set the coeffSetFlag high. If not enabled, set
 	// coeffSetFlag low and reset the coeffCounter.
 	if(enable) begin: setCoefficients
 
-		// Set coefficientOut to the corresponding coefficients array value.
-		coefficientOut <= coefficients[coeffCounter];
-
-		// Increment coeffCounter each loop.
-		coeffCounter <= coeffCounter + 10'd1;
-
 		// Set flag high when coeffCounter is equal to the filter length - 1.
 		if(coeffCounter == LENGTH - 1) begin
 			coeffSetFlag <= 1'd1;
+			coeffOut <= coefficients[coeffCounter];
+		end
+		else begin
+			// Set coeffOut to the corresponding coefficients array value.
+			coeffOut <= coefficients[coeffCounter];
+
+			// Increment coeffCounter each loop.
+			coeffCounter <= coeffCounter + 10'd1;
+		
+			coeffSetFlag <= 1'd0;
 		end
 
 	end
 	else begin
 		coeffSetFlag <= 1'd0;
 		coeffCounter <= 10'd0;
-		coefficientOut <= {(DATA_WIDTH){1'd0}};
+		coeffOut <= {(DATA_WIDTH){1'd0}};
 	end
 
 end

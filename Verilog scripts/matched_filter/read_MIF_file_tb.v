@@ -1,6 +1,6 @@
 /*
 
- setup_MF_coeff_tb.v
+ read_MIF_file_tb.v
  --------------
  By: Augustas Jackevic
  Date: June 2021
@@ -10,7 +10,10 @@
  This module is a test bench for the module setup_MF_coeff. It connects to the instantiated 
  module. The test bench as of now does not do any self-testing, only observing the signals 
  in ModelSim. It is vital that the MIF file is placed in <project directory>\simulation\modelsim, 
- otherwise ModelSim will no read the MIF data.
+ otherwise ModelSim will no read the MIF data. To compile successfully in Quartus have a copy
+ of the MIF file in <project directory>\ELEC5882\Verilog scripts\matched_filter too.
+ 
+ Set DATA_TYPE to 1 to load the coeff and 2 to load the input data.
 
 
 */
@@ -21,19 +24,19 @@
 `timescale 1 ns/100 ps
 
 
-module setup_MF_coeff_tb;
+module read_MIF_file_tb;
 
 
 
 
 // Parameters for creating the 50MHz clock signal.
-localparam NUM_CYCLES = 50000;
+localparam NUM_CYCLES = 1000000;
 localparam CLOCK_FREQ = 50000000;
 localparam RST_CYCLES = 10;
 
 // Parameters for the dut module.
-localparam LENGTH = 10000;
-localparam DATA_WIDTH = 16;
+localparam LENGTH = 7700;
+localparam DATA_WIDTH = 18;
 
 
 
@@ -43,7 +46,7 @@ reg clock;
 reg enableModule;
 wire signed [DATA_WIDTH-1:0] outputValueRe;
 wire signed [DATA_WIDTH-1:0] outputValueIm;
-wire coeffSetFlag;
+wire dataFinishedFlag;
 
 
 
@@ -61,17 +64,18 @@ end
 
 
 // Connecting the instantiated dut module.
-setup_MF_coeff #(
-	.LENGTH 			(LENGTH),
-	.DATA_WIDTH 	(DATA_WIDTH)
+read_MIF_file #(
+	.LENGTH 				(LENGTH),
+	.DATA_WIDTH 		(DATA_WIDTH),
+	.DATA_TYPE			(2)
 
 ) dut (
-	.clock			(clock),
-	.enable			(enableModule),
+	.clock				(clock),
+	.enable				(enableModule),
 	
-	.coeffSetFlag	(coeffSetFlag),
-	.coeffOutRe		(outputValueRe),
-	.coeffOutIm		(outputValueIm)
+	.dataFinishedFlag	(dataFinishedFlag),
+	.outputRe			(outputValueRe),
+	.outputIm			(outputValueIm)
 );
 
 
