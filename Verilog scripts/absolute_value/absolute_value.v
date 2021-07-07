@@ -1,4 +1,4 @@
-module  absolute_value #(
+module absolute_value #(
 	parameter DATA_WIDTH = 18
 ) (
 	input clock,
@@ -17,6 +17,7 @@ end
 
 
 
+
 always @ (posedge clock) begin
 
 	// If enable is set, do the following. Else set the output to 0.
@@ -30,12 +31,14 @@ always @ (posedge clock) begin
 		else begin
 			dataOut <= dataIn;
 		end
+		
 	end
 	else begin
 		dataOut <= {(DATA_WIDTH){1'd0}};
 	end
 
 end
+
 
 
 endmodule
