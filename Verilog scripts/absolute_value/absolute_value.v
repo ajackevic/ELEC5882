@@ -9,14 +9,19 @@ module  absolute_value #(
 );
 
 
+initial begin
+	
+end
 
 
 
 
 
 
+always @ (posedge clock) begin
 
 
+end
 
 
 
