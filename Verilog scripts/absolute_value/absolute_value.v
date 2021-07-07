@@ -21,7 +21,7 @@ module absolute_value #(
 	input signed [DATA_WIDTH - 1:0] dataInRe,
 	input signed [DATA_WIDTH - 1:0] dataInIm,
 	
-	output reg signed [DATA_WIDTH - 1:0] dataOut
+	output reg signed [DATA_WIDTH:0] dataOut
 );
 
 reg [DATA_WIDTH - 1:0] absDataInRe;
@@ -34,7 +34,7 @@ initial begin
 	absDataInRe <= {(DATA_WIDTH){1'd0}};
 	absDataInIm <= {(DATA_WIDTH){1'd0}};
 	
-	dataOut <= {(DATA_WIDTH){1'd0}};
+	dataOut <= {(DATA_WIDTH + 1){1'd0}};
 end
 
 
@@ -74,7 +74,7 @@ always @ (posedge clock) begin
 		
 	end
 	else begin
-		dataOut = {(DATA_WIDTH){1'd0}};
+		dataOut = {(DATA_WIDTH + 1){1'd0}};
 	end
 
 end
