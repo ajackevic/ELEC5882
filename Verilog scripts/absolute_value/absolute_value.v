@@ -20,7 +20,7 @@ always @ (posedge clock) begin
 	
 	end
 	else begin
-	
+		dataOut <= {(DATA_WIDTH){1'd0}};
 	end
 
 end
