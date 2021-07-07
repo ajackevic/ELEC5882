@@ -49,6 +49,7 @@ reg enableMFDataIn;
 reg enablecomplexFIRCoeff;
 reg enableHT;
 reg enableComplexFIRData;
+reg enableABS;
 
 
 // A reg for informing the complex FIR filter when the data is about to be stopped.
@@ -83,6 +84,7 @@ initial begin
 	enableMFDataIn <= 1'd0;
 	enablecomplexFIRCoeff <= 1'd0;
 	enableHT <= 1'd0;
+	enableABS <= 1'd0;
 	
 	
 	enableComplexFIRData <= 1'd0;
