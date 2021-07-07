@@ -1,3 +1,19 @@
+/*
+
+ absolute_value_tb.v
+ --------------
+ By: Augustas Jackevic
+ Date: July 2021
+
+ Module Description:
+ -------------------
+ This module is a test bench for the module absolute_value. values for dataIn are set and
+ the values of dataOut are then the values of dataOut are observed in ModelSim.
+
+*/
+
+
+
 // Setting the time unit for this module.
 `timescale 1 ns/100 ps
 
