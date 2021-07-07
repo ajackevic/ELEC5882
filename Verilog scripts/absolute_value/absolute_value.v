@@ -48,6 +48,13 @@ always @ (posedge clock) begin
 			dataOut <= dataInRe;
 		end
 		
+		if(dataInIm[DATA_WIDTH - 1] == 1'd1) begin
+			dataOut <= -dataInIm;
+		end
+		else begin
+			dataOut <= dataInIm;
+		end
+		
 	end
 	else begin
 		dataOut <= {(DATA_WIDTH){1'd0}};
