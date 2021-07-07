@@ -64,8 +64,7 @@ end
 	.clock				(clock),
 	.enable				(enableModule),
 	
-	.MFOutputRe  		(MFOutputRe),
-	.MFOutputIm			(MFOutputIm)
+	.MFOutput  		  (MFOutput)
 );
 
 
