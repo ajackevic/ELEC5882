@@ -28,9 +28,11 @@ initial begin
 	enableModule = 1'd0;
 	dataIn = 18'd0;
 	
-	
+	//Set enableModule.
 	repeat(RST_CYCLES) @ (posedge clock);
 	enableModule = 1'd1;
+	
+	// Send the data.
 	repeat(1) @ (posedge clock);
 	dataIn = 18'd59;
 	repeat(1) @ (posedge clock);
@@ -68,6 +70,9 @@ end
 
 
 
+
+
+// Instantiating the dut module.
 absolute_value #(
 	.DATA_WIDTH 	(DATA_WIDTH)
 ) dut (
