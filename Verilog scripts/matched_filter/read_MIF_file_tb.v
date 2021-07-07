@@ -35,7 +35,7 @@ localparam CLOCK_FREQ = 50000000;
 localparam RST_CYCLES = 10;
 
 // Parameters for the dut module.
-localparam LENGTH = 330000;
+localparam LENGTH = 7700;
 localparam DATA_WIDTH = 18;
 
 

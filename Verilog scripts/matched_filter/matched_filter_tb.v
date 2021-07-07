@@ -29,8 +29,8 @@ localparam RST_CYCLES = 20;
 
 
 // Creating the local parameters for the DUT module
-localparam COEFF_LENGTH = 10000;
-localparam DATA_LENGTH = 330000;
+localparam COEFF_LENGTH = 800;
+localparam DATA_LENGTH = 7700;
 localparam HT_COEFF_LENGTH = 27;
 localparam DATA_WIDTH = 18;
 

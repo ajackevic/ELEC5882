@@ -24,8 +24,8 @@ convoluted. The hilbert transform is required to avoid aliasing. Due to the hilb
 
 
 module matched_filter #(
-	parameter COEFF_LENGTH = 10000,
-	parameter DATA_LENGTH = 330000,
+	parameter COEFF_LENGTH = 800,
+	parameter DATA_LENGTH = 7700,
 	parameter HT_COEFF_LENGTH = 27,
 	parameter DATA_WIDTH = 18
 	// It should be noted the stated parameters must match the values in the MATLAB script. 

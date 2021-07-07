@@ -17,7 +17,7 @@
 */
 
 module read_MIF_file #(
-	parameter LENGTH = 10000,
+	parameter LENGTH = 800,
 	parameter DATA_WIDTH = 18,
 	parameter DATA_TYPE = 1			// 1 is for coefficient, 2 is for input data.
 
