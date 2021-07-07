@@ -48,18 +48,29 @@ always @ (posedge clock) begin
 		// Check the MSB bit of dataIn. If 1, the value is negative, hence dataOut should be 
 		// set to -dataIn, else dataOut should be equal to dataIn
 		if(dataInRe[DATA_WIDTH - 1] == 1'd1) begin
-			dataOut <= -dataInRe;
+			absDataInRe <= -dataInRe;
 		end
 		else begin
-			dataOut <= dataInRe;
+			absDataInRe <= dataInRe;
 		end
 		
+		
 		if(dataInIm[DATA_WIDTH - 1] == 1'd1) begin
-			dataOut <= -dataInIm;
+			absDataInIm <= -dataInIm;
 		end
 		else begin
-			dataOut <= dataInIm;
+			absDataInIm <= dataInIm;
 		end
+		
+		
+		
+		if(absDataInRe >= absDataInIm) begin
+		
+		end
+		else begin
+		
+		end
+		
 		
 	end
 	else begin
