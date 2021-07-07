@@ -46,7 +46,7 @@ initial begin
 	repeat(1) @ (posedge clock);
 	dataIn = -18'd12363;
 	repeat(1) @ (posedge clock);
-	dataIn = -18'd123456
+	dataIn = -18'd123456;
 	repeat(1) @ (posedge clock);
 	dataIn = 18'd65432;
 	repeat(1) @ (posedge clock);
