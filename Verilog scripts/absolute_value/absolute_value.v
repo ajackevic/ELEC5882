@@ -15,18 +15,15 @@ end
 
 
 
-
-
-
 always @ (posedge clock) begin
-
+	if(enable) begin
+	
+	end
+	else begin
+	
+	end
 
 end
-
-
-
-
-
 
 
 endmodule
