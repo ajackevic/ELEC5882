@@ -171,6 +171,16 @@ n_tap_complex_fir #(
 
 
 
+absolute_value #(
+	.DATA_WIDTH 	()
+) abs (
+	.clock			(),
+	.enable			(),
+	.dataInRe		(),
+	.dataInIm		(),
+	
+	.dataOut			()
+);
 
 
 
