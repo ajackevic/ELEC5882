@@ -29,20 +29,16 @@ end
 
 
 
+
 absolute_value #(
-	.DATA_WIDTH 	()
+	.DATA_WIDTH 	(DATA_WIDTH)
 ) dut (
-	.clock			(),
-	.enable			(),
-	.dataIn			(),
+	.clock			(clock),
+	.enable			(enableModule),
+	.dataIn			(dataIn),
 	
-	.dataOut			()
+	.dataOut			(dataOut)
 );
-
-
-
-
-
 
 
 
