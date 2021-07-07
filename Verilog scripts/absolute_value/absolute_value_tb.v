@@ -11,12 +11,14 @@ localparam NUM_CYCLES = 1000000;
 localparam CLOCK_FREQ = 50000000;
 localparam RST_CYCLES = 10;
 
-
+localparam DATA_WIDTH = 18;
 
 
 // Local parameters for the dut module.
 reg clock;
-
+reg enableModule;
+reg signed [DATA_WIDTH - 1:0] dataIn;
+wire signed [DATA_WIDTH - 1:0] dataOut;
 
 
 
