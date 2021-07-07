@@ -18,10 +18,10 @@ end
 always @ (posedge clock) begin
 	if(enable) begin
 		if(dataIn[DATA_WIDTH - 1] == 1'd1) begin
-		
+			dataOut <= -dataInl;
 		end
 		else begin
-		
+			dataOut <= dataIn;
 		end
 	end
 	else begin
