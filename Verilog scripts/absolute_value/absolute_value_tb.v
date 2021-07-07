@@ -112,6 +112,7 @@ absolute_value #(
 	.clock			(clock),
 	.enable			(enableModule),
 	.dataInRe		(dataInRe),
+	.dataInIm		(dataInIm),
 	
 	.dataOut			(dataOut)
 );
