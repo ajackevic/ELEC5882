@@ -24,10 +24,16 @@ module absolute_value #(
 	output reg signed [DATA_WIDTH - 1:0] dataOut
 );
 
+reg [DATA_WIDTH - 1:0] absDataInRe;
+reg [DATA_WIDTH - 1:0] absDataInIm;
 
 
-// Setting the output to an initial value of 0. 
+
+// Setting the initial value to 0. 
 initial begin
+	absDataInRe <= {(DATA_WIDTH){1'd0}};
+	absDataInIm <= {(DATA_WIDTH){1'd0}};
+	
 	dataOut <= {(DATA_WIDTH){1'd0}};
 end
 
