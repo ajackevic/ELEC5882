@@ -33,8 +33,7 @@ module matched_filter #(
 	input clock,
 	input enable,
 	
-	output signed [(DATA_WIDTH * 3) - 1:0] MFOutputRe,
-	output signed [(DATA_WIDTH * 3) - 1:0] MFOutputIm
+	output signed [(DATA_WIDTH * 3):0] MFOut
 );
 
 
@@ -174,14 +173,14 @@ n_tap_complex_fir #(
 
 
 absolute_value #(
-	.DATA_WIDTH 	()
+	.DATA_WIDTH 	(DATA_WIDTH * 3)
 ) abs (
-	.clock			(),
-	.enable			(),
-	.dataInRe		(),
-	.dataInIm		(),
+	.clock			(clock),
+	.enable			(enableABS),
+	.dataInRe		(MFOutputRe),
+	.dataInIm		(MFOutputIm),
 	
-	.dataOut			()
+	.dataOut			(MFOut)
 );
 
 
@@ -215,6 +214,7 @@ always @ (posedge clock) begin
 				enablecomplexFIRCoeff <= 1'd1;
 				enableHT <= 1'd1;
 				enableComplexFIRData <= 1'd1;
+				enableABS <= 1'd0;
 			end
 		end
 		
