@@ -24,10 +24,10 @@ clear all
 
 % Setting the cirp waveform start and end frequency, as well as its
 % duration and the sampling frequency.
-chirpFreqStart = 10000;
-chirpFreqEnd = 50000;
-chirpDuration = 0.1;
-samplingFreqs = 1e5;
+chirpFreqStart = 1e6;   %1MHz
+chirpFreqEnd = 10e6;    %10MHz
+chirpDuration = 10e-6;  %10uS
+samplingFreqs = 80e6;   %80MHz
 
 
 
@@ -51,14 +51,15 @@ h_t = flip(conj(hilbert(chirpWave))) * 1000;
 %%
 % Creating the input signal, x_t.
 
+
 % Creating padding of zeros before and after the chirp wave. These
-% paddings are of 0.1 sec duration and consists of amplitude reduction of 0.9,
-% 0.8, 0.7, and 0.6.
-paddedChirpWaveAmp1   = [zeros(1,samplingFreqs/2), chirpWave * 1.0, zeros(1,samplingFreqs/2)];
-paddedChirpWaveAmp0_9 = [zeros(1,samplingFreqs/2), chirpWave * 0.9, zeros(1,samplingFreqs/2)];
-paddedChirpWaveAmp0_8 = [zeros(1,samplingFreqs/2), chirpWave * 0.8, zeros(1,samplingFreqs/2)];
-paddedChirpWaveAmp0_7 = [zeros(1,samplingFreqs/2), chirpWave * 0.7, zeros(1,samplingFreqs/2)];
-paddedChirpWaveAmp0_6 = [zeros(1,samplingFreqs/2), chirpWave * 0.6, zeros(1,samplingFreqs/2)];
+% paddings are of duration equivalent to the length of chirpWave and consists of 
+% amplitude reduction of 0.9, 0.8, 0.7, and 0.6.
+paddedChirpWaveAmp1   = [zeros(1,length(chirpWave)), chirpWave * 1.0, zeros(1,length(chirpWave))];
+paddedChirpWaveAmp0_9 = [zeros(1,length(chirpWave)), chirpWave * 0.9, zeros(1,length(chirpWave))];
+paddedChirpWaveAmp0_8 = [zeros(1,length(chirpWave)), chirpWave * 0.8, zeros(1,length(chirpWave))];
+paddedChirpWaveAmp0_7 = [zeros(1,length(chirpWave)), chirpWave * 0.7, zeros(1,length(chirpWave))];
+paddedChirpWaveAmp0_6 = [zeros(1,length(chirpWave)), chirpWave * 0.6, zeros(1,length(chirpWave))];
 
 
 % Creating chirp signals with different amount of noise.
