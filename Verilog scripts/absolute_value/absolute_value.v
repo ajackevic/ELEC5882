@@ -1,3 +1,18 @@
+/*
+
+ absolute_value.v
+ --------------
+ By: Augustas Jackevic
+ Date: July 2021
+
+ Module Description:
+ -------------------
+ This module obtaines the absolute value of dataIn. Once enable is set, if MSB of dataIn is 
+ to 1 dataOut is set to - dataIn, else dataOut is equal to dataIn.
+
+*/
+
+
 module absolute_value #(
 	parameter DATA_WIDTH = 18
 ) (
