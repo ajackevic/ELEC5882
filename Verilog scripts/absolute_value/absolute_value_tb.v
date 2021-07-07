@@ -25,6 +25,8 @@ wire signed [DATA_WIDTH - 1:0] dataOut;
 // Setting the init values.
 initial begin
 	clock = 1'd0;
+	enableModule = 1'd0;
+	dataIn = 18'd0;
 end
 
 
