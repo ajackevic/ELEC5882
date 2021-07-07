@@ -17,7 +17,12 @@ end
 
 always @ (posedge clock) begin
 	if(enable) begin
-	
+		if(dataIn[DATA_WIDTH - 1] == 1'd1) begin
+		
+		end
+		else begin
+		
+		end
 	end
 	else begin
 		dataOut <= {(DATA_WIDTH){1'd0}};
