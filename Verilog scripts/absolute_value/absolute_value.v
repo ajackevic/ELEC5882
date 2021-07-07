@@ -10,7 +10,7 @@ module  absolute_value #(
 
 
 initial begin
-	
+	dataOut <= {(DATA_WIDTH){1'd0}};
 end
 
 
