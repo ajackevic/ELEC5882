@@ -33,8 +33,8 @@ localparam DATA_WIDTH = 18;
 // Local parameters for the dut module.
 reg clock;
 reg enableModule;
-reg signed [DATA_WIDTH - 1:0] dataInReRe;
-reg signed [DATA_WIDTH - 1:0] dataInReIm;
+reg signed [DATA_WIDTH - 1:0] dataInRe;
+reg signed [DATA_WIDTH - 1:0] dataInIm;
 wire signed [DATA_WIDTH:0] dataOut;
 
 
@@ -44,7 +44,7 @@ initial begin
 	clock = 1'd0;
 	enableModule = 1'd0;
 	dataInRe = 18'd0;
-	dataInReIm = 18'd0;
+	dataInIm = 18'd0;
 	
 	//Set enableModule.
 	repeat(RST_CYCLES) @ (posedge clock);
