@@ -27,6 +27,15 @@ end
 
 
 
+absolute_value #(
+	.DATA_WIDTH 	()
+) dut (
+	.clock			(),
+	.enable			(),
+	.dataIn			(),
+	
+	.dataOut			()
+);
 
 
 
