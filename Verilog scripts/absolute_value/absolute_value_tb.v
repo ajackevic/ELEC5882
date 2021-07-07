@@ -27,6 +27,42 @@ initial begin
 	clock = 1'd0;
 	enableModule = 1'd0;
 	dataIn = 18'd0;
+	
+	
+	repeat(RST_CYCLES) @ (posedge clock);
+	enableModule = 1'd1;
+	repeat(1) @ (posedge clock);
+	dataIn = 18'd59;
+	repeat(1) @ (posedge clock);
+	dataIn = 18'd15683;
+	repeat(1) @ (posedge clock);
+	dataIn = -18'd15696;
+	repeat(1) @ (posedge clock);
+	dataIn = -18'd111111;
+	repeat(1) @ (posedge clock);
+	dataIn = -18'd131000;
+	repeat(1) @ (posedge clock);
+	dataIn = 18'd69420;
+	repeat(1) @ (posedge clock);
+	dataIn = -18'd12363;
+	repeat(1) @ (posedge clock);
+	dataIn = -18'd123456
+	repeat(1) @ (posedge clock);
+	dataIn = 18'd65432;
+	repeat(1) @ (posedge clock);
+	dataIn = 18'd10101;
+	repeat(1) @ (posedge clock);
+	dataIn = 18'd5786;
+	repeat(1) @ (posedge clock);
+	dataIn = -18'd9989;
+	repeat(1) @ (posedge clock);
+	dataIn = -8'd45876;
+	repeat(1) @ (posedge clock);
+	dataIn = 18'd0;
+	repeat(1) @ (posedge clock);
+	dataIn = -18'd123;
+	repeat(1) @ (posedge clock);
+	enableModule = 1'd0;
 end
 
 
