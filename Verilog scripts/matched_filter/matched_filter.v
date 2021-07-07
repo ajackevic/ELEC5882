@@ -33,7 +33,7 @@ module matched_filter #(
 	input clock,
 	input enable,
 	
-	output signed [(DATA_WIDTH * 3):0] MFOut
+	output signed [(DATA_WIDTH * 3):0] MFOutput
 );
 
 
@@ -64,6 +64,9 @@ wire signed [DATA_WIDTH - 1:0] dataMIFOutRe;
 
 wire signed [(DATA_WIDTH * 2) - 1:0] HTOutRe;
 wire signed [(DATA_WIDTH * 2) - 1:0] HTOutIm;
+
+wire signed [(DATA_WIDTH * 3) - 1:0] MFOutputRe;
+wire signed [(DATA_WIDTH * 3) - 1:0] MFOutputIm;
 
 
 
@@ -180,7 +183,7 @@ absolute_value #(
 	.dataInRe		(MFOutputRe),
 	.dataInIm		(MFOutputIm),
 	
-	.dataOut			(MFOut)
+	.dataOut			(MFOutput)
 );
 
 
@@ -214,7 +217,7 @@ always @ (posedge clock) begin
 				enablecomplexFIRCoeff <= 1'd1;
 				enableHT <= 1'd1;
 				enableComplexFIRData <= 1'd1;
-				enableABS <= 1'd0;
+				enableABS <= 1'd1;
 			end
 		end
 		
