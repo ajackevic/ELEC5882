@@ -18,7 +18,8 @@ module absolute_value #(
 ) (
 	input clock,
 	input enable,
-	input signed [DATA_WIDTH - 1:0] dataIn,
+	input signed [DATA_WIDTH - 1:0] dataInRe,
+	input signed [DATA_WIDTH - 1:0] dataInIm,
 	
 	output reg signed [DATA_WIDTH - 1:0] dataOut
 );
@@ -40,11 +41,11 @@ always @ (posedge clock) begin
 	
 		// Check the MSB bit of dataIn. If 1, the value is negative, hence dataOut should be 
 		// set to -dataIn, else dataOut should be equal to dataIn
-		if(dataIn[DATA_WIDTH - 1] == 1'd1) begin
-			dataOut <= -dataIn;
+		if(dataInRe[DATA_WIDTH - 1] == 1'd1) begin
+			dataOut <= -dataInRe;
 		end
 		else begin
-			dataOut <= dataIn;
+			dataOut <= dataInRe;
 		end
 		
 	end
