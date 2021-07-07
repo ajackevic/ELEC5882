@@ -34,8 +34,8 @@ localparam DATA_WIDTH = 18;
 reg clock;
 reg enableModule;
 reg signed [DATA_WIDTH - 1:0] dataInReRe;
-reg signed [DATA_WIDTH - 1:0] dataInReRe;
-wire signed [DATA_WIDTH - 1:0] dataOut;
+reg signed [DATA_WIDTH - 1:0] dataInReIm;
+wire signed [DATA_WIDTH:0] dataOut;
 
 
 
@@ -44,6 +44,7 @@ initial begin
 	clock = 1'd0;
 	enableModule = 1'd0;
 	dataInRe = 18'd0;
+	dataInReIm = 18'd0;
 	
 	//Set enableModule.
 	repeat(RST_CYCLES) @ (posedge clock);
@@ -52,34 +53,49 @@ initial begin
 	// Send the data.
 	repeat(1) @ (posedge clock);
 	dataInRe = 18'd59;
+	dataInIm = 18'd15683;
 	repeat(1) @ (posedge clock);
 	dataInRe = 18'd15683;
+	dataInIm = -18'd15696;
 	repeat(1) @ (posedge clock);
 	dataInRe = -18'd15696;
+	dataInIm = -18'd111111;
 	repeat(1) @ (posedge clock);
 	dataInRe = -18'd111111;
+	dataInIm = -18'd131000;
 	repeat(1) @ (posedge clock);
 	dataInRe = -18'd131000;
+	dataInIm = 18'd69420;
 	repeat(1) @ (posedge clock);
 	dataInRe = 18'd69420;
+	dataInIm = -18'd12363;
 	repeat(1) @ (posedge clock);
 	dataInRe = -18'd12363;
+	dataInIm = -18'd123456;
 	repeat(1) @ (posedge clock);
 	dataInRe = -18'd123456;
+	dataInIm = -18'd123456;
 	repeat(1) @ (posedge clock);
 	dataInRe = 18'd65432;
+	dataInIm = 18'd10101;
 	repeat(1) @ (posedge clock);
 	dataInRe = 18'd10101;
+	dataInIm = 18'd5786;
 	repeat(1) @ (posedge clock);
 	dataInRe = 18'd5786;
+	dataInIm = -18'd9989;
 	repeat(1) @ (posedge clock);
 	dataInRe = -18'd9989;
+	dataInIm = -18'd45876;
 	repeat(1) @ (posedge clock);
 	dataInRe = -18'd45876;
+	dataInIm = 18'd0;
 	repeat(1) @ (posedge clock);
 	dataInRe = 18'd0;
+	dataInIm = -18'd123;
 	repeat(1) @ (posedge clock);
 	dataInRe = -18'd123;
+	dataInIm = -18'd9989;
 	repeat(1) @ (posedge clock);
 	enableModule = 1'd0;
 end
