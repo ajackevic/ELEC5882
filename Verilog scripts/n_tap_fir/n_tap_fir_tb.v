@@ -34,16 +34,19 @@ wire [18:0] dataOut;
 
 // Connect the device under test.
 n_tap_fir #(
-	.LENGTH						(20),
-	.DATA_WIDTH					(8)
+	.LENGTH					(20),
+	.DATA_WIDTH				(8)
 	)dut(
 	
-	.clock						(clock),
-	.loadDataFlag				(loadDataFlag),
-	.stopDataLoadFlag 		(stopDataLoadFlag),
-	.dataIn						(dataIn),
+	.clock					(clock),
+	.loadDataFlag			(loadDataFlag),
+	.coeffSetFlag			(),
+	.stopDataLoadFlag 	(stopDataLoadFlag),
+	.coeffIn					(),
+	.dataIn					(dataIn),
 	
-	.dataOut 					(dataOut)
+	
+	.dataOut 				(dataOut)
 );
 
 
