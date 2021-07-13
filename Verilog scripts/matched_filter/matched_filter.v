@@ -33,8 +33,7 @@ module matched_filter #(
 	input clock,
 	input enable,
 	
-	output signed [(DATA_WIDTH * 3) - 1:0] MFOutputRe,
-	output signed [(DATA_WIDTH * 3) - 1:0] MFOutputIm
+	output signed [(DATA_WIDTH * 3):0] MFOutput
 );
 
 
@@ -49,6 +48,7 @@ reg enableMFDataIn;
 reg enablecomplexFIRCoeff;
 reg enableHT;
 reg enableComplexFIRData;
+reg enableABS;
 
 
 // A reg for informing the complex FIR filter when the data is about to be stopped.
@@ -64,6 +64,9 @@ wire signed [DATA_WIDTH - 1:0] dataMIFOutRe;
 
 wire signed [(DATA_WIDTH * 2) - 1:0] HTOutRe;
 wire signed [(DATA_WIDTH * 2) - 1:0] HTOutIm;
+
+wire signed [(DATA_WIDTH * 3) - 1:0] MFOutputRe;
+wire signed [(DATA_WIDTH * 3) - 1:0] MFOutputIm;
 
 
 
@@ -83,6 +86,7 @@ initial begin
 	enableMFDataIn <= 1'd0;
 	enablecomplexFIRCoeff <= 1'd0;
 	enableHT <= 1'd0;
+	enableABS <= 1'd0;
 	
 	
 	enableComplexFIRData <= 1'd0;
@@ -171,6 +175,16 @@ n_tap_complex_fir #(
 
 
 
+absolute_value #(
+	.DATA_WIDTH 	(DATA_WIDTH * 3)
+) abs (
+	.clock			(clock),
+	.enable			(enableABS),
+	.dataInRe		(MFOutputRe),
+	.dataInIm		(MFOutputIm),
+	
+	.dataOut			(MFOutput)
+);
 
 
 
@@ -203,6 +217,7 @@ always @ (posedge clock) begin
 				enablecomplexFIRCoeff <= 1'd1;
 				enableHT <= 1'd1;
 				enableComplexFIRData <= 1'd1;
+				enableABS <= 1'd1;
 			end
 		end
 		

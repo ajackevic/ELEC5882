@@ -94,8 +94,15 @@ matchedFilterOut = conv(x_t,h_t);
 
 
 % Obtaining the envelop value of the matched filter output.
-y_t = abs(matchedFilterOut);
-
+%y_t = abs(matchedFilterOut);
+y_t = [];
+for i = 1:1:(length(matchedFilterOut))
+    if(abs(real(matchedFilterOut(i))) >= abs(imag(matchedFilterOut(i))))
+        y_t = [y_t (abs(real(matchedFilterOut(i))) + bitshift(abs(imag(matchedFilterOut(i))),-1))];
+    else
+        y_t = [y_t (abs(imag(matchedFilterOut(i))) + bitshift(abs(real(matchedFilterOut(i))),-1))];
+    end
+end
 
 % Plotting the following graphs:
 %    Chirp waveform
