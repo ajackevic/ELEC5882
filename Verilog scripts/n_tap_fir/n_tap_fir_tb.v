@@ -64,9 +64,9 @@ localparam ENABLE_COEFF = 1;
 localparam FIR_MAIN = 2;
 localparam CHECK_RESULTS = 3;
 localparam STOP = 4;
-localparam EMPTY_STATE = 5;
-localparam EMPTY_STATE = 6;
-localparam EMPTY_STATE = 7;
+localparam EMPTY_STATE1 = 5;
+localparam EMPTY_STATE2 = 6;
+localparam EMPTY_STATE3 = 7;
 
 
 
@@ -239,7 +239,6 @@ always @(posedge clock) begin
 				dataIn <= dataInBuff[dataInCounter];
 				dataInCounter <= dataInCounter + 8'd1;
 			end
-		
 		end
 		
 		STOP: begin
