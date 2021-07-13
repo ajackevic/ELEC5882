@@ -50,9 +50,10 @@ setup_FIR_coeff #(
 	.DATA_WIDTH 		(DATA_WIDTH)
 ) setupCoeff (
 	.clock				(clock),
-	.enable				(),
-	.coeffSetFlag		(),
-	.coeffOut			()
+	.enable				(enableFIRCoeff),
+	
+	.coeffSetFlag		(coeffSetFlag),
+	.coeffOut			(coeffOut)
 );
 
 
