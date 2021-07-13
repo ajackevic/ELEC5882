@@ -339,4 +339,32 @@ always @(posedge clock) begin
 end
 
 
+
+always @ (posedge clock) begin
+	case(stateResults)
+		IDLE: begin
+		
+		end
+		
+		RESULTS: begin
+		
+		end
+		
+		EMPTY_STATE1: begin
+		
+		end
+		
+		EMPTY_STATE2: begin 
+		
+		end
+		
+		default: begin
+		
+		end
+	endcase
+end
+
+
+
+
 endmodule
