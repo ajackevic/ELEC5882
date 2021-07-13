@@ -32,7 +32,6 @@ reg clock;
 
 // Local parameters for the n_tap_fir module.
 reg loadDataFlag;
-reg coeffSetFlag;
 reg stopDataLoadFlag;
 // Note the range of reg signed [N:0] is [-2^(N-1) to (2^(N-1))-1)].
 reg signed [DATA_WIDTH - 1:0] dataIn;
@@ -85,7 +84,6 @@ n_tap_fir #(
 initial begin
 
 	stopDataLoadFlag = 0;
-	coeffSetFlag = 0;
 	coeffIn = 0;
 	dataIn = 0;
 	loadDataFlag = 0;
