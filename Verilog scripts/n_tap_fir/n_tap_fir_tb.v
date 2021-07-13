@@ -172,7 +172,7 @@ initial begin
 	dataInBuff[41] <= 18'd0;
 	dataInBuff[42] <= -18'd17923;
 	dataInBuff[43] <= -18'd666;
-	dataInBuff[44] <= 18'd999
+	dataInBuff[44] <= 18'd999;
 	dataInBuff[45] <= -18'd12361;
 	dataInBuff[46] <= -18'd1;
 	dataInBuff[47] <= 18'd1251;
@@ -217,7 +217,7 @@ end
 
 
 always @(posedge clock) begin
-	case(state) begin
+	case(state)
 		IDLE: begin
 			if(startTest) begin
 				state <= ENABLE_COEFF;
