@@ -7,10 +7,10 @@
 
  Module Description:
  -------------------
- This module sets up the coefficients for the FIR filter. When setting the coefficients
+ This module sets up the coeff for the FIR filter. When setting the coeff
  make sure all the coefficient up to the value of LENGTH are set and are at a bit width
- of DATA_WIDTH. If more than 1023 coefficients are used, increase the bit width of
- coeffCounter. The coefficients will be passed on as soon as enable is set, and once all
+ of DATA_WIDTH. If more than 1023 coeff are used, increase the bit width of
+ coeffCounter. The coeff will be passed on as soon as enable is set, and once all
  the values are passed through coeffOut the coeffSetFlag is then set.
 
 
@@ -29,33 +29,33 @@ module setup_FIR_coeff #(
 // Coefficient counter. Filter will only for 1023 ((2^10)-1) taps.
 reg [9:0] coeffCounter;
 // Designing the correct length of the coefficient array based on parameters LENGTH and DATA_WIDTH.
-reg signed [DATA_WIDTH - 1:0] coefficients [0:LENGTH - 1];
+reg signed [DATA_WIDTH - 1:0] coeff [0:LENGTH - 1];
 
 
 
-// Setting the coefficients. When setting the coefficients, make sure all values are covered.
+// Setting the coeff. When setting the coeff, make sure all values are covered.
 // This should be from 0 to LENGTH - 1.
 initial begin
-	coefficients[0] <= 8'd34;
-	coefficients[1] <= 8'd34;
-	coefficients[2] <= 8'd0;
-	coefficients[3] <= 8'd49;
-	coefficients[4] <= 8'd125;
-	coefficients[5] <= -8'd77;
-	coefficients[6] <= -8'd51;
-	coefficients[7] <= 8'd8;
-	coefficients[8] <= 8'd98;
-	coefficients[9] <= 8'd109;
-	coefficients[10] <= -8'd91;
-	coefficients[11] <= -8'd3;
-	coefficients[12] <= 8'd9;
-	coefficients[13] <= 8'd1;
-	coefficients[14] <= 8'd59;
-	coefficients[15] <= 8'd75;
-	coefficients[16] <= 8'd19;
-	coefficients[17] <= 8'd58;
-	coefficients[18] <= -8'd97;
-	coefficients[19] <= 8'd10;
+	coeff[0] <= 8'd34;
+	coeff[1] <= 8'd34;
+	coeff[2] <= 8'd0;
+	coeff[3] <= 8'd49;
+	coeff[4] <= 8'd125;
+	coeff[5] <= -8'd77;
+	coeff[6] <= -8'd51;
+	coeff[7] <= 8'd8;
+	coeff[8] <= 8'd98;
+	coeff[9] <= 8'd109;
+	coeff[10] <= -8'd91;
+	coeff[11] <= -8'd3;
+	coeff[12] <= 8'd9;
+	coeff[13] <= 8'd1;
+	coeff[14] <= 8'd59;
+	coeff[15] <= 8'd75;
+	coeff[16] <= 8'd19;
+	coeff[17] <= 8'd58;
+	coeff[18] <= -8'd97;
+	coeff[19] <= 8'd10;
 end
 
 
@@ -70,13 +70,13 @@ end
 
 always @(posedge clock) begin
 
-	// If enable is set, set coeffOut based on the coeffCounter and the array coefficients values.
-	// When all the coefficients were passed across, set the coeffSetFlag high. If not enabled, set
+	// If enable is set, set coeffOut based on the coeffCounter and the array coeff values.
+	// When all the coeff were passed across, set the coeffSetFlag high. If not enabled, set
 	// coeffSetFlag low and reset the coeffCounter.
-	if(enable) begin: setCoefficients
+	if(enable) begin: setcoeff
 
-		// Set coeffOut to the corresponding coefficients array value.
-		coeffOut <= coefficients[coeffCounter];
+		// Set coeffOut to the corresponding coeff array value.
+		coeffOut <= coeff[coeffCounter];
 
 		// Increment coeffCounter each loop.
 		coeffCounter <= coeffCounter + 10'd1;
