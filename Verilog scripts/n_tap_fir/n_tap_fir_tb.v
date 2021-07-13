@@ -111,10 +111,14 @@ n_tap_fir #(
 
 // Set the init values of the local parameters.
 initial begin
+	state = IDLE;
+	
+	enableFIRCoeff = 1'd0;
 	startTest = 1'd0;
 	stopDataLoadFlag = 1'd0;
-	dataIn = 0;
 	loadDataFlag = 1'd0;
+	
+	dataIn = 18'd0;
 	dataInCounter = 8'd0;
 	
 	repeat(RST_CYCLES) @ (posedge clock);
