@@ -35,7 +35,6 @@ reg loadDataFlag;
 reg stopDataLoadFlag;
 // Note the range of reg signed [N:0] is [-2^(N-1) to (2^(N-1))-1)].
 reg signed [DATA_WIDTH - 1:0] dataIn;
-reg signed [DATA_WIDTH - 1:0] coeffIn;
 wire signed [(DATA_WIDTH * 2) - 1:0] dataOut;
 
 // Local parameters for the setup_FIR_coeff module.
@@ -69,7 +68,7 @@ n_tap_fir #(
 	.loadDataFlag			(loadDataFlag),
 	.coeffSetFlag			(coeffSetFlag),
 	.stopDataLoadFlag 	(stopDataLoadFlag),
-	.coeffIn					(coeffIn),
+	.coeffIn					(coeffOut),
 	.dataIn					(dataIn),
 	
 	
@@ -84,7 +83,6 @@ n_tap_fir #(
 initial begin
 
 	stopDataLoadFlag = 0;
-	coeffIn = 0;
 	dataIn = 0;
 	loadDataFlag = 0;
 	repeat(RST_CYCLES) @ (posedge clock);
