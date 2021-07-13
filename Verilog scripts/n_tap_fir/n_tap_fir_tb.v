@@ -24,11 +24,13 @@ localparam RST_CYCLES = 10;
 
 
 // Creating the lcoal parameters.
-// Note the range of reg signed [7:0] is [-128 to 127].
+// Note the range of reg signed [N:0] is [-2^(N-1) to (2^(N-1))-1)].
 reg clock;
 reg loadDataFlag;
+reg coeffSetFlag;
 reg stopDataLoadFlag;
 reg signed [7:0] dataIn;
+reg signed [7:0] coeffIn;
 wire [18:0] dataOut;
 
 
@@ -57,6 +59,8 @@ n_tap_fir #(
 initial begin
 
 	stopDataLoadFlag = 0;
+	coeffSetFlag = 0;
+	coeffIn = 0;
 	dataIn = 0;
 	loadDataFlag = 0;
 	repeat(RST_CYCLES) @ (posedge clock);
