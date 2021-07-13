@@ -323,7 +323,14 @@ always @(posedge clock) begin
 		end
 		
 		default: begin
-		
+			state <= IDLE;
+			enableFIRCoeff <= 1'd0;
+			startTest <= 1'd0;
+			stopDataLoadFlag <= 1'd0;
+			loadDataFlag <= 1'd0;
+	
+			dataIn <= 18'd0;
+			dataInCounter <= 8'd0;
 		end	
 	endcase
 end
