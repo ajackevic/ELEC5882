@@ -150,7 +150,12 @@ end
 always @(posedge clock) begin
 	case(state) begin
 		IDLE: begin
-		
+			if(startTest) begin
+				enableFIRCoeff <= 1'd1;
+			end
+			else begin
+				enableFIRCoeff <= 1'd0;
+			end
 		end
 		
 		ENABLE_COEFF: begin
