@@ -104,22 +104,28 @@ n_tap_fir #(
 
 
 
-// Set the init values. Then send the data in a serial manner, one 
-// clock cycle at a time.
+// Set the init values of the local parameters.
 initial begin
 	startTest = 1'd0;
 	stopDataLoadFlag = 1'd0;
 	dataIn = 0;
 	loadDataFlag = 1'd0;
+	
 	repeat(RST_CYCLES) @ (posedge clock);
 	startTest = 1'd1;
 end
 
 
+
 // Set the initial value of the clock.
 initial begin
-	clock = 0;
+	clock <= 0;
 end
+
+
+
+
+
 
 
 real HALF_CLOCK_PERIOD = (1000000000.0/$itor(CLOCK_FREQ))/2.0;
