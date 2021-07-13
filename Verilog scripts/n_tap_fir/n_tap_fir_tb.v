@@ -8,7 +8,7 @@
  Module Description:
  -------------------
  This module is a test bench for the module n_tap_fir.v. The script
- sends the the input data (srDataIn) to the test script, the output 
+ sends the the input data (dataIn) to the test script, the output 
  data (dataOut) is then observed in ModelSim. The results are then
  confirmed through the convolution operation in MATLAB, with the same inputs.
 
@@ -28,7 +28,7 @@ localparam RST_CYCLES = 10;
 reg clock;
 reg loadDataFlag;
 reg stopDataLoadFlag;
-reg signed [7:0] srDataIn;
+reg signed [7:0] dataIn;
 wire [18:0] dataOut;
 
 
@@ -41,7 +41,7 @@ n_tap_fir #(
 	.clock						(clock),
 	.loadDataFlag				(loadDataFlag),
 	.stopDataLoadFlag 		(stopDataLoadFlag),
-	.dataIn						(srDataIn),
+	.dataIn						(dataIn),
 	
 	.dataOut 					(dataOut)
 );
@@ -54,7 +54,7 @@ n_tap_fir #(
 initial begin
 
 	stopDataLoadFlag = 0;
-	srDataIn = 0;
+	dataIn = 0;
 	loadDataFlag = 0;
 	repeat(RST_CYCLES) @ (posedge clock);
 
@@ -63,113 +63,113 @@ initial begin
 
 	// Set the input data values, in this case there are 51 values.
 	repeat(1) @ (posedge clock);
-	srDataIn = 8'd10;
+	dataIn = 8'd10;
 	repeat(1) @ (posedge clock);
-	srDataIn = 8'd20;
+	dataIn = 8'd20;
 	repeat(1) @ (posedge clock);
-	srDataIn = 8'd30;
+	dataIn = 8'd30;
 	repeat(1) @ (posedge clock);
-	srDataIn = 8'd40;
+	dataIn = 8'd40;
 	repeat(1) @ (posedge clock);
-	srDataIn = 8'd50;
+	dataIn = 8'd50;
 	repeat(1) @ (posedge clock);
-	srDataIn = 8'd60;
+	dataIn = 8'd60;
 	repeat(1) @ (posedge clock);
-	srDataIn = 8'd70;
+	dataIn = 8'd70;
 	repeat(1) @ (posedge clock);
-	srDataIn = 8'd80;
+	dataIn = 8'd80;
 	repeat(1) @ (posedge clock);
-	srDataIn = 8'd90;
+	dataIn = 8'd90;
 	repeat(1) @ (posedge clock);
-	srDataIn = 8'd100;
+	dataIn = 8'd100;
 	repeat(1) @ (posedge clock);
-	srDataIn = 8'd110;
+	dataIn = 8'd110;
 	repeat(1) @ (posedge clock);
-	srDataIn = 8'd120;
+	dataIn = 8'd120;
 	repeat(1) @ (posedge clock);
-	srDataIn = -8'd126;
+	dataIn = -8'd126;
 	repeat(1) @ (posedge clock);
-	srDataIn = -8'd116;
+	dataIn = -8'd116;
 	repeat(1) @ (posedge clock);
-	srDataIn = -8'd106;
+	dataIn = -8'd106;
 	repeat(1) @ (posedge clock);
-	srDataIn = -8'd96;
+	dataIn = -8'd96;
 	repeat(1) @ (posedge clock);
-	srDataIn = -8'd86;
+	dataIn = -8'd86;
 	repeat(1) @ (posedge clock);
-	srDataIn = -8'd76;
+	dataIn = -8'd76;
 	repeat(1) @ (posedge clock);
-	srDataIn = -8'd66;
+	dataIn = -8'd66;
 	repeat(1) @ (posedge clock);
-	srDataIn = -8'd56;
+	dataIn = -8'd56;
 	repeat(1) @ (posedge clock);
-	srDataIn = -8'd116;
+	dataIn = -8'd116;
 	repeat(1) @ (posedge clock);
-	srDataIn = -8'd106;
+	dataIn = -8'd106;
 	repeat(1) @ (posedge clock);
-	srDataIn = -8'd96;
+	dataIn = -8'd96;
 	repeat(1) @ (posedge clock);
-	srDataIn = -8'd116;
+	dataIn = -8'd116;
 	repeat(1) @ (posedge clock);
-	srDataIn = 8'd120;
+	dataIn = 8'd120;
 	repeat(1) @ (posedge clock);
-	srDataIn = 8'd0;
+	dataIn = 8'd0;
 	repeat(1) @ (posedge clock);
-	srDataIn = -8'd60;
+	dataIn = -8'd60;
 	repeat(1) @ (posedge clock);
-	srDataIn = -8'd111;
+	dataIn = -8'd111;
 	repeat(1) @ (posedge clock);
-	srDataIn = -8'd114;
+	dataIn = -8'd114;
 	repeat(1) @ (posedge clock);
-	srDataIn = 8'd13;
+	dataIn = 8'd13;
 	repeat(1) @ (posedge clock);
-	srDataIn = -8'd93;
+	dataIn = -8'd93;
 	repeat(1) @ (posedge clock);
-	srDataIn = 8'd111;
+	dataIn = 8'd111;
 	repeat(1) @ (posedge clock);
-	srDataIn = -8'd87;
+	dataIn = -8'd87;
 
 	// Need to add [length number entered to the n_tap_fir module - 1], in this case
 	// that is 19 padded 0s. This is required by convolution opperation that the FIR
 	// filters achives.
 	repeat(1) @ (posedge clock);
-	srDataIn = 8'd0;
+	dataIn = 8'd0;
 	repeat(1) @ (posedge clock);
-	srDataIn = 8'd0;
+	dataIn = 8'd0;
 	repeat(1) @ (posedge clock);
-	srDataIn = 8'd0;
+	dataIn = 8'd0;
 	repeat(1) @ (posedge clock);
-	srDataIn = 8'd0;
+	dataIn = 8'd0;
 	repeat(1) @ (posedge clock);
-	srDataIn = 8'd0;
+	dataIn = 8'd0;
 	repeat(1) @ (posedge clock);
-	srDataIn = 8'd0;
+	dataIn = 8'd0;
 	repeat(1) @ (posedge clock);
-	srDataIn = 8'd0;
+	dataIn = 8'd0;
 	repeat(1) @ (posedge clock);
-	srDataIn = 8'd0;
+	dataIn = 8'd0;
 	repeat(1) @ (posedge clock);
-	srDataIn = 8'd0;
+	dataIn = 8'd0;
 	repeat(1) @ (posedge clock);
-	srDataIn = 8'd0;
+	dataIn = 8'd0;
 	repeat(1) @ (posedge clock);
-	srDataIn = 8'd0;
+	dataIn = 8'd0;
 	repeat(1) @ (posedge clock);
-	srDataIn = 8'd0;
+	dataIn = 8'd0;
 	repeat(1) @ (posedge clock);
-	srDataIn = 8'd0;
+	dataIn = 8'd0;
 	repeat(1) @ (posedge clock);
-	srDataIn = 8'd0;
+	dataIn = 8'd0;
 	repeat(1) @ (posedge clock);
-	srDataIn = 8'd0;
+	dataIn = 8'd0;
 	repeat(1) @ (posedge clock);
-	srDataIn = 8'd0;
+	dataIn = 8'd0;
 	repeat(1) @ (posedge clock);
-	srDataIn = 8'd0;
+	dataIn = 8'd0;
 	repeat(1) @ (posedge clock);
-	srDataIn = 8'd0;
+	dataIn = 8'd0;
 	repeat(1) @ (posedge clock);
-	srDataIn = 8'd0;
+	dataIn = 8'd0;
 	repeat(1) @ (posedge clock);
 	//stopDataLoadFlag = 1 ;
 end
