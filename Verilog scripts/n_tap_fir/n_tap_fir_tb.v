@@ -25,23 +25,29 @@ localparam RST_CYCLES = 10;
 localparam LENGTH = 20;
 localparam DATA_WIDTH = 8;
 
-
-// Creating the lcoal parameters.
-// Note the range of reg signed [N:0] is [-2^(N-1) to (2^(N-1))-1)].
+//
+// Creating the local parameters.
+//
 reg clock;
+
+// Local parameters for the n_tap_fir module.
 reg loadDataFlag;
 reg coeffSetFlag;
 reg stopDataLoadFlag;
+// Note the range of reg signed [N:0] is [-2^(N-1) to (2^(N-1))-1)].
 reg signed [DATA_WIDTH - 1:0] dataIn;
 reg signed [DATA_WIDTH - 1:0] coeffIn;
 wire signed [(DATA_WIDTH * 2) - 1:0] dataOut;
 
+// Local parameters for the setup_FIR_coeff module.
+
+
 
 setup_FIR_coeff #(
-	.LENGTH 				(),
-	.DATA_WIDTH 		()
+	.LENGTH 				(LENGTH),
+	.DATA_WIDTH 		(DATA_WIDTH)
 ) setupCoeff (
-	.clock				(),
+	.clock				(clock),
 	.enable				(),
 	.coeffSetFlag		(),
 	.coefficientOut	()
