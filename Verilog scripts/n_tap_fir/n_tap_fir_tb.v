@@ -22,6 +22,9 @@ localparam NUM_CYCLES = 500;
 localparam CLOCK_FREQ = 50000000;
 localparam RST_CYCLES = 10;
 
+localparam LENGTH = 20;
+localparam DATA_WIDTH = 8;
+
 
 // Creating the lcoal parameters.
 // Note the range of reg signed [N:0] is [-2^(N-1) to (2^(N-1))-1)].
@@ -36,8 +39,8 @@ wire [18:0] dataOut;
 
 // Connect the device under test.
 n_tap_fir #(
-	.LENGTH					(20),
-	.DATA_WIDTH				(8)
+	.LENGTH					(LENGTH),
+	.DATA_WIDTH				(DATA_WIDTH)
 	)dut(
 	
 	.clock					(clock),
