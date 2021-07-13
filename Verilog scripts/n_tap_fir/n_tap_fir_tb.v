@@ -194,6 +194,69 @@ initial begin
 	dataInBuff[58] <= -18'd124;
 	dataInBuff[59] <= -18'd1231;
 	
+	
+	
+	expectedDataOutBuff[0]  <= 36'd4472666804;
+	expectedDataOutBuff[1]  <= 36'd4880821898;
+	expectedDataOutBuff[2]  <= 36'd4880821898;
+	expectedDataOutBuff[3]  <= 36'd5534997259;
+	expectedDataOutBuff[4]  <= 36'd7176268321;
+	expectedDataOutBuff[5]  <= 36'd6165579840;
+	expectedDataOutBuff[6]  <= 36'd5490433119;
+	expectedDataOutBuff[7]  <= 36'd16123174781;
+	expectedDataOutBuff[8]  <= 36'd17419466971;
+	expectedDataOutBuff[9]  <= 36'd17562465432;
+	expectedDataOutBuff[10] <= 36'd16368277551;
+	expectedDataOutBuff[11] <= 36'd15009202352;
+	expectedDataOutBuff[12] <= 36'd15128608033;
+	expectedDataOutBuff[13] <= 36'd15275538624;
+	expectedDataOutBuff[14] <= 36'd15353001585;
+	expectedDataOutBuff[15] <= 36'd16347830475;
+	expectedDataOutBuff[16] <= 36'd16350320824;
+	expectedDataOutBuff[17] <= 36'd17111974405;
+	expectedDataOutBuff[18] <= 36'd16984835535;
+	expectedDataOutBuff[19] <=	36'd18295545535;
+	expectedDataOutBuff[20] <= 36'd9350177803;
+	expectedDataOutBuff[21] <= 36'd8533864501;
+	expectedDataOutBuff[22] <= 36'd8533864501;
+	expectedDataOutBuff[23] <= 36'd7225508788;
+	expectedDataOutBuff[24] <= 36'd3942954142;
+	expectedDataOutBuff[25] <= 36'd5964338815;
+	expectedDataOutBuff[26] <= 36'd7314637408;
+	expectedDataOutBuff[27] <= -36'd13950927038;
+	expectedDataOutBuff[28] <= -36'd16543521308;
+	expectedDataOutBuff[29] <= -36'd16829519321;
+	expectedDataOutBuff[30] <= -36'd14441134448;
+	expectedDataOutBuff[31] <= -36'd11722973681;
+	expectedDataOutBuff[32] <= -36'd11961785954;
+	expectedDataOutBuff[33] <= -36'd12255648257;
+	expectedDataOutBuff[34] <= -36'd12410574770;
+	expectedDataOutBuff[35] <= -36'd14400240140;
+	expectedDataOutBuff[36] <= -36'd14405220857;
+	expectedDataOutBuff[37] <= -36'd15928533830;
+	expectedDataOutBuff[38] <= -36'd15674255120;
+	expectedDataOutBuff[39] <= -36'd18295685120;
+	expectedDataOutBuff[40] <= -36'd13822984192;
+	expectedDataOutBuff[41] <= -36'd13414825984;
+	expectedDataOutBuff[42] <= -36'd13414825984;
+	expectedDataOutBuff[43] <= -36'd12760645632;
+	expectedDataOutBuff[44] <= -36'd11119362048;
+	expectedDataOutBuff[45] <= -36'd12130058240;
+	expectedDataOutBuff[46] <= -36'd12805210112;
+	expectedDataOutBuff[47] <= -36'd2172387328;
+	expectedDataOutBuff[48] <= -36'd876085248;
+	expectedDataOutBuff[49] <= -36'd733085696;
+	expectedDataOutBuff[50] <= -36'd1927282688;
+	expectedDataOutBuff[51] <= -36'd3286368256;
+	expectedDataOutBuff[52] <= -36'd3166961664;
+	expectedDataOutBuff[53] <= -36'd3020029952;
+	expectedDataOutBuff[54] <= -36'd2942566400;
+	expectedDataOutBuff[55] <= -36'd1947729920;
+	expectedDataOutBuff[56] <= -36'd1945239552;
+	expectedDataOutBuff[57] <= -36'd1183580160;
+	expectedDataOutBuff[58] <= -36'd1310720000;
+	//expectedDataOutBuff[59] <= -36'd
+	
 end
 
 
