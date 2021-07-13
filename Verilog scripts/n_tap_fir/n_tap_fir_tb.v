@@ -255,8 +255,23 @@ end
 
 
 always @(posedge clock) begin
-
-
+	case(state) begin
+		IDLE: begin
+		
+		end
+		
+		ENABLE_COEFF: begin
+		
+		end
+		
+		FIR_MAIN: begin
+		
+		end
+		
+		default: begin
+		
+		end	
+	endcase
 end
 
 
