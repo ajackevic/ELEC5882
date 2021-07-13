@@ -18,7 +18,7 @@
 
 module setup_FIR_coeff #(
 	parameter LENGTH = 20,
-	parameter DATA_WIDTH = 8
+	parameter DATA_WIDTH = 18
 )(
 	input clock,
 	input enable,
@@ -36,26 +36,26 @@ reg signed [DATA_WIDTH - 1:0] coeff [0:LENGTH - 1];
 // Setting the coeff. When setting the coeff, make sure all values are covered.
 // This should be from 0 to LENGTH - 1.
 initial begin
-	coeff[0] <= 8'd34;
-	coeff[1] <= 8'd34;
-	coeff[2] <= 8'd0;
-	coeff[3] <= 8'd49;
-	coeff[4] <= 8'd125;
-	coeff[5] <= -8'd77;
-	coeff[6] <= -8'd51;
-	coeff[7] <= 8'd8;
-	coeff[8] <= 8'd98;
-	coeff[9] <= 8'd109;
-	coeff[10] <= -8'd91;
-	coeff[11] <= -8'd3;
-	coeff[12] <= 8'd9;
-	coeff[13] <= 8'd1;
-	coeff[14] <= 8'd59;
-	coeff[15] <= 8'd75;
-	coeff[16] <= 8'd19;
-	coeff[17] <= 8'd58;
-	coeff[18] <= -8'd97;
-	coeff[19] <= 8'd10;
+	coeff[0] <= 18'd34124;
+	coeff[1] <= 18'd3114;
+	coeff[2] <= 18'd0;
+	coeff[3] <= 18'd4991;
+	coeff[4] <= 18'd12522;
+	coeff[5] <= -18'd7711;
+	coeff[6] <= -18'd5151;
+	coeff[7] <= 18'd81122;
+	coeff[8] <= 18'd9890;
+	coeff[9] <= 18'd1091;
+	coeff[10] <= -18'd9111;
+	coeff[11] <= -18'd10369;
+	coeff[12] <= 18'd911;
+	coeff[13] <= 18'd1121;
+	coeff[14] <= 18'd591;
+	coeff[15] <= 18'd7590;
+	coeff[16] <= 18'd19;
+	coeff[17] <= 18'd5811;
+	coeff[18] <= -18'd970;
+	coeff[19] <= 18'd10000;
 end
 
 
