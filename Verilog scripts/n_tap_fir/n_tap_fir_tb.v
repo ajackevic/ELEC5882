@@ -95,6 +95,7 @@ n_tap_fir #(
 	)dut(
 	
 	.clock					(clock),
+	.loadCoeff				(enableFIRCoeff),
 	.loadDataFlag			(loadDataFlag),
 	.coeffSetFlag			(coeffSetFlag),
 	.stopDataLoadFlag 	(stopDataLoadFlag),
