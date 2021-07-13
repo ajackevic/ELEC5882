@@ -42,7 +42,7 @@ wire signed [(DATA_WIDTH * 2) - 1:0] dataOut;
 // Local parameters for the setup_FIR_coeff module.
 reg enableFIRCoeff;
 wire coeffSetFlag;
-wire signed [DATA_WIDTH - 1:0] coefficientOut;
+wire signed [DATA_WIDTH - 1:0] coeffOut;
 
 
 setup_FIR_coeff #(
@@ -52,7 +52,7 @@ setup_FIR_coeff #(
 	.clock				(clock),
 	.enable				(),
 	.coeffSetFlag		(),
-	.coefficientOut	()
+	.coeffOut			()
 );
 
 

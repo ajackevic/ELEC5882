@@ -11,7 +11,7 @@
  make sure all the coefficient up to the value of LENGTH are set and are at a bit width
  of DATA_WIDTH. If more than 1023 coefficients are used, increase the bit width of
  coeffCounter. The coefficients will be passed on as soon as enable is set, and once all
- the values are passed through coefficientOut the coeffSetFlag is then set.
+ the values are passed through coeffOut the coeffSetFlag is then set.
 
 
 */
@@ -23,7 +23,7 @@ module setup_FIR_coeff #(
 	input clock,
 	input enable,
 	output reg coeffSetFlag,
-	output reg signed [DATA_WIDTH - 1:0] coefficientOut
+	output reg signed [DATA_WIDTH - 1:0] coeffOut
 );
 
 // Coefficient counter. Filter will only for 1023 ((2^10)-1) taps.
@@ -61,7 +61,7 @@ end
 
 // Set the initial outputs to 0.
 initial begin
-	coefficientOut <= {(DATA_WIDTH){1'd0}};
+	coeffOut <= {(DATA_WIDTH){1'd0}};
 	coeffSetFlag <= 1'd0;
 	coeffCounter <= 10'd0;
 end
@@ -70,13 +70,13 @@ end
 
 always @(posedge clock) begin
 
-	// If enable is set, set coefficientOut based on the coeffCounter and the array coefficients values.
+	// If enable is set, set coeffOut based on the coeffCounter and the array coefficients values.
 	// When all the coefficients were passed across, set the coeffSetFlag high. If not enabled, set
 	// coeffSetFlag low and reset the coeffCounter.
 	if(enable) begin: setCoefficients
 
-		// Set coefficientOut to the corresponding coefficients array value.
-		coefficientOut <= coefficients[coeffCounter];
+		// Set coeffOut to the corresponding coefficients array value.
+		coeffOut <= coefficients[coeffCounter];
 
 		// Increment coeffCounter each loop.
 		coeffCounter <= coeffCounter + 10'd1;
@@ -90,7 +90,7 @@ always @(posedge clock) begin
 	else begin
 		coeffSetFlag <= 1'd0;
 		coeffCounter <= 10'd0;
-		coefficientOut <= {(DATA_WIDTH){1'd0}};
+		coeffOut <= {(DATA_WIDTH){1'd0}};
 	end
 
 end
