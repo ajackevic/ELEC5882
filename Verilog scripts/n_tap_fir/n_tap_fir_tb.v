@@ -42,9 +42,9 @@ n_tap_fir #(
 	
 	.clock					(clock),
 	.loadDataFlag			(loadDataFlag),
-	.coeffSetFlag			(),
+	.coeffSetFlag			(coeffSetFlag),
 	.stopDataLoadFlag 	(stopDataLoadFlag),
-	.coeffIn					(),
+	.coeffIn					(coeffIn),
 	.dataIn					(dataIn),
 	
 	
