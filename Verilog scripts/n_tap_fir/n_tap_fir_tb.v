@@ -58,15 +58,12 @@ wire signed [DATA_WIDTH - 1:0] coeffOut;
 
 
 // FSM states.
-reg [2:0] state;
+reg [1:0] state;
 localparam IDLE = 0;
 localparam ENABLE_COEFF = 1;
 localparam FIR_MAIN = 2;
-localparam CHECK_RESULTS = 3;
-localparam STOP = 4;
-localparam EMPTY_STATE1 = 5;
-localparam EMPTY_STATE2 = 6;
-localparam EMPTY_STATE3 = 7;
+localparam STOP = 3;
+
 
 
 
