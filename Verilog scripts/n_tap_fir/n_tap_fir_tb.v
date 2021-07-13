@@ -58,7 +58,7 @@ wire signed [DATA_WIDTH - 1:0] coeffOut;
 
 
 // FSM states.
-reg [1:0] state;
+reg [1:0] stateDut;
 localparam IDLE = 0;
 localparam ENABLE_COEFF = 1;
 localparam FIR_MAIN = 2;
@@ -108,7 +108,7 @@ n_tap_fir #(
 
 // Set the init values of the local parameters.
 initial begin
-	state = IDLE;
+	stateDut = IDLE;
 	
 	enableFIRCoeff = 1'd0;
 	startTest = 1'd0;
@@ -280,23 +280,23 @@ end
 
 
 always @(posedge clock) begin
-	case(state)
+	case(stateDut)
 		IDLE: begin
 			if(startTest) begin
-				state <= ENABLE_COEFF;
+				stateDut <= ENABLE_COEFF;
 			end
 		end
 		
 		ENABLE_COEFF: begin
 			enableFIRCoeff <= 1'd1;
-			state <= FIR_MAIN;
+			stateDut <= FIR_MAIN;
 		end
 		
 		FIR_MAIN: begin
 			loadDataFlag <= 1'd1;
 		
 			if(dataInCounter == NUMB_DATAIN) begin
-				state <= STOP;
+				stateDut <= STOP;
 			end
 			else begin
 			
@@ -320,7 +320,7 @@ always @(posedge clock) begin
 		end
 		
 		default: begin
-			state <= IDLE;
+			stateDut <= IDLE;
 			enableFIRCoeff <= 1'd0;
 			startTest <= 1'd0;
 			stopDataLoadFlag <= 1'd0;
