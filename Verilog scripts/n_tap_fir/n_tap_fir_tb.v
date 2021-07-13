@@ -233,6 +233,10 @@ always @(posedge clock) begin
 		
 		end
 		
+		STOP: begin
+		
+		end
+		
 		default: begin
 		
 		end	
