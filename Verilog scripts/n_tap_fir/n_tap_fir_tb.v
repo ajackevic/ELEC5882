@@ -239,7 +239,13 @@ always @(posedge clock) begin
 				state <= STOP;
 			end
 			else begin
-				enableFIRCoeff <= 1'd0;
+			
+				if(coeffSetFlag) begin
+					enableFIRCoeff <= 1'd0;
+				end
+				else begin
+					enableFIRCoeff <= 1'd1;
+				end
 				
 				dataIn <= dataInBuff[dataInCounter];
 				dataInCounter <= dataInCounter + 8'd1;
