@@ -233,6 +233,9 @@ always @(posedge clock) begin
 			if(dataInCounter == NUMB_DATAIN) begin
 				state <= STOP;
 			end
+			else begin
+				enableFIRCoeff <= 1'd0;
+			end
 		
 		end
 		
