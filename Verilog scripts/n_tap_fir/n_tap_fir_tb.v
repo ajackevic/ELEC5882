@@ -37,6 +37,20 @@ reg signed [DATA_WIDTH - 1:0] coeffIn;
 wire [(DATA_WIDTH * 2) - 1:0] dataOut;
 
 
+setup_FIR_coeff #(
+	.LENGTH 				(),
+	.DATA_WIDTH 		()
+) setupCoeff (
+	.clock				(),
+	.enable				(),
+	.coeffSetFlag		(),
+	.coefficientOut	()
+);
+
+
+
+
+
 // Connect the device under test.
 n_tap_fir #(
 	.LENGTH					(LENGTH),
