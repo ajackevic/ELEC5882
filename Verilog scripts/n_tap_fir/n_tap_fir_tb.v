@@ -235,6 +235,9 @@ always @(posedge clock) begin
 			end
 			else begin
 				enableFIRCoeff <= 1'd0;
+				
+				dataIn <= dataInBuff[dataInCounter];
+				dataInCounter <= dataInCounter + 8'd1;
 			end
 		
 		end
