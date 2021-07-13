@@ -65,6 +65,11 @@ localparam FIR_MAIN = 2;
 localparam STOP = 3;
 
 
+reg [1:0] stateResults;
+localparam RESULTS = 1;
+localparam EMPTY_STATE1 = 2;
+localparam EMPTY_STATE2 = 3;
+
 
 
 
@@ -109,6 +114,7 @@ n_tap_fir #(
 // Set the init values of the local parameters.
 initial begin
 	stateDut = IDLE;
+	stateResults = IDLE;
 	
 	enableFIRCoeff = 1'd0;
 	startTest = 1'd0;
