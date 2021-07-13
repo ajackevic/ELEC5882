@@ -230,6 +230,9 @@ always @(posedge clock) begin
 		end
 		
 		FIR_MAIN: begin
+			if(dataInCounter == NUMB_DATAIN) begin
+				state <= STOP;
+			end
 		
 		end
 		
