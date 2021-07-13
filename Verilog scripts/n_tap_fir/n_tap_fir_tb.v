@@ -37,6 +37,8 @@ localparam DATA_WIDTH = 8;
 //
 reg clock;
 reg startTest;
+reg signed [DATA_WIDTH - 1:0] dataInBuff;
+reg signed [(DATA_WIDTH * 2) - 1:0] expectedDataOutBuff;
 
 // Local parameters for the n_tap_fir module.
 reg loadDataFlag;
@@ -117,7 +119,7 @@ end
 
 
 
-// Set the initial value of the clock.
+// Set the initial value of the clock and dataInBuff and expectedDataOutBuff.
 initial begin
 	clock <= 0;
 end
