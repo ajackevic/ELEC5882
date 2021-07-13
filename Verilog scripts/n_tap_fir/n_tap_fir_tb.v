@@ -32,9 +32,9 @@ reg clock;
 reg loadDataFlag;
 reg coeffSetFlag;
 reg stopDataLoadFlag;
-reg signed [7:0] dataIn;
-reg signed [7:0] coeffIn;
-wire [18:0] dataOut;
+reg signed [DATA_WIDTH - 1:0] dataIn;
+reg signed [DATA_WIDTH - 1:0] coeffIn;
+wire [(DATA_WIDTH * 2) - 1:0] dataOut;
 
 
 // Connect the device under test.
