@@ -34,7 +34,7 @@ reg coeffSetFlag;
 reg stopDataLoadFlag;
 reg signed [DATA_WIDTH - 1:0] dataIn;
 reg signed [DATA_WIDTH - 1:0] coeffIn;
-wire [(DATA_WIDTH * 2) - 1:0] dataOut;
+wire signed [(DATA_WIDTH * 2) - 1:0] dataOut;
 
 
 setup_FIR_coeff #(
