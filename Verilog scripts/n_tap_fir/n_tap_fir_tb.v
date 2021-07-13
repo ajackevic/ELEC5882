@@ -26,7 +26,7 @@ localparam CLOCK_FREQ = 50000000;
 localparam RST_CYCLES = 10;
 
 // Parameters for the dut module.
-localparam LENGTH = 20;
+localparam TAPS = 20;
 localparam DATA_WIDTH = 8;
 
 
@@ -85,7 +85,7 @@ setup_FIR_coeff #(
 
 // Connect the device under test.
 n_tap_fir #(
-	.LENGTH					(LENGTH),
+	.LENGTH					(TAPS),
 	.DATA_WIDTH				(DATA_WIDTH)
 	)dut(
 	
