@@ -235,6 +235,8 @@ always @(posedge clock) begin
 		end
 		
 		FIR_MAIN: begin
+			loadDataFlag <= 1'd1;
+		
 			if(dataInCounter == NUMB_DATAIN) begin
 				state <= STOP;
 			end
