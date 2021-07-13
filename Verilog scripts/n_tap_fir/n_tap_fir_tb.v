@@ -74,7 +74,7 @@ localparam EMPTY_STATE3 = 7;
 
 // Connecting the coeff for the FIR module.
 setup_FIR_coeff #(
-	.LENGTH 				(LENGTH),
+	.LENGTH 				(TAPS),
 	.DATA_WIDTH 		(DATA_WIDTH)
 ) setupCoeff (
 	.clock				(clock),
