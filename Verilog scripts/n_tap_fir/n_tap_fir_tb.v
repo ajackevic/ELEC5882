@@ -36,6 +36,7 @@ localparam DATA_WIDTH = 8;
 // Creating the local parameters.
 //
 reg clock;
+reg startTest;
 
 // Local parameters for the n_tap_fir module.
 reg loadDataFlag;
@@ -106,126 +107,12 @@ n_tap_fir #(
 // Set the init values. Then send the data in a serial manner, one 
 // clock cycle at a time.
 initial begin
-
-	stopDataLoadFlag = 0;
+	startTest = 1'd0;
+	stopDataLoadFlag = 1'd0;
 	dataIn = 0;
-	loadDataFlag = 0;
+	loadDataFlag = 1'd0;
 	repeat(RST_CYCLES) @ (posedge clock);
-
-	repeat(13) @ (posedge clock);
-	loadDataFlag = 1;
-
-	// Set the input data values, in this case there are 51 values.
-	repeat(1) @ (posedge clock);
-	dataIn = 8'd10;
-	repeat(1) @ (posedge clock);
-	dataIn = 8'd20;
-	repeat(1) @ (posedge clock);
-	dataIn = 8'd30;
-	repeat(1) @ (posedge clock);
-	dataIn = 8'd40;
-	repeat(1) @ (posedge clock);
-	dataIn = 8'd50;
-	repeat(1) @ (posedge clock);
-	dataIn = 8'd60;
-	repeat(1) @ (posedge clock);
-	dataIn = 8'd70;
-	repeat(1) @ (posedge clock);
-	dataIn = 8'd80;
-	repeat(1) @ (posedge clock);
-	dataIn = 8'd90;
-	repeat(1) @ (posedge clock);
-	dataIn = 8'd100;
-	repeat(1) @ (posedge clock);
-	dataIn = 8'd110;
-	repeat(1) @ (posedge clock);
-	dataIn = 8'd120;
-	repeat(1) @ (posedge clock);
-	dataIn = -8'd126;
-	repeat(1) @ (posedge clock);
-	dataIn = -8'd116;
-	repeat(1) @ (posedge clock);
-	dataIn = -8'd106;
-	repeat(1) @ (posedge clock);
-	dataIn = -8'd96;
-	repeat(1) @ (posedge clock);
-	dataIn = -8'd86;
-	repeat(1) @ (posedge clock);
-	dataIn = -8'd76;
-	repeat(1) @ (posedge clock);
-	dataIn = -8'd66;
-	repeat(1) @ (posedge clock);
-	dataIn = -8'd56;
-	repeat(1) @ (posedge clock);
-	dataIn = -8'd116;
-	repeat(1) @ (posedge clock);
-	dataIn = -8'd106;
-	repeat(1) @ (posedge clock);
-	dataIn = -8'd96;
-	repeat(1) @ (posedge clock);
-	dataIn = -8'd116;
-	repeat(1) @ (posedge clock);
-	dataIn = 8'd120;
-	repeat(1) @ (posedge clock);
-	dataIn = 8'd0;
-	repeat(1) @ (posedge clock);
-	dataIn = -8'd60;
-	repeat(1) @ (posedge clock);
-	dataIn = -8'd111;
-	repeat(1) @ (posedge clock);
-	dataIn = -8'd114;
-	repeat(1) @ (posedge clock);
-	dataIn = 8'd13;
-	repeat(1) @ (posedge clock);
-	dataIn = -8'd93;
-	repeat(1) @ (posedge clock);
-	dataIn = 8'd111;
-	repeat(1) @ (posedge clock);
-	dataIn = -8'd87;
-
-	// Need to add [length number entered to the n_tap_fir module - 1], in this case
-	// that is 19 padded 0s. This is required by convolution opperation that the FIR
-	// filters achives.
-	repeat(1) @ (posedge clock);
-	dataIn = 8'd0;
-	repeat(1) @ (posedge clock);
-	dataIn = 8'd0;
-	repeat(1) @ (posedge clock);
-	dataIn = 8'd0;
-	repeat(1) @ (posedge clock);
-	dataIn = 8'd0;
-	repeat(1) @ (posedge clock);
-	dataIn = 8'd0;
-	repeat(1) @ (posedge clock);
-	dataIn = 8'd0;
-	repeat(1) @ (posedge clock);
-	dataIn = 8'd0;
-	repeat(1) @ (posedge clock);
-	dataIn = 8'd0;
-	repeat(1) @ (posedge clock);
-	dataIn = 8'd0;
-	repeat(1) @ (posedge clock);
-	dataIn = 8'd0;
-	repeat(1) @ (posedge clock);
-	dataIn = 8'd0;
-	repeat(1) @ (posedge clock);
-	dataIn = 8'd0;
-	repeat(1) @ (posedge clock);
-	dataIn = 8'd0;
-	repeat(1) @ (posedge clock);
-	dataIn = 8'd0;
-	repeat(1) @ (posedge clock);
-	dataIn = 8'd0;
-	repeat(1) @ (posedge clock);
-	dataIn = 8'd0;
-	repeat(1) @ (posedge clock);
-	dataIn = 8'd0;
-	repeat(1) @ (posedge clock);
-	dataIn = 8'd0;
-	repeat(1) @ (posedge clock);
-	dataIn = 8'd0;
-	repeat(1) @ (posedge clock);
-	//stopDataLoadFlag = 1 ;
+	startTest = 1'd1;
 end
 
 
