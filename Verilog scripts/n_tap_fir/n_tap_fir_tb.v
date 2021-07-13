@@ -66,9 +66,8 @@ localparam STOP = 3;
 
 
 reg [1:0] stateResults;
-localparam RESULTS = 1;
-localparam EMPTY_STATE1 = 2;
-localparam EMPTY_STATE2 = 3;
+localparam CHECK_RESULTS = 1;
+localparam PRINT_RESULTS = 2;
 
 
 
@@ -343,18 +342,20 @@ end
 always @ (posedge clock) begin
 	case(stateResults)
 		IDLE: begin
+			if(loadDataFlag) begin
+				stateResults <= CHECK_RESULTS;
+			end
+		end
+		
+		CHECK_RESULTS: begin
 		
 		end
 		
-		RESULTS: begin
+		PRINT_RESULTS: begin
 		
 		end
 		
-		EMPTY_STATE1: begin
-		
-		end
-		
-		EMPTY_STATE2: begin 
+		STOP: begin 
 		
 		end
 		
