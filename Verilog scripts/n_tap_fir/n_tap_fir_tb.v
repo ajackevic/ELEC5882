@@ -17,14 +17,17 @@
 module n_tap_fir_tb;
 
 
+
+
+
 // Parameters for creating the 50MHz clock signal.
 localparam NUM_CYCLES = 500;
 localparam CLOCK_FREQ = 50000000;
 localparam RST_CYCLES = 10;
 
+// Parameters for the dut module.
 localparam LENGTH = 20;
 localparam DATA_WIDTH = 8;
-
 
 
 
@@ -64,6 +67,7 @@ localparam EMPTY_STATE = 7;
 
 
 
+// Connecting the coeff for the FIR module.
 setup_FIR_coeff #(
 	.LENGTH 				(LENGTH),
 	.DATA_WIDTH 		(DATA_WIDTH)
