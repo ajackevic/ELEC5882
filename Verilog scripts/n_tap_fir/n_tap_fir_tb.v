@@ -25,6 +25,10 @@ localparam RST_CYCLES = 10;
 localparam LENGTH = 20;
 localparam DATA_WIDTH = 8;
 
+
+
+
+
 //
 // Creating the local parameters.
 //
@@ -41,6 +45,23 @@ wire signed [(DATA_WIDTH * 2) - 1:0] dataOut;
 reg enableFIRCoeff;
 wire coeffSetFlag;
 wire signed [DATA_WIDTH - 1:0] coeffOut;
+
+
+
+
+// FSM states.
+reg [2:0] state;
+localparam IDLE = 0;
+localparam ENABLE_COEFF = 1;
+localparam FIR_MAIN = 2;
+localparam CHECK_RESULTS = 3;
+localparam STOP = 4;
+localparam EMPTY_STATE = 5;
+localparam EMPTY_STATE = 6;
+localparam EMPTY_STATE = 7;
+
+
+
 
 
 setup_FIR_coeff #(
