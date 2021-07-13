@@ -29,7 +29,8 @@ localparam RST_CYCLES = 10;
 localparam TAPS = 20;
 localparam DATA_WIDTH = 8;
 
-
+// Parameter for the number of data inputs.
+localparam NUMB_DATAIN = 40;
 
 
 //
@@ -37,8 +38,8 @@ localparam DATA_WIDTH = 8;
 //
 reg clock;
 reg startTest;
-reg signed [DATA_WIDTH - 1:0] dataInBuff;
-reg signed [(DATA_WIDTH * 2) - 1:0] expectedDataOutBuff;
+reg signed [DATA_WIDTH - 1:0] dataInBuff [0:NUMB_DATAIN - 1];
+reg signed [(DATA_WIDTH * 2) - 1:0] expectedDataOutBuff [0:NUMB_DATAIN - 1];
 
 // Local parameters for the n_tap_fir module.
 reg loadDataFlag;
