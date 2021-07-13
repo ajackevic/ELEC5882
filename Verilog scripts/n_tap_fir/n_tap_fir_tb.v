@@ -40,7 +40,9 @@ reg signed [DATA_WIDTH - 1:0] coeffIn;
 wire signed [(DATA_WIDTH * 2) - 1:0] dataOut;
 
 // Local parameters for the setup_FIR_coeff module.
-
+reg enableFIRCoeff;
+wire coeffSetFlag;
+wire signed [DATA_WIDTH - 1:0] coefficientOut;
 
 
 setup_FIR_coeff #(
