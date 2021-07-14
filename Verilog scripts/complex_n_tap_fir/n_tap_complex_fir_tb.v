@@ -144,10 +144,96 @@ initial begin
 	startTest = 1'd1;
 end
 
-
-// Set the initial value of the clock.
+	
+	
+// Set the initial value of the clock, dataInBuff, and expectedDataOutBuff.
 initial begin
-	clock = 0;
+	clock <= 0;
+	
+	// 20 131071 are sent (max 18 bit value) to check the upper bounds of the FIR filter.
+	dataInBuffRe[0]  <= 18'd131071;
+	dataInBuffIm[0]  <= 18'd131071;
+	dataInBuffRe[1]  <= 18'd131071;
+	dataInBuffIm[1]  <= 18'd131071;
+	dataInBuffRe[2]  <= 18'd131071;
+	dataInBuffIm[2]  <= 18'd131071;
+	dataInBuffRe[3]  <= 18'd131071;
+	dataInBuffIm[3]  <= 18'd131071;
+	dataInBuffRe[4]  <= 18'd131071;
+	dataInBuffIm[4]  <= 18'd131071;
+	dataInBuffRe[5]  <= 18'd131071;
+	dataInBuffIm[5]  <= 18'd131071;
+	dataInBuffRe[6]  <= 18'd131071;
+	dataInBuffIm[6]  <= 18'd131071;
+	dataInBuffRe[7]  <= 18'd131071;
+	dataInBuffIm[7]  <= 18'd131071;
+	dataInBuffRe[8]  <= 18'd131071;
+	dataInBuffIm[8]  <= 18'd131071;
+	dataInBuffRe[9]  <= 18'd131071;
+	dataInBuffIm[9]  <= 18'd131071;
+	dataInBuffRe[10] <= 18'd131071;
+	dataInBuffIm[10] <= 18'd131071;
+	dataInBuffRe[11] <= 18'd131071;
+	dataInBuffIm[11] <= 18'd131071;
+	dataInBuffRe[12] <= 18'd131071;
+	dataInBuffIm[12] <= 18'd131071;
+	dataInBuffRe[13] <= 18'd131071;
+	dataInBuffIm[13] <= 18'd131071;
+	dataInBuffRe[14] <= 18'd131071;
+	dataInBuffIm[14] <= 18'd131071;
+	dataInBuffRe[15] <= 18'd131071;
+	dataInBuffIm[15] <= 18'd131071;
+	dataInBuffRe[16] <= 18'd131071;
+	dataInBuffIm[16] <= 18'd131071;
+	dataInBuffRe[17] <= 18'd131071;
+	dataInBuffIm[17] <= 18'd131071;
+	dataInBuffRe[18] <= 18'd131071;
+	dataInBuffIm[18] <= 18'd131071;
+	dataInBuffRe[19] <= 18'd131071;
+	dataInBuffIm[19] <= 18'd131071;
+	
+	// 20 -131072 are sent (smallest 18 bit value) to check the lower bounds of the FIR filter.
+	dataInBuffRe[20] <= -18'd131072;
+	dataInBuffIm[20] <= -18'd131072;
+	dataInBuffRe[21] <= -18'd131072;
+	dataInBuffIm[21] <= -18'd131072;
+	dataInBuffRe[22] <= -18'd131072;
+	dataInBuffIm[22] <= -18'd131072;
+	dataInBuffRe[23] <= -18'd131072;
+	dataInBuffIm[23] <= -18'd131072;
+	dataInBuffRe[24] <= -18'd131072;
+	dataInBuffIm[24] <= -18'd131072;
+	dataInBuffRe[25] <= -18'd131072;
+	dataInBuffIm[25] <= -18'd131072;
+	dataInBuffRe[26] <= -18'd131072;
+	dataInBuffIm[26] <= -18'd131072;
+	dataInBuffRe[27] <= -18'd131072;
+	dataInBuffIm[27] <= -18'd131072;
+	dataInBuffRe[28] <= -18'd131072;
+	dataInBuffIm[28] <= -18'd131072;
+	dataInBuffRe[29] <= -18'd131072;
+	dataInBuffIm[29] <= -18'd131072;
+	dataInBuffRe[30] <= -18'd131072;
+	dataInBuffIm[30] <= -18'd131072;
+	dataInBuffRe[31] <= -18'd131072;
+	dataInBuffIm[31] <= -18'd131072;
+	dataInBuffRe[32] <= -18'd131072;
+	dataInBuffIm[32] <= -18'd131072;
+	dataInBuffRe[33] <= -18'd131072;
+	dataInBuffIm[33] <= -18'd131072;
+	dataInBuffRe[34] <= -18'd131072;
+	dataInBuffIm[34] <= -18'd131072;
+	dataInBuffRe[35] <= -18'd131072;
+	dataInBuffIm[35] <= -18'd131072;
+	dataInBuffRe[36] <= -18'd131072;
+	dataInBuffIm[36] <= -18'd131072;
+	dataInBuffRe[37] <= -18'd131072;
+	dataInBuffIm[37] <= -18'd131072;
+	dataInBuffRe[38] <= -18'd131072;
+	dataInBuffIm[38] <= -18'd131072;
+	dataInBuffRe[39] <= -18'd131072;
+	dataInBuffIm[39] <= -18'd131072;
+	
 end
 
 
