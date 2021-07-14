@@ -348,7 +348,7 @@ end
 
 
 
-
+integer n;
 always @ (posedge clock) begin
 	case(stateResults)
 		IDLE: begin
@@ -394,7 +394,7 @@ always @ (posedge clock) begin
 				$display("Data Out:%d   Expected Value:%d   Obtained Value:%d \n", n+1, expectedDataOutBuff[n], obtainedValues[n]);
 			end
 			
-			state = STOP;
+			stateResults = STOP;
 			
 		end
 		
