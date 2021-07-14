@@ -22,8 +22,10 @@ module n_tap_complex_fir_tb;
 localparam NUM_CYCLES = 500;
 localparam CLOCK_FREQ = 50000000;
 localparam RST_CYCLES = 10;
-localparam LENGTH = 12;
-localparam DATA_WIDTH = 8;
+
+
+localparam TAPS = 20;
+localparam DATA_WIDTH = 18;
 
 
 
@@ -47,7 +49,7 @@ wire signed [DATA_WIDTH - 1:0] coeffOutIm;
 
 // Instantiating the module.
 setup_complex_FIR_coeff # (
-	.LENGTH				(LENGTH),
+	.LENGTH				(TAPS),
 	.DATA_WIDTH			(DATA_WIDTH)
 ) dut_coeff (
 	.clock				(clock),
@@ -62,7 +64,7 @@ setup_complex_FIR_coeff # (
 
 // Connect the device under test
 n_tap_complex_fir #(
-	.LENGTH					(LENGTH),
+	.LENGTH					(TAPS),
 	.DATA_WIDTH				(DATA_WIDTH)
 	) dut_fir (
 	.clock					(clock),
