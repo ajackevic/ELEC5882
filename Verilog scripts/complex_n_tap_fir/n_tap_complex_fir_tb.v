@@ -59,7 +59,7 @@ wire signed [(DATA_WIDTH * 3) - 1:0] dataOutIm;
 
 
 // Local parameters for the setup_complex_FIR_coeff module.
-reg loadCoeff;
+reg enableFIRCoeff;
 wire coeffSetFlag;
 wire signed [DATA_WIDTH - 1:0] coeffOutRe;
 wire signed [DATA_WIDTH - 1:0] coeffOutIm;
@@ -108,8 +108,8 @@ n_tap_complex_fir #(
 	.DATA_WIDTH				(DATA_WIDTH)
 	) dut (
 	.clock					(clock),
-	.loadCoeff				(loadCoeff),
-	.coeffSetFlag			(filterSetFlag),
+	.loadCoeff				(enableFIRCoeff),
+	.coeffSetFlag			(coeffSetFlag),
 	
 	.loadDataFlag			(loadDataFlag),
 	.stopDataLoadFlag		(stopDataLoadFlag),
@@ -126,7 +126,22 @@ n_tap_complex_fir #(
 
 
 initial begin
-
+	stateDut = IDLE;
+	stateResults = IDLE;
+	
+	enableFIRCoeff = 1'd0;
+	startTest = 1'd0;
+	testFailedFlag = 1'd0;
+	stopDataLoadFlag = 1'd0;
+	loadDataFlag = 1'd0;
+	
+	dataInRe = 18'd0;
+	dataInIm = 18'd0;
+	dataInCounter = 8'd0;
+	dataOutCounter = 8'd0;
+	
+	repeat(RST_CYCLES) @ (posedge clock);
+	startTest = 1'd1;
 end
 
 
