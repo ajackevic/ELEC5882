@@ -23,11 +23,12 @@ localparam NUM_CYCLES = 500;
 localparam CLOCK_FREQ = 50000000;
 localparam RST_CYCLES = 10;
 
-
+// Parameters for the dut module.
 localparam TAPS = 20;
 localparam DATA_WIDTH = 18;
 
-
+// Parameter for the number of data inputs.
+localparam NUMB_DATAIN = 60;
 
 
 
