@@ -38,6 +38,7 @@ localparam NUMB_DATAIN = 60;
 //
 reg clock;
 reg startTest;
+reg testFailedFlag;
 reg [7:0] dataInCounter;
 reg [7:0] dataOutCounter;
 reg signed [DATA_WIDTH - 1:0] dataInBuff [0:NUMB_DATAIN - 1];
@@ -122,6 +123,7 @@ initial begin
 	
 	enableFIRCoeff = 1'd0;
 	startTest = 1'd0;
+	testFailedFlag = 1'd0;
 	stopDataLoadFlag = 1'd0;
 	loadDataFlag = 1'd0;
 	
