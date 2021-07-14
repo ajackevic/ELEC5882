@@ -68,6 +68,22 @@ wire signed [DATA_WIDTH - 1:0] coeffOutIm;
 
 
 
+// FSM states for loading the coefficients and dataIn.
+reg [1:0] stateDut;
+localparam IDLE = 0;
+localparam ENABLE_COEFF = 1;
+localparam FIR_MAIN = 2;
+localparam STOP = 3;
+
+// FSM states for checking dataOut.
+reg [1:0] stateResults;
+localparam CHECK_RESULTS = 1;
+localparam PRINT_RESULTS = 2;
+
+
+
+
+
 
 // Connecting module setup_complex_FIR_coeff and hence supplying the coefficients 
 // to the dut module.
