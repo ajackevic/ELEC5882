@@ -359,11 +359,10 @@ always @ (posedge clock) begin
 		
 		CHECK_RESULTS: begin
 			if(dataOut != expectedDataOutBuff[dataOutCounter]) begin
-			
+				testFailedFlag <= 1'd1;
 			end
-			else begin
 			
-			end
+
 			dataOutCounter <= dataOutCounter + 8'd1;
 		end
 		
