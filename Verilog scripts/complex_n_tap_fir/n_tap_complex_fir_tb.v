@@ -253,4 +253,89 @@ always begin
 	end
 end
 
+
+
+
+
+
+// This always block loads the coefficients and the dataIn.
+always @(posedge clock) begin
+	case(stateDut)
+	
+	
+		// State IDLE. This state waits until startTest is high before transitioning to ENABLE_COEFF.
+		IDLE: begin
+			if(startTest) begin
+				stateDut <= ENABLE_COEFF;
+			end
+		end
+		
+		
+		// State ENABLE_COEFF. This state enables the coefficients module and transitions to FIR_MAIN.
+		ENABLE_COEFF: begin
+			enableFIRCoeff <= 1'd1;
+			stateDut <= FIR_MAIN;
+		end
+		
+		
+		// State FIR_MAIN. This state enables the loading of data to the dut module and then
+		// loads dataInBuff to dataIn. When the counter is equal to NUMB_DATAIN the state 
+		// transitions to STOP.
+		FIR_MAIN: begin
+			loadDataFlag <= 1'd1;
+		
+			if(dataInCounter == NUMB_DATAIN) begin
+				stateDut <= STOP;
+			end
+			else begin
+			
+				if(coeffSetFlag) begin
+					enableFIRCoeff <= 1'd0;
+				end
+				
+				dataInRe <= dataInBuffRe[dataInCounter];
+				dataInIm <= dataInBuffIm[dataInCounter];
+				
+				dataInCounter <= dataInCounter + 8'd1;
+			end
+		end
+		
+		
+		// State STOP. This state resets all the used parameters in this FSM.
+		STOP: begin
+			enableFIRCoeff <= 1'd0;
+			startTest <= 1'd0;
+			stopDataLoadFlag <= 1'd0;
+			loadDataFlag <= 1'd0;
+	
+			dataInRe <= 18'd0;
+			dataInIm <= 18'd0;
+			dataInCounter <= 8'd0;
+		end
+		
+		
+		// State default. This is a default state just incase the FSM is in an unkown state.
+		default: begin
+			stateDut <= IDLE;
+			enableFIRCoeff <= 1'd0;
+			startTest <= 1'd0;
+			stopDataLoadFlag <= 1'd0;
+			loadDataFlag <= 1'd0;
+	
+			dataInRe <= 18'd0;
+			dataInIm <= 18'd0;
+			dataInCounter <= 8'd0;
+		end	
+	endcase
+end
+
+
+
+
+
+
+
+
+
+
 endmodule
