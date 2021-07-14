@@ -356,7 +356,13 @@ always @ (posedge clock) begin
 		end
 		
 		CHECK_RESULTS: begin
-
+			if(dataOut != expectedDataOutBuff[dataOutCounter]) begin
+			
+			end
+			else begin
+			
+			end
+			dataOutCounter <= dataOutCounter + 8'd1;
 		end
 		
 		PRINT_RESULTS: begin
