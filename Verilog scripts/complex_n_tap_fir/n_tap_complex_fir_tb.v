@@ -28,6 +28,9 @@ localparam TAPS = 20;
 localparam DATA_WIDTH = 18;
 
 
+
+
+
 //
 // Creating the local regs and wires.
 // Note: The range of reg signed [N:0] is [-2^(N-1) to (2^(N-1))-1)].
@@ -45,25 +48,29 @@ reg signed [(DATA_WIDTH * 2) - 1:0] obtainedValuesRe [0:NUMB_DATAIN - 1];
 reg signed [(DATA_WIDTH * 2) - 1:0] obtainedValuesIm [0:NUMB_DATAIN - 1];
 
 
-// Local regs and wires.
-
+// Local parameters for the n_tap_complex_fir module.
 reg loadDataFlag;
 reg stopDataLoadFlag;
 reg signed [(DATA_WIDTH * 2) - 1:0] dataInRe;
 reg signed [(DATA_WIDTH * 2) - 1:0] dataInIm;
-
-reg loadCoeff;
-
-
-// Note the range of reg signed [7:0] is [-128 to 127].
 wire signed [(DATA_WIDTH * 3) - 1:0] dataOutRe;
 wire signed [(DATA_WIDTH * 3) - 1:0] dataOutIm;
+
+
+
+// Local parameters for the setup_complex_FIR_coeff module.
+reg loadCoeff;
+wire coeffSetFlag;
 wire signed [DATA_WIDTH - 1:0] coeffOutRe;
 wire signed [DATA_WIDTH - 1:0] coeffOutIm;
 
 
 
-// Instantiating the module.
+
+
+
+// Connecting module setup_complex_FIR_coeff and hence supplying the coefficients 
+// to the dut module.
 setup_complex_FIR_coeff # (
 	.LENGTH				(TAPS),
 	.DATA_WIDTH			(DATA_WIDTH)
@@ -71,18 +78,19 @@ setup_complex_FIR_coeff # (
 	.clock				(clock),
 	.enable				(loadCoeff),
 
-	.coeffSetFlag		(filterSetFlag),
+	.coeffSetFlag		(coeffSetFlag),
 	.coeffOutRe			(coeffOutRe),
 	.coeffOutIm			(coeffOutIm)
 );
 
 
 
-// Connect the device under test
+
+// Connect the dut module.
 n_tap_complex_fir #(
 	.LENGTH					(TAPS),
 	.DATA_WIDTH				(DATA_WIDTH)
-	) dut_fir (
+	) dut (
 	.clock					(clock),
 	.loadCoeff				(loadCoeff),
 	.coeffSetFlag			(filterSetFlag),
