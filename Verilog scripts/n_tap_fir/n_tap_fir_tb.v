@@ -351,12 +351,16 @@ end
 integer n;
 always @ (posedge clock) begin
 	case(stateResults)
+	
+		
 		IDLE: begin
 			if(loadDataFlag) begin
 				repeat(2) @ (posedge clock);
 				stateResults <= CHECK_RESULTS;
 			end
 		end
+		
+		
 		
 		CHECK_RESULTS: begin
 		
@@ -375,8 +379,10 @@ always @ (posedge clock) begin
 			
 		end
 		
+		
+		
 		PRINT_RESULTS: begin
-			$display("This is a test bench for the module n_tap_fir. \n",
+			$display("This is a test bench for the module n_tap_fir. \n \n",
 						"It tests whether the coefficients of the DUT are correctly loaded \n",
 						"and stored in the module, if the FIR filter performs the convolution correctly \n",
 						"and lastly if the maximum and minimum bounds of the filter are exceeded. \n \n"
@@ -391,15 +397,26 @@ always @ (posedge clock) begin
 			
 			
 			for (n = 0; n <= NUMB_DATAIN - 2; n = n + 1) begin
-				$display("Data Out:%d   Expected Value:%d   Obtained Value:%d \n", n+1, expectedDataOutBuff[n], obtainedValues[n]);
+				$display("Data Out:%d   Expected Value:%d   Obtained Value:%d", n+1, expectedDataOutBuff[n], obtainedValues[n]);
 			end
 			
 			stateResults = STOP;
 			
 		end
 		
+		
+		
 		STOP: begin 
-
+		
+			testFailedFlag = 1'd0;
+			dataOutCounter = 8'd0;
+			
+			for (n = 0; n <= NUMB_DATAIN - 2; n = n + 1) begin
+				obtainedValues[n] = 36'd0;
+			end
+			
+			$stop;
+			
 		end
 		
 		default: begin
