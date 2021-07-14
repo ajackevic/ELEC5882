@@ -39,8 +39,11 @@ localparam NUMB_DATAIN = 60;
 reg clock;
 reg startTest;
 reg [7:0] dataInCounter;
+reg [7:0] dataOutCounter;
 reg signed [DATA_WIDTH - 1:0] dataInBuff [0:NUMB_DATAIN - 1];
 reg signed [(DATA_WIDTH * 2) - 1:0] expectedDataOutBuff [0:NUMB_DATAIN - 1];
+
+
 
 // Local parameters for the n_tap_fir module.
 reg loadDataFlag;
@@ -48,6 +51,8 @@ reg stopDataLoadFlag;
 // Note the range of reg signed [N:0] is [-2^(N-1) to (2^(N-1))-1)].
 reg signed [DATA_WIDTH - 1:0] dataIn;
 wire signed [(DATA_WIDTH * 2) - 1:0] dataOut;
+
+
 
 // Local parameters for the setup_FIR_coeff module.
 reg enableFIRCoeff;
@@ -122,6 +127,7 @@ initial begin
 	
 	dataIn = 18'd0;
 	dataInCounter = 8'd0;
+	dataOutCounter = 8'd0;
 	
 	repeat(RST_CYCLES) @ (posedge clock);
 	startTest = 1'd1;
@@ -339,6 +345,8 @@ end
 
 
 
+
+
 always @ (posedge clock) begin
 	case(stateResults)
 		IDLE: begin
@@ -348,7 +356,7 @@ always @ (posedge clock) begin
 		end
 		
 		CHECK_RESULTS: begin
-		
+
 		end
 		
 		PRINT_RESULTS: begin
