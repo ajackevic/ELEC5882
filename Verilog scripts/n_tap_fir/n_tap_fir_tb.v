@@ -56,7 +56,7 @@ reg signed [(DATA_WIDTH * 2) - 1:0] obtainedValues [0:NUMB_DATAIN - 1];
 reg loadDataFlag;
 reg stopDataLoadFlag;
 reg signed [DATA_WIDTH - 1:0] dataIn;
-wire signed [(DATA_WIDTH * 2) - 1:0] dataOut;
+wire signed [(DATA_WIDTH * 3) - 1:0] dataOut;
 
 
 // Local parameters for the setup_FIR_coeff module.
