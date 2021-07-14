@@ -28,9 +28,25 @@ localparam TAPS = 20;
 localparam DATA_WIDTH = 18;
 
 
-
-// Local parameters.
+//
+// Creating the local regs and wires.
+// Note: The range of reg signed [N:0] is [-2^(N-1) to (2^(N-1))-1)].
+//
 reg clock;
+reg startTest;
+reg testFailedFlag;
+reg [7:0] dataInCounter;
+reg [7:0] dataOutCounter;
+reg signed [DATA_WIDTH - 1:0] dataInBuffRe [0:NUMB_DATAIN - 1];
+reg signed [DATA_WIDTH - 1:0] dataInBuffIm [0:NUMB_DATAIN - 1];
+reg signed [(DATA_WIDTH * 2) - 1:0] expectedDataOutBuffRe [0:NUMB_DATAIN - 1];
+reg signed [(DATA_WIDTH * 2) - 1:0] expectedDataOutBuffIm [0:NUMB_DATAIN - 1];
+reg signed [(DATA_WIDTH * 2) - 1:0] obtainedValuesRe [0:NUMB_DATAIN - 1];
+reg signed [(DATA_WIDTH * 2) - 1:0] obtainedValuesIm [0:NUMB_DATAIN - 1];
+
+
+// Local regs and wires.
+
 reg loadDataFlag;
 reg stopDataLoadFlag;
 reg signed [(DATA_WIDTH * 2) - 1:0] dataInRe;
