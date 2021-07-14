@@ -52,8 +52,8 @@ reg signed [(DATA_WIDTH * 2) - 1:0] obtainedValuesIm [0:NUMB_DATAIN - 1];
 // Local parameters for the n_tap_complex_fir module.
 reg loadDataFlag;
 reg stopDataLoadFlag;
-reg signed [(DATA_WIDTH * 2) - 1:0] dataInRe;
-reg signed [(DATA_WIDTH * 2) - 1:0] dataInIm;
+reg signed [DATA_WIDTH - 1:0] dataInRe;
+reg signed [DATA_WIDTH - 1:0] dataInIm;
 wire signed [(DATA_WIDTH * 3) - 1:0] dataOutRe;
 wire signed [(DATA_WIDTH * 3) - 1:0] dataOutIm;
 
@@ -93,7 +93,7 @@ setup_complex_FIR_coeff # (
 	.DATA_WIDTH			(DATA_WIDTH)
 ) dut_coeff (
 	.clock				(clock),
-	.enable				(loadCoeff),
+	.enable				(enableFIRCoeff),
 
 	.coeffSetFlag		(coeffSetFlag),
 	.coeffOutRe			(coeffOutRe),
