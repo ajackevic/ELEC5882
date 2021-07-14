@@ -7,16 +7,21 @@
 
  Module Description:
  -------------------
- This module is a test bench for the module n_tap_fir.v. The script
- sends the the input data (dataIn) to the test script, the output 
- data (dataOut) is then observed in ModelSim. The results are then
- confirmed through the convolution operation in MATLAB, with the same inputs.
+ This module is a test bench for the module n_tap_fir.v. The test bench 
+ sets the coefficients of the dut module by calling and passing through
+ the outputs of setup_FIR_coeff to the dut module. Serial data is then 
+ passed through dataIn and the corresponding output is then observed in 
+ dataOut. This test bench checks whether the coefficients of the DUT are 
+ correctly loaded and stored in the module, if the FIR filter performs the 
+ convolution correctly and lastly if the maximum and minimum bounds of the 
+ filter are exceeded. The convolution opperation is checked with MATLABS
+ corresponding outputs.
 
 */
 
+
+
 module n_tap_fir_tb;
-
-
 
 
 
@@ -34,7 +39,8 @@ localparam NUMB_DATAIN = 60;
 
 
 //
-// Creating the local parameters.
+// Creating the local regs and wires.
+// Note: The range of reg signed [N:0] is [-2^(N-1) to (2^(N-1))-1)].
 //
 reg clock;
 reg startTest;
@@ -49,10 +55,8 @@ reg signed [(DATA_WIDTH * 2) - 1:0] obtainedValues [0:NUMB_DATAIN - 1];
 // Local parameters for the n_tap_fir module.
 reg loadDataFlag;
 reg stopDataLoadFlag;
-// Note the range of reg signed [N:0] is [-2^(N-1) to (2^(N-1))-1)].
 reg signed [DATA_WIDTH - 1:0] dataIn;
 wire signed [(DATA_WIDTH * 2) - 1:0] dataOut;
-
 
 
 // Local parameters for the setup_FIR_coeff module.
@@ -63,7 +67,7 @@ wire signed [DATA_WIDTH - 1:0] coeffOut;
 
 
 
-// FSM states.
+// FSM states for loading the coefficients and dataIn.
 reg [1:0] stateDut;
 localparam IDLE = 0;
 localparam ENABLE_COEFF = 1;
@@ -71,6 +75,7 @@ localparam FIR_MAIN = 2;
 localparam STOP = 3;
 
 
+// FSM states for checking dataOut.
 reg [1:0] stateResults;
 localparam CHECK_RESULTS = 1;
 localparam PRINT_RESULTS = 2;
@@ -79,7 +84,8 @@ localparam PRINT_RESULTS = 2;
 
 
 
-// Connecting the coeff for the FIR module.
+// Connecting module setup_FIR_coeff and hence supplying the coefficients 
+// to the dut module.
 setup_FIR_coeff #(
 	.LENGTH 				(TAPS),
 	.DATA_WIDTH 		(DATA_WIDTH)
@@ -93,9 +99,7 @@ setup_FIR_coeff #(
 
 
 
-
-
-// Connect the device under test.
+// Connecting the dut.
 n_tap_fir #(
 	.LENGTH					(TAPS),
 	.DATA_WIDTH				(DATA_WIDTH)
@@ -116,7 +120,7 @@ n_tap_fir #(
 
 
 
-// Set the init values of the local parameters.
+// Set the init values of the regs.
 initial begin
 	stateDut = IDLE;
 	stateResults = IDLE;
@@ -137,10 +141,11 @@ end
 
 
 
-// Set the initial value of the clock and dataInBuff and expectedDataOutBuff.
+// Set the initial value of the clock, dataInBuff, and expectedDataOutBuff.
 initial begin
 	clock <= 0;
 	
+	// 20 131071 are sent (max 18 bit value) to check the upper bounds of the FIR filter.
 	dataInBuff[0]  <= 18'd131071;
 	dataInBuff[1]  <= 18'd131071;
 	dataInBuff[2]  <= 18'd131071;
@@ -162,6 +167,7 @@ initial begin
 	dataInBuff[18] <= 18'd131071;
 	dataInBuff[19] <= 18'd131071;
 	
+	// 20 -131072 are sent (smallest 18 bit value) to check the lower bounds of the FIR filter.
 	dataInBuff[20] <= -18'd131072;
 	dataInBuff[21] <= -18'd131072;
 	dataInBuff[22] <= -18'd131072;
@@ -183,6 +189,7 @@ initial begin
 	dataInBuff[38] <= -18'd131072;
 	dataInBuff[39] <= -18'd131072;
 	
+	// 20 random values are sent to check the other opperations.
 	dataInBuff[40] <= 18'd131071;
 	dataInBuff[41] <= 18'd0;
 	dataInBuff[42] <= -18'd17923;
@@ -205,7 +212,8 @@ initial begin
 	dataInBuff[59] <= -18'd1231;
 	
 	
-	
+	// The expectedDataOutBuff values are aquired from MATLAB through the
+	// convolution opperation between the coefficients and dataInBuff.
 	expectedDataOutBuff[0]  <= 36'd4472666804;
 	expectedDataOutBuff[1]  <= 36'd4880821898;
 	expectedDataOutBuff[2]  <= 36'd4880821898;
@@ -272,11 +280,12 @@ end
 
 
 
-
+// Parameters for the clock signal.
 real HALF_CLOCK_PERIOD = (1000000000.0/$itor(CLOCK_FREQ))/2.0;
 integer half_cycles = 0;
 
-// Create the clock toggeling and stop it simulation when half_cycles == (2*NUM_CYCLES).
+
+// Create the clock toggeling and stop the simulation when half_cycles == (2*NUM_CYCLES).
 always begin
 	#(HALF_CLOCK_PERIOD);
 	clock = ~clock;
@@ -290,21 +299,29 @@ end
 
 
 
-
-
+// This always block loads the coefficients and the dataIn.
 always @(posedge clock) begin
 	case(stateDut)
+	
+	
+		// State IDLE. This state waits until startTest is high before transitioning to ENABLE_COEFF.
 		IDLE: begin
 			if(startTest) begin
 				stateDut <= ENABLE_COEFF;
 			end
 		end
 		
+		
+		// State ENABLE_COEFF. This state enables the coefficients module and transitions to FIR_MAIN.
 		ENABLE_COEFF: begin
 			enableFIRCoeff <= 1'd1;
 			stateDut <= FIR_MAIN;
 		end
 		
+		
+		// State FIR_MAIN. This state enables the loading of data to the dut module and then
+		// loads dataInBuff to dataIn. When the counter is equal to NUMB_DATAIN the state 
+		// transitions to STOP.
 		FIR_MAIN: begin
 			loadDataFlag <= 1'd1;
 		
@@ -322,6 +339,8 @@ always @(posedge clock) begin
 			end
 		end
 		
+		
+		// State STOP. This state resets all the used parameters in this FSM.
 		STOP: begin
 			enableFIRCoeff <= 1'd0;
 			startTest <= 1'd0;
@@ -332,6 +351,8 @@ always @(posedge clock) begin
 			dataInCounter <= 8'd0;
 		end
 		
+		
+		// State default. This is a default state just incase the FSM is in an unkown state.
 		default: begin
 			stateDut <= IDLE;
 			enableFIRCoeff <= 1'd0;
@@ -348,11 +369,18 @@ end
 
 
 
+
+
+
 integer n;
 always @ (posedge clock) begin
 	case(stateResults)
 	
 		
+		// State IDLE. This state waits until loadDataFlag is set high, before waiting two clock
+		// cycles then transitioning to CHECK_RESULTS. The waiting of two clock cycles is required
+		// as it takes 3 clock cycles before loadDataFlag is set and dataOut is aquired. In this
+		// state, 2 clock cycle wait, 1 clock cycle transition.
 		IDLE: begin
 			if(loadDataFlag) begin
 				repeat(2) @ (posedge clock);
@@ -361,7 +389,10 @@ always @ (posedge clock) begin
 		end
 		
 		
-		
+		// State CHECK_RESULTS. This state stores the dataOut values to obtainedValues and then
+		// checks if the aquired dataOut value is equal to the corresponding expectedDataOutBuff
+		// value. If it is not, testFailedFlag is set high. Once dataOutCounter is equal to 
+		// NUMB_DATAIN - 2, the state transitions to PRINT_RESULTS.
 		CHECK_RESULTS: begin
 		
 			obtainedValues[dataOutCounter] <= dataOut;
@@ -380,12 +411,14 @@ always @ (posedge clock) begin
 		end
 		
 		
-		
+		// State PRINT_RESULTS. This state prints the transcript of the test bench.
 		PRINT_RESULTS: begin
 			$display("This is a test bench for the module n_tap_fir. \n \n",
 						"It tests whether the coefficients of the DUT are correctly loaded \n",
 						"and stored in the module, if the FIR filter performs the convolution correctly \n",
-						"and lastly if the maximum and minimum bounds of the filter are exceeded. \n \n"
+						"and lastly if the maximum and minimum bounds of the filter are exceeded. \n",
+						"The convolution opperation is checked with MATLABS corresponding outputs. \n \n"
+
 			);
 			
 			if(testFailedFlag) begin
@@ -395,7 +428,7 @@ always @ (posedge clock) begin
 				$display("Test results: PASSED \n \n");
 			end
 			
-			
+			// Display all the expected and aquired results.
 			for (n = 0; n <= NUMB_DATAIN - 2; n = n + 1) begin
 				$display("Data Out:%d   Expected Value:%d   Obtained Value:%d", n+1, expectedDataOutBuff[n], obtainedValues[n]);
 			end
@@ -405,7 +438,7 @@ always @ (posedge clock) begin
 		end
 		
 		
-		
+		// State STOP. This state resets all the used parameters in this FSM.
 		STOP: begin 
 		
 			testFailedFlag = 1'd0;
@@ -419,6 +452,8 @@ always @ (posedge clock) begin
 			
 		end
 		
+		
+		// State default. This is a default state just incase the FSM is in an unkown state.
 		default: begin
 		
 			stateResults <= IDLE;
@@ -432,8 +467,6 @@ always @ (posedge clock) begin
 		end
 	endcase
 end
-
-
 
 
 endmodule
