@@ -378,7 +378,7 @@ always @ (posedge clock) begin
 		end
 		
 		WAIT_1_CYCLE: begin 
-		
+			stateResults <= CHECK_RESULTS;
 		end
 		
 		default: begin
