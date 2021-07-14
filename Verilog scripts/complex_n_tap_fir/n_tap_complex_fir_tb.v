@@ -8,7 +8,7 @@
  Module Description:
  -------------------
  This module is a test bench for the module n_tap_complex_fir.v. The script
- sends the input data (srDataInRe and srDataInIm) to the test script, the output
+ sends the input data (dataInRe and dataInIm) to the test script, the output
  data (dataOutRe and dataOutIm) is then observed in ModelSim. The results
  are then confirmed through the convolution operation in MATLAB, with the same
  inputs.
@@ -33,8 +33,8 @@ localparam DATA_WIDTH = 18;
 reg clock;
 reg loadDataFlag;
 reg stopDataLoadFlag;
-reg signed [(DATA_WIDTH * 2) - 1:0] srDataInRe;
-reg signed [(DATA_WIDTH * 2) - 1:0] srDataInIm;
+reg signed [(DATA_WIDTH * 2) - 1:0] dataInRe;
+reg signed [(DATA_WIDTH * 2) - 1:0] dataInIm;
 
 reg loadCoeff;
 
@@ -73,8 +73,8 @@ n_tap_complex_fir #(
 	
 	.loadDataFlag			(loadDataFlag),
 	.stopDataLoadFlag		(stopDataLoadFlag),
-	.dataInRe				(srDataInRe),
-	.dataInIm				(srDataInIm),
+	.dataInRe				(dataInRe),
+	.dataInIm				(dataInIm),
 	.coeffInRe				(coeffOutRe),
 	.coeffInIm				(coeffOutIm),
 	
@@ -89,8 +89,8 @@ initial begin
 
 	// Set the init values. Then send the c the data in a serial manner, one clock 
 	// cycle at a time.
-	srDataInRe = 0;
-	srDataInIm = 0;
+	dataInRe = 0;
+	dataInIm = 0;
 
 	loadDataFlag = 0;
 	stopDataLoadFlag = 0;
@@ -104,126 +104,126 @@ initial begin
 
 	// Set the input data values, in this case there are 4 values.
 	repeat(2) @ (posedge clock);
-	srDataInRe = 8'd2;
-	srDataInIm = 8'd3;
+	dataInRe = 8'd2;
+	dataInIm = 8'd3;
 	repeat(1) @ (posedge clock);
-	srDataInRe = 8'd5;
-	srDataInIm = 8'd10;
+	dataInRe = 8'd5;
+	dataInIm = 8'd10;
 	repeat(1) @ (posedge clock);
-	srDataInRe = -8'd2;
-	srDataInIm = -8'd3;
+	dataInRe = -8'd2;
+	dataInIm = -8'd3;
 	repeat(1) @ (posedge clock);
-	srDataInRe = 8'd0;
-	srDataInIm = -8'd6;
+	dataInRe = 8'd0;
+	dataInIm = -8'd6;
 	repeat(1) @ (posedge clock);
-	srDataInRe = 8'd56;
-	srDataInIm = -8'd39;
+	dataInRe = 8'd56;
+	dataInIm = -8'd39;
 	repeat(1) @ (posedge clock);
-	srDataInRe = 8'd55;
-	srDataInIm = 8'd110;
+	dataInRe = 8'd55;
+	dataInIm = 8'd110;
 	repeat(1) @ (posedge clock);
-	srDataInRe = -8'd21;
-	srDataInIm = -8'd93;
+	dataInRe = -8'd21;
+	dataInIm = -8'd93;
 	repeat(1) @ (posedge clock);
-	srDataInRe = 8'd46;
-	srDataInIm = -8'd54;
+	dataInRe = 8'd46;
+	dataInIm = -8'd54;
 	repeat(1) @ (posedge clock);
-	srDataInRe = 8'd76;
-	srDataInIm = 8'd8;
+	dataInRe = 8'd76;
+	dataInIm = 8'd8;
 	repeat(1) @ (posedge clock);
-	srDataInRe = 8'd5;
-	srDataInIm = 8'd10;
+	dataInRe = 8'd5;
+	dataInIm = 8'd10;
 	repeat(1) @ (posedge clock);
-	srDataInRe = -8'd15;
-	srDataInIm = -8'd96;
+	dataInRe = -8'd15;
+	dataInIm = -8'd96;
 	repeat(1) @ (posedge clock);
-	srDataInRe = 8'd0;
-	srDataInIm = -8'd75;
+	dataInRe = 8'd0;
+	dataInIm = -8'd75;
 	repeat(1) @ (posedge clock);
-	srDataInRe = 8'd12;
-	srDataInIm = 8'd98;
+	dataInRe = 8'd12;
+	dataInIm = 8'd98;
 	repeat(1) @ (posedge clock);
-	srDataInRe = 8'd78;
-	srDataInIm = 8'd100;
+	dataInRe = 8'd78;
+	dataInIm = 8'd100;
 	repeat(1) @ (posedge clock);
-	srDataInRe = -8'd20;
-	srDataInIm = -8'd30;
+	dataInRe = -8'd20;
+	dataInIm = -8'd30;
 	repeat(1) @ (posedge clock);
-	srDataInRe = 8'd99;
-	srDataInIm = -8'd69;
+	dataInRe = 8'd99;
+	dataInIm = -8'd69;
 	repeat(1) @ (posedge clock);
-	srDataInRe = 8'd21;
-	srDataInIm = 8'd32;
+	dataInRe = 8'd21;
+	dataInIm = 8'd32;
 	repeat(1) @ (posedge clock);
-	srDataInRe = 8'd53;
-	srDataInIm = 8'd107;
+	dataInRe = 8'd53;
+	dataInIm = 8'd107;
 	repeat(1) @ (posedge clock);
-	srDataInRe = -8'd28;
-	srDataInIm = -8'd33;
+	dataInRe = -8'd28;
+	dataInIm = -8'd33;
 	repeat(1) @ (posedge clock);
-	srDataInRe = 8'd0;
-	srDataInIm = -8'd66;
+	dataInRe = 8'd0;
+	dataInIm = -8'd66;
 	repeat(1) @ (posedge clock);
-	srDataInRe = 8'd26;
-	srDataInIm = 8'd38;
+	dataInRe = 8'd26;
+	dataInIm = 8'd38;
 	repeat(1) @ (posedge clock);
-	srDataInRe = 8'd57;
-	srDataInIm = 8'd107;
+	dataInRe = 8'd57;
+	dataInIm = 8'd107;
 	repeat(1) @ (posedge clock);
-	srDataInRe = -8'd25;
-	srDataInIm = -8'd35;
+	dataInRe = -8'd25;
+	dataInIm = -8'd35;
 	repeat(1) @ (posedge clock);
-	srDataInRe = 8'd80;
-	srDataInIm = -8'd96;
+	dataInRe = 8'd80;
+	dataInIm = -8'd96;
 	repeat(1) @ (posedge clock);
-	srDataInRe = 8'd42;
-	srDataInIm = 8'd3;
+	dataInRe = 8'd42;
+	dataInIm = 8'd3;
 	repeat(1) @ (posedge clock);
-	srDataInRe = 8'd1;
-	srDataInIm = 8'd1;
+	dataInRe = 8'd1;
+	dataInIm = 8'd1;
 	repeat(1) @ (posedge clock);
-	srDataInRe = -8'd32;
-	srDataInIm = -8'd23;
+	dataInRe = -8'd32;
+	dataInIm = -8'd23;
 	repeat(1) @ (posedge clock);
-	srDataInRe = 8'd90;
-	srDataInIm = -8'd96;
+	dataInRe = 8'd90;
+	dataInIm = -8'd96;
 	repeat(1) @ (posedge clock);
 
 	// Need to add [length number entered to the n_tap_complex_fir module - 1], in this case
 	// that is 11 padded 0s. This is required by convolution opperation that the FIR
 	// filters achives.
-	srDataInRe = 8'd0;
-	srDataInIm = 8'd0;
+	dataInRe = 8'd0;
+	dataInIm = 8'd0;
 	repeat(1) @ (posedge clock);
-	srDataInRe = 8'd0;
-	srDataInIm = 8'd0;
+	dataInRe = 8'd0;
+	dataInIm = 8'd0;
 	repeat(1) @ (posedge clock);
-	srDataInRe = 8'd0;
-	srDataInIm = 8'd0;
+	dataInRe = 8'd0;
+	dataInIm = 8'd0;
 	repeat(1) @ (posedge clock);
-	srDataInRe = 8'd0;
-	srDataInIm = 8'd0;
+	dataInRe = 8'd0;
+	dataInIm = 8'd0;
 	repeat(1) @ (posedge clock);
-	srDataInRe = 8'd0;
-	srDataInIm = 8'd0;
+	dataInRe = 8'd0;
+	dataInIm = 8'd0;
 	repeat(1) @ (posedge clock);
-	srDataInRe = 8'd0;
-	srDataInIm = 8'd0;
+	dataInRe = 8'd0;
+	dataInIm = 8'd0;
 	repeat(1) @ (posedge clock);
-	srDataInRe = 8'd0;
-	srDataInIm = 8'd0;
+	dataInRe = 8'd0;
+	dataInIm = 8'd0;
 	repeat(1) @ (posedge clock);
-	srDataInRe = 8'd0;
-	srDataInIm = 8'd0;
+	dataInRe = 8'd0;
+	dataInIm = 8'd0;
 	repeat(1) @ (posedge clock);
-	srDataInRe = 8'd0;
-	srDataInIm = 8'd0;
+	dataInRe = 8'd0;
+	dataInIm = 8'd0;
 	repeat(1) @ (posedge clock);
-	srDataInRe = 8'd0;
-	srDataInIm = 8'd0;
+	dataInRe = 8'd0;
+	dataInIm = 8'd0;
 	repeat(1) @ (posedge clock);
-	srDataInRe = 8'd0;
-	srDataInIm = 8'd0;
+	dataInRe = 8'd0;
+	dataInIm = 8'd0;
 	repeat(1) @ (posedge clock);
 
 
