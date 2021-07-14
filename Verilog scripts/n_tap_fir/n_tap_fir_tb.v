@@ -74,7 +74,6 @@ localparam STOP = 3;
 reg [1:0] stateResults;
 localparam CHECK_RESULTS = 1;
 localparam PRINT_RESULTS = 2;
-localparam WAIT_1_CYCLE = 3;
 
 
 
@@ -253,8 +252,8 @@ initial begin
 	expectedDataOutBuff[43] <= -36'd9446075034;
 	expectedDataOutBuff[44] <= -36'd13648896292;
 	expectedDataOutBuff[45] <= -36'd13746638923;
-	expectedDataOutBuff[46] <= -36'd8637890954;
-	expectedDataOutBuff[47] <= -36'd2120632630;
+	expectedDataOutBuff[46] <= 36'd8637890954;
+	expectedDataOutBuff[47] <= 36'd2120632630;
 	expectedDataOutBuff[48] <= -36'd1759493161;
 	expectedDataOutBuff[49] <= -36'd2467235478;
 	expectedDataOutBuff[50] <= -36'd6096312730;
@@ -354,7 +353,8 @@ always @ (posedge clock) begin
 	case(stateResults)
 		IDLE: begin
 			if(loadDataFlag) begin
-				stateResults <= WAIT_1_CYCLE;
+				repeat(2) @ (posedge clock);
+				stateResults <= CHECK_RESULTS;
 			end
 		end
 		
@@ -377,8 +377,8 @@ always @ (posedge clock) begin
 		
 		end
 		
-		WAIT_1_CYCLE: begin 
-			stateResults <= CHECK_RESULTS;
+		STOP: begin 
+
 		end
 		
 		default: begin
