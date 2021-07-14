@@ -43,7 +43,7 @@ reg [7:0] dataInCounter;
 reg [7:0] dataOutCounter;
 reg signed [DATA_WIDTH - 1:0] dataInBuff [0:NUMB_DATAIN - 1];
 reg signed [(DATA_WIDTH * 2) - 1:0] expectedDataOutBuff [0:NUMB_DATAIN - 1];
-
+reg signed [(DATA_WIDTH * 2) - 1:0] obtainedValues [0:NUMB_DATAIN - 1];
 
 
 // Local parameters for the n_tap_fir module.
