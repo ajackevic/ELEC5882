@@ -74,6 +74,7 @@ localparam STOP = 3;
 reg [1:0] stateResults;
 localparam CHECK_RESULTS = 1;
 localparam PRINT_RESULTS = 2;
+localparam WAIT_1_CYCLE = 3;
 
 
 
@@ -353,7 +354,7 @@ always @ (posedge clock) begin
 	case(stateResults)
 		IDLE: begin
 			if(loadDataFlag) begin
-				stateResults <= CHECK_RESULTS;
+				stateResults <= WAIT_1_CYCLE;
 			end
 		end
 		
@@ -376,7 +377,7 @@ always @ (posedge clock) begin
 		
 		end
 		
-		STOP: begin 
+		WAIT_1_CYCLE: begin 
 		
 		end
 		
