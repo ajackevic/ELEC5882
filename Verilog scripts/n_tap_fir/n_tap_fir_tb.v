@@ -358,12 +358,18 @@ always @ (posedge clock) begin
 		end
 		
 		CHECK_RESULTS: begin
+		
 			if(dataOut != expectedDataOutBuff[dataOutCounter]) begin
 				testFailedFlag <= 1'd1;
 			end
 			
-
-			dataOutCounter <= dataOutCounter + 8'd1;
+			if(dataOutCounter == NUMB_DATAIN - 2) begin
+				stateResults <= PRINT_RESULTS;
+			end
+			else begin
+				dataOutCounter <= dataOutCounter + 8'd1;
+			end
+			
 		end
 		
 		PRINT_RESULTS: begin
