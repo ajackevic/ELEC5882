@@ -270,14 +270,14 @@ always @(posedge clock) begin
 		IDLE: begin
 			if(startTest) begin
 				stateDut <= ENABLE_COEFF;
-				enableFIRCoeff <= 1'd1;
+				loadCoeff <= 1'd1;
 			end
 		end
 		
 		
 		// State ENABLE_COEFF. This state enables the coefficients module and transitions to FIR_MAIN.
 		ENABLE_COEFF: begin
-			//enableFIRCoeff <= 1'd1;
+			enableFIRCoeff <= 1'd1;
 			stateDut <= FIR_MAIN;
 		end
 		
