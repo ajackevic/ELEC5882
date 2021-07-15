@@ -41,21 +41,21 @@ reg startTest;
 reg testFailedFlag;
 reg [7:0] dataInCounter;
 reg [7:0] dataOutCounter;
-reg signed [DATA_WIDTH - 1:0] dataInBuffRe [0:NUMB_DATAIN - 1];
-reg signed [DATA_WIDTH - 1:0] dataInBuffIm [0:NUMB_DATAIN - 1];
-reg signed [(DATA_WIDTH * 2) - 1:0] expectedDataOutBuffRe [0:NUMB_DATAIN - 1];
-reg signed [(DATA_WIDTH * 2) - 1:0] expectedDataOutBuffIm [0:NUMB_DATAIN - 1];
-reg signed [(DATA_WIDTH * 2) - 1:0] obtainedValuesRe [0:NUMB_DATAIN - 1];
-reg signed [(DATA_WIDTH * 2) - 1:0] obtainedValuesIm [0:NUMB_DATAIN - 1];
+reg signed [(DATA_WIDTH * 3) - 1:0] dataInBuffRe [0:NUMB_DATAIN - 1];
+reg signed [(DATA_WIDTH * 3) - 1:0] dataInBuffIm [0:NUMB_DATAIN - 1];
+reg signed [(DATA_WIDTH * 4) - 1:0] expectedDataOutBuffRe [0:NUMB_DATAIN - 1];
+reg signed [(DATA_WIDTH * 4) - 1:0] expectedDataOutBuffIm [0:NUMB_DATAIN - 1];
+reg signed [(DATA_WIDTH * 4) - 1:0] obtainedValuesRe [0:NUMB_DATAIN - 1];
+reg signed [(DATA_WIDTH * 4) - 1:0] obtainedValuesIm [0:NUMB_DATAIN - 1];
 
 
 // Local parameters for the n_tap_complex_fir module.
 reg loadDataFlag;
 reg stopDataLoadFlag;
-reg signed [DATA_WIDTH - 1:0] dataInRe;
-reg signed [DATA_WIDTH - 1:0] dataInIm;
-wire signed [(DATA_WIDTH * 3) - 1:0] dataOutRe;
-wire signed [(DATA_WIDTH * 3) - 1:0] dataOutIm;
+reg signed [(DATA_WIDTH * 3) - 1:0] dataInRe;
+reg signed [(DATA_WIDTH * 3) - 1:0] dataInIm;
+wire signed [(DATA_WIDTH * 4) - 1:0] dataOutRe;
+wire signed [(DATA_WIDTH * 4) - 1:0] dataOutIm;
 
 
 
@@ -109,7 +109,7 @@ n_tap_complex_fir #(
 	.DATA_WIDTH				(DATA_WIDTH)
 	) dut (
 	.clock					(clock),
-	.loadCoeff				(enableFIRCoeff),
+	.loadCoeff				(enableFIRCoeff), // Probpably need to enable this one clock cycle after enableFIRCoeff. 
 	.coeffSetFlag			(coeffSetFlag),
 	
 	.loadDataFlag			(loadDataFlag),
@@ -268,13 +268,14 @@ always @(posedge clock) begin
 		IDLE: begin
 			if(startTest) begin
 				stateDut <= ENABLE_COEFF;
+				enableFIRCoeff <= 1'd1;
 			end
 		end
 		
 		
 		// State ENABLE_COEFF. This state enables the coefficients module and transitions to FIR_MAIN.
 		ENABLE_COEFF: begin
-			enableFIRCoeff <= 1'd1;
+			//enableFIRCoeff <= 1'd1;
 			stateDut <= FIR_MAIN;
 		end
 		
