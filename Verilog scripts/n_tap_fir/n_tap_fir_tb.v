@@ -48,8 +48,8 @@ reg testFailedFlag;
 reg [7:0] dataInCounter;
 reg [7:0] dataOutCounter;
 reg signed [DATA_WIDTH - 1:0] dataInBuff [0:NUMB_DATAIN - 1];
-reg signed [(DATA_WIDTH * 2) - 1:0] expectedDataOutBuff [0:NUMB_DATAIN - 1];
-reg signed [(DATA_WIDTH * 2) - 1:0] obtainedValues [0:NUMB_DATAIN - 1];
+reg signed [(DATA_WIDTH * 3) - 1:0] expectedDataOutBuff [0:NUMB_DATAIN - 1];
+reg signed [(DATA_WIDTH * 3) - 1:0] obtainedValues [0:NUMB_DATAIN - 1];
 
 
 // Local parameters for the n_tap_fir module.
@@ -214,65 +214,65 @@ initial begin
 	
 	// The expectedDataOutBuff values are aquired from MATLAB through the
 	// convolution opperation between the coefficients and dataInBuff.
-	expectedDataOutBuff[0]  <= 36'd4472666804;
-	expectedDataOutBuff[1]  <= 36'd4880821898;
-	expectedDataOutBuff[2]  <= 36'd4880821898;
-	expectedDataOutBuff[3]  <= 36'd5534997259;
-	expectedDataOutBuff[4]  <= 36'd7176268321;
-	expectedDataOutBuff[5]  <= 36'd6165579840;
-	expectedDataOutBuff[6]  <= 36'd5490433119;
-	expectedDataOutBuff[7]  <= 36'd16123174781;
-	expectedDataOutBuff[8]  <= 36'd17419466971;
-	expectedDataOutBuff[9]  <= 36'd17562465432;
-	expectedDataOutBuff[10] <= 36'd16368277551;
-	expectedDataOutBuff[11] <= 36'd15009202352;
-	expectedDataOutBuff[12] <= 36'd15128608033;
-	expectedDataOutBuff[13] <= 36'd15275538624;
-	expectedDataOutBuff[14] <= 36'd15353001585;
-	expectedDataOutBuff[15] <= 36'd16347830475;
-	expectedDataOutBuff[16] <= 36'd16350320824;
-	expectedDataOutBuff[17] <= 36'd17111974405;
-	expectedDataOutBuff[18] <= 36'd16984835535;
-	expectedDataOutBuff[19] <= 36'd9350177803;
-	expectedDataOutBuff[20] <= 36'd8533864501;
-	expectedDataOutBuff[21] <= 36'd8533864501;
-	expectedDataOutBuff[22] <= 36'd7225508788;
-	expectedDataOutBuff[23] <= 36'd3942954142;
-	expectedDataOutBuff[24] <= 36'd5964338815;
-	expectedDataOutBuff[25] <= 36'd7314637408;
-	expectedDataOutBuff[26] <= -36'd13950927038;
-	expectedDataOutBuff[27] <= -36'd16543521308;
-	expectedDataOutBuff[28] <= -36'd16829519321;
-	expectedDataOutBuff[29] <= -36'd14441134448;
-	expectedDataOutBuff[30] <= -36'd11722973681;
-	expectedDataOutBuff[31] <= -36'd11961785954;
-	expectedDataOutBuff[32] <= -36'd12255648257;
-	expectedDataOutBuff[33] <= -36'd12410574770;
-	expectedDataOutBuff[34] <= -36'd14400240140;
-	expectedDataOutBuff[35] <= -36'd14405220857;
-	expectedDataOutBuff[36] <= -36'd15928533830;
-	expectedDataOutBuff[37] <= -36'd15674255120;
-	expectedDataOutBuff[38] <= -36'd18295685120;
-	expectedDataOutBuff[39] <= -36'd9350317388;
-	expectedDataOutBuff[40] <= -36'd13006670890;
-	expectedDataOutBuff[41] <= -36'd14026430436;
-	expectedDataOutBuff[42] <= -36'd12185009077;
-	expectedDataOutBuff[43] <= -36'd9446075034;
-	expectedDataOutBuff[44] <= -36'd13648896292;
-	expectedDataOutBuff[45] <= -36'd13746638923;
-	expectedDataOutBuff[46] <= 36'd8637890954;
-	expectedDataOutBuff[47] <= 36'd2120632630;
-	expectedDataOutBuff[48] <= -36'd1759493161;
-	expectedDataOutBuff[49] <= -36'd2467235478;
-	expectedDataOutBuff[50] <= -36'd6096312730;
-	expectedDataOutBuff[51] <= -36'd4508939584;
-	expectedDataOutBuff[52] <= -36'd3400027393;
-	expectedDataOutBuff[53] <= -36'd2340162471;
-	expectedDataOutBuff[54] <= 36'd1267724388;
-	expectedDataOutBuff[55] <= -36'd825693084;
-	expectedDataOutBuff[56] <= 36'd1902480668;
-   expectedDataOutBuff[57] <= -36'd5770887581;
-	expectedDataOutBuff[58] <= -36'd2959737156;
+	expectedDataOutBuff[0]  <= 54'd4472666804;
+	expectedDataOutBuff[1]  <= 54'd4880821898;
+	expectedDataOutBuff[2]  <= 54'd4880821898;
+	expectedDataOutBuff[3]  <= 54'd5534997259;
+	expectedDataOutBuff[4]  <= 54'd7176268321;
+	expectedDataOutBuff[5]  <= 54'd6165579840;
+	expectedDataOutBuff[6]  <= 54'd5490433119;
+	expectedDataOutBuff[7]  <= 54'd16123174781;
+	expectedDataOutBuff[8]  <= 54'd17419466971;
+	expectedDataOutBuff[9]  <= 54'd17562465432;
+	expectedDataOutBuff[10] <= 54'd16368277551;
+	expectedDataOutBuff[11] <= 54'd15009202352;
+	expectedDataOutBuff[12] <= 54'd15128608033;
+	expectedDataOutBuff[13] <= 54'd15275538624;
+	expectedDataOutBuff[14] <= 54'd15353001585;
+	expectedDataOutBuff[15] <= 54'd16347830475;
+	expectedDataOutBuff[16] <= 54'd16350320824;
+	expectedDataOutBuff[17] <= 54'd17111974405;
+	expectedDataOutBuff[18] <= 54'd16984835535;
+	expectedDataOutBuff[19] <= 54'd9350177803;
+	expectedDataOutBuff[20] <= 54'd8533864501;
+	expectedDataOutBuff[21] <= 54'd8533864501;
+	expectedDataOutBuff[22] <= 54'd7225508788;
+	expectedDataOutBuff[23] <= 54'd3942954142;
+	expectedDataOutBuff[24] <= 54'd5964338815;
+	expectedDataOutBuff[25] <= 54'd7314637408;
+	expectedDataOutBuff[26] <= -54'd13950927038;
+	expectedDataOutBuff[27] <= -54'd16543521308;
+	expectedDataOutBuff[28] <= -54'd16829519321;
+	expectedDataOutBuff[29] <= -54'd14441134448;
+	expectedDataOutBuff[30] <= -54'd11722973681;
+	expectedDataOutBuff[31] <= -54'd11961785954;
+	expectedDataOutBuff[32] <= -54'd12255648257;
+	expectedDataOutBuff[33] <= -54'd12410574770;
+	expectedDataOutBuff[34] <= -54'd14400240140;
+	expectedDataOutBuff[35] <= -54'd14405220857;
+	expectedDataOutBuff[36] <= -54'd15928533830;
+	expectedDataOutBuff[37] <= -54'd15674255120;
+	expectedDataOutBuff[38] <= -54'd18295685120;
+	expectedDataOutBuff[39] <= -54'd9350317388;
+	expectedDataOutBuff[40] <= -54'd13006670890;
+	expectedDataOutBuff[41] <= -54'd14026430436;
+	expectedDataOutBuff[42] <= -54'd12185009077;
+	expectedDataOutBuff[43] <= -54'd9446075034;
+	expectedDataOutBuff[44] <= -54'd13648896292;
+	expectedDataOutBuff[45] <= -54'd13746638923;
+	expectedDataOutBuff[46] <= 54'd8637890954;
+	expectedDataOutBuff[47] <= 54'd2120632630;
+	expectedDataOutBuff[48] <= -54'd1759493161;
+	expectedDataOutBuff[49] <= -54'd2467235478;
+	expectedDataOutBuff[50] <= -54'd6096312730;
+	expectedDataOutBuff[51] <= -54'd4508939584;
+	expectedDataOutBuff[52] <= -54'd3400027393;
+	expectedDataOutBuff[53] <= -54'd2340162471;
+	expectedDataOutBuff[54] <= 54'd1267724388;
+	expectedDataOutBuff[55] <= -54'd825693084;
+	expectedDataOutBuff[56] <= 54'd1902480668;
+   expectedDataOutBuff[57] <= -54'd5770887581;
+	expectedDataOutBuff[58] <= -54'd2959737156;
 end
 
 
@@ -445,7 +445,7 @@ always @ (posedge clock) begin
 			dataOutCounter = 8'd0;
 			
 			for (n = 0; n <= NUMB_DATAIN - 2; n = n + 1) begin
-				obtainedValues[n] = 36'd0;
+				obtainedValues[n] = 54'd0;
 			end
 			
 			$stop;
@@ -461,7 +461,7 @@ always @ (posedge clock) begin
 			dataOutCounter <= 8'd0;
 			
 			for (n = 0; n <= NUMB_DATAIN - 2; n = n + 1) begin
-				obtainedValues[n] <= 36'd0;
+				obtainedValues[n] <= 54'd0;
 			end
 		
 		end
