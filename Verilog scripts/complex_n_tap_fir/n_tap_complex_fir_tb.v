@@ -50,6 +50,7 @@ reg signed [(DATA_WIDTH * 4) - 1:0] obtainedValuesIm [0:NUMB_DATAIN - 1];
 
 
 // Local parameters for the n_tap_complex_fir module.
+reg loadCoeff;
 reg loadDataFlag;
 reg stopDataLoadFlag;
 reg signed [(DATA_WIDTH * 3) - 1:0] dataInRe;
@@ -109,7 +110,7 @@ n_tap_complex_fir #(
 	.DATA_WIDTH				(DATA_WIDTH)
 	) dut (
 	.clock					(clock),
-	.loadCoeff				(enableFIRCoeff), // Probpably need to enable this one clock cycle after enableFIRCoeff. 
+	.loadCoeff				(loadCoeff), // Probpably need to enable this one clock cycle after enableFIRCoeff. 
 	.coeffSetFlag			(coeffSetFlag),
 	
 	.loadDataFlag			(loadDataFlag),
@@ -130,6 +131,7 @@ initial begin
 	stateDut = IDLE;
 	stateResults = IDLE;
 	
+	loadCoeff = 1'd0;
 	enableFIRCoeff = 1'd0;
 	startTest = 1'd0;
 	testFailedFlag = 1'd0;
