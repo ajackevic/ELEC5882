@@ -26,8 +26,8 @@ module n_tap_complex_fir #(
 	input coeffSetFlag,
 	input loadDataFlag,
 	input stopDataLoadFlag,
-	input signed [DATA_WIDTH - 1:0] dataInRe,
-	input signed [DATA_WIDTH - 1:0] dataInIm,
+	input signed [(DATA_WIDTH * 2) - 1:0] dataInRe,
+	input signed [(DATA_WIDTH * 2) - 1:0] dataInIm,
 	input signed [DATA_WIDTH - 1:0] coeffInRe,
 	input signed [DATA_WIDTH - 1:0] coeffInIm,
 	
