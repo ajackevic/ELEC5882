@@ -134,7 +134,7 @@ always @(posedge clock) begin
 		FIR_MAIN: begin
 		
 			// Continoue loading the coefficients.
-			if(coeffBufferCounter <= LENGTH) begin
+			if(coeffBufferCounter <= LENGTH + 2) begin
 				coeffPreBufferRe[0] <= coeffInRe;
 				coeffPreBufferIm[0] <= coeffInIm;
 			

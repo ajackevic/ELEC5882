@@ -110,7 +110,7 @@ n_tap_complex_fir #(
 	.DATA_WIDTH				(DATA_WIDTH)
 	) dut (
 	.clock					(clock),
-	.loadCoeff				(loadCoeff), // Probpably need to enable this one clock cycle after enableFIRCoeff. 
+	.loadCoeff				(loadCoeff),
 	.coeffSetFlag			(coeffSetFlag),
 	
 	.loadDataFlag			(loadDataFlag),
@@ -277,8 +277,9 @@ always @(posedge clock) begin
 		
 		// State ENABLE_COEFF. This state enables the coefficients module and transitions to FIR_MAIN.
 		ENABLE_COEFF: begin
-			enableFIRCoeff <= 1'd1;
-			stateDut <= FIR_MAIN;
+			enableFIRCoeff = 1'd1;
+			repeat(5) @ (posedge clock);
+			stateDut = FIR_MAIN;
 		end
 		
 		
@@ -302,6 +303,7 @@ always @(posedge clock) begin
 				
 				dataInCounter <= dataInCounter + 8'd1;
 			end
+			
 		end
 		
 		
@@ -332,14 +334,6 @@ always @(posedge clock) begin
 		end	
 	endcase
 end
-
-
-
-
-
-
-
-
 
 
 endmodule
