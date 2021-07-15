@@ -237,6 +237,48 @@ initial begin
 	dataInBuffRe[39] <= -54'd131072;
 	dataInBuffIm[39] <= -54'd131072;
 	
+	
+	dataInBuffRe[40] <= -54'd123;
+	dataInBuffIm[40] <= 54'd12111;
+	dataInBuffRe[41] <= 54'd891;
+	dataInBuffIm[41] <= 54'd9;
+	dataInBuffRe[42] <= 54'd0;
+	dataInBuffIm[42] <= 54'd511;
+	dataInBuffRe[43] <= 54'd1241;
+	dataInBuffIm[43] <= -54'd7819;
+	dataInBuffRe[44] <= -54'd76;
+	dataInBuffIm[44] <= 54'd1111;
+	dataInBuffRe[45] <= 54'd9861;
+	dataInBuffIm[45] <= -54'd90;
+	dataInBuffRe[46] <= -54'd8191;
+	dataInBuffIm[46] <= -54'd88910;
+	dataInBuffRe[47] <= 54'd888;
+	dataInBuffIm[47] <= -54'd9901;
+	dataInBuffRe[48] <= 54'd12;
+	dataInBuffIm[48] <= 54'd11111;
+	dataInBuffRe[49] <= -54'd1231;
+	dataInBuffIm[49] <= -54'd131072;
+	dataInBuffRe[50] <= -54'd131072;
+	dataInBuffIm[50] <= -54'd131072;
+	dataInBuffRe[51] <= 54'd89700;
+	dataInBuffIm[51] <= -54'd12;
+	dataInBuffRe[52] <= 54'd35111;
+	dataInBuffIm[52] <= -54'd78819;
+	dataInBuffRe[53] <= 54'd1;
+	dataInBuffIm[53] <= 54'd99719;
+	dataInBuffRe[54] <= 54'd999;
+	dataInBuffIm[54] <= -54'd666;
+	dataInBuffRe[55] <= -54'd1251;
+	dataInBuffIm[55] <= -54'd678;
+	dataInBuffRe[56] <= 54'd69696;
+	dataInBuffIm[56] <= 54'd420;
+	dataInBuffRe[57] <= -54'd69420;
+	dataInBuffIm[57] <= -54'd552;
+	dataInBuffRe[58] <= 54'd891;
+	dataInBuffIm[58] <= -54'd111;
+	dataInBuffRe[59] <= 54'd131071;
+	dataInBuffIm[59] <= -54'd987;
+	
 end
 
 
