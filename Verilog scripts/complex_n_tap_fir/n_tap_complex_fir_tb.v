@@ -558,11 +558,25 @@ always @ (posedge clock) begin
 		end
 		
 		STOP: begin
-		
+			testFailedFlag = 1'd0;
+			dataOutCounter = 8'd0;
+			
+			for (n = 0; n <= NUMB_DATAIN - 2; n = n + 1) begin
+				obtainedValuesRe[n] = 54'd0;
+				obtainedValuesIm[n] = 54'd0;
+			end
+			
+			$stop;
 		end
 		
 		default: begin
-		
+			stateResults <= IDLE;
+			dataOutCounter <= 8'd0;
+			
+			for (n = 0; n <= NUMB_DATAIN - 2; n = n + 1) begin
+				obtainedValuesRe[n] <= 54'd0;
+				obtainedValuesIm[n] <= 54'd0;
+			end
 		end	
 	endcase
 end
