@@ -504,7 +504,7 @@ end
 
 
 
-
+integer n;
 always @ (posedge clock) begin
 	case(stateResults)
 		IDLE: begin
