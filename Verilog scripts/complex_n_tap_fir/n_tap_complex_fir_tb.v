@@ -126,7 +126,7 @@ n_tap_complex_fir #(
 
 
 
-
+// Set the init values of the regs.
 initial begin
 	stateDut = IDLE;
 	stateResults = IDLE;
@@ -195,6 +195,7 @@ initial begin
 	dataInBuffRe[19] <= 54'd131071;
 	dataInBuffIm[19] <= 54'd131071;
 	
+	
 	// 20 -131072 are sent (smallest 18 bit value) to check the lower bounds of the FIR filter.
 	dataInBuffRe[20] <= -54'd131072;
 	dataInBuffIm[20] <= -54'd131072;
@@ -238,6 +239,7 @@ initial begin
 	dataInBuffIm[39] <= -54'd131072;
 	
 	
+	// 20 random values are sent to check the other opperations.
 	dataInBuffRe[40] <= -54'd123;
 	dataInBuffIm[40] <= 54'd12111;
 	dataInBuffRe[41] <= 54'd891;
@@ -281,6 +283,9 @@ initial begin
 	
 	
 	
+	
+	// The expectedDataOutBuff values are aquired from MATLAB through the
+	// convolution opperation between the coefficients and dataInBuff.
 	expectedDataOutBuffRe[0]  <= 54'd5441543636;
 	expectedDataOutBuffIm[0]  <= 54'd3503789972;
 	expectedDataOutBuffRe[1]  <= 54'd9912244375;
@@ -406,6 +411,8 @@ end
 
 
 
+
+// Parameters for the clock signal.
 real HALF_CLOCK_PERIOD = (1000000000.0/$itor(CLOCK_FREQ))/2.0;
 integer half_cycles = 0;
 
@@ -431,7 +438,9 @@ always @(posedge clock) begin
 	case(stateDut)
 	
 	
-		// State IDLE. This state waits until startTest is high before transitioning to ENABLE_COEFF.
+		// State IDLE. This state waits until startTest is high before transitioning to enabling 
+		// the loading of the coefficients to the module n_tap_complex_fir and then 
+		// transitioning to ENABLE_COEFF.
 		IDLE: begin
 			if(startTest) begin
 				stateDut <= ENABLE_COEFF;
@@ -441,6 +450,9 @@ always @(posedge clock) begin
 		
 		
 		// State ENABLE_COEFF. This state enables the coefficients module and transitions to FIR_MAIN.
+		// The module n_tap_complex_fir requires 6 clock cycles before loadDataFlag can be set high, 
+		// thus the added wait of 5 clock cycles. This state also enables the reading/loading of the 
+		// coefficients from the module setup_complex_FIR_coeff.
 		ENABLE_COEFF: begin
 			enableFIRCoeff = 1'd1;
 			repeat(5) @ (posedge clock);
@@ -504,9 +516,16 @@ end
 
 
 
+
+
+// This always block checks the obtained results from the dut module.
 integer n;
 always @ (posedge clock) begin
 	case(stateResults)
+	
+		// State IDLE. This state waits until loadDataFlag is set high, before waiting one clock
+		// cycles then transitioning to CHECK_RESULTS. The reson for the wait is due to the internal 
+		// workings of the module n_tap_complex_fir.
 		IDLE: begin
 			if(loadDataFlag) begin
 				repeat(1) @ (posedge clock);
@@ -514,6 +533,11 @@ always @ (posedge clock) begin
 			end
 		end
 		
+		
+		// State CHECK_RESULTS. This state stores the dataOut values to obtainedValues and then
+		// checks if the aquired dataOut value is equal to the corresponding expectedDataOutBuff
+		// value. If it is not, testFailedFlag is set high. Once dataOutCounter is equal to 
+		// NUMB_DATAIN - 2, the state transitions to PRINT_RESULTS.
 		CHECK_RESULTS: begin
 			obtainedValuesRe[dataOutCounter] <= dataOutRe;
 			obtainedValuesIm[dataOutCounter] <= dataOutIm;
@@ -532,6 +556,8 @@ always @ (posedge clock) begin
 			
 		end
 		
+		
+		// State PRINT_RESULTS. This state prints the transcript of the test bench.
 		PRINT_RESULTS: begin
 			$display("This is a test bench for the module n_tap_complex_fir. \n \n",
 						"It tests whether the coefficients of the DUT are correctly loaded \n",
@@ -557,6 +583,8 @@ always @ (posedge clock) begin
 			stateResults = STOP;
 		end
 		
+		
+		// State STOP. This state resets all the used parameters in this FSM.
 		STOP: begin
 			testFailedFlag = 1'd0;
 			dataOutCounter = 8'd0;
@@ -569,6 +597,8 @@ always @ (posedge clock) begin
 			$stop;
 		end
 		
+		
+		// State default. This is a default state just incase the FSM is in an unkown state.
 		default: begin
 			stateResults <= IDLE;
 			testFailedFlag <= 1'd0;

@@ -372,6 +372,7 @@ end
 
 
 
+// This always block checks the obtained results from the dut module.
 integer n;
 always @ (posedge clock) begin
 	case(stateResults)
