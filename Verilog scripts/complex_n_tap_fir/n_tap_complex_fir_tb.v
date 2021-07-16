@@ -550,8 +550,8 @@ always @ (posedge clock) begin
 			
 			// Display all the expected and aquired results.
 			for (n = 0; n <= NUMB_DATAIN - 2; n = n + 1) begin
-				$display("Real Data Out:%d   Expected Value:%d   Obtained Value:%d", n+1, expectedDataOutBuffRe[n], obtainedValuesreRe[n]);
-				$display("Imaginary Data Out:%d   Expected Value:%d   Obtained Value:%d", n+1, expectedDataOutBuffIm[n], obtainedValuesreIm[n]);
+				$display("Real Data Out:%d   Expected Value:%d   Obtained Value:%d", n+1, expectedDataOutBuffRe[n], obtainedValuesRe[n]);
+				$display("Imaginary Data Out:%d   Expected Value:%d   Obtained Value:%d", n+1, expectedDataOutBuffIm[n], obtainedValuesIm[n]);
 			end
 			
 			stateResults = STOP;
