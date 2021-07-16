@@ -19,7 +19,10 @@
 
 */
 
+
 module n_tap_complex_fir_tb;
+
+
 
 
 // Parameters for creating the 50MHz clock signal
@@ -33,6 +36,7 @@ localparam DATA_WIDTH = 18;
 
 // Parameter for the number of data inputs.
 localparam NUMB_DATAIN = 60;
+
 
 
 
@@ -61,7 +65,6 @@ reg signed [(DATA_WIDTH * 3) - 1:0] dataInRe;
 reg signed [(DATA_WIDTH * 3) - 1:0] dataInIm;
 wire signed [(DATA_WIDTH * 4) - 1:0] dataOutRe;
 wire signed [(DATA_WIDTH * 4) - 1:0] dataOutIm;
-
 
 
 // Local parameters for the setup_complex_FIR_coeff module.
@@ -410,7 +413,6 @@ initial begin
 	expectedDataOutBuffIm[58] <= 54'd10318675348;
 	expectedDataOutBuffRe[59] <= 54'd14905513835;
 	expectedDataOutBuffIm[59] <= -54'd13284280934;
-	
 end
 
 
@@ -513,6 +515,7 @@ always @(posedge clock) begin
 			dataInIm <= 54'd0;
 			dataInCounter <= 8'd0;
 		end	
+		
 	endcase
 end
 
@@ -613,8 +616,10 @@ always @ (posedge clock) begin
 				obtainedValuesIm[n] <= 54'd0;
 			end
 		end	
+		
 	endcase
 end
+
 
 
 endmodule
