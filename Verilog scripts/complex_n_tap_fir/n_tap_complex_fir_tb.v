@@ -501,4 +501,33 @@ always @(posedge clock) begin
 end
 
 
+
+
+
+
+always @ (posedge clock) begin
+	case(stateResults)
+		IDLE: begin
+		
+		end
+		
+		CHECK_RESULTS: begin
+		
+		end
+		
+		PRINT_RESULTS: begin
+		
+		end
+		
+		STOP: begin
+		
+		end
+		
+		default: begin
+		
+		end	
+	endcase
+end
+
+
 endmodule
