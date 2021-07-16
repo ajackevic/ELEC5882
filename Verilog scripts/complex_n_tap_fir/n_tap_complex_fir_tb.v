@@ -508,7 +508,10 @@ end
 always @ (posedge clock) begin
 	case(stateResults)
 		IDLE: begin
-		
+			if(loadDataFlag) begin
+				repeat(2) @ (posedge clock);
+				stateResults <= CHECK_RESULTS;
+			end
 		end
 		
 		CHECK_RESULTS: begin
