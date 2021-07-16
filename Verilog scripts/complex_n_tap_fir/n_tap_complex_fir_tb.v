@@ -3,15 +3,19 @@
  n_tap_complex_fir_tb.v
  --------------
  By: Augustas Jackevic
- Date: 11th Feb 2021
+ Date: Feb 2021
 
  Module Description:
  -------------------
- This module is a test bench for the module n_tap_complex_fir.v. The script
- sends the input data (dataInRe and dataInIm) to the test script, the output
- data (dataOutRe and dataOutIm) is then observed in ModelSim. The results
- are then confirmed through the convolution operation in MATLAB, with the same
- inputs.
+ This module is a test bench for the module n_tap_complex_fir.v. The test bench 
+ sets the coefficients of the dut module by calling and passing through
+ the outputs of setup_complex_FIR_coeff to the dut module. Serial data is then 
+ passed through dataInRe and dataInIm and the corresponding output is then observed in 
+ dataOutRe and dataOutIm. This test bench checks whether the coefficients of the DUT are 
+ correctly loaded and stored in the module, if the FIR filter performs the 
+ convolution correctly and lastly if the maximum and minimum bounds of the 
+ filter are exceeded. The convolution opperation is checked with MATLABS
+ corresponding outputs.
 
 */
 
