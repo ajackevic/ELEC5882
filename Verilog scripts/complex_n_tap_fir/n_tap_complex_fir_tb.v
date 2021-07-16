@@ -515,7 +515,21 @@ always @ (posedge clock) begin
 		end
 		
 		CHECK_RESULTS: begin
+			obtainedValuesRe[dataOutCounter] <= dataOutRe;
+			obtainedValuesIm[dataOutCounter] <= dataOutIm;
+			
 		
+			if((dataOutRe != expectedDataOutBuffRe[dataOutCounter) || (dataOutIm != expectedDataOutBuffIm[dataOutCounter)]) begin
+				testFailedFlag <= 1'd1;
+			end
+			
+			if(dataOutCounter == NUMB_DATAIN - 2) begin
+				stateResults <= PRINT_RESULTS;
+			end
+			else begin
+				dataOutCounter <= dataOutCounter + 8'd1;
+			end
+			
 		end
 		
 		PRINT_RESULTS: begin
