@@ -533,7 +533,28 @@ always @ (posedge clock) begin
 		end
 		
 		PRINT_RESULTS: begin
-		
+			$display("This is a test bench for the module n_tap_complex_fir. \n \n",
+						"It tests whether the coefficients of the DUT are correctly loaded \n",
+						"and stored in the module, if the FIR filter performs the convolution correctly \n",
+						"and lastly if the maximum and minimum bounds of the filter are exceeded. \n",
+						"The convolution opperation is checked with MATLABS corresponding outputs. \n \n"
+
+			);
+			
+			if(testFailedFlag) begin
+				$display("Test results: FAILED \n \n");
+			end
+			else begin
+				$display("Test results: PASSED \n \n");
+			end
+			
+			// Display all the expected and aquired results.
+			for (n = 0; n <= NUMB_DATAIN - 2; n = n + 1) begin
+				$display("Real Data Out:%d   Expected Value:%d   Obtained Value:%d", n+1, expectedDataOutBuffreRe[n], obtainedValuesreRe[n]);
+				$display("Imaginary Data Out:%d   Expected Value:%d   Obtained Value:%d", n+1, expectedDataOutBuffreIm[n], obtainedValuesreIm[n]);
+			end
+			
+			stateResults = STOP;
 		end
 		
 		STOP: begin
