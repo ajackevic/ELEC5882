@@ -519,7 +519,7 @@ always @ (posedge clock) begin
 			obtainedValuesIm[dataOutCounter] <= dataOutIm;
 			
 		
-			if((dataOutRe != expectedDataOutBuffRe[dataOutCounter) || (dataOutIm != expectedDataOutBuffIm[dataOutCounter)]) begin
+			if((dataOutRe != expectedDataOutBuffRe[dataOutCounter]) || (dataOutIm != expectedDataOutBuffIm[dataOutCounter])) begin
 				testFailedFlag <= 1'd1;
 			end
 			
