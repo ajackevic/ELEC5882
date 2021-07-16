@@ -571,6 +571,7 @@ always @ (posedge clock) begin
 		
 		default: begin
 			stateResults <= IDLE;
+			testFailedFlag <= 1'd0;
 			dataOutCounter <= 8'd0;
 			
 			for (n = 0; n <= NUMB_DATAIN - 2; n = n + 1) begin
