@@ -46,8 +46,11 @@ complexData = complex(randRealValues, randImagValues);
 alphaBetaOut1 = [];
 
 
-% A for loop 
+% A for loop to acquire the abs values from the variable complexData.
 for i = 1:1:dataLength
+    % If the real abs value is larger than imag abs value, set
+    % absAlphaValue to the real abs value and absBetaValue to the imag abs
+    % value. Same but the other way round if the if statement does not meet.
     if(abs(real(complexData(i))) >= abs(imag(complexData(i))))
        absAlphaValue = abs(real(complexData(i)));
        absBetaValue = abs(imag(complexData(i)));
@@ -55,7 +58,10 @@ for i = 1:1:dataLength
        absAlphaValue = abs(imag(complexData(i)));
        absBetaValue = abs(real(complexData(i)));
     end
+    % Bit shift absBetaValue by 1 to aquire the required 1/2 value. It
+    % should be noted that this value is rounded down.
     absBetaValue = bitshift(absBetaValue,-1);
+    % Added the alpha and beta value to the output array.
     alphaBetaOut1 = [alphaBetaOut1 (absAlphaValue + absBetaValue)];
 end
 
@@ -69,7 +75,11 @@ end
 % Empty array to store the alpha max plus beta min values.
 alphaBetaOut2 = [];
 
+% A for loop to acquire the abs values from the variable complexData.
 for i = 1:1:dataLength
+    % If the real abs value is larger than imag abs value, set
+    % absAlphaValue to the real abs value and absBetaValue to the imag abs
+    % value. Same but the other way round if the if statement does not meet.
     if(abs(real(complexData(i))) >= abs(imag(complexData(i))))
        absAlphaValue = abs(real(complexData(i)));
        absBetaValue = abs(imag(complexData(i)));
@@ -77,7 +87,10 @@ for i = 1:1:dataLength
        absAlphaValue = abs(imag(complexData(i)));
        absBetaValue = abs(real(complexData(i)));
     end
+    % Bit shift absBetaValue by 2 to aquire the required 1/4 value. It
+    % should be noted that this value is rounded down.
     absBetaValue = bitshift(absBetaValue,-2);
+    % Added the alpha and beta value to the output array.
     alphaBetaOut2 = [alphaBetaOut2 (absAlphaValue + absBetaValue)];
 end
 
@@ -90,7 +103,11 @@ end
 % Empty array to store the alpha max plus beta min values.
 alphaBetaOut3 = [];
 
+% A for loop to acquire the abs values from the variable complexData.
 for i = 1:1:dataLength
+    % If the real abs value is larger than imag abs value, set
+    % absAlphaValue to the real abs value and absBetaValue to the imag abs
+    % value. Same but the other way round if the if statement does not meet.
     if(abs(real(complexData(i))) >= abs(imag(complexData(i))))
        absAlphaValue = abs(real(complexData(i)));
        absBetaValue = abs(imag(complexData(i)));
@@ -98,7 +115,11 @@ for i = 1:1:dataLength
        absAlphaValue = abs(imag(complexData(i)));
        absBetaValue = abs(real(complexData(i)));
     end
+    % Bit shift absBetaValue by 3 to aquire the 1/8 value and then 
+    % muiltiply by 3 to aquire the 3/8 value. It should be noted that this 
+    % value is rounded down.
     absBetaValue = (bitshift(absBetaValue,-3) * 3);
+    % Added the alpha and beta value to the output array.
     alphaBetaOut3 = [alphaBetaOut3 (absAlphaValue + absBetaValue)];
 end
 
