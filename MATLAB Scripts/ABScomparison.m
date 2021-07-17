@@ -25,8 +25,8 @@ clear all
 % to maxBound.
 
 % Creating the max and min bounds for the rand arrays.
-minBound = -100000000;
-maxBound = 100000000;
+minBound = -45000;
+maxBound = 45000;
 dataLength = 10000;
 
 % Creating the random real and imaginary array values using the max, min
@@ -249,6 +249,12 @@ ylim([0 8]);
 annotation('textbox',[0.91 .08 .1 .2],'String',avgError3str,'EdgeColor','none')
 annotation('textbox',[0.91 .05 .1 .2],'String',maxError3str,'EdgeColor','none')
 
-
+figure(2)
+scatter(xAxis, squrOutError,3,'x');
+title('Aquired error through non-restoring square root algorithm.')
+ylabel('Error (%)')
+xlabel('Data points')
+annotation('textbox',[0.91 .45 .1 .2],'String',avgSquarErrorstr,'EdgeColor','none')
+annotation('textbox',[0.91 .42 .1 .2],'String',maxSquarErrorstr,'EdgeColor','none')
 
 
