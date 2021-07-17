@@ -18,6 +18,7 @@ complexData = complex(randRealValues, randImagValues);
 %%
 % Alpha (1/1) max plus beta (1/2) min.
 
+alphaBetaOut1 = [];
 for i = 1:1:dataLength
     if(abs(real(complexData(i))) >= abs(imag(complexData(i))))
        absAlphaValue = abs(real(complexData(i)));
