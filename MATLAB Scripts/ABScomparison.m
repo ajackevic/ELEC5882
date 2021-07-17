@@ -48,185 +48,182 @@ idealOut = abs(complexData);
 
 
 
-% %%
-% % Alpha (1/1) max plus beta (1/2) min.
-% 
-% % Empty array to store the alpha max plus beta min values.
-% alphaBetaOut1 = [];
-% 
-% 
-% % A for loop to acquire the abs values from the variable complexData.
-% for i = 1:1:dataLength
-%     % If the real abs value is larger than imag abs value, set
-%     % absAlphaValue to the real abs value and absBetaValue to the imag abs
-%     % value. Same but the other way round if the if statement does not meet.
-%     if(abs(real(complexData(i))) >= abs(imag(complexData(i))))
-%        absAlphaValue = abs(real(complexData(i)));
-%        absBetaValue = abs(imag(complexData(i)));
-%     else
-%        absAlphaValue = abs(imag(complexData(i)));
-%        absBetaValue = abs(real(complexData(i)));
-%     end
-%     % Bit shift absBetaValue by 1 to aquire the required 1/2 value. It
-%     % should be noted that this value is rounded down.
-%     absBetaValue = bitshift(absBetaValue,-1);
-%     % Added the alpha and beta value to the output array.
-%     alphaBetaOut1 = [alphaBetaOut1 (absAlphaValue + absBetaValue)];
-% end
-% 
-% 
-% 
-% 
-% 
-% 
-% 
-% 
-% %%
-% % Alpha (1/1) max plus beta (1/4) min.
-% 
-% 
-% % Empty array to store the alpha max plus beta min values.
-% alphaBetaOut2 = [];
-% 
-% % A for loop to acquire the abs values from the variable complexData.
-% for i = 1:1:dataLength
-%     % If the real abs value is larger than imag abs value, set
-%     % absAlphaValue to the real abs value and absBetaValue to the imag abs
-%     % value. Same but the other way round if the if statement does not meet.
-%     if(abs(real(complexData(i))) >= abs(imag(complexData(i))))
-%        absAlphaValue = abs(real(complexData(i)));
-%        absBetaValue = abs(imag(complexData(i)));
-%     else
-%        absAlphaValue = abs(imag(complexData(i)));
-%        absBetaValue = abs(real(complexData(i)));
-%     end
-%     % Bit shift absBetaValue by 2 to aquire the required 1/4 value. It
-%     % should be noted that this value is rounded down.
-%     absBetaValue = bitshift(absBetaValue,-2);
-%     % Added the alpha and beta value to the output array.
-%     alphaBetaOut2 = [alphaBetaOut2 (absAlphaValue + absBetaValue)];
-% end
-% 
-% 
-% 
-% 
-% 
-% 
-% 
-% 
-% %%
-% % Alpha (1/1) max plus beta (3/8) min.
-% 
-% 
-% % Empty array to store the alpha max plus beta min values.
-% alphaBetaOut3 = [];
-% 
-% % A for loop to acquire the abs values from the variable complexData.
-% for i = 1:1:dataLength
-%     % If the real abs value is larger than imag abs value, set
-%     % absAlphaValue to the real abs value and absBetaValue to the imag abs
-%     % value. Same but the other way round if the if statement does not meet.
-%     if(abs(real(complexData(i))) >= abs(imag(complexData(i))))
-%        absAlphaValue = abs(real(complexData(i)));
-%        absBetaValue = abs(imag(complexData(i)));
-%     else
-%        absAlphaValue = abs(imag(complexData(i)));
-%        absBetaValue = abs(real(complexData(i)));
-%     end
-%     % Bit shift absBetaValue by 3 to aquire the 1/8 value and then 
-%     % muiltiply by 3 to aquire the 3/8 value. It should be noted that this 
-%     % value is rounded down.
-%     absBetaValue = (bitshift(absBetaValue,-3) * 3);
-%     % Added the alpha and beta value to the output array.
-%     alphaBetaOut3 = [alphaBetaOut3 (absAlphaValue + absBetaValue)];
-% end
-% 
-% 
-% 
-% 
-% 
-% 
-% %%
-% % Calculaing the error values from the obtianed alphaBetaOut values and the
-% % average error and max error from the error array values.
-% 
-% 
-% % Empty arrays which are then used to store the errors.
-% absOut1Error = [];
-% absOut2Error = [];
-% absOut3Error = [];
-% 
-% 
-% % A for loop that is used to calculate the error of each value and then
-% % store it in absOutXError arrays.
-% for i = 1:1:dataLength
-%     % Error = (|obtained value - expected value|/expected value) * 100
-%     error1 = (abs((alphaBetaOut1(i) - idealOut(i)))/idealOut(i)) * 100;
-%     error2 = (abs((alphaBetaOut2(i) - idealOut(i)))/idealOut(i)) * 100;
-%     error3 = (abs((alphaBetaOut3(i) - idealOut(i)))/idealOut(i)) * 100;
-%     
-%     
-%     % Store the calculated errors in the array.
-%     absOut1Error = [absOut1Error error1];  
-%     absOut2Error = [absOut2Error error2];  
-%     absOut3Error = [absOut3Error error3];  
-% end
-% 
-% 
-% avgError1str = "Avg error: " + string(round(mean(absOut1Error),2));
-% avgError2str = "Avg error: " + string(round(mean(absOut2Error),2));
-% avgError3str = "Avg error: " + string(round(mean(absOut3Error),2));
-% 
-% maxError1str = "Max error: " + string(round(max(absOut1Error),2));
-% maxError2str = "Max error: " + string(round(max(absOut2Error),2));
-% maxError3str = "Max error: " + string(round(max(absOut3Error),2));
-% 
-% 
-% %%
-% % Ploting the errors.
-% 
-% xAxis = 1:1:dataLength;
-% 
-% figure(1)
-% tiledlayout(3,1);
-% 
-% 
-% nexttile
-% scatter(xAxis, absOut1Error,3,'x');
-% title('Aquired error through alpha (1/1) max plus beta (1/2) min alogirthm.')
-% ylabel('Error (%)')
-% xlabel('Data points')
-% ylim([0 13]);
-% yticks([0 2 4 6 8 10 12]);
-% annotation('textbox',[0.91 .7 .1 .2],'String',avgError1str,'EdgeColor','none')
-% annotation('textbox',[0.91 .67 .1 .2],'String',maxError1str,'EdgeColor','none')
-% 
-% 
-% 
-% nexttile
-% scatter(xAxis, absOut2Error,3,'x');
-% title('Aquired error through alpha (1/1) max plus beta (1/4) min alogirthm.')
-% ylabel('Error (%)')
-% xlabel('Data points')
-% ylim([0 13]);
-% yticks([0 2 4 6 8 10 12]);
-% annotation('textbox',[0.91 .4 .1 .2],'String',avgError2str,'EdgeColor','none')
-% annotation('textbox',[0.91 .37 .1 .2],'String',maxError2str,'EdgeColor','none')
-% 
-% 
-% 
-% 
-% nexttile
-% scatter(xAxis, absOut3Error,3,'x');
-% title('Aquired error through alpha (1/1) max plus beta (3/8) min alogirthm.')
-% ylabel('Error (%)')
-% xlabel('Data points')
-% ylim([0 8]);
-% annotation('textbox',[0.91 .08 .1 .2],'String',avgError3str,'EdgeColor','none')
-% annotation('textbox',[0.91 .05 .1 .2],'String',maxError3str,'EdgeColor','none')
+%%
+% Alpha (1/1) max plus beta (1/2) min.
+
+% Empty array to store the alpha max plus beta min values.
+alphaBetaOut1 = [];
+
+
+% A for loop to acquire the abs values from the variable complexData.
+for i = 1:1:dataLength
+    % If the real abs value is larger than imag abs value, set
+    % absAlphaValue to the real abs value and absBetaValue to the imag abs
+    % value. Same but the other way round if the if statement does not meet.
+    if(abs(real(complexData(i))) >= abs(imag(complexData(i))))
+       absAlphaValue = abs(real(complexData(i)));
+       absBetaValue = abs(imag(complexData(i)));
+    else
+       absAlphaValue = abs(imag(complexData(i)));
+       absBetaValue = abs(real(complexData(i)));
+    end
+    % Bit shift absBetaValue by 1 to aquire the required 1/2 value. It
+    % should be noted that this value is rounded down.
+    absBetaValue = bitshift(absBetaValue,-1);
+    % Added the alpha and beta value to the output array.
+    alphaBetaOut1 = [alphaBetaOut1 (absAlphaValue + absBetaValue)];
+end
 
 
 
+
+
+
+
+
+%%
+% Alpha (1/1) max plus beta (1/4) min.
+
+
+% Empty array to store the alpha max plus beta min values.
+alphaBetaOut2 = [];
+
+% A for loop to acquire the abs values from the variable complexData.
+for i = 1:1:dataLength
+    % If the real abs value is larger than imag abs value, set
+    % absAlphaValue to the real abs value and absBetaValue to the imag abs
+    % value. Same but the other way round if the if statement does not meet.
+    if(abs(real(complexData(i))) >= abs(imag(complexData(i))))
+       absAlphaValue = abs(real(complexData(i)));
+       absBetaValue = abs(imag(complexData(i)));
+    else
+       absAlphaValue = abs(imag(complexData(i)));
+       absBetaValue = abs(real(complexData(i)));
+    end
+    % Bit shift absBetaValue by 2 to aquire the required 1/4 value. It
+    % should be noted that this value is rounded down.
+    absBetaValue = bitshift(absBetaValue,-2);
+    % Added the alpha and beta value to the output array.
+    alphaBetaOut2 = [alphaBetaOut2 (absAlphaValue + absBetaValue)];
+end
+
+
+
+
+
+
+
+
+%%
+% Alpha (1/1) max plus beta (3/8) min.
+
+
+% Empty array to store the alpha max plus beta min values.
+alphaBetaOut3 = [];
+
+% A for loop to acquire the abs values from the variable complexData.
+for i = 1:1:dataLength
+    % If the real abs value is larger than imag abs value, set
+    % absAlphaValue to the real abs value and absBetaValue to the imag abs
+    % value. Same but the other way round if the if statement does not meet.
+    if(abs(real(complexData(i))) >= abs(imag(complexData(i))))
+       absAlphaValue = abs(real(complexData(i)));
+       absBetaValue = abs(imag(complexData(i)));
+    else
+       absAlphaValue = abs(imag(complexData(i)));
+       absBetaValue = abs(real(complexData(i)));
+    end
+    % Bit shift absBetaValue by 3 to aquire the 1/8 value and then 
+    % muiltiply by 3 to aquire the 3/8 value. It should be noted that this 
+    % value is rounded down.
+    absBetaValue = (bitshift(absBetaValue,-3) * 3);
+    % Added the alpha and beta value to the output array.
+    alphaBetaOut3 = [alphaBetaOut3 (absAlphaValue + absBetaValue)];
+end
+
+
+
+
+
+
+%%
+% Calculaing the error values from the obtianed alphaBetaOut values and the
+% average error and max error from the error array values.
+
+
+% Empty arrays which are then used to store the errors.
+absOut1Error = [];
+absOut2Error = [];
+absOut3Error = [];
+
+
+% A for loop that is used to calculate the error of each value and then
+% store it in absOutXError arrays.
+for i = 1:1:dataLength
+    % Error = (|obtained value - expected value|/expected value) * 100
+    error1 = (abs((alphaBetaOut1(i) - idealOut(i)))/idealOut(i)) * 100;
+    error2 = (abs((alphaBetaOut2(i) - idealOut(i)))/idealOut(i)) * 100;
+    error3 = (abs((alphaBetaOut3(i) - idealOut(i)))/idealOut(i)) * 100;
+    
+    
+    % Store the calculated errors in the array.
+    absOut1Error = [absOut1Error error1];  
+    absOut2Error = [absOut2Error error2];  
+    absOut3Error = [absOut3Error error3];  
+end
+
+
+avgError1str = "Avg error: " + string(round(mean(absOut1Error),2));
+avgError2str = "Avg error: " + string(round(mean(absOut2Error),2));
+avgError3str = "Avg error: " + string(round(mean(absOut3Error),2));
+
+maxError1str = "Max error: " + string(round(max(absOut1Error),2));
+maxError2str = "Max error: " + string(round(max(absOut2Error),2));
+maxError3str = "Max error: " + string(round(max(absOut3Error),2));
+
+
+%%
+% Ploting the errors.
+
+xAxis = 1:1:dataLength;
+
+figure(1)
+tiledlayout(3,1);
+
+
+nexttile
+scatter(xAxis, absOut1Error,3,'x');
+title('Aquired error through alpha (1/1) max plus beta (1/2) min alogirthm.')
+ylabel('Error (%)')
+xlabel('Data points')
+ylim([0 13]);
+yticks([0 2 4 6 8 10 12]);
+annotation('textbox',[0.91 .7 .1 .2],'String',avgError1str,'EdgeColor','none')
+annotation('textbox',[0.91 .67 .1 .2],'String',maxError1str,'EdgeColor','none')
+
+
+
+nexttile
+scatter(xAxis, absOut2Error,3,'x');
+title('Aquired error through alpha (1/1) max plus beta (1/4) min alogirthm.')
+ylabel('Error (%)')
+xlabel('Data points')
+ylim([0 13]);
+yticks([0 2 4 6 8 10 12]);
+annotation('textbox',[0.91 .4 .1 .2],'String',avgError2str,'EdgeColor','none')
+annotation('textbox',[0.91 .37 .1 .2],'String',maxError2str,'EdgeColor','none')
+
+
+
+
+nexttile
+scatter(xAxis, absOut3Error,3,'x');
+title('Aquired error through alpha (1/1) max plus beta (3/8) min alogirthm.')
+ylabel('Error (%)')
+xlabel('Data points')
+ylim([0 8]);
+annotation('textbox',[0.91 .08 .1 .2],'String',avgError3str,'EdgeColor','none')
+annotation('textbox',[0.91 .05 .1 .2],'String',maxError3str,'EdgeColor','none')
 
 
 
