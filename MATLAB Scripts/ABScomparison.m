@@ -148,18 +148,26 @@ end
 % Calculaing the error values from the obtianed alphaBetaOut values.
 
 
+% Empty arrays which are then used to store the errors.
 absOut1Error = [];
 absOut2Error = [];
 absOut3Error = [];
 
+
+% A for loop that is used to calculate the error of each value and then
+% store it in absOutXError arrays.
 for i = 1:1:dataLength
+    % Error = (|obtained value - expected value|/expected value) * 100
     error1 = (abs((alphaBetaOut1(i) - idealOut(i)))/idealOut(i)) * 100;
     error2 = (abs((alphaBetaOut2(i) - idealOut(i)))/idealOut(i)) * 100;
     error3 = (abs((alphaBetaOut3(i) - idealOut(i)))/idealOut(i)) * 100;
     
     
-    
+    % Store the calculated errors in the array.
     absOut1Error = [absOut1Error error1];  
     absOut2Error = [absOut2Error error2];  
     absOut3Error = [absOut3Error error3];  
 end
+
+
+
