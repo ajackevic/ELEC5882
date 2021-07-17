@@ -23,9 +23,13 @@ for i = 1:1:dataLength
     if(abs(real(complexData(i))) >= abs(imag(complexData(i))))
        absAlphaValue = abs(real(complexData(i)));
        absBetaValue = abs(imag(complexData(i)));
+       
+       absBetaValue = bitshift(absBetaValue,-1);
     else
        absAlphaValue = abs(imag(complexData(i)));
        absBetaValue = abs(real(complexData(i)));
+       
+       absBetaValue = bitshift(absBetaValue,-1);
     end
 end
 
