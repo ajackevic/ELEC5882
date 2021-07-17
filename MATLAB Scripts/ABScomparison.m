@@ -225,7 +225,16 @@ idealOut = abs(complexData);
 % annotation('textbox',[0.91 .08 .1 .2],'String',avgError3str,'EdgeColor','none')
 % annotation('textbox',[0.91 .05 .1 .2],'String',maxError3str,'EdgeColor','none')
 
+value = dec2bin(654321,32);
 
 
+for n = 1:1:dataLength
+   for i = 1:1:16
+       
+       
+       
+       
+   end    
+end
 
 
