@@ -145,4 +145,21 @@ end
 
 
 %%
-% Calculaing the error values from the ideal values
+% Calculaing the error values from the obtianed alphaBetaOut values.
+
+
+absOut1Error = [];
+absOut2Error = [];
+absOut3Error = [];
+
+for i = 1:1:dataLength
+    error1 = (abs((alphaBetaOut1(i) - idealOut(i)))/idealOut(i)) * 100;
+    error2 = (abs((alphaBetaOut2(i) - idealOut(i)))/idealOut(i)) * 100;
+    error3 = (abs((alphaBetaOut3(i) - idealOut(i)))/idealOut(i)) * 100;
+    
+    
+    
+    absOut1Error = [absOut1Error error1];  
+    absOut2Error = [absOut2Error error2];  
+    absOut3Error = [absOut3Error error3];  
+end
