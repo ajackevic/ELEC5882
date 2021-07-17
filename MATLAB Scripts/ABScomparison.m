@@ -36,6 +36,9 @@ randImagValues = randi([minBound,maxBound],1,dataLength);
 complexData = complex(randRealValues, randImagValues);
 
 
+% Calculating the ideal ABS output.
+idealOut = abs(complexData);
+
 
 
 
@@ -93,6 +96,8 @@ for i = 1:1:dataLength
     % Added the alpha and beta value to the output array.
     alphaBetaOut2 = [alphaBetaOut2 (absAlphaValue + absBetaValue)];
 end
+
+
 
 
 
