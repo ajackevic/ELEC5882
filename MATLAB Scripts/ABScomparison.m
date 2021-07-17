@@ -24,7 +24,7 @@
 % Creating the max and min bounds for the rand arrays.
 minBound = -100000000;
 maxBound = 100000000;
-dataLength = 1000;
+dataLength = 10000;
 
 % Creating the random real and imaginary array values using the max, min
 % bounds, array length.
@@ -145,7 +145,8 @@ end
 
 
 %%
-% Calculaing the error values from the obtianed alphaBetaOut values.
+% Calculaing the error values from the obtianed alphaBetaOut values and the
+% average error from the error array values.
 
 
 % Empty arrays which are then used to store the errors.
@@ -170,4 +171,54 @@ for i = 1:1:dataLength
 end
 
 
+avgError1str = "Avg error: " + string(round(mean(absOut1Error),2));
+avgError2str = "Avg error: " + string(round(mean(absOut2Error),2));
+avgError3str = "Avg error: " + string(round(mean(absOut3Error),2));
 
+maxError1str = "Max error: " + string(round(max(absOut1Error),2));
+maxError2str = "Max error: " + string(round(max(absOut2Error),2));
+maxError3str = "Max error: " + string(round(max(absOut3Error),2));
+
+
+%%
+% Ploting the errors.
+
+xAxis = 1:1:dataLength;
+
+figure(1)
+tiledlayout(3,1);
+
+
+nexttile
+scatter(xAxis, absOut1Error,3,'x');
+title('Aquired error through alpha (1/1) max plus beta (1/2) min alogirthm.')
+ylabel('Error (%)')
+xlabel('Data points')
+ylim([0 13]);
+yticks([0 2 4 6 8 10 12]);
+annotation('textbox',[0.91 .7 .1 .2],'String',avgError1str,'EdgeColor','none')
+annotation('textbox',[0.91 .67 .1 .2],'String',maxError1str,'EdgeColor','none')
+
+
+
+nexttile
+scatter(xAxis, absOut2Error,3,'x');
+title('Aquired error through alpha (1/1) max plus beta (1/4) min alogirthm.')
+ylabel('Error (%)')
+xlabel('Data points')
+ylim([0 13]);
+yticks([0 2 4 6 8 10 12]);
+annotation('textbox',[0.91 .4 .1 .2],'String',avgError2str,'EdgeColor','none')
+annotation('textbox',[0.91 .37 .1 .2],'String',maxError2str,'EdgeColor','none')
+
+
+
+
+nexttile
+scatter(xAxis, absOut3Error,3,'x');
+title('Aquired error through alpha (1/1) max plus beta (3/8) min alogirthm.')
+ylabel('Error (%)')
+xlabel('Data points')
+ylim([0 8]);
+annotation('textbox',[0.91 .08 .1 .2],'String',avgError3str,'EdgeColor','none')
+annotation('textbox',[0.91 .05 .1 .2],'String',maxError3str,'EdgeColor','none')
