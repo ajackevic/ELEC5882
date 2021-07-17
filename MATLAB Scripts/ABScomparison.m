@@ -171,6 +171,7 @@ end
 absOut1Error = [];
 absOut2Error = [];
 absOut3Error = [];
+squrOutError = [];
 
 
 % A for loop that is used to calculate the error of each value and then
@@ -180,22 +181,27 @@ for i = 1:1:dataLength
     error1 = (abs((alphaBetaOut1(i) - idealOut(i)))/idealOut(i)) * 100;
     error2 = (abs((alphaBetaOut2(i) - idealOut(i)))/idealOut(i)) * 100;
     error3 = (abs((alphaBetaOut3(i) - idealOut(i)))/idealOut(i)) * 100;
+    squrError = (abs((squareRootMethod(i) - idealOut(i)))/idealOut(i)) * 100;
+    
     
     
     % Store the calculated errors in the array.
     absOut1Error = [absOut1Error error1];  
     absOut2Error = [absOut2Error error2];  
     absOut3Error = [absOut3Error error3];  
+    squrOutError = [squrOutError squrError];
 end
 
 
 avgError1str = "Avg error: " + string(round(mean(absOut1Error),2));
 avgError2str = "Avg error: " + string(round(mean(absOut2Error),2));
 avgError3str = "Avg error: " + string(round(mean(absOut3Error),2));
+avgSquarErrorstr = "Avg error: " + string(round(mean(squrOutError),2));
 
 maxError1str = "Max error: " + string(round(max(absOut1Error),2));
 maxError2str = "Max error: " + string(round(max(absOut2Error),2));
 maxError3str = "Max error: " + string(round(max(absOut3Error),2));
+maxSquarErrorstr = "Max error: " + string(round(max(squrOutError),2));
 
 
 
