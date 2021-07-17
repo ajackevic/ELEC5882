@@ -1,54 +1,53 @@
-% % ABScomparison.m
-% % --------------
-% % By: Augustas Jackevic
-% % Date: July 2021
-% % Script Description:
-% % -------------------
-% % This script compares the different methods of acquiring an absolute value
-% % (abs) of complex numbers in a fixed-point number format. three different
-% % sets of Alpha max plus Beta min algorithms are implemented (bete = 1/2,
-% % 1/4, and 3/8) and compared.
-% %
-% %
-% % The algorithm works in the folloing manner:
-% % Output = Alpha(|max value|) + Beta(|min value|)
-% % The larger abs value of the complex pair is multiplied by alpha whilst
-% % the smaller abs value is multiplied by the beta value.
-% 
-% 
-% 
-% % Clear any saved vairable from MATLAB's workspace section.
-% clear all
-% 
-% 
-% % Creating a rand complex array of 1000 values ranging from minBound
-% % to maxBound.
-% 
-% % Creating the max and min bounds for the rand arrays.
-% minBound = -100000000;
-% maxBound = 100000000;
-% dataLength = 10000;
-% 
-% % Creating the random real and imaginary array values using the max, min
-% % bounds, array length.
-% randRealValues = randi([minBound,maxBound],1,dataLength);
-% randImagValues = randi([minBound,maxBound],1,dataLength);
-% 
-% % Creating the complex array from the arrays randRealValues and
-% % randImagValues.
-% complexData = complex(randRealValues, randImagValues);
-% 
-% 
-% % Calculating the ideal ABS output.
-% idealOut = abs(complexData);
-% 
-% 
-% 
-% 
-% 
-% 
-% 
-% 
+% ABScomparison.m
+% --------------
+% By: Augustas Jackevic
+% Date: July 2021
+% Script Description:
+% -------------------
+% This script compares the different methods of acquiring an absolute value
+% (abs) of complex numbers in a fixed-point number format. three different
+% sets of Alpha max plus Beta min algorithms are implemented (bete = 1/2,
+% 1/4, and 3/8) and compared.
+%
+%
+% The algorithm works in the folloing manner:
+% Output = Alpha(|max value|) + Beta(|min value|)
+% The larger abs value of the complex pair is multiplied by alpha whilst
+% the smaller abs value is multiplied by the beta value.
+
+
+
+% Clear any saved vairable from MATLAB's workspace section.
+clear all
+
+
+% Creating a rand complex array of 1000 values ranging from minBound
+% to maxBound.
+
+% Creating the max and min bounds for the rand arrays.
+minBound = -100000000;
+maxBound = 100000000;
+dataLength = 10000;
+
+% Creating the random real and imaginary array values using the max, min
+% bounds, array length.
+randRealValues = randi([minBound,maxBound],1,dataLength);
+randImagValues = randi([minBound,maxBound],1,dataLength);
+
+% Creating the complex array from the arrays randRealValues and
+% randImagValues.
+complexData = complex(randRealValues, randImagValues);
+
+
+% Calculating the ideal ABS output.
+idealOut = abs(complexData);
+
+
+
+
+
+
+
 % %%
 % % Alpha (1/1) max plus beta (1/2) min.
 % 
@@ -227,6 +226,6 @@
 % annotation('textbox',[0.91 .05 .1 .2],'String',maxError3str,'EdgeColor','none')
 
 
-clear all
+
 
 
