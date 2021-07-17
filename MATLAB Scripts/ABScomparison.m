@@ -149,7 +149,7 @@ end
 
 %%
 % Calculaing the error values from the obtianed alphaBetaOut values and the
-% average error from the error array values.
+% average error and max error from the error array values.
 
 
 % Empty arrays which are then used to store the errors.
