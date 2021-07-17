@@ -17,6 +17,9 @@
 
 
 
+% Clear any saved vairable from MATLAB's workspace section.
+clear all
+
 
 % Creating a rand complex array of 1000 values ranging from minBound
 % to maxBound.
