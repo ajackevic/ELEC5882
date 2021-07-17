@@ -1,0 +1,8 @@
+minBound = 
+
+% Creating the a random real and imaginary array values 
+randRealValues = randi([-100000000,100000000],1,1000);
+randImagValues = randi([-100000000,100000000],1,1000);
+
+
+
