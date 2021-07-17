@@ -15,22 +15,25 @@ randImagValues = randi([minBound,maxBound],1,dataLength);
 % randImagValues.
 complexData = complex(randRealValues, randImagValues);
 
+
+
+
+
 %%
 % Alpha (1/1) max plus beta (1/2) min.
 
 alphaBetaOut1 = [];
+
 for i = 1:1:dataLength
     if(abs(real(complexData(i))) >= abs(imag(complexData(i))))
        absAlphaValue = abs(real(complexData(i)));
        absBetaValue = abs(imag(complexData(i)));
-       
-       absBetaValue = bitshift(absBetaValue,-1);
     else
        absAlphaValue = abs(imag(complexData(i)));
        absBetaValue = abs(real(complexData(i)));
-       
-       absBetaValue = bitshift(absBetaValue,-1);
     end
+    absBetaValue = bitshift(absBetaValue,-1);
+    alphaBetaOut1 = [alphaBetaOut1 (absAlphaValue + absBetaValue)];
 end
 
 
