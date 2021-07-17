@@ -42,6 +42,10 @@ idealOut = abs(complexData);
 
 
 
+
+
+
+
 %%
 % Alpha (1/1) max plus beta (1/2) min.
 
@@ -67,6 +71,10 @@ for i = 1:1:dataLength
     % Added the alpha and beta value to the output array.
     alphaBetaOut1 = [alphaBetaOut1 (absAlphaValue + absBetaValue)];
 end
+
+
+
+
 
 
 
@@ -101,6 +109,9 @@ end
 
 
 
+
+
+
 %%
 % Alpha (1/1) max plus beta (3/8) min.
 
@@ -130,3 +141,8 @@ end
 
 
 
+
+
+
+%%
+% Calculaing the error values from the ideal values
