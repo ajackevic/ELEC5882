@@ -37,6 +37,23 @@ for i = 1:1:dataLength
 end
 
 
+%%
+% Alpha (1/1) max plus beta (1/4) min.
+
+alphaBetaOut2 = [];
+
+for i = 1:1:dataLength
+    if(abs(real(complexData(i))) >= abs(imag(complexData(i))))
+       absAlphaValue = abs(real(complexData(i)));
+       absBetaValue = abs(imag(complexData(i)));
+    else
+       absAlphaValue = abs(imag(complexData(i)));
+       absBetaValue = abs(real(complexData(i)));
+    end
+    absBetaValue = bitshift(absBetaValue,-2);
+    alphaBetaOut2 = [alphaBetaOut2 (absAlphaValue + absBetaValue)];
+end
+
 
 
 
