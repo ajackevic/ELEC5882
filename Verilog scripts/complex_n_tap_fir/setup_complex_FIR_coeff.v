@@ -19,8 +19,8 @@
 
 
 module setup_complex_FIR_coeff#(
-	parameter LENGTH = 12,
-	parameter DATA_WIDTH = 8
+	parameter LENGTH = 20,
+	parameter DATA_WIDTH = 18
 )(
 	input clock,
 	input enable,
@@ -42,30 +42,46 @@ reg signed [DATA_WIDTH - 1:0] coeffIm [0:LENGTH - 1];
 // Setting the coefficients. When setting the coefficients, make sure all values are covered.
 // This should include from 0 to LENGTH - 1.
 initial begin
-	coeffRe[0] <= 8'd3;
-	coeffIm[0] <= 8'd7;
-	coeffRe[1] <= 8'd2;
-	coeffIm[1] <= 8'd0;
-	coeffRe[2] <= 8'd17;
-	coeffIm[2] <= 8'd5;
-	coeffRe[3] <= 8'd0;
-	coeffIm[3] <= -8'd3;
-	coeffRe[4] <= 8'd55;
-	coeffIm[4] <= -8'd103;
-	coeffRe[5] <= 8'd120;
-	coeffIm[5] <= -8'd111;
-	coeffRe[6] <= 8'd123;
-	coeffIm[6] <= -8'd24;
-	coeffRe[7] <= 8'd56;
-	coeffIm[7] <= 8'd96;
-	coeffRe[8] <= -8'd99;
-	coeffIm[8] <= -8'd32;
-	coeffRe[9] <= -8'd109;
-	coeffIm[9] <= -8'd76;
-	coeffRe[10] <= 8'd23;
-	coeffIm[10] <= -8'd14;
-	coeffRe[11] <= -8'd60;
-	coeffIm[11] <= 8'd10;
+	coeffRe[0] <= 18'd34124;
+	coeffIm[0] <= -18'd7392;
+	coeffRe[1] <= 18'd34124;
+	coeffIm[1] <= 18'd15;
+	coeffRe[2] <= 18'd0;
+	coeffIm[2] <= 18'd89998;
+	coeffRe[3] <= 18'd4991;
+	coeffIm[3] <= -18'd43211;
+	coeffRe[4] <= 18'd12522;
+	coeffIm[4] <= -18'd131072;
+	coeffRe[5] <= -18'd7711;
+	coeffIm[5] <= 18'd131071;
+	coeffRe[6] <= -18'd5151;
+	coeffIm[6] <= 18'd5151;
+	coeffRe[7] <= 18'd81122;
+	coeffIm[7] <= 18'd81122;
+	coeffRe[8] <= 18'd9890;
+	coeffIm[8] <= 18'd0;
+	coeffRe[9] <= 18'd1091;
+	coeffIm[9] <= 18'd882;
+	coeffRe[10] <= -18'd9111;
+	coeffIm[10] <= -18'd9;
+	coeffRe[11] <= -18'd10369;
+	coeffIm[11] <= 18'd8982;
+	coeffRe[12] <= 18'd911;
+	coeffIm[12] <= -18'd119;
+	coeffRe[13] <= 18'd1121;
+	coeffIm[13] <= 18'd6969;
+	coeffRe[14] <= 18'd591;
+	coeffIm[14] <= -18'd666;
+	coeffRe[15] <= 18'd7590;
+	coeffIm[15] <= 18'd8422;
+	coeffRe[16] <= 18'd19;
+	coeffIm[16] <= -18'd19223;
+	coeffRe[17] <= 18'd5811;
+	coeffIm[17] <= -18'd131072;
+	coeffRe[18] <= -18'd970;
+	coeffIm[18] <= -18'd9790;
+	coeffRe[19] <= 18'd10000;
+	coeffIm[19] <= 18'd1;
 end
 
 

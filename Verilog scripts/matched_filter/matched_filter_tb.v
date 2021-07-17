@@ -40,7 +40,7 @@ localparam DATA_WIDTH = 18;
 // Creating the lcoal parameters.
 reg clock;
 reg enableModule;
-wire signed [DATA_WIDTH * 3:0] MFOutput;
+wire signed [DATA_WIDTH * 4:0] MFOutput;
 
 
 // Set the initial value of the clock.

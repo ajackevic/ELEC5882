@@ -25,8 +25,8 @@ module hilbert_transform #(
 	input stopDataInFlag,
 	input signed [DATA_WIDTH - 1:0] dataIn,
 	
-	output reg signed [(DATA_WIDTH * 2) - 1:0] dataOutRe,
-	output reg signed [(DATA_WIDTH * 2) - 1:0] dataOutIm
+	output reg signed [(DATA_WIDTH * 3) - 1:0] dataOutRe,
+	output reg signed [(DATA_WIDTH * 3) - 1:0] dataOutIm
 );
 
 
@@ -46,7 +46,7 @@ reg loadFIRDataFlag;
 reg stopFIRDataFlag;
 reg [DATA_WIDTH - 1:0] dataFIRIn;
 reg loadCoeffFIRFlag;
-wire [(DATA_WIDTH * 2) - 1:0] FIRDataOut;
+wire [(DATA_WIDTH * 3) - 1:0] FIRDataOut;
 
 
 

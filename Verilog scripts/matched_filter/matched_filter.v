@@ -33,7 +33,7 @@ module matched_filter #(
 	input clock,
 	input enable,
 	
-	output signed [(DATA_WIDTH * 3):0] MFOutput
+	output signed [(DATA_WIDTH * 4):0] MFOutput
 );
 
 
@@ -62,11 +62,11 @@ wire signed [DATA_WIDTH - 1:0] coeffMIFOutRe;
 wire signed [DATA_WIDTH - 1:0] coeffMIFOutIm;
 wire signed [DATA_WIDTH - 1:0] dataMIFOutRe;
 
-wire signed [(DATA_WIDTH * 2) - 1:0] HTOutRe;
-wire signed [(DATA_WIDTH * 2) - 1:0] HTOutIm;
+wire signed [(DATA_WIDTH * 3) - 1:0] HTOutRe;
+wire signed [(DATA_WIDTH * 3) - 1:0] HTOutIm;
 
-wire signed [(DATA_WIDTH * 3) - 1:0] MFOutputRe;
-wire signed [(DATA_WIDTH * 3) - 1:0] MFOutputIm;
+wire signed [(DATA_WIDTH * 4) - 1:0] MFOutputRe;
+wire signed [(DATA_WIDTH * 4) - 1:0] MFOutputIm;
 
 
 
@@ -176,7 +176,7 @@ n_tap_complex_fir #(
 
 
 absolute_value #(
-	.DATA_WIDTH 	(DATA_WIDTH * 3)
+	.DATA_WIDTH 	(DATA_WIDTH * 4)
 ) abs (
 	.clock			(clock),
 	.enable			(enableABS),
