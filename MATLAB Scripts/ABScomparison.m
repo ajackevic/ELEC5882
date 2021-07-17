@@ -182,6 +182,26 @@ maxError2str = "Max error: " + string(round(max(absOut2Error),2));
 maxError3str = "Max error: " + string(round(max(absOut3Error),2));
 
 
+
+%%
+% Calculation of the abs values using Non-Restoring Square Root algorithm.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 %%
 % Ploting the errors.
 
