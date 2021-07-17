@@ -4,19 +4,18 @@
 % Creating the max and min bounds for the rand arrays.
 minBound = -100000000;
 maxBound = 100000000;
-arrayLength = 1000;
+dataLength = 1000;
 
 % Creating the random real and imaginary array values using the max, min
 % bounds, array length.
-randRealValues = randi([minBound,maxBound],1,arrayLength);
-randImagValues = randi([minBound,maxBound],1,arrayLength);
+randRealValues = randi([minBound,maxBound],1,dataLength);
+randImagValues = randi([minBound,maxBound],1,dataLength);
 
 % Creating the complex array from the arrays randRealValues and
 % randImagValues.
 complexData = complex(randRealValues, randImagValues);
 
 %%
-%
 
 
 
