@@ -229,6 +229,11 @@ value = dec2bin(654321,32);
 
 
 for n = 1:1:dataLength
+    a = dec2bin(0,32);
+    q = dec2bin(0,16);
+    left = dec2bin(0,18);
+    right = dec2bin(0,18);
+    r = dec2bin(0,18);
    for i = 1:1:16
        
        
