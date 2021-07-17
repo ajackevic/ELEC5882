@@ -17,6 +17,9 @@
 
 
 
+% Clear any saved vairable from MATLAB's workspace section.
+clear all
+
 
 % Creating a rand complex array of 1000 values ranging from minBound
 % to maxBound.
@@ -24,7 +27,7 @@
 % Creating the max and min bounds for the rand arrays.
 minBound = -100000000;
 maxBound = 100000000;
-dataLength = 1000;
+dataLength = 10000;
 
 % Creating the random real and imaginary array values using the max, min
 % bounds, array length.
@@ -38,7 +41,6 @@ complexData = complex(randRealValues, randImagValues);
 
 % Calculating the ideal ABS output.
 idealOut = abs(complexData);
-
 
 
 
@@ -143,10 +145,25 @@ end
 
 
 
+%%
+% Calculation of the abs values using Non-Restoring Square Root algorithm.
+% The values are squared and added then passed through squareRootCal
+% function to calculate the abs value.
+squareRootMethod = [];
+for i = 1:1:dataLength
+    realSquared = real(complexData(i)) * real(complexData(i));
+    imagSquared = imag(complexData(i)) * imag(complexData(i));
+    squareRootMethod = [squareRootMethod squareRootCal(realSquared + imagSquared)];  
+end
+
+
+
+
+
 
 %%
-% Calculaing the error values from the obtianed alphaBetaOut values and the
-% average error from the error array values.
+% Calculaing the error values from the obtianed alphaBetaOut values +and the
+% average error and max error from the error array values.
 
 
 % Empty arrays which are then used to store the errors.
@@ -171,13 +188,15 @@ for i = 1:1:dataLength
 end
 
 
-avgError1str = "Avg error: " + string(mean(absOut1Error))
-avgError2str = "Avg error: " + string(mean(absOut2Error))
-avgError3str = "Avg error: " + string(mean(absOut3Error))
+avgError1str = "Avg error: " + string(round(mean(absOut1Error),2));
+avgError2str = "Avg error: " + string(round(mean(absOut2Error),2));
+avgError3str = "Avg error: " + string(round(mean(absOut3Error),2));
 
-maxError1str = "Max error: " + string(max(absOut1Error));
-maxError2str = "Max error: " + string(max(absOut2Error));
-maxError3str = "Max error: " + string(max(absOut3Error));
+maxError1str = "Max error: " + string(round(max(absOut1Error),2));
+maxError2str = "Max error: " + string(round(max(absOut2Error),2));
+maxError3str = "Max error: " + string(round(max(absOut3Error),2));
+
+
 
 
 %%
@@ -194,8 +213,10 @@ scatter(xAxis, absOut1Error,3,'x');
 title('Aquired error through alpha (1/1) max plus beta (1/2) min alogirthm.')
 ylabel('Error (%)')
 xlabel('Data points')
-annotation('textbox',[0.9 .7 .1 .2],'String',avgError1str,'EdgeColor','none')
-annotation('textbox',[0.9 .67 .1 .2],'String',maxError1str,'EdgeColor','none')
+ylim([0 13]);
+yticks([0 2 4 6 8 10 12]);
+annotation('textbox',[0.91 .7 .1 .2],'String',avgError1str,'EdgeColor','none')
+annotation('textbox',[0.91 .67 .1 .2],'String',maxError1str,'EdgeColor','none')
 
 
 
@@ -204,8 +225,11 @@ scatter(xAxis, absOut2Error,3,'x');
 title('Aquired error through alpha (1/1) max plus beta (1/4) min alogirthm.')
 ylabel('Error (%)')
 xlabel('Data points')
-annotation('textbox',[0.9 .4 .1 .2],'String',avgError2str,'EdgeColor','none')
-annotation('textbox',[0.9 .67 .1 .2],'String',maxError1str,'EdgeColor','none')
+ylim([0 13]);
+yticks([0 2 4 6 8 10 12]);
+annotation('textbox',[0.91 .4 .1 .2],'String',avgError2str,'EdgeColor','none')
+annotation('textbox',[0.91 .37 .1 .2],'String',maxError2str,'EdgeColor','none')
+
 
 
 
@@ -214,4 +238,10 @@ scatter(xAxis, absOut3Error,3,'x');
 title('Aquired error through alpha (1/1) max plus beta (3/8) min alogirthm.')
 ylabel('Error (%)')
 xlabel('Data points')
-annotation('textbox',[0.9 .08 .1 .2],'String',avgError3str,'EdgeColor','none')
+ylim([0 8]);
+annotation('textbox',[0.91 .08 .1 .2],'String',avgError3str,'EdgeColor','none')
+annotation('textbox',[0.91 .05 .1 .2],'String',maxError3str,'EdgeColor','none')
+
+
+
+

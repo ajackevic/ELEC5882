@@ -145,10 +145,26 @@ end
 
 
 
+%%
+% Calculation of the abs values using Non-Restoring Square Root algorithm.
+% The values are squared and added then passed through squareRootCal
+% function to calculate the abs value.
+squareRootMethod = [];
+for i = 1:1:dataLength
+    realSquared = real(complexData(i)) * real(complexData(i));
+    imagSquared = imag(complexData(i)) * imag(complexData(i));
+    squareRootMethod = [squareRootMethod squareRootCal(realSquared + imagSquared)];  
+end
+
+
+
+
+
 
 %%
-% Calculaing the error values from the obtianed alphaBetaOut values and the
-% average error and max error from the error array values.
+% Calculaing the error values from the obtianed alpha max plus beta min 
+%algorithm and the non-restoring square root algorithm. The average and max
+%errors are also calculated.
 
 
 % Empty arrays which are then used to store the errors.
@@ -180,24 +196,6 @@ avgError3str = "Avg error: " + string(round(mean(absOut3Error),2));
 maxError1str = "Max error: " + string(round(max(absOut1Error),2));
 maxError2str = "Max error: " + string(round(max(absOut2Error),2));
 maxError3str = "Max error: " + string(round(max(absOut3Error),2));
-
-
-
-%%
-% Calculation of the abs values using Non-Restoring Square Root algorithm.
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
