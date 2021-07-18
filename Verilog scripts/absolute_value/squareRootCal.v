@@ -22,6 +22,9 @@ end
 
 always @ (posedge clock or enable) begin
 	if(enable) begin
+		currentBits = 142'd0;
+		subtractBits = 142'd0;
+		remainderBits = 142'd0;
 	
 	end
 	
