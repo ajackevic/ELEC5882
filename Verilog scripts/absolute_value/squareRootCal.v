@@ -40,13 +40,14 @@ always @ (posedge clock or enable) begin
 		
 		// A for loop for calculating the square root.
 		for(i = 71; i => 0; i = i - 1) begin
-			currentBits = {currentBits[141:2], dataIn[(i*2)-1:(i*2)-3]};
+			currentBits = {currentBits[139:0], dataIn[(i*2)-1:(i*2)-3]};
 			
 			// subtractBits is equal to {b'remainderBits,01}.
 			subtractBits = {remainderBits[139:0], 2'd1};
-			
 			// Calculatting the remainderBits.
 			remainderBits = currentBits - subtractBits;
+			
+			
 			
 			// Check if remainderBits is posative or negative
 			if(remainderBits[141] == 1'd1) begin	// remainderBits is neg
@@ -58,6 +59,9 @@ always @ (posedge clock or enable) begin
 				tempOut[i] = 1'd1;
 				currentBits = remainderBits;
 			end
+			
+			
+			
 			
 			// Reset remainderBits, then set its value to 0's bit shifted by (71-i) with 
 			// the values of tempOut.
