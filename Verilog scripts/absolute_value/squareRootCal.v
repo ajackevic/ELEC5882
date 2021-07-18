@@ -28,7 +28,7 @@ always @ (posedge clock or enable) begin
 		remainderBits = 142'd0;
 		
 		
-		for(i = 0; i < 32; i = i + 1) begin
+		for(i = 72; i => 0; i = i - 2) begin
 		
 		
 		end	
