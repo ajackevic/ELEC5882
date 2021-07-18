@@ -8,6 +8,9 @@ module squareRootCal(
 
 
 
+
+
+// Creating the local parameters.
 reg [141:0] currentBits;
 reg [141:0] subtractBits;
 reg [141:0] remainderBits;
@@ -16,8 +19,7 @@ reg [70:0] tempOut;
 
 
 
-
-
+// Setting the localparam 
 initial begin
 	currentBits <= 142'd0;
 	subtractBits <= 142'd0;
@@ -25,11 +27,15 @@ initial begin
 	dataIn <= 142'd0;
 	
 	tempOut <= 71'd0;
+	outputData <= 71'd0;
 	
 end
 
 
 
+
+
+// Creating the integers which are used for the for loops in the always block.
 integer i;
 integer n;
 always @ (posedge clock or enable) begin
