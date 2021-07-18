@@ -32,10 +32,17 @@ always @ (posedge clock or enable) begin
 		
 		
 		for(i = 71; i => 0; i = i - 1) begin
-			currentBits = dataIn[(i*2)-1:(i*2)-3];
+			currentBits = {currentBits[141:2], dataIn[(i*2)-1:(i*2)-3]};
 			subtractBits = {remainderBits[141-2:0], 2'd1};
 			
 			remainderBits = currentBits - subtractBits;
+			
+			if(remainderBits[141] == 1'd1) begin	// If remainderBits is neg
+			
+			end
+			else begin										// If remainderBits is pos (0 is pos)
+			
+			end
 		end	
 		
 	
