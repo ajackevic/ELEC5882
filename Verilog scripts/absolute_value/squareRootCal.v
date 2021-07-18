@@ -26,7 +26,7 @@ always @ (posedge clock or enable) begin
 	end
 	
 	else begin
-	
+		outputData <= 72'd0;
 	end
 
 
