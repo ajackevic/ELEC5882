@@ -44,10 +44,10 @@ always @ (posedge clock or enable) begin
 			remainderBits = currentBits - subtractBits;
 			
 			if(remainderBits[141] == 1'd1) begin	// If remainderBits is neg
-			
+				tempOut[i] = 1'd0;
 			end
 			else begin										// If remainderBits is pos (0 is pos)
-			
+				tempOut[i] = 1'd1;
 			end
 		end	
 		
