@@ -15,13 +15,19 @@ localparam RST_CYCLES = 10;
 
 // Local parameters for the dut module.
 reg clock;
-
+reg enableModule;
 
 
 
 // Setting the init values.
 initial begin
 	clock = 1'd0;
+	enableModule = 1'd0;
+	
+	
+	// Set enableModule high after RST_CYCLES number of clock cycles.
+	repeat(RST_CYCLES) @ (posedge clock);
+	enableModule = 1'd1;
 end
 
 
