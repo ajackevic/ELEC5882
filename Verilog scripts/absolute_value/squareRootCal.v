@@ -20,11 +20,19 @@ end
 
 
 
+integer i;
 always @ (posedge clock or enable) begin
 	if(enable) begin
 		currentBits = inputData;
 		subtractBits = 142'd0;
 		remainderBits = 142'd0;
+		
+		
+		for(i = 0; i < 32; i = i + 1) begin
+		
+		
+		end	
+		
 	
 	end
 	
