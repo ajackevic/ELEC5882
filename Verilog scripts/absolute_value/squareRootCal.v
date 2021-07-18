@@ -31,22 +31,28 @@ end
 integer i;
 always @ (posedge clock or enable) begin
 	if(enable) begin
+	
+		// With each new enable/value, reset the main parameters
 		dataIn = inputData;
 		currentBits = 142'd0;
 		subtractBits = 142'd0;
 		remainderBits = 142'd0;
 		
-		
+		// A for loop for calculating the square root.
 		for(i = 71; i => 0; i = i - 1) begin
 			currentBits = {currentBits[141:2], dataIn[(i*2)-1:(i*2)-3]};
+			
+			// subtractBits is equal to {b'remainderBits,01}.
 			subtractBits = {remainderBits[139:0], 2'd1};
 			
+			// Calculatting the remainderBits.
 			remainderBits = currentBits - subtractBits;
 			
-			if(remainderBits[141] == 1'd1) begin	// If remainderBits is neg
+			// Check if remainderBits is posative or negative
+			if(remainderBits[141] == 1'd1) begin	// remainderBits is neg
 				tempOut[i] = 1'd0;
 			end
-			else begin										// If remainderBits is pos (0 is pos)
+			else begin										// remainderBits is pos (0 is pos)
 				tempOut[i] = 1'd1;
 				currentBits = remainderBits;
 			end
