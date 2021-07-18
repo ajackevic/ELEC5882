@@ -7,4 +7,15 @@ module squareRootCal(
 );
 
 
+
+reg [141:0] currentBits;
+reg [141:0] subtractBits;
+reg [141:0] remainderBits;
+
+initial begin
+	currentBits <= 142'd0;
+	subtractBits <= 142'd0;
+	remainderBits <= 142'd0;
+end
+
 endmodule
