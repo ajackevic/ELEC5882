@@ -23,7 +23,7 @@ end
 integer i;
 always @ (posedge clock or enable) begin
 	if(enable) begin
-		currentBits = inputData;
+		currentBits = 142'd0;
 		subtractBits = 142'd0;
 		remainderBits = 142'd0;
 		
