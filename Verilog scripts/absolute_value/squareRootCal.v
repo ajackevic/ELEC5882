@@ -29,6 +29,7 @@ end
 
 
 integer i;
+integer n;
 always @ (posedge clock or enable) begin
 	if(enable) begin
 	
@@ -68,7 +69,10 @@ always @ (posedge clock or enable) begin
 			// Reset remainderBits, then set its value to 0's bit shifted by (71-i) with 
 			// the values of tempOut.
 			remainderBits = 141'd0;
-			remainderBits = {remainderBits[141:(71-i)+1], tempOut[71:i]};
+			
+			for(n = 71; n >= 0; n = n - 1) begin
+				remainderBits[71 - n] = tempOut[n];
+			end
 			
 		end	
 		
