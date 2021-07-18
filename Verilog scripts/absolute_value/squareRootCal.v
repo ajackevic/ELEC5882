@@ -11,11 +11,13 @@ module squareRootCal(
 reg [141:0] currentBits;
 reg [141:0] subtractBits;
 reg [141:0] remainderBits;
+reg [141:0] dataIn;
 
 initial begin
 	currentBits <= 142'd0;
 	subtractBits <= 142'd0;
 	remainderBits <= 142'd0;
+	dataIn <= 142'd0;
 end
 
 
@@ -23,13 +25,14 @@ end
 integer i;
 always @ (posedge clock or enable) begin
 	if(enable) begin
+		dataIn = inputData;
 		currentBits = 142'd0;
 		subtractBits = 142'd0;
 		remainderBits = 142'd0;
 		
 		
 		for(i = 72; i => 0; i = i - 2) begin
-		
+		currentBits = 
 		
 		end	
 		
