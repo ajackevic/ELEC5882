@@ -17,7 +17,7 @@ localparam RST_CYCLES = 10;
 reg clock;
 reg enableModule;
 reg [141:0] dataIn;
-wire [71:0] dataOut;
+wire [70:0] dataOut;
 
 
 
