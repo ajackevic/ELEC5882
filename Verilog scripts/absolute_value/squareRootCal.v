@@ -12,12 +12,18 @@ reg [141:0] currentBits;
 reg [141:0] subtractBits;
 reg [141:0] remainderBits;
 reg [141:0] dataIn;
+reg [71:0] tempOut;
+
+
+
+
 
 initial begin
 	currentBits <= 142'd0;
 	subtractBits <= 142'd0;
 	remainderBits <= 142'd0;
 	dataIn <= 142'd0;
+	tempOut <= 71'd0;
 end
 
 
