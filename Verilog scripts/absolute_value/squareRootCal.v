@@ -1,3 +1,30 @@
+/*
+
+ squareRootCal.v
+ --------------
+ By: Augustas Jackevic
+ Date: July 2021
+
+ Module Description:
+ -------------------
+ This module calculates the square root value of the provided inputData value. This 
+ is achieved through the usage of the Non-Restoring Square Root algorithm. The data 
+ width of the output must be exactly half the input bit width. Input bit width must 
+ be equal to an even number.
+ 
+ To fully understand how the Non-Restoring Square Root method works pleas read 
+ the following:
+ - http://www.ijcte.org/papers/281-G850.pdf
+ - https://digitalsystemdesign.in/non-restoring-algorithm-for-square-root/
+ - http://www.ijceronline.com/papers/(NCASSGC)/W107-116.pdf
+ 
+
+*/
+
+
+
+
+
 module squareRootCal(
 	input clock,
 	input enable,
