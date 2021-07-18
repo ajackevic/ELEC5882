@@ -3,7 +3,7 @@ module squareRootCal(
 	input enable,
 	input [141:0] inputData,
 	
-	output [71:0] outputData
+	output reg [71:0] outputData
 );
 
 
@@ -37,10 +37,12 @@ always @ (posedge clock or enable) begin
 		currentBits = 142'd0;
 		subtractBits = 142'd0;
 		remainderBits = 142'd0;
+		tempOut = 71'd0;
 		
 		// A for loop for calculating the square root.
-		for(i = 71; i => 0; i = i - 1) begin
-			currentBits = {currentBits[139:0], dataIn[(i*2)-1:(i*2)-3]};
+		for(i = 71; i >= 0; i = i - 1) begin
+			currentBits = {currentBits[139:0], dataIn[141:140]};
+			dataIn = dataIn << 2;
 			
 			// subtractBits is equal to {b'remainderBits,01}.
 			subtractBits = {remainderBits[139:0], 2'd1};
@@ -66,10 +68,11 @@ always @ (posedge clock or enable) begin
 			// Reset remainderBits, then set its value to 0's bit shifted by (71-i) with 
 			// the values of tempOut.
 			remainderBits = 141'd0;
-			remainderBits = {remainderBits[141:(71-i)+1], tempOut[71:i]}
+			remainderBits = {remainderBits[141:(71-i)+1], tempOut[71:i]};
 			
 		end	
 		
+		outputData = tempOut;
 	
 	end
 	
