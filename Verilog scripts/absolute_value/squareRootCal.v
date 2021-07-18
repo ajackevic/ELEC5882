@@ -31,8 +31,8 @@ always @ (posedge clock or enable) begin
 		remainderBits = 142'd0;
 		
 		
-		for(i = 72; i => 0; i = i - 2) begin
-		currentBits = 
+		for(i = 71; i => 0; i = i - 1) begin
+		currentBits = dataIn[(i*2)-1:(i*2)-3];
 		
 		end	
 		
