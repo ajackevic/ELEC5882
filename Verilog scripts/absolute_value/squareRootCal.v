@@ -50,13 +50,17 @@ always @ (posedge clock or enable) begin
 			
 			// Check if remainderBits is posative or negative
 			if(remainderBits[141] == 1'd1) begin	// remainderBits is neg
+				// Set the current (from MSB side) tempOut bit to 0.
 				tempOut[i] = 1'd0;
 			end
 			else begin										// remainderBits is pos (0 is pos)
+				// Set the current (from MSB side) tempOut bit to 1.
 				tempOut[i] = 1'd1;
 				currentBits = remainderBits;
 			end
 			
+			// Reset remainderBits, then set its value to 0's bit shifted by (71-i) with 
+			// the values of tempOut.
 			remainderBits = 141'd0;
 			remainderBits = {remainderBits[141:(71-i)+1], tempOut[71:i]}
 			
