@@ -18,4 +18,21 @@ initial begin
 	remainderBits <= 142'd0;
 end
 
+
+
+always @ (posedge clock or enable) begin
+
+
+
+
+
+
+
+
+
+
+
+
+end
+
 endmodule
