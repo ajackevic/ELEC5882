@@ -39,7 +39,7 @@ always @ (posedge clock or enable) begin
 		
 		for(i = 71; i => 0; i = i - 1) begin
 			currentBits = {currentBits[141:2], dataIn[(i*2)-1:(i*2)-3]};
-			subtractBits = {remainderBits[141-2:0], 2'd1};
+			subtractBits = {remainderBits[139:0], 2'd1};
 			
 			remainderBits = currentBits - subtractBits;
 			
