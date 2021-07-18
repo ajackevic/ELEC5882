@@ -34,12 +34,13 @@ initial begin
 end
 
 
-
-
-
-
-
-
+squareRootCal dut(
+	.clock		(clock),
+	.enable		(enableModule),
+	.inputData	(dataIn),
+	
+	.outputData	(dataOut)
+);
 
 
 
