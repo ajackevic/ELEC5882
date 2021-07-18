@@ -49,6 +49,10 @@ always @ (posedge clock or enable) begin
 			else begin										// If remainderBits is pos (0 is pos)
 				tempOut[i] = 1'd1;
 			end
+			
+			remainderBits = 141'd0;
+			remainderBits = {remainderBits[141:(71-i)+1], tempOut[71:i]}
+			
 		end	
 		
 	
