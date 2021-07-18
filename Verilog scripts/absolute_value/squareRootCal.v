@@ -21,9 +21,13 @@ end
 
 
 always @ (posedge clock or enable) begin
-
-
-
+	if(enable) begin
+	
+	end
+	
+	else begin
+	
+	end
 
 
 
