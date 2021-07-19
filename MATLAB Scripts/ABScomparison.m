@@ -25,9 +25,9 @@ clear all
 % to maxBound.
 
 % Creating the max and min bounds for the rand arrays.
-minBound = -45000;
-maxBound = 45000;
-dataLength = 10000;
+minBound = -100000000;
+maxBound = 100000000;
+dataLength = 1000;
 
 % Creating the random real and imaginary array values using the max, min
 % bounds, array length.
