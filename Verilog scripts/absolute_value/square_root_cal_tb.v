@@ -2,7 +2,7 @@
 `timescale 1 ns/100 ps
 
 
-module squareRootCal_tb;
+module square_root_cal_tb;
 
 
 
@@ -34,7 +34,7 @@ initial begin
 end
 
 
-squareRootCal dut(
+square_root_cal dut(
 	.clock		(clock),
 	.enable		(enableModule),
 	.inputData	(dataIn),

@@ -1,6 +1,6 @@
 /*
 
- squareRootCal.v
+ square_root_cal.v
  --------------
  By: Augustas Jackevic
  Date: July 2021
@@ -25,7 +25,7 @@
 
 
 
-module squareRootCal(
+module square_root_cal(
 	input clock,
 	input enable,
 	input [141:0] inputData,
