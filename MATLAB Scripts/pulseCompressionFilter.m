@@ -97,11 +97,9 @@ matchedFilterOut = conv(x_t,h_t);
 %y_t = abs(matchedFilterOut);
 y_t = [];
 for i = 1:1:(length(matchedFilterOut))
-    if(abs(real(matchedFilterOut(i))) >= abs(imag(matchedFilterOut(i))))
-        y_t = [y_t (abs(real(matchedFilterOut(i))) + bitshift(abs(imag(matchedFilterOut(i))),-1))];
-    else
-        y_t = [y_t (abs(imag(matchedFilterOut(i))) + bitshift(abs(real(matchedFilterOut(i))),-1))];
-    end
+    realValueSquared = real(matchedFilterOut(i))*real(matchedFilterOut(i));
+    imagValueSquared = imag(matchedFilterOut(i))*imag(matchedFilterOut(i));
+    y_t = [y_t squareRootCal(realValueSquared + imagValueSquared)];
 end
 
 % Plotting the following graphs:
