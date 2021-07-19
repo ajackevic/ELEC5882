@@ -1,38 +1,35 @@
-function output = squareRootCal(valueIn)
-   a = dec2bin(valueIn,32);
-   q = dec2bin(0,16);
-   left = dec2bin(0,18);
-   right = dec2bin(0,18);
-   r = dec2bin(0,18);
-   
-   for i = 1:1:16
-       right = [q r(1) '1'];
-       left = [r(3:18) a(1:2)];
-       aValue = [a '00'];
-       a = aValue(end - 31:end);
-       
-       if(left(1) == '1')
-           left32 = ['11111111111111' left];
-       else
-           left32 = ['00000000000000' left];
-       end
-      if(right(1) == '1')
-           right32 = ['11111111111111' right];
-       else
-           right32 = ['00000000000000' right];
-      end
-       
-      
-       if(r(1) == '1')
-           % This is the issue. The int16. It should be 18 bits not 16.
-           r = dec2bin(typecast(uint32(bin2dec(left32)), 'int32') + typecast(uint32(bin2dec(right32)), 'int32'),18);
-       else
-           r = dec2bin(typecast(uint32(bin2dec(left32)), 'int32') - typecast(uint32(bin2dec(right32)), 'int32'),18);
-       end
-       
-       q = [q(2:16) dec2bin(~bin2dec(r(1)))];
-       out = bin2dec(q);
-   end   
-   output = bin2dec(q);
+function outputData = squareRootCal(inputData)
+
+    dataIn = dec2bin(inputData,142);
+    currentBits = dec2bin(0,142);
+    subtractBits = dec2bin(0,142);
+    remainderBits = dec2bin(0,142);
+    tempOut = dec2bin(0,71);
     
+    
+    pows2 = 2.^(142-1:-1:0);
+    pows_2 = 2.^(71-1:-1:0);
+    
+    for i = 71:-1:1
+        currentBits = [currentBits(3:142) dataIn(1:2)];
+        dataIn = [dataIn(3:142) '00'];
+        
+        subtractBits = [remainderBits(3:142) '01'];
+        
+        decCBValue = pows2*(currentBits-'0')';
+        decSBValue = pows2*(subtractBits-'0')';
+        
+        if(decSBValue > decCBValue)
+            tempOut((71 - i)+1) = '0';  
+        else
+            tempOut((71 - i)+1) = '1';
+            currentBits = dec2bin(decCBValue - decSBValue,142); 
+        end
+        
+        decTOValue = pows_2*(tempOut-'0')';
+        remainderBits = [dec2bin(0,(142 - (72 - i)))  tempOut(1:(72-i))];
+        
+    end
+
+    outputData = pows_2*(tempOut-'0')';
 end
