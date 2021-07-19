@@ -33,7 +33,7 @@ module matched_filter #(
 	input clock,
 	input enable,
 	
-	output signed [(DATA_WIDTH * 4):0] MFOutput
+	output signed [(DATA_WIDTH * 4)-2:0] MFOutput
 );
 
 
@@ -48,7 +48,9 @@ reg enableMFDataIn;
 reg enablecomplexFIRCoeff;
 reg enableHT;
 reg enableComplexFIRData;
-reg enableABS;
+reg enableSquar;
+
+reg [141:0] absInputValue;
 
 
 // A reg for informing the complex FIR filter when the data is about to be stopped.
@@ -86,11 +88,13 @@ initial begin
 	enableMFDataIn <= 1'd0;
 	enablecomplexFIRCoeff <= 1'd0;
 	enableHT <= 1'd0;
-	enableABS <= 1'd0;
+	enableSquar <= 1'd0;
 	
 	
 	enableComplexFIRData <= 1'd0;
 	stopDataLoadFlag <= 1'd0;
+	
+	absInputValue <= 141'd0;
 	
 	
 	state <= IDLE;
@@ -175,15 +179,15 @@ n_tap_complex_fir #(
 
 
 
-absolute_value #(
-	.DATA_WIDTH 	(DATA_WIDTH * 4)
-) abs (
-	.clock			(clock),
-	.enable			(enableABS),
-	.dataInRe		(MFOutputRe),
-	.dataInIm		(MFOutputIm),
+
+
+
+square_root_cal squr(
+	.clock		(clock),
+	.enable		(enableSquar),
+	.inputData	(absInputValue),
 	
-	.dataOut			(MFOutput)
+	.outputData	(MFOutput)
 );
 
 
@@ -217,8 +221,10 @@ always @ (posedge clock) begin
 				enablecomplexFIRCoeff <= 1'd1;
 				enableHT <= 1'd1;
 				enableComplexFIRData <= 1'd1;
-				enableABS <= 1'd1;
+				enableSquar <= 1'd1;
 			end
+			
+			absInputValue <= (MFOutputRe * MFOutputRe) + (MFOutputIm * MFOutputIm);
 		end
 		
 		
