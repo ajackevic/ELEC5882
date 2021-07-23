@@ -31,7 +31,7 @@ module hilbert_transform #(
 
 
 // Local parameter used in this module.
-reg signed [DATA_WIDTH - 1:0] dataInBuf [0:2];
+reg signed [(DATA_WIDTH * 3) - 1:0] dataInBuf [0:2];
 
 
 // Local parameters for the module setup_HT_coeff.
@@ -162,7 +162,7 @@ always @ (posedge clock) begin
 				dataFIRIn <= dataIn;
 				dataOutIm <= FIRDataOut;
 				dataInBuf[0] <= dataIn;
-				dataOutRe <= dataInBuf[2];
+				dataOutRe <= dataInBuf[2] * 20'd200000;
 				
 				// Shift the values inside the buffer by one position.
 				for (n = 0; n < 2; n = n + 1) begin
