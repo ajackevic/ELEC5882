@@ -66,7 +66,7 @@ end
 // Creating the integers which are used for the for loops in the always block.
 integer i;
 integer n;
-always @ (posedge clock or enable) begin
+always @ (posedge clock) begin
 
 	// If enable do the square root operation.
 	if(enable) begin
