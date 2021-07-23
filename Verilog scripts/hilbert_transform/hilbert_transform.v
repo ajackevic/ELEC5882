@@ -75,8 +75,8 @@ initial begin: init_values
 	dataFIRIn <= {(DATA_WIDTH){1'd0}};
 
 	
-	dataOutRe <= {(DATA_WIDTH * 2){1'd0}};
-	dataOutIm <= {(DATA_WIDTH * 2){1'd0}};
+	dataOutRe <= {(DATA_WIDTH * 3){1'd0}};
+	dataOutIm <= {(DATA_WIDTH * 3){1'd0}};
 end
 
 
@@ -128,8 +128,8 @@ always @ (posedge clock) begin
 				loadCoeffFIRFlag <= 1'd1;
 			end
 			else begin
-				dataOutRe <= {(DATA_WIDTH * 2){1'd0}};
-				dataOutIm <= {(DATA_WIDTH * 2){1'd0}};
+				dataOutRe <= {(DATA_WIDTH * 3){1'd0}};
+				dataOutIm <= {(DATA_WIDTH * 3){1'd0}};
 			end
 		end
 		
@@ -179,8 +179,8 @@ always @ (posedge clock) begin
 			loadFIRDataFlag <= 1'd0;
 			stopFIRDataFlag <= 1'd1;
 			dataFIRIn <= {(DATA_WIDTH){1'd0}};
-			dataOutRe <= {(DATA_WIDTH * 2){1'd0}};
-			dataOutIm <= {(DATA_WIDTH * 2){1'd0}};
+			dataOutRe <= {(DATA_WIDTH * 3){1'd0}};
+			dataOutIm <= {(DATA_WIDTH * 3){1'd0}};
 		end
 		
 		
@@ -194,8 +194,8 @@ always @ (posedge clock) begin
 			dataFIRIn <= {(DATA_WIDTH){1'd0}};
 
 			
-			dataOutRe <= {(DATA_WIDTH * 2){1'd0}};
-			dataOutIm <= {(DATA_WIDTH * 2){1'd0}};
+			dataOutRe <= {(DATA_WIDTH * 3){1'd0}};
+			dataOutIm <= {(DATA_WIDTH * 3){1'd0}};
 		end
 	endcase
 end
