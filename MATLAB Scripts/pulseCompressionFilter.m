@@ -82,7 +82,7 @@ HTCoeff = [-775 0 -1582 0  -3114 0 -5642 0 -10043 0 -19511 0 -63075 0 63075 0 19
 
 
 % Creating the complex input signal.
-x_t_real = receivedSignal;
+x_t_real = receivedSignal * 200000;
 x_t_imag = conv(HTCoeff, receivedSignal);
 x_t = complex(x_t_real, x_t_imag(1:length(x_t_real)));
 % x_t = hilbert(receivedSignal);
