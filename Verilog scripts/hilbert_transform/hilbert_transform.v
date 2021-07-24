@@ -176,9 +176,13 @@ always @ (posedge clock) begin
 		// State STOP. This state stops the FIR and HT opperation as well as 
 		// setting some of the local variables and outputs to 0.
 		STOP: begin
+			state <= IDLE;
+			loadCoeff <= 1'd0;
 			loadFIRDataFlag <= 1'd0;
-			stopFIRDataFlag <= 1'd1;
+			stopFIRDataFlag <= 1'd0;
 			dataFIRIn <= {(DATA_WIDTH){1'd0}};
+
+			
 			dataOutRe <= {(DATA_WIDTH * 3){1'd0}};
 			dataOutIm <= {(DATA_WIDTH * 3){1'd0}};
 		end
