@@ -77,8 +77,8 @@ h_t = round(flip(conj(hilbert(chirpWave)))* 1451 );
 % to create the HTCoeff array. Every second coefficient should be 0,
 % however due to the muiltiplication by 100000, some coefficients end up 1
 % or -1, hence have been changed to 0.
-% HTCoeff = round(firpm(26,[0.1 0.9],[1 1],'hilbert') * 100000);
-HTCoeff = [-775 0 -1582 0  -3114 0 -5642 0 -10043 0 -19511 0 -63075 0 63075 0 19511 0 10043 0 5642 0 3114 0 1582 0 775];
+% HTCoeff = round(firpm(26,[0.1 0.9],[1 1],'hilbert') * 3200);
+HTCoeff = [-25 0 -51 0  -100 0 -181 0 -321 0 -624 0 -2018 0 2018 0 624 0 321 0 181 0 100 0 51 0 25];
 
 
 % Creating the complex input signal.
