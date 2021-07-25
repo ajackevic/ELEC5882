@@ -25,7 +25,10 @@
 
 
 
-module square_root_cal(
+module square_root_cal #(
+	parameter INPUT_DATA_WIDTH = 142,
+	parameter OUTPUT_DATA_WIDTH = 71
+	)(
 	input clock,
 	input enable,
 	input [141:0] inputData,
