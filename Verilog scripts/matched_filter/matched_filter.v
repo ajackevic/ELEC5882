@@ -182,12 +182,15 @@ n_tap_complex_fir #(
 
 
 
-square_root_cal squr(
-	.clock		(clock),
-	.enable		(enableSquar),
-	.inputData	(absInputValue),
+square_root_cal #(
+	.INPUT_DATA_WIDTH		(142),
+	.OUTPUT_DATA_WIDTH	(71)
+) squr(
+	.clock					(clock),
+	.enable					(enableSquar),
+	.inputData				(absInputValue),
 	
-	.outputData	(MFOutput)
+	.outputData				(MFOutput)
 );
 
 
