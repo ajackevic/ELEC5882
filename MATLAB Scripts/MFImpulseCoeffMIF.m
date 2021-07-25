@@ -94,8 +94,11 @@ fileID = fopen(MIFFile,'w');
 % are the rounded real and imaginary parts. They are printed in 2's
 % compliment format. The length of each value is 16 bits.
 for i = 1:1:length(h_t)
-    fprintf(fileID,'%s\n', dec2bin(round(real(h_t(i))),12));
-    fprintf(fileID,'%s\n', dec2bin(round(imag(h_t(i))),12));
+    binRealh_t = dec2bin(round(real(h_t(i))),16);
+    binImagh_t = dec2bin(round(imag(h_t(i))),16);
+    
+    fprintf(fileID,'%s\n', binRealh_t(end-11:end));
+    fprintf(fileID,'%s\n', binImagh_t(end-11:end));
 end
 
 
@@ -121,7 +124,9 @@ fileID = fopen(MIFFile,'w');
 % are the rounded to int values. They are printed in 2's
 % compliment format. The length of each value is 16 bits.
 for i = 1:1:length(receivedSignal)
-    fprintf(fileID,'%s\n', dec2bin(round(receivedSignal(i)),12));
+    binReceivedSignal = dec2bin(round(receivedSignal(i)),16);
+    
+    fprintf(fileID,'%s\n', binReceivedSignal(end-11:end));
 end
 
 
