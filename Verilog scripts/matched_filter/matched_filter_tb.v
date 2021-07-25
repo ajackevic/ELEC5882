@@ -32,7 +32,7 @@ localparam RST_CYCLES = 20;
 localparam COEFF_LENGTH = 800;
 localparam DATA_LENGTH = 7700;
 localparam HT_COEFF_LENGTH = 27;
-localparam DATA_WIDTH = 18;
+localparam DATA_WIDTH = 12;
 
 
 
@@ -40,7 +40,7 @@ localparam DATA_WIDTH = 18;
 // Creating the lcoal parameters.
 reg clock;
 reg enableModule;
-wire signed [(DATA_WIDTH * 4)-2:0] MFOutput;
+wire signed [70:0] MFOutput;
 
 
 // Set the initial value of the clock.

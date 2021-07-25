@@ -33,7 +33,7 @@ module matched_filter #(
 	input clock,
 	input enable,
 	
-	output signed [(DATA_WIDTH * 4)-2:0] MFOutput
+	output signed [70:0] MFOutput
 );
 
 
