@@ -63,14 +63,14 @@ receivedSignal = [chirp1, chirp2, chirp3, chirp4, chirp5, chirp6];
 
 % Multiplying and rounding the receivedSignal so that the aquired signal in
 % FPGA can be comfirmed with the MATLAB results.
-receivedSignal = round(receivedSignal * 1000);
+receivedSignal = round(receivedSignal * 204.7);
 
 
 % Creating the matched filter impulse response. This is equal to the complex
 % conjugate time reverse analytic signal of the chirp signal. Its
 % muiltiplied by 1000 and rounded so that the results from FPGA can be
 % comfirmed in MATLAB.
-h_t = round(flip(conj(hilbert(chirpWave))) * 1000);
+h_t = round(flip(conj(hilbert(chirpWave)))* 1451 );
 
 
 % Creating the hilbert transform coefficients. This uses the firpm function
@@ -197,7 +197,7 @@ fileID = fopen(MIFFile,'w');
 % are the rounded to int values. They are printed in 2's
 % compliment format. The length of each value is 16 bits.
 for i = 1:1:length(receivedSignal)
-    fprintf(fileID,'%s\n', dec2bin(round(receivedSignal(i)),18));
+    fprintf(fileID,'%s\n', dec2bin(receivedSignal(i),12));
 end
 
 
