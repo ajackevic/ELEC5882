@@ -31,20 +31,20 @@ module square_root_cal #(
 	)(
 	input clock,
 	input enable,
-	input [141:0] inputData,
+	input [INPUT_DATA_WIDTH - 1:0] inputData,
 	
-	output reg [70:0] outputData
+	output reg [OUTPUT_DATA_WIDTH - 1:0] outputData
 );
 
 
 
 
 // Creating the local parameters.
-reg [141:0] currentBits;
-reg [141:0] subtractBits;
-reg [141:0] remainderBits;
-reg [141:0] dataIn;
-reg [70:0] tempOut;
+reg [INPUT_DATA_WIDTH - 1:0] currentBits;
+reg [INPUT_DATA_WIDTH - 1:0] subtractBits;
+reg [INPUT_DATA_WIDTH - 1:0] remainderBits;
+reg [INPUT_DATA_WIDTH - 1:0] dataIn;
+reg [OUTPUT_DATA_WIDTH - 1:0] tempOut;
 
 
 
@@ -52,13 +52,14 @@ reg [70:0] tempOut;
 
 // Setting the localparam 
 initial begin
-	currentBits <= 142'd0;
-	subtractBits <= 142'd0;
-	remainderBits <= 142'd0;
-	dataIn <= 142'd0;
+	currentBits <= {(INPUT_DATA_WIDTH){1'd0}};
+	subtractBits <= {(INPUT_DATA_WIDTH){1'd0}};
+	remainderBits <= {(INPUT_DATA_WIDTH){1'd0}};
+	dataIn <= {(INPUT_DATA_WIDTH){1'd0}};
 	
-	tempOut <= 71'd0;
-	outputData <= 71'd0;
+	
+	tempOut <= {(OUTPUT_DATA_WIDTH){1'd0}};
+	outputData <= {(OUTPUT_DATA_WIDTH){1'd0}};
 	
 end
 
@@ -76,21 +77,21 @@ always @ (posedge clock) begin
 	
 		// With each new enable/value, reset the main parameters
 		dataIn = inputData;
-		currentBits = 142'd0;
-		subtractBits = 142'd0;
-		remainderBits = 142'd0;
-		tempOut = 71'd0;
+		currentBits = {(INPUT_DATA_WIDTH){1'd0}};
+		subtractBits = {(INPUT_DATA_WIDTH){1'd0}};
+		remainderBits = {(INPUT_DATA_WIDTH){1'd0}};
+		tempOut = {(OUTPUT_DATA_WIDTH){1'd0}};
 		
 		
 
 		// A for loop which goes through all the values in. The for loop iterations
 		// must equal half of inputData bit width.
-		for(i = 70; i >= -0; i = i - 1) begin
+		for(i = OUTPUT_DATA_WIDTH - 1; i >= -0; i = i - 1) begin
 			
 			// Adding the MSB 2 bits of dataIn to the start of currentBits. Hence shift 
 			// currentBits to the left by 2 positions and setting bits 0 and 1 to the 2
 			// MSB's of dataIn.
-			currentBits = {currentBits[139:0], dataIn[141:140]};
+			currentBits = {currentBits[INPUT_DATA_WIDTH - 3:0], dataIn[INPUT_DATA_WIDTH - 1:INPUT_DATA_WIDTH - 2]};
 			// Shifting dataIn two positions so that in the next for loop iteration, the 
 			// corresponding 2 bits of dataIn are processed.
 			dataIn = dataIn << 2;
@@ -98,7 +99,7 @@ always @ (posedge clock) begin
 			
 			// Setting subtractBits to remainderBits bit shifted by 2 values, with bits
 			// 1 and 0 being set to 2'b01.
-			subtractBits = {remainderBits[139:0], 2'd1};
+			subtractBits = {remainderBits[INPUT_DATA_WIDTH - 3:0], 2'd1};
 			
 			// Check if the remainder of currentBits - subtractBits is negative. If
 			// subtractBits is larger than currentBits, then the remainder would be 
@@ -118,7 +119,7 @@ always @ (posedge clock) begin
 			
 			// Reset remainderBits, then set its value to the shifted value of 
 			// tempOut. 
-			remainderBits = 141'd0;
+			remainderBits = {(INPUT_DATA_WIDTH){1'd0}};
 			remainderBits = remainderBits + (tempOut >> (i));
 		end
 		
@@ -129,7 +130,7 @@ always @ (posedge clock) begin
 	
 	// If enable is low, set outputData to 0.
 	else begin
-		outputData = 71'd0;
+		outputData = {(OUTPUT_DATA_WIDTH){1'd0}};
 	end
 
 
