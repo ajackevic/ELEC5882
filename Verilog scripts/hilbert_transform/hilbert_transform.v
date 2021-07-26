@@ -162,7 +162,7 @@ always @ (posedge clock) begin
 				dataFIRIn <= dataIn;
 				dataOutIm <= FIRDataOut;
 				dataInBuf[0] <= dataIn;
-				dataOutRe <= dataInBuf[2] * 20'd3300;
+				dataOutRe <= dataInBuf[2];
 				
 				// Shift the values inside the buffer by one position.
 				for (n = 0; n < 2; n = n + 1) begin
