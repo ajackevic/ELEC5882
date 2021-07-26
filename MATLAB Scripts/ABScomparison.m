@@ -258,3 +258,19 @@ annotation('textbox',[0.91 .45 .1 .2],'String',avgSquarErrorstr,'EdgeColor','non
 annotation('textbox',[0.91 .42 .1 .2],'String',maxSquarErrorstr,'EdgeColor','none')
 
 
+
+figure(3)
+histogram(absOut1Error);
+title('Aquired error through alpha (1/1) max plus beta (1/2) min alogirthm.')
+
+figure(4)
+histogram(absOut2Error);
+title('Aquired error through alpha (1/1) max plus beta (1/4) min alogirthm.')
+
+figure(5)
+histogram(absOut3Error);
+title('Aquired error through alpha (1/1) max plus beta (3/8) min alogirthm.')
+
+figure(6)
+histogram(squrOutError);
+title('Aquired error through non-restoring square root algorithm.')
