@@ -31,7 +31,7 @@ module hilbert_transform #(
 
 
 // Local parameter used in this module.
-reg signed [DATA_WIDTH - 1:0] dataInBuf [0:2];
+reg signed [(DATA_WIDTH * 3) - 1:0] dataInBuf [0:2];
 
 
 // Local parameters for the module setup_HT_coeff.
@@ -75,8 +75,8 @@ initial begin: init_values
 	dataFIRIn <= {(DATA_WIDTH){1'd0}};
 
 	
-	dataOutRe <= {(DATA_WIDTH * 2){1'd0}};
-	dataOutIm <= {(DATA_WIDTH * 2){1'd0}};
+	dataOutRe <= {(DATA_WIDTH * 3){1'd0}};
+	dataOutIm <= {(DATA_WIDTH * 3){1'd0}};
 end
 
 
@@ -128,8 +128,8 @@ always @ (posedge clock) begin
 				loadCoeffFIRFlag <= 1'd1;
 			end
 			else begin
-				dataOutRe <= {(DATA_WIDTH * 2){1'd0}};
-				dataOutIm <= {(DATA_WIDTH * 2){1'd0}};
+				dataOutRe <= {(DATA_WIDTH * 3){1'd0}};
+				dataOutIm <= {(DATA_WIDTH * 3){1'd0}};
 			end
 		end
 		
@@ -176,11 +176,15 @@ always @ (posedge clock) begin
 		// State STOP. This state stops the FIR and HT opperation as well as 
 		// setting some of the local variables and outputs to 0.
 		STOP: begin
+			state <= IDLE;
+			loadCoeff <= 1'd0;
 			loadFIRDataFlag <= 1'd0;
-			stopFIRDataFlag <= 1'd1;
+			stopFIRDataFlag <= 1'd0;
 			dataFIRIn <= {(DATA_WIDTH){1'd0}};
-			dataOutRe <= {(DATA_WIDTH * 2){1'd0}};
-			dataOutIm <= {(DATA_WIDTH * 2){1'd0}};
+
+			
+			dataOutRe <= {(DATA_WIDTH * 3){1'd0}};
+			dataOutIm <= {(DATA_WIDTH * 3){1'd0}};
 		end
 		
 		
@@ -194,8 +198,8 @@ always @ (posedge clock) begin
 			dataFIRIn <= {(DATA_WIDTH){1'd0}};
 
 			
-			dataOutRe <= {(DATA_WIDTH * 2){1'd0}};
-			dataOutIm <= {(DATA_WIDTH * 2){1'd0}};
+			dataOutRe <= {(DATA_WIDTH * 3){1'd0}};
+			dataOutIm <= {(DATA_WIDTH * 3){1'd0}};
 		end
 	endcase
 end

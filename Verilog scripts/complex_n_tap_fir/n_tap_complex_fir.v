@@ -153,18 +153,13 @@ always @(posedge clock) begin
 		
 			// If the data input stream is ready, do the following.
 			if(loadDataFlag == 1) begin
-				// Shift the values inside inputDataBufferRe by 1.
+				// Shift the values inside inputDataBufferRe and inputDataBufferIm by 1.
 				for (n = LENGTH - 1; n > 0; n = n - 1) begin
 					inputDataBufferRe[n] <= inputDataBufferRe[n - 1];
-				end
-				// Load the inputDataBufferRe value to the start of the buffer.
-				inputDataBufferRe[0] <= dataInRe;
-
-				// Shift the values inside inputDataBufferIm by 1.
-				for (n = LENGTH - 1; n > 0; n = n - 1) begin
 					inputDataBufferIm[n] <= inputDataBufferIm[n - 1];
 				end
-				// Load the inputDataBufferIm value to the start of the buffer.
+				// Load the inputDataBufferRe and inputDataBufferIm values to the start of the buffer.
+				inputDataBufferRe[0] <= dataInRe;
 				inputDataBufferIm[0] <= dataInIm;
 
 
@@ -198,8 +193,26 @@ always @(posedge clock) begin
 		end
 
 		
-		STOP: begin
+		// State Stop. This state is responsiable for the resetting of the used parameters and then 
+		// transistioning to the state IDLE.
+		STOP: begin: resetValues
+			// Set all the values inside the coeffBuffer to 0.
+			integer k;
+			for (k = 0; k <= LENGTH - 1 ; k = k + 1) begin
+				coeffBufferRe[k] <= 0;
+				coeffBufferIm[k] <= 0;
+				inputDataBufferRe[k] <= 0;
+				inputDataBufferIm[k] <= 0;
+			end
+
+			// Set the internal variables and outputs to 0.
 			state <= IDLE;
+			dataOutRe <= 0;
+			dataOutIm <= 0;
+			firOutputReRe <= 0;
+			firOutputReIm <= 0;
+			firOutputImRe <= 0;
+			firOutputImIm <= 0;
 		end
 		
 		

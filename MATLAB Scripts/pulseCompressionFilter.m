@@ -63,22 +63,22 @@ receivedSignal = [chirp1, chirp2, chirp3, chirp4, chirp5, chirp6];
 
 % Multiplying and rounding the receivedSignal so that the aquired signal in
 % FPGA can be comfirmed with the MATLAB results.
-receivedSignal = round(receivedSignal * 1000);
+receivedSignal = round(receivedSignal * 204.7);
 
 
 % Creating the matched filter impulse response. This is equal to the complex
 % conjugate time reverse analytic signal of the chirp signal. Its
 % muiltiplied by 1000 and rounded so that the results from FPGA can be
 % comfirmed in MATLAB.
-h_t = round(flip(conj(hilbert(chirpWave))) * 1000);
+h_t = round(flip(conj(hilbert(chirpWave)))* 1451 );
 
 
 % Creating the hilbert transform coefficients. This uses the firpm function
 % to create the HTCoeff array. Every second coefficient should be 0,
-% however due to the muiltiplication by 100000, some coefficients end up 1
+% however due to the muiltiplication by 3200, some coefficients end up 1
 % or -1, hence have been changed to 0.
-% HTCoeff = round(firpm(26,[0.1 0.9],[1 1],'hilbert') * 100000);
-HTCoeff = [-775 0 -1582 0  -3114 0 -5642 0 -10043 0 -19511 0 -63075 0 63075 0 19511 0 10043 0 5642 0 3114 0 1582 0 775];
+% HTCoeff = round(firpm(26,[0.1 0.9],[1 1],'hilbert') * 3200);
+HTCoeff = [-25 0 -51 0  -100 0 -181 0 -321 0 -624 0 -2018 0 2018 0 624 0 321 0 181 0 100 0 51 0 25];
 
 
 % Creating the complex input signal.
@@ -97,12 +97,16 @@ matchedFilterOut = conv(x_t,h_t);
 %y_t = abs(matchedFilterOut);
 y_t = [];
 for i = 1:1:(length(matchedFilterOut))
-    if(abs(real(matchedFilterOut(i))) >= abs(imag(matchedFilterOut(i))))
-        y_t = [y_t (abs(real(matchedFilterOut(i))) + bitshift(abs(imag(matchedFilterOut(i))),-1))];
-    else
-        y_t = [y_t (abs(imag(matchedFilterOut(i))) + bitshift(abs(real(matchedFilterOut(i))),-1))];
-    end
+    realValueSquared = real(matchedFilterOut(i))*real(matchedFilterOut(i));
+    imagValueSquared = imag(matchedFilterOut(i))*imag(matchedFilterOut(i));
+    squarValue = squareRootCal(realValueSquared + imagValueSquared);
+    
+    squarBinValue = dec2bin(squarValue,42);
+    y_t = [y_t bin2dec(squarBinValue(end-41:end-10))];
 end
+
+
+
 
 % Plotting the following graphs:
 %    Chirp waveform
@@ -179,12 +183,6 @@ xlabel('Time (S)')
 
 
 
-
-
-
-
-
-
 %%
 % The following section is for the creation of the x_t MIF file.
 
@@ -199,7 +197,9 @@ fileID = fopen(MIFFile,'w');
 % are the rounded to int values. They are printed in 2's
 % compliment format. The length of each value is 16 bits.
 for i = 1:1:length(receivedSignal)
-    fprintf(fileID,'%s\n', dec2bin(round(receivedSignal(i)),18));
+    binReceivedSignal = dec2bin(round(receivedSignal(i)),16);
+    
+    fprintf(fileID,'%s\n', binReceivedSignal(end-11:end));
 end
 
 

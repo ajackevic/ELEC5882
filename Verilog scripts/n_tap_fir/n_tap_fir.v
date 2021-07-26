@@ -146,9 +146,20 @@ always @(posedge clock) begin
 		end
 		
 
-		
-		STOP: begin
+		// State Stop. This is responsiable for resetting the used parameters and then transistioning
+		// to the state IDLE.
+		STOP: begin: resetValues
+			// Set all the values inside the coeffBuffer and inputDataBuffer to 0.
+			integer k;
+			for (k = 0; k <= LENGTH - 1 ; k = k + 1) begin
+				coeffBuffer[k] <= 0;
+				inputDataBuffer[k] <= 0;
+			end
+
+			// Set the internal variables and outputs to 0.
 			state <= IDLE;
+			dataOut <= 0;
+			firOutput <= 0;
 		end
 		
 		
@@ -171,7 +182,7 @@ always @(posedge clock) begin
 		// State default. This state is added just incase the FSM is in an unknown state, it resets all
 		// all the local parameter and sets state to IDLE.
 		default: begin: defaultValues
-			// Set all the values inside the coeffBuffer to 0.
+			// Set all the values inside the coeffBuffer and inputDataBuffer to 0.
 			integer k;
 			for (k = 0; k <= LENGTH - 1 ; k = k + 1) begin
 				coeffBuffer[k] <= 0;

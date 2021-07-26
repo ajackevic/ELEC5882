@@ -43,7 +43,7 @@ chirpWave = chirp(tChirp,chirpFreqStart,chirpDuration,chirpFreqEnd);
 % Impulse response of the matched filter. This is equal to the complex
 % conjugate time reversal of the transmitted signal (chirpWave). The
 % impulse reponse is muiltiplied by 1000 to aquire integers.
-h_t = flip(conj(hilbert(chirpWave))) * 1000;
+h_t = flip(conj(hilbert(chirpWave))) * 1451;
 
 
 
@@ -73,7 +73,7 @@ chirp6 = awgn(paddedChirpWaveAmp1,-5);
 
 % Summing up the different chirp waveforms into one continous long input signal.
 receivedSignal = [chirp1, chirp2, chirp3, chirp4, chirp5, chirp6];
-receivedSignal = receivedSignal * 1000;
+receivedSignal = receivedSignal * 204.7;
 
 
 
@@ -94,8 +94,11 @@ fileID = fopen(MIFFile,'w');
 % are the rounded real and imaginary parts. They are printed in 2's
 % compliment format. The length of each value is 16 bits.
 for i = 1:1:length(h_t)
-    fprintf(fileID,'%s\n', dec2bin(round(real(h_t(i))),18));
-    fprintf(fileID,'%s\n', dec2bin(round(imag(h_t(i))),18));
+    binRealh_t = dec2bin(round(real(h_t(i))),16);
+    binImagh_t = dec2bin(round(imag(h_t(i))),16);
+    
+    fprintf(fileID,'%s\n', binRealh_t(end-11:end));
+    fprintf(fileID,'%s\n', binImagh_t(end-11:end));
 end
 
 
@@ -121,7 +124,9 @@ fileID = fopen(MIFFile,'w');
 % are the rounded to int values. They are printed in 2's
 % compliment format. The length of each value is 16 bits.
 for i = 1:1:length(receivedSignal)
-    fprintf(fileID,'%s\n', dec2bin(round(receivedSignal(i)),18));
+    binReceivedSignal = dec2bin(round(receivedSignal(i)),16);
+    
+    fprintf(fileID,'%s\n', binReceivedSignal(end-11:end));
 end
 
 
