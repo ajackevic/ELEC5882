@@ -75,14 +75,14 @@ h_t = round(flip(conj(hilbert(chirpWave)))* 1451 );
 
 % Creating the hilbert transform coefficients. This uses the firpm function
 % to create the HTCoeff array. Every second coefficient should be 0,
-% however due to the muiltiplication by 100000, some coefficients end up 1
+% however due to the muiltiplication by 3200, some coefficients end up 1
 % or -1, hence have been changed to 0.
 % HTCoeff = round(firpm(26,[0.1 0.9],[1 1],'hilbert') * 3200);
 HTCoeff = [-25 0 -51 0  -100 0 -181 0 -321 0 -624 0 -2018 0 2018 0 624 0 321 0 181 0 100 0 51 0 25];
 
 
 % Creating the complex input signal.
-x_t_real = receivedSignal * 3300;
+x_t_real = receivedSignal;
 x_t_imag = conv(HTCoeff, receivedSignal);
 x_t = complex(x_t_real, x_t_imag(1:length(x_t_real)));
 % x_t = hilbert(receivedSignal);
@@ -99,8 +99,14 @@ y_t = [];
 for i = 1:1:(length(matchedFilterOut))
     realValueSquared = real(matchedFilterOut(i))*real(matchedFilterOut(i));
     imagValueSquared = imag(matchedFilterOut(i))*imag(matchedFilterOut(i));
-    y_t = [y_t squareRootCal(realValueSquared + imagValueSquared)];
+    squarValue = squareRootCal(realValueSquared + imagValueSquared);
+    
+    squarBinValue = dec2bin(squarValue,42);
+    y_t = [y_t bin2dec(squarBinValue(end-41:end-10))];
 end
+
+
+
 
 % Plotting the following graphs:
 %    Chirp waveform
@@ -174,12 +180,6 @@ plot(tOut(1:end-1),y_t)
 title('Matched filter output y(t)')
 ylabel('Magnitude')
 xlabel('Time (S)')
-
-
-
-
-
-
 
 
 
