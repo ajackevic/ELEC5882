@@ -27,19 +27,25 @@ module matched_filter #(
 	parameter COEFF_LENGTH = 800,
 	parameter DATA_LENGTH = 7700,
 	parameter HT_COEFF_LENGTH = 27,
-	parameter DATA_WIDTH = 18
+	parameter DATA_WIDTH = 12
 	// It should be noted the stated parameters must match the values in the MATLAB script. 
 )(
 	input clock,
 	input enable,
 	
-	output signed [70:0] MFOutput
+	output reg [31:0] MFOutput
 );
 
 
 // Local parameters for the module read_MIF_file.
 localparam COEFF = 1;
 localparam DATA_IN = 2;
+
+// Local parameters for the module square_root_cal.
+// ABS_DATA_IN_WIDTH is determind by log2[(2^(DATA_WIDTH - 1) - 1)^2 + (2^(DATA_WIDTH - 1) - 1)^2] 
+// rounded up even value. ABS_DATA_OUT_WIDTH must be half of ABS_DATA_IN_WIDTH.
+localparam ABS_DATA_IN_WIDTH = 84;
+localparam ABS_DATA_OUT_WIDTH = 42;
 
 
 // Enable regs for the instantiated modules.
@@ -50,7 +56,8 @@ reg enableHT;
 reg enableComplexFIRData;
 reg enableSquar;
 
-reg [141:0] absInputValue;
+reg [ABS_DATA_IN_WIDTH - 1:0] absInputValue;
+wire [ABS_DATA_OUT_WIDTH - 1:0] absOutputValue;
 
 
 // A reg for informing the complex FIR filter when the data is about to be stopped.
@@ -94,7 +101,7 @@ initial begin
 	enableComplexFIRData <= 1'd0;
 	stopDataLoadFlag <= 1'd0;
 	
-	absInputValue <= 141'd0;
+	absInputValue <= {(ABS_DATA_IN_WIDTH){1'd0}};
 	
 	
 	state <= IDLE;
@@ -183,14 +190,14 @@ n_tap_complex_fir #(
 
 
 square_root_cal #(
-	.INPUT_DATA_WIDTH		(142),
-	.OUTPUT_DATA_WIDTH	(71)
+	.INPUT_DATA_WIDTH		(ABS_DATA_IN_WIDTH),
+	.OUTPUT_DATA_WIDTH	(ABS_DATA_OUT_WIDTH)
 ) squr(
 	.clock					(clock),
 	.enable					(enableSquar),
 	.inputData				(absInputValue),
 	
-	.outputData				(MFOutput)
+	.outputData				(absOutputValue)
 );
 
 
@@ -228,6 +235,7 @@ always @ (posedge clock) begin
 			end
 			
 			absInputValue <= (MFOutputRe * MFOutputRe) + (MFOutputIm * MFOutputIm);
+			MFOutput <= absOutputValue[41:10];
 		end
 		
 		
