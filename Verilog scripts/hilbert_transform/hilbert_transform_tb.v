@@ -35,9 +35,13 @@ wire signed [(DATA_WIDTH * 2) - 1:0] dataOutRe;
 wire signed [(DATA_WIDTH * 2) - 1:0] dataOutIm;
 
 
+
 reg signed [DATA_WIDTH - 1: 0] dataInBuf [0:29];
 reg signed [DATA_WIDTH - 1: 0] expectedOutBufRe [0:29];
 reg signed [DATA_WIDTH - 1: 0] expectedOutBufIm [0:29];
+wire signed [DATA_WIDTH - 1: 0] obtainedOutBufRe [0:29];
+wire signed [DATA_WIDTH - 1: 0] obtainedOutBufIm [0:29];
+
 
 
 // FSM states.
@@ -131,6 +135,8 @@ initial begin
 	expectedOutBufRe[27] = 36'd719;
 	expectedOutBufRe[28] = 36'd999;
 	expectedOutBufRe[29] = -36'd666;
+	
+	
 	
 	
 	expectedOutBufIm[0] = -36'3075;
