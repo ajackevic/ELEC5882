@@ -24,6 +24,7 @@ localparam LENGTH = 27;
 localparam DATA_WIDTH = 18;
 
 
+
 // Creating the lcoal parameters.
 reg clock;
 reg enable;
@@ -31,6 +32,17 @@ reg stopDataInFlag;
 reg signed [DATA_WIDTH - 1:0] dataIn;
 wire signed [(DATA_WIDTH * 2) - 1:0] dataOutRe;
 wire signed [(DATA_WIDTH * 2) - 1:0] dataOutIm;
+
+
+
+
+// FSM states.
+reg [1:0] state;
+localparam [1:0] IDLE = 2'd0;
+localparam [1:0] CHECK_COEFFICIENTS = 2'd1;
+localparam [1:0] DISPLAY_RESULTS = 2'd2;
+localparam [1:0] STOP = 2'd3;
+
 
 
 // Connect the device under test.
@@ -120,7 +132,8 @@ end
 
 // Set the initial value of the clock.
 initial begin
-	clock = 0;
+	clock <= 0;
+	state <= IDLE;
 end
 
 
