@@ -27,7 +27,7 @@ clear all
 % Creating the max and min bounds for the rand arrays.
 minBound = -100000000;
 maxBound = 100000000;
-dataLength = 10000;
+dataLength = 100000;
 
 % Creating the random real and imaginary array values using the max, min
 % bounds, array length.
@@ -136,7 +136,7 @@ for i = 1:1:dataLength
     % Bit shift absBetaValue by 3 to aquire the 1/8 value and then 
     % muiltiply by 3 to aquire the 3/8 value. It should be noted that this 
     % value is rounded down.
-    absBetaValue = (bitshift(absBetaValue,-3) * 3);
+    absBetaValue = (bitshift(absBetaValue * 3,-3));
     % Added the alpha and beta value to the output array.
     alphaBetaOut3 = [alphaBetaOut3 (absAlphaValue + absBetaValue)];
 end
@@ -261,16 +261,31 @@ annotation('textbox',[0.91 .42 .1 .2],'String',maxSquarErrorstr,'EdgeColor','non
 
 figure(3)
 histogram(absOut1Error);
-title('Aquired error through alpha (1/1) max plus beta (1/2) min alogirthm.')
+title('Aquired error of alpha (1/1) max plus beta (1/2) min alogirthm');
+ylabel('Number of data points');
+xlabel('Error (%)');
+set(gca,'FontSize',30);
+
 
 figure(4)
 histogram(absOut2Error);
-title('Aquired error through alpha (1/1) max plus beta (1/4) min alogirthm.')
+title('Aquired error of alpha (1/1) max plus beta (1/4) min alogirthm')
+ylabel('Number of data points');
+xlabel('Error (%)');
+set(gca,'FontSize',30);
+
 
 figure(5)
 histogram(absOut3Error);
-title('Aquired error through alpha (1/1) max plus beta (3/8) min alogirthm.')
+title('Aquired error of alpha (1/1) max plus beta (3/8) min alogirthm')
+ylabel('Number of data points');
+xlabel('Error (%)');
+set(gca,'FontSize',30);
+
 
 figure(6)
 histogram(squrOutError);
-title('Aquired error through non-restoring square root algorithm.')
+title('Aquired error of non-restoring square root algorithm')
+ylabel('Number of data points');
+xlabel('Error (%)');
+set(gca,'FontSize',30);
