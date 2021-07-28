@@ -33,6 +33,7 @@ reg stopDataInFlag;
 reg signed [DATA_WIDTH - 1:0] dataIn;
 wire signed [(DATA_WIDTH * 2) - 1:0] dataOutRe;
 wire signed [(DATA_WIDTH * 2) - 1:0] dataOutIm;
+reg signed [DATA_WIDTH - 1: 0] dataInBuf [0:29];
 
 
 
@@ -63,71 +64,42 @@ hilbert_transform #(
 initial begin
 	enable = 1'd0;
 	stopDataInFlag = 1'd0;
-	dataIn = 18'd0;
+	
+	dataInBuff[0] = -18'd123;
+	dataInBuff[1] = 18'd12111;
+	dataInBuff[2] = 18'd891;
+	dataInBuff[3] = 18'd9;
+	dataInBuff[4] = 18'd0;
+	dataInBuff[5] = 18'd511;
+	dataInBuff[6] = 18'd1241;
+	dataInBuff[7] = -18'd7819;
+	dataInBuff[8] = -18'd76;
+	dataInBuff[9] = 18'd1111;
+	dataInBuff[10] = 18'd9861;
+	dataInBuff[11] = -18'd90;
+	dataInBuff[12] = -18'd8191;
+	dataInBuff[13] = -18'd88910;
+	dataInBuff[14] = 18'd888;
+	dataInBuff[15] = -18'd9901;
+	dataInBuff[16] = 18'd12;
+	dataInBuff[17] = 18'd11111;
+	dataInBuff[18] = -18'd1231;
+	dataInBuff[19] = -18'd131072;
+	dataInBuff[20] = -18'd131072;
+	dataInBuff[21] = -18'd131072;
+	dataInBuff[22] = 18'd89700;
+	dataInBuff[23] = -18'd12;
+	dataInBuff[24] = 18'd35111;
+	dataInBuff[25] = -18'd78819;
+	dataInBuff[26] = 18'd1;
+	dataInBuff[27] = 18'd99719;
+	dataInBuff[28] = 18'd999;
+	dataInBuff[29] = -18'd666;
+
+	
+	
 	repeat(RST_CYCLES) @ (posedge clock);
 	enable = 1'd1;
-	
-	repeat(50) @ (posedge clock);
-	
-	repeat(1) @ (posedge clock);
-	dataIn = 18'd60;
-	repeat(1) @ (posedge clock);
-	dataIn = 18'd70;
-	repeat(1) @ (posedge clock);
-	dataIn = 18'd80;
-	repeat(1) @ (posedge clock);
-	dataIn = 18'd90;
-	repeat(1) @ (posedge clock);
-	dataIn = 18'd100;
-	repeat(1) @ (posedge clock);
-	dataIn = 18'd110;
-	repeat(1) @ (posedge clock);
-	dataIn = 18'd120;
-	repeat(1) @ (posedge clock);
-	dataIn = -18'd126;
-	repeat(1) @ (posedge clock);
-	dataIn = -18'd116;
-	repeat(1) @ (posedge clock);
-	dataIn = -18'd106;
-	repeat(1) @ (posedge clock);
-	dataIn = -18'd96;
-	repeat(1) @ (posedge clock);
-	dataIn = -18'd86;
-	repeat(1) @ (posedge clock);
-	dataIn = -18'd76;
-	repeat(1) @ (posedge clock);
-	dataIn = -18'd66;
-	repeat(1) @ (posedge clock);
-	dataIn = -18'd56;
-	repeat(1) @ (posedge clock);
-	dataIn = -18'd116;
-	repeat(1) @ (posedge clock);
-	dataIn = -18'd106;
-	repeat(1) @ (posedge clock);
-	dataIn = -18'd96;
-	repeat(1) @ (posedge clock);
-	dataIn = -18'd116;
-	repeat(1) @ (posedge clock);
-	dataIn = 18'd120;
-	repeat(1) @ (posedge clock);
-	dataIn = 18'd0;
-	repeat(1) @ (posedge clock);
-	dataIn = -18'd60;
-	repeat(1) @ (posedge clock);
-	dataIn = -18'd111;
-	repeat(1) @ (posedge clock);
-	dataIn = -18'd114;
-	repeat(1) @ (posedge clock);
-	dataIn = 18'd13;
-	repeat(1) @ (posedge clock);
-	dataIn = -18'd93;
-	repeat(1) @ (posedge clock);
-	dataIn = 18'd111;
-	repeat(1) @ (posedge clock);
-	dataIn = -18'd87;
-	
-	repeat(1) @ (posedge clock);
-	stopDataInFlag = 1'd1;
 end
 
 
@@ -166,7 +138,9 @@ end
 always @ (posedge clock) begin
 	case(state) 
 		IDLE: begin
-		
+			if(enable) begin
+			
+			end
 		end
 		
 		SEND_VALUES: begin
