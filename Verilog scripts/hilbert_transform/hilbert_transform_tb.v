@@ -25,6 +25,7 @@ localparam DATA_WIDTH = 18;
 
 
 
+
 // Creating the lcoal parameters.
 reg clock;
 reg enable;
@@ -39,7 +40,7 @@ wire signed [(DATA_WIDTH * 2) - 1:0] dataOutIm;
 // FSM states.
 reg [1:0] state;
 localparam [1:0] IDLE = 2'd0;
-localparam [1:0] CHECK_COEFFICIENTS = 2'd1;
+localparam [1:0] SEND_VALUES = 2'd1;
 localparam [1:0] DISPLAY_RESULTS = 2'd2;
 localparam [1:0] STOP = 2'd3;
 
@@ -130,11 +131,17 @@ initial begin
 end
 
 
+
+
+
 // Set the initial value of the clock.
 initial begin
 	clock <= 0;
 	state <= IDLE;
 end
+
+
+
 
 
 real HALF_CLOCK_PERIOD = (1000000000.0/$itor(CLOCK_FREQ))/2.0;
@@ -149,6 +156,36 @@ always begin
 	if(half_cycles == (2*NUM_CYCLES)) begin
 		$stop;
 	end
+end
+
+
+
+
+
+
+always @ (posedge clock) begin
+	case(state) 
+		IDLE: begin
+		
+		end
+		
+		SEND_VALUES: begin
+		
+		end
+	
+		DISPLAY_RESULTS: begin
+		
+		end
+		
+		STOP: begin
+		
+		end
+		
+		default: begin
+		
+		end	
+	
+	endcase
 end
 
 endmodule
