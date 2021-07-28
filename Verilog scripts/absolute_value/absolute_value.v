@@ -14,7 +14,7 @@
 
 
 module absolute_value #(
-	parameter DATA_WIDTH = 18
+	parameter DATA_WIDTH = 82
 ) (
 	input clock,
 	input enable,
@@ -65,7 +65,7 @@ always @ (posedge clock) begin
 		
 		
 		if(absDataInRe >= absDataInIm) begin
-			dataOut = absDataInRe + (absDataInIm >> 1);
+			dataOut = absDataInRe + (absDataInIm  >> 1);
 		end
 		else begin
 			dataOut = absDataInIm + (absDataInRe >> 1);
