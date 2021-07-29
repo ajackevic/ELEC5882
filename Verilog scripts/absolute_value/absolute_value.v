@@ -65,10 +65,10 @@ always @ (posedge clock) begin
 		
 		
 		if(absDataInRe >= absDataInIm) begin
-			dataOut = absDataInRe + (absDataInIm  >> 1);
+			dataOut = absDataInRe + (absDataInIm  >> 2);
 		end
 		else begin
-			dataOut = absDataInIm + (absDataInRe >> 1);
+			dataOut = absDataInIm + (absDataInRe >> 2);
 		end
 		
 		
