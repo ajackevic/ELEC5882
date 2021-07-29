@@ -46,13 +46,21 @@ reg signed [DATA_WIDTH:0] expectedDataOutBuff [0:19];
 
 
 
+reg [1:0] state;
+localparam IDLE = 0;
+localparam SEND_DATA = 1;
+localparam PRINT_RESULTS = 2;
+localparam STOP = 3;
+
+
+
 // Setting the init values.
 initial begin
 	clock = 1'd0;
 	enableModule = 1'd0;
 	dataInRe = 18'd0;
 	dataInIm = 18'd0;
-	
+	state = IDLE;
 	
 	
 	
