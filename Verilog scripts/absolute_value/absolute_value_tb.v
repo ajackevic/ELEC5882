@@ -182,7 +182,9 @@ always @(posedge clock) begin
 	
 	
 		IDLE: begin
-		
+			if(enableModule) begin
+				state = SEND_DATA;
+			end
 		end
 		
 		
