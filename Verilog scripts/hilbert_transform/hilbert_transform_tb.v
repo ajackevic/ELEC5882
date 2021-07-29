@@ -30,7 +30,7 @@ localparam DATA_WIDTH = 12;
 reg clock;
 reg enable;
 reg stopDataInFlag;
-reg [4:0] counter;
+reg [5:0] counter;
 reg signed [DATA_WIDTH - 1:0] dataIn;
 wire signed [(DATA_WIDTH * 3) - 1:0] dataOutRe;
 wire signed [(DATA_WIDTH * 3) - 1:0] dataOutIm;
@@ -40,8 +40,8 @@ wire signed [(DATA_WIDTH * 3) - 1:0] dataOutIm;
 reg signed [DATA_WIDTH - 1: 0] dataInBuff [0:29];
 reg signed [DATA_WIDTH - 1: 0] expectedOutBufRe [0:29];
 reg signed [DATA_WIDTH - 1: 0] expectedOutBufIm [0:29];
-wire signed [DATA_WIDTH - 1: 0] obtainedOutBufRe [0:29];
-wire signed [DATA_WIDTH - 1: 0] obtainedOutBufIm [0:29];
+reg signed [DATA_WIDTH - 1: 0] obtainedOutBufRe [0:29];
+reg signed [DATA_WIDTH - 1: 0] obtainedOutBufIm [0:29];
 
 
 
@@ -71,7 +71,7 @@ hilbert_transform #(
 initial begin
 	enable = 1'd0;
 	stopDataInFlag = 1'd0;
-	counter = 5'd0;
+	counter = 6'd0;
 	dataIn = 12'd0;
 	
 	
@@ -221,11 +221,30 @@ always @ (posedge clock) begin
 		end
 		
 		SEND_VALUES: begin
-			dataIn = dataInBuff[counter];
-			
-			
-			counter = counter + 5'd1;
 		
+			if(counter == 6'd35) begin
+				state = DISPLAY_RESULTS;
+			end
+			else begin
+			
+				if(counter <= 6'd29) begin
+					dataIn = dataInBuff[counter];
+				end
+				else begin
+					dataIn = 12'd0;
+				end
+				
+				
+				
+				if(counter >= 6'd5) begin
+					obtainedOutBufRe[counter - 6'd5] = dataOutRe;
+					obtainedOutBufIm[counter - 6'd5] = dataOutIm;
+				end
+				
+				
+			end
+			
+			counter = counter + 6'd1;	
 		end
 	
 		DISPLAY_RESULTS: begin
