@@ -24,8 +24,8 @@ localparam RST_CYCLES = 10;
 
 
 // Parameters for the dut module.
-localparam LENGTH = 12;
-localparam DATA_WIDTH = 8;
+localparam LENGTH = 20;
+localparam DATA_WIDTH = 18;
 
 
 
@@ -76,31 +76,46 @@ initial begin : init_values
 	coefficientCounter = 5'd0;
 
 	// Set the expected outputs. Make sure all values (from 0 to LENGTH -1) of the array are covered.
-	expectedOutputsRe[0] <= 8'd3;
-	expectedOutputsIm[0] <= 8'd7;
-	expectedOutputsRe[1] <= 8'd2;
-	expectedOutputsIm[1] <= 8'd0;
-	expectedOutputsRe[2] <= 8'd17;
-	expectedOutputsIm[2] <= 8'd5;
-	expectedOutputsRe[3] <= 8'd0;
-	expectedOutputsIm[3] <= -8'd3;
-	expectedOutputsRe[4] <= 8'd55;
-	expectedOutputsIm[4] <= -8'd103;
-	expectedOutputsRe[5] <= 8'd120;
-	expectedOutputsIm[5] <= -8'd111;
-	expectedOutputsRe[6] <= 8'd123;
-	expectedOutputsIm[6] <= -8'd24;
-	expectedOutputsRe[7] <= 8'd56;
-	expectedOutputsIm[7] <= 8'd96;
-	expectedOutputsRe[8] <= -8'd99;
-	expectedOutputsIm[8] <= -8'd32;
-	expectedOutputsRe[9] <= -8'd109;
-	expectedOutputsIm[9] <= -8'd76;
-	expectedOutputsRe[10] <= 8'd23;
-	expectedOutputsIm[10] <= -8'd14;
-	expectedOutputsRe[11] <= -8'd60;
-	expectedOutputsIm[11] <= 8'd10;
-
+	expectedOutputsRe[0] <= 18'd34124;
+	expectedOutputsIm[0] <= -18'd7392;
+	expectedOutputsRe[1] <= 18'd34124;
+	expectedOutputsIm[1] <= 18'd15;
+	expectedOutputsRe[2] <= 18'd0;
+	expectedOutputsIm[2] <= 18'd89998;
+	expectedOutputsRe[3] <= 18'd4991;
+	expectedOutputsIm[3] <= -18'd43211;
+	expectedOutputsRe[4] <= 18'd12522;
+	expectedOutputsIm[4] <= -18'd131072;
+	expectedOutputsRe[5] <= -18'd7711;
+	expectedOutputsIm[5] <= 18'd131071;
+	expectedOutputsRe[6] <= -18'd5151;
+	expectedOutputsIm[6] <= 18'd5151;
+	expectedOutputsRe[7] <= 18'd81122;
+	expectedOutputsIm[7] <= 18'd81122;
+	expectedOutputsRe[8] <= 18'd9890;
+	expectedOutputsIm[8] <= 18'd0;
+	expectedOutputsRe[9] <= 18'd1091;
+	expectedOutputsIm[9] <= 18'd882;
+	expectedOutputsRe[10] <= -18'd9111;
+	expectedOutputsIm[10] <= -18'd9;
+	expectedOutputsRe[11] <= -18'd10369;
+	expectedOutputsIm[11] <= 18'd8982;
+	expectedOutputsRe[12] <= 18'd911;
+	expectedOutputsIm[12] <= -18'd119;
+	expectedOutputsRe[13] <= 18'd1121;
+	expectedOutputsIm[13] <= 18'd6969;
+	expectedOutputsRe[14] <= 18'd591;
+	expectedOutputsIm[14] <= -18'd666;
+	expectedOutputsRe[15] <= 18'd7590;
+	expectedOutputsIm[15] <= 18'd8422;
+	expectedOutputsRe[16] <= 18'd19;
+	expectedOutputsIm[16] <= -18'd19223;
+	expectedOutputsRe[17] <= 18'd5811;
+	expectedOutputsIm[17] <= -18'd131072;
+	expectedOutputsRe[18] <= -18'd970;
+	expectedOutputsIm[18] <= -18'd9790;
+	expectedOutputsRe[19] <= 18'd10000;
+	expectedOutputsIm[19] <= 18'd1;
 	// Set enableModule to 1 after RST_CYCLES clock cycles.
 	repeat(RST_CYCLES) @ (posedge clock);
 	enableModule = 1'd1;
@@ -110,16 +125,16 @@ end
 
 
 // Instantiating the module.
-setupComplexCoefficients # (
+setup_complex_FIR_coeff # (
 	.LENGTH				(LENGTH),
 	.DATA_WIDTH			(DATA_WIDTH)
 ) dut (
 	.clock				(clock),
 	.enable				(enableModule),
 
-	.filterSetFlag		(filterSetFlag),
-	.coefficientOutRe	(coefficientOutRe),
-	.coefficientOutIm	(coefficientOutIm)
+	.coeffSetFlag		(filterSetFlag),
+	.coeffOutRe			(coefficientOutRe),
+	.coeffOutIm			(coefficientOutIm)
 );
 
 
