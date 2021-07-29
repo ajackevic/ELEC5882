@@ -95,13 +95,13 @@ initial begin
 	dataInBuffRe[13] = 18'd0;
 	dataInBuffIm[13] = -18'd123;
 	dataInBuffRe[14] = -18'd123;
-	dataInBuffIm[14] = -18'd9989
+	dataInBuffIm[14] = -18'd9989;
 	dataInBuffRe[15] = 18'd513;
 	dataInBuffIm[15] = -18'd3516;
 	dataInBuffRe[16] = -18'd230;
 	dataInBuffIm[16] = -18'd334;
-	dataInBuffRe[17] = -18'9879;
-	dataInBuffIm[17] = 18'd1793
+	dataInBuffRe[17] = -18'd9879;
+	dataInBuffIm[17] = 18'd1793;
 	dataInBuffRe[18] = 18'd12;
 	dataInBuffIm[18] = -18'd78;
 	dataInBuffRe[19] = 18'd0;
@@ -191,7 +191,26 @@ always @(posedge clock) begin
 		
 		
 		SEND_DATA: begin
-		
+			if(counter == 5'd22) begin
+				state = PRINT_RESULTS;
+				counter = 5'd0;
+			end
+			
+			if(counter <= 5'd19) begin
+				dataInRe = dataInBuffRe[counter];
+				dataInIm = dataInBuffIm[counter];
+			end
+			else begin
+				dataInRe = 18'd0;
+				dataInIm = 18'd0;
+			end
+			
+			
+			if(counter > 5'd1) begin
+				obtainedDataOutBuff[counter - 5'd2] = dataOut;
+			end
+			
+			counter = counter + 5'd1;
 		end
 
 		
@@ -208,7 +227,7 @@ always @(posedge clock) begin
 		default: begin
 		
 		end
-	end
+	endcase
 end
 
 endmodule
