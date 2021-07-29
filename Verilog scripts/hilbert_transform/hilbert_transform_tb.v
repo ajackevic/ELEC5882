@@ -238,6 +238,7 @@ always @ (posedge clock) begin
 		
 			if(counter == 6'd35) begin
 				state = DISPLAY_RESULTS;
+				counter = 6'd0;
 			end
 			else begin
 			
@@ -262,6 +263,12 @@ always @ (posedge clock) begin
 		end
 		
 		CHECK_RESULTS: begin
+			if(counter <= 6'd29) begin
+				
+			end
+			else begin
+			
+			end
 		
 		end
 	
