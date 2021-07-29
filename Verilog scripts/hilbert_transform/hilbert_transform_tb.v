@@ -46,6 +46,7 @@ reg signed [DATA_WIDTH - 1: 0] expectedOutBufRe [0:29];
 reg signed [DATA_WIDTH - 1: 0] expectedOutBufIm [0:29];
 reg signed [(DATA_WIDTH * 3) - 1: 0] obtainedOutBufRe [0:29];
 reg signed [(DATA_WIDTH * 3) - 1: 0] obtainedOutBufIm [0:29];
+reg signed testFailedFlag;
 
 
 
@@ -85,6 +86,7 @@ hilbert_transform #(
 initial begin
 	enable = 1'd0;
 	stopDataInFlag = 1'd0;
+	testFailedFlag = 1'd0;
 	counter = 6'd0;
 	dataIn = 12'd0;
 	
@@ -264,12 +266,16 @@ always @ (posedge clock) begin
 		
 		CHECK_RESULTS: begin
 			if(counter <= 6'd29) begin
-				
+				state = DISPLAY_RESULTS;
 			end
 			else begin
 			
+				if((obtainedOutBufRe[counter] != expectedOutBufRe[counter]) || (obtainedOutBufIm[counter] != expectedOutBufIm[counter]))) begin
+					testFailedFlag = 1'd1;
+				end
 			end
 		
+			counter = counter + 6'd1;
 		end
 	
 		DISPLAY_RESULTS: begin
