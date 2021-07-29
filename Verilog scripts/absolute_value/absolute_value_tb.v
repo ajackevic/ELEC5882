@@ -39,6 +39,13 @@ wire signed [DATA_WIDTH:0] dataOut;
 
 
 
+reg signed [DATA_WIDTH - 1:0] dataInBuffRe[0:19];
+reg signed [DATA_WIDTH - 1:0] dataInBuffIm[0:19];
+reg signed [DATA_WIDTH:0] obtainedDataOutBuff [0:19];
+reg signed [DATA_WIDTH:0] expectedDataOutBuff [0:19];
+
+
+
 // Setting the init values.
 initial begin
 	clock = 1'd0;
@@ -46,58 +53,80 @@ initial begin
 	dataInRe = 18'd0;
 	dataInIm = 18'd0;
 	
-	//Set enableModule.
+	
+	
+	
+	dataInBuffRe[0] = 18'd59;
+	dataInBuffIm[0] = 18'd15683;
+	dataInBuffRe[1] = 18'd15683;
+	dataInBuffIm[1] = -18'd15696;
+	dataInBuffRe[2] = -18'd15696;
+	dataInBuffIm[2] = -18'd111111;
+	dataInBuffRe[3] = -18'd111111;
+	dataInBuffIm[3] = -18'd131000;
+	dataInBuffRe[4] = -18'd131000;
+	dataInBuffIm[4] = 18'd69420;
+	dataInBuffRe[5] = 18'd69420;
+	dataInBuffIm[5] = -18'd12363;
+	dataInBuffRe[6] = -18'd12363;
+	dataInBuffIm[6] = -18'd123456;
+	dataInBuffRe[7] = -18'd123456;
+	dataInBuffIm[7] = -18'd123456;
+	dataInBuffRe[8] = 18'd65432;
+	dataInBuffIm[8] = 18'd10101;
+	dataInBuffRe[9] = 18'd10101;
+	dataInBuffIm[9] = 18'd5786;
+	dataInBuffRe[10] = 18'd5786;
+	dataInBuffIm[10] = -18'd9989;
+	dataInBuffRe[11] = -18'd9989;
+	dataInBuffIm[11] = -18'd45876;
+	dataInBuffRe[12] = -18'd45876;
+	dataInBuffIm[12] = 18'd0;
+	dataInBuffRe[13] = 18'd0;
+	dataInBuffIm[13] = -18'd123;
+	dataInBuffRe[14] = -18'd123;
+	dataInBuffIm[14] = -18'd9989
+	dataInBuffRe[15] = 18'd513;
+	dataInBuffIm[15] = -18'd3516;
+	dataInBuffRe[16] = -18'd230;
+	dataInBuffIm[16] = -18'd334;
+	dataInBuffRe[17] = -18'9879;
+	dataInBuffIm[17] = 18'd1793
+	dataInBuffRe[18] = 18'd12;
+	dataInBuffIm[18] = -18'd78;
+	dataInBuffRe[19] = 18'd0;
+	dataInBuffIm[19] = -18'd1357;
+	
+	
+	
+	
+	expectedDataOutBuff[0] = 18'd15697;
+	expectedDataOutBuff[1] = 18'd19616;
+	expectedDataOutBuff[2] = 18'd115035;
+	expectedDataOutBuff[3] = 18'd158777;
+	expectedDataOutBuff[4] = 18'd148355;
+	expectedDataOutBuff[5] = 18'd72510;
+	expectedDataOutBuff[6] = 18'd126546;
+	expectedDataOutBuff[7] = 18'd154320;
+	expectedDataOutBuff[8] = 18'd67957;
+	expectedDataOutBuff[9] = 18'd11547;
+	expectedDataOutBuff[10] = 18'd11435;
+	expectedDataOutBuff[11] = 18'd48373;
+	expectedDataOutBuff[12] = 18'd45876;
+	expectedDataOutBuff[13] = 18'd123;
+	expectedDataOutBuff[14] = 18'd10019;
+	expectedDataOutBuff[15] = 18'd3644;
+	expectedDataOutBuff[16] = 18'd391;
+	expectedDataOutBuff[17] = 18'd10327;
+	expectedDataOutBuff[18] = 18'd81;
+	expectedDataOutBuff[19] = 18'd1357;
+	
+	
+
+
+	//Set enableModule high after RST_CYCLES clock cycles.
 	repeat(RST_CYCLES) @ (posedge clock);
 	enableModule = 1'd1;
-	
-	// Send the data.
-	repeat(1) @ (posedge clock);
-	dataInRe = 18'd59;
-	dataInIm = 18'd15683;
-	repeat(1) @ (posedge clock);
-	dataInRe = 18'd15683;
-	dataInIm = -18'd15696;
-	repeat(1) @ (posedge clock);
-	dataInRe = -18'd15696;
-	dataInIm = -18'd111111;
-	repeat(1) @ (posedge clock);
-	dataInRe = -18'd111111;
-	dataInIm = -18'd131000;
-	repeat(1) @ (posedge clock);
-	dataInRe = -18'd131000;
-	dataInIm = 18'd69420;
-	repeat(1) @ (posedge clock);
-	dataInRe = 18'd69420;
-	dataInIm = -18'd12363;
-	repeat(1) @ (posedge clock);
-	dataInRe = -18'd12363;
-	dataInIm = -18'd123456;
-	repeat(1) @ (posedge clock);
-	dataInRe = -18'd123456;
-	dataInIm = -18'd123456;
-	repeat(1) @ (posedge clock);
-	dataInRe = 18'd65432;
-	dataInIm = 18'd10101;
-	repeat(1) @ (posedge clock);
-	dataInRe = 18'd10101;
-	dataInIm = 18'd5786;
-	repeat(1) @ (posedge clock);
-	dataInRe = 18'd5786;
-	dataInIm = -18'd9989;
-	repeat(1) @ (posedge clock);
-	dataInRe = -18'd9989;
-	dataInIm = -18'd45876;
-	repeat(1) @ (posedge clock);
-	dataInRe = -18'd45876;
-	dataInIm = 18'd0;
-	repeat(1) @ (posedge clock);
-	dataInRe = 18'd0;
-	dataInIm = -18'd123;
-	repeat(1) @ (posedge clock);
-	dataInRe = -18'd123;
-	dataInIm = -18'd9989;
-	repeat(1) @ (posedge clock);
-	enableModule = 1'd0;
 end
 
 
