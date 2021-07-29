@@ -53,8 +53,9 @@ reg signed [(DATA_WIDTH * 3) - 1: 0] obtainedOutBufIm [0:29];
 reg [1:0] state;
 localparam [1:0] IDLE = 2'd0;
 localparam [1:0] SEND_VALUES = 2'd1;
-localparam [1:0] DISPLAY_RESULTS = 2'd2;
-localparam [1:0] STOP = 2'd3;
+localparam [1:0] CHECK_RESULTS = 2'd2;
+localparam [1:0] DISPLAY_RESULTS = 2'd3;
+
 
 
 
@@ -259,14 +260,15 @@ always @ (posedge clock) begin
 			
 			counter = counter + 6'd1;	
 		end
+		
+		CHECK_RESULTS: begin
+		
+		end
 	
 		DISPLAY_RESULTS: begin
 		
 		end
-		
-		STOP: begin
-		
-		end
+
 		
 		default: begin
 		
