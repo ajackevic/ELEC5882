@@ -40,8 +40,8 @@ wire signed [(DATA_WIDTH * 3) - 1:0] dataOutIm;
 reg signed [DATA_WIDTH - 1: 0] dataInBuff [0:29];
 reg signed [DATA_WIDTH - 1: 0] expectedOutBufRe [0:29];
 reg signed [DATA_WIDTH - 1: 0] expectedOutBufIm [0:29];
-reg signed [DATA_WIDTH - 1: 0] obtainedOutBufRe [0:29];
-reg signed [DATA_WIDTH - 1: 0] obtainedOutBufIm [0:29];
+reg signed [(DATA_WIDTH * 3) - 1: 0] obtainedOutBufRe [0:29];
+reg signed [(DATA_WIDTH * 3) - 1: 0] obtainedOutBufIm [0:29];
 
 
 
