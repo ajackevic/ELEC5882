@@ -306,8 +306,13 @@ always @ (posedge clock) begin
 
 		
 		default: begin
-		
-		end	
+			enable = 1'd0;
+			stopDataInFlag = 1'd0;
+			testFailedFlag = 1'd0;
+			counter = 6'd0;
+			dataIn = 12'd0;
+			state = IDLE;
+				end	
 	
 	endcase
 end
