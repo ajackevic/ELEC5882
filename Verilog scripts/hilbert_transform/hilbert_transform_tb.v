@@ -42,8 +42,8 @@ wire signed [(DATA_WIDTH * 3) - 1:0] dataOutIm;
 
 // Creating the local parameters for testing aspect.
 reg signed [DATA_WIDTH - 1: 0] dataInBuff [0:29];
-reg signed [DATA_WIDTH - 1: 0] expectedOutBufRe [0:29];
-reg signed [DATA_WIDTH - 1: 0] expectedOutBufIm [0:29];
+reg signed [(DATA_WIDTH * 3) - 1: 0] expectedOutBufRe [0:29];
+reg signed [(DATA_WIDTH * 3) - 1: 0] expectedOutBufIm [0:29];
 reg signed [(DATA_WIDTH * 3) - 1: 0] obtainedOutBufRe [0:29];
 reg signed [(DATA_WIDTH * 3) - 1: 0] obtainedOutBufIm [0:29];
 reg signed testFailedFlag;
@@ -159,7 +159,7 @@ initial begin
 	
 	
 	
-	expectedOutBufIm[0] = -36'd3075;
+	expectedOutBufIm[0] = 36'd3075;
 	expectedOutBufIm[1] = -36'd50000;
 	expectedOutBufIm[2] = -36'd16002;
 	expectedOutBufIm[3] = -36'd102225;
@@ -239,7 +239,7 @@ always @ (posedge clock) begin
 		SEND_VALUES: begin
 		
 			if(counter == 6'd35) begin
-				state = DISPLAY_RESULTS;
+				state = CHECK_RESULTS;
 				counter = 6'd0;
 			end
 			else begin
@@ -265,12 +265,12 @@ always @ (posedge clock) begin
 		end
 		
 		CHECK_RESULTS: begin
-			if(counter <= 6'd29) begin
+			if(counter == 6'd29) begin
 				state = DISPLAY_RESULTS;
 			end
 			else begin
 			
-				if((obtainedOutBufRe[counter] != expectedOutBufRe[counter]) || (obtainedOutBufIm[counter] != expectedOutBufIm[counter]))) begin
+				if((obtainedOutBufRe[counter] != expectedOutBufRe[counter]) || (obtainedOutBufIm[counter] != expectedOutBufIm[counter])) begin
 					testFailedFlag = 1'd1;
 				end
 			end
