@@ -39,6 +39,7 @@ wire signed [DATA_WIDTH:0] dataOut;
 
 
 
+reg [4:0] counter;
 reg signed [DATA_WIDTH - 1:0] dataInBuffRe[0:19];
 reg signed [DATA_WIDTH - 1:0] dataInBuffIm[0:19];
 reg signed [DATA_WIDTH:0] obtainedDataOutBuff [0:19];
@@ -61,6 +62,7 @@ initial begin
 	dataInRe = 18'd0;
 	dataInIm = 18'd0;
 	state = IDLE;
+	counter = 5'd0;
 	
 	
 	
