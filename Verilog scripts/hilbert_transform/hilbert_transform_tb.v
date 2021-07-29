@@ -16,6 +16,10 @@
 module hilbert_transform_tb;
 
 
+
+
+
+
 // Parameters for creating the 50MHz clock signal.
 localparam NUM_CYCLES = 500;
 localparam CLOCK_FREQ = 50000000;
@@ -25,8 +29,7 @@ localparam DATA_WIDTH = 12;
 
 
 
-
-// Creating the local parameters.
+// Creating the local parameters for the dut modle.
 reg clock;
 reg enable;
 reg stopDataInFlag;
@@ -37,6 +40,7 @@ wire signed [(DATA_WIDTH * 3) - 1:0] dataOutIm;
 
 
 
+// Creating the local parameters for testing aspect.
 reg signed [DATA_WIDTH - 1: 0] dataInBuff [0:29];
 reg signed [DATA_WIDTH - 1: 0] expectedOutBufRe [0:29];
 reg signed [DATA_WIDTH - 1: 0] expectedOutBufIm [0:29];
@@ -54,6 +58,10 @@ localparam [1:0] STOP = 2'd3;
 
 
 
+
+
+
+
 // Connect the device under test.
 hilbert_transform #(
 	.LENGTH 					(LENGTH),
@@ -67,6 +75,11 @@ hilbert_transform #(
 	.dataOutRe				(dataOutRe),
 	.dataOutIm				(dataOutIm)
 );
+
+
+
+
+
 
 initial begin
 	enable = 1'd0;
