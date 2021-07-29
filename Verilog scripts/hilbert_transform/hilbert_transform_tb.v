@@ -30,13 +30,14 @@ localparam DATA_WIDTH = 12;
 reg clock;
 reg enable;
 reg stopDataInFlag;
+reg [4:0] counter;
 reg signed [DATA_WIDTH - 1:0] dataIn;
-wire signed [(DATA_WIDTH * 2) - 1:0] dataOutRe;
-wire signed [(DATA_WIDTH * 2) - 1:0] dataOutIm;
+wire signed [(DATA_WIDTH * 3) - 1:0] dataOutRe;
+wire signed [(DATA_WIDTH * 3) - 1:0] dataOutIm;
 
 
 
-reg signed [DATA_WIDTH - 1: 0] dataInBuf [0:29];
+reg signed [DATA_WIDTH - 1: 0] dataInBuff [0:29];
 reg signed [DATA_WIDTH - 1: 0] expectedOutBufRe [0:29];
 reg signed [DATA_WIDTH - 1: 0] expectedOutBufIm [0:29];
 wire signed [DATA_WIDTH - 1: 0] obtainedOutBufRe [0:29];
@@ -70,6 +71,9 @@ hilbert_transform #(
 initial begin
 	enable = 1'd0;
 	stopDataInFlag = 1'd0;
+	counter = 5'd0;
+	dataIn = 12'd0;
+	
 	
 	dataInBuff[0] = -12'd123;
 	dataInBuff[1] = 12'd2000;
@@ -139,36 +143,36 @@ initial begin
 	
 	
 	
-	expectedOutBufIm[0] = -36'3075;
-	expectedOutBufIm[1] = -36'50000;
-	expectedOutBufIm[2] = -36'16002;
-	expectedOutBufIm[3] = -36'102225;
-	expectedOutBufIm[4] = -36'33141;
-	expectedOutBufIm[5] = -36'213234;
-	expectedOutBufIm[6] = -36'97862;
-	expectedOutBufIm[7] = -36'349786;
-	expectedOutBufIm[8] = -36'183179;
-	expectedOutBufIm[9] = -36'642587;
-	expectedOutBufIm[10] = -36'333333;
-	expectedOutBufIm[11] = -36'1241091;
-	expectedOutBufIm[12] = -36'501670;
-	expectedOutBufIm[13] = -36'4000755;
-	expectedOutBufIm[14] = -36'2405268;
-	expectedOutBufIm[15] = 36'4082876;
-	expectedOutBufIm[16] = 36'1021736;
-	expectedOutBufIm[17] = 36'1005284;
-	expectedOutBufIm[18] = -36'1824225;
-	expectedOutBufIm[19] = 36'4445650;
-	expectedOutBufIm[20] = 36'3175030;
-	expectedOutBufIm[21] = -36'4131095;
-	expectedOutBufIm[22] = 36'1150050;
-	expectedOutBufIm[23] = 36'2840122;
-	expectedOutBufIm[24] = 36'3065563;
-	expectedOutBufIm[25] = 36'3100240;
-	expectedOutBufIm[26] = -36'3291358;
-	expectedOutBufIm[27] = -36'403851;
-	expectedOutBufIm[28] = 36'2402470;
-	expectedOutBufIm[29] = -36'1608079;
+	expectedOutBufIm[0] = -36'd3075;
+	expectedOutBufIm[1] = -36'd50000;
+	expectedOutBufIm[2] = -36'd16002;
+	expectedOutBufIm[3] = -36'd102225;
+	expectedOutBufIm[4] = -36'd33141;
+	expectedOutBufIm[5] = -36'd213234;
+	expectedOutBufIm[6] = -36'd97862;
+	expectedOutBufIm[7] = -36'd349786;
+	expectedOutBufIm[8] = -36'd183179;
+	expectedOutBufIm[9] = -36'd642587;
+	expectedOutBufIm[10] = -36'd333333;
+	expectedOutBufIm[11] = -36'd1241091;
+	expectedOutBufIm[12] = -36'd501670;
+	expectedOutBufIm[13] = -36'd4000755;
+	expectedOutBufIm[14] = -36'd2405268;
+	expectedOutBufIm[15] = 36'd4082876;
+	expectedOutBufIm[16] = 36'd1021736;
+	expectedOutBufIm[17] = 36'd1005284;
+	expectedOutBufIm[18] = -36'd1824225;
+	expectedOutBufIm[19] = 36'd4445650;
+	expectedOutBufIm[20] = 36'd3175030;
+	expectedOutBufIm[21] = -36'd4131095;
+	expectedOutBufIm[22] = 36'd1150050;
+	expectedOutBufIm[23] = 36'd2840122;
+	expectedOutBufIm[24] = 36'd3065563;
+	expectedOutBufIm[25] = 36'd3100240;
+	expectedOutBufIm[26] = -36'd3291358;
+	expectedOutBufIm[27] = -36'd403851;
+	expectedOutBufIm[28] = 36'd2402470;
+	expectedOutBufIm[29] = -36'd1608079;
 	
 	
 	repeat(RST_CYCLES) @ (posedge clock);
@@ -212,11 +216,15 @@ always @ (posedge clock) begin
 	case(state) 
 		IDLE: begin
 			if(enable) begin
-			
+				state <= SEND_VALUES;
 			end
 		end
 		
 		SEND_VALUES: begin
+			dataIn = dataInBuff[counter];
+			
+			
+			counter = counter + 5'd1;
 		
 		end
 	
