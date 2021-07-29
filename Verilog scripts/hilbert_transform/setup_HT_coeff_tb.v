@@ -1,3 +1,19 @@
+/*
+
+ setup_HT_coeff_tb.v
+ --------------
+ By: Augustas Jackevic
+ Date: June 2021
+
+ Module Description:
+ -------------------
+ This module is a test bench for the script setup_HT_coeff_tb. It reads the output of 
+ module and compares it with the expected values. The results of the test bench are then 
+ printed in the scripts transcript.
+ 
+*/
+
+
 module setup_HT_coeff_tb;
 
 
@@ -39,6 +55,8 @@ localparam [1:0] IDLE = 2'd0;
 localparam [1:0] CHECK_COEFFICIENTS = 2'd1;
 localparam [1:0] DISPLAY_RESULTS = 2'd2;
 localparam [1:0] STOP = 2'd3;
+
+
 
 
 
@@ -94,6 +112,7 @@ end
 
 
 
+
 // Instantiating the module setup_FIR_coeff.
 setup_HT_coeff #(
 	.LENGTH				(LENGTH),
@@ -107,11 +126,12 @@ setup_HT_coeff #(
 );
 
 
+
+
+
 // Clock parameters.
 real HALF_CLOCK_PERIOD = (1000000000.0/$itor(CLOCK_FREQ))/2.0;
 integer half_cycles = 0;
-
-
 
 
 // Create the clock toggeling and stop it simulation when half_cycles == (2*NUM_CYCLES).
@@ -133,6 +153,7 @@ integer n;
 always @ (posedge clock) begin
 	case(state)
 
+	
 		// State IDLE. This state waits until enableModule is set before transistioning to CHECK_COEFFICIENTS.
 		IDLE: begin
 			if(enableModule) begin
@@ -210,6 +231,7 @@ always @ (posedge clock) begin
 			coefficientCounter = 5'd0;
 			state = IDLE;
 		end
+		
 	endcase
 end
 
