@@ -9,13 +9,12 @@
  -------------------
  This module is a test bench for the script hilbert_transform.v. It tests 
  wheather the DUT module outputs the correct output values for the applied data.
+ The expected data in obtained from MATLAB. The results are printed in the transcript.
 
 */
 
 
 module hilbert_transform_tb;
-
-
 
 
 
@@ -82,7 +81,7 @@ hilbert_transform #(
 
 
 
-
+// Setting the initial values of the test bench.
 initial begin
 	enable = 1'd0;
 	stopDataInFlag = 1'd0;
@@ -91,7 +90,7 @@ initial begin
 	dataIn = 12'd0;
 	state = IDLE;
 	
-	
+	// Setting the dataIn to a buffer.
 	dataInBuff[0] = -12'd123;
 	dataInBuff[1] = 12'd2000;
 	dataInBuff[2] = 12'd891;
@@ -125,7 +124,7 @@ initial begin
 	
 	
 	
-	
+	// Setting the expected real output to a buffer.
 	expectedOutBufRe[0] = -36'd123;
 	expectedOutBufRe[1] = 36'd2000;
 	expectedOutBufRe[2] = 36'd891;
@@ -159,7 +158,7 @@ initial begin
 	
 	
 	
-	
+	// Setting the expected imaginary output to a buffer.
 	expectedOutBufIm[0] = 36'd3075;
 	expectedOutBufIm[1] = -36'd50000;
 	expectedOutBufIm[2] = -36'd16002;
@@ -192,6 +191,7 @@ initial begin
 	expectedOutBufIm[29] = -36'd1608079;
 	
 	
+	// Setting enable high after RST_CYCLES clock cycles.
 	repeat(RST_CYCLES) @ (posedge clock);
 	enable = 1'd1;
 end
@@ -208,7 +208,7 @@ end
 
 
 
-
+// Setting the parameters of the clock.
 real HALF_CLOCK_PERIOD = (1000000000.0/$itor(CLOCK_FREQ))/2.0;
 integer half_cycles = 0;
 
@@ -226,24 +226,35 @@ end
 
 
 
-
+// Creating the integer n which is then used in the FSM state DISPLAY_RESULTS.
 integer n;
 always @ (posedge clock) begin
 	case(state) 
+	
+	
+		// State IDLE. This state waits until enable is set high before transistioning to the state SEND_VALUES.
 		IDLE: begin
 			if(enable) begin
 				state <= SEND_VALUES;
 			end
 		end
 		
+		
+		// State SEND_VALUES. This state sends the dataIn value from the buffer to the dut module.
+		// Additionally it stores the corresponding output to the buffers obtained OutBuf Re and Im. When the variable 
+		// counter is equal to 35, the state transitions to CHECK_RESULTS.
 		SEND_VALUES: begin
 		
+			// If counter is equal to 35, reset the counter and transition to the state CHECK_RESULTS.
 			if(counter == 6'd35) begin
 				state = CHECK_RESULTS;
 				counter = 6'd0;
 			end
+			
+			// If counter is not equal to 35, do the following opperation.
 			else begin
 			
+				// Send the values of dataIn buffer to dataIn. When all the values were sent (29of them), set dataIn to 0.
 				if(counter <= 6'd29) begin
 					dataIn = dataInBuff[counter];
 				end
@@ -252,32 +263,43 @@ always @ (posedge clock) begin
 				end
 				
 				
-				
+				// After dataIn is first applied, it takes 5 clock cycles for the output to be shown. Thus the outputs are 
+				// only stored in obtainedOutBuf Re and Im after 5 clock cycles have passed.
 				if(counter >= 6'd5) begin
 					obtainedOutBufRe[counter - 6'd5] = dataOutRe;
 					obtainedOutBufIm[counter - 6'd5] = dataOutIm;
 				end
 				
-				
 			end
 			
+			// Increment the counter by 1.
 			counter = counter + 6'd1;	
 		end
 		
+		
+		// State CHECK_RESULTS. This state checks the obtained values with the expected values. If the values do not match,
+		// the variable testFailedFlag is set high. If counter is equal to 29, the state transitions to DISPLAY_RESULTS.
 		CHECK_RESULTS: begin
+		
+			// When counter is equal to 29, transition to DISPLAY_RESULTS.
 			if(counter == 6'd29) begin
 				state = DISPLAY_RESULTS;
 			end
 			else begin
-			
+				// Check if the corresponding obtained buffer values are equal to the expected buffer values. If not the 
+				// variable testFailedFlag is set high.
 				if((obtainedOutBufRe[counter] != expectedOutBufRe[counter]) || (obtainedOutBufIm[counter] != expectedOutBufIm[counter])) begin
 					testFailedFlag = 1'd1;
 				end
 			end
 		
+			// Increment the variable counter by 1.
 			counter = counter + 6'd1;
 		end
 	
+	
+		// State DISPLAY_RESULTS. This state prints the transcript of the test bench. After all the information is printed, 
+		// the simulation is stoped.
 		DISPLAY_RESULTS: begin
 			$display("This is a test bench for the module hilbert_transform_tb. \n \n",
 						"It tests whether the Hilbert transforms performs its main opperation correctly. \n \n",
@@ -286,7 +308,7 @@ always @ (posedge clock) begin
 						"outputs obtained from MATLAB. \n \n"
 			);
 			
-			
+			// Check if testFailedFlag is high, is so print the test failed, else it passed.
 			if(testFailedFlag) begin
 				$display("Test results: FAILED \n \n");
 			end
@@ -301,10 +323,12 @@ always @ (posedge clock) begin
 				$display("Imaginary Data Out:%d   Expected Value:%d   Obtained Value:%d", n+1, expectedOutBufIm[n], obtainedOutBufIm[n]);
 			end
 			
+			// Stop the simulation.
 			$stop;
 		end
 
 		
+		// State default. This state resets all the parameters if the FSM is in an unkown state.
 		default: begin
 			enable = 1'd0;
 			stopDataInFlag = 1'd0;
@@ -312,7 +336,7 @@ always @ (posedge clock) begin
 			counter = 6'd0;
 			dataIn = 12'd0;
 			state = IDLE;
-				end	
+		end	
 	
 	endcase
 end
