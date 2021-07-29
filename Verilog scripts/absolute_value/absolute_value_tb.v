@@ -39,6 +39,7 @@ wire signed [DATA_WIDTH:0] dataOut;
 
 
 
+reg testFailedFlag;
 reg [4:0] counter;
 reg signed [DATA_WIDTH - 1:0] dataInBuffRe[0:19];
 reg signed [DATA_WIDTH - 1:0] dataInBuffIm[0:19];
@@ -63,6 +64,7 @@ initial begin
 	dataInIm = 18'd0;
 	state = IDLE;
 	counter = 5'd0;
+	testFailedFlag = 1'd0;
 	
 	
 	
@@ -208,6 +210,11 @@ always @(posedge clock) begin
 			
 			if(counter > 5'd1) begin
 				obtainedDataOutBuff[counter - 5'd2] = dataOut;
+				
+				if(obtainedDataOutBuff[counter] != expectedDataOutBuff[counter]) begin
+					testFailedFlag = 1'd1;
+				end
+				
 			end
 			
 			counter = counter + 5'd1;
