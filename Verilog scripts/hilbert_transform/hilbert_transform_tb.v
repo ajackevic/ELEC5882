@@ -89,6 +89,7 @@ initial begin
 	testFailedFlag = 1'd0;
 	counter = 6'd0;
 	dataIn = 12'd0;
+	state = IDLE;
 	
 	
 	dataInBuff[0] = -12'd123;
@@ -202,7 +203,6 @@ end
 // Set the initial value of the clock.
 initial begin
 	clock <= 0;
-	state <= IDLE;
 end
 
 
@@ -227,7 +227,7 @@ end
 
 
 
-
+integer n;
 always @ (posedge clock) begin
 	case(state) 
 		IDLE: begin
@@ -279,7 +279,29 @@ always @ (posedge clock) begin
 		end
 	
 		DISPLAY_RESULTS: begin
-		
+			$display("This is a test bench for the module hilbert_transform_tb. \n \n",
+						"It tests whether the Hilbert transforms performs its main opperation correctly. \n \n",
+						"It utalises the setup_HT_coeff modules to set up the dut modules coefficients and then \n \n",
+						"supplies the input data to the module. The corresponding output of the module is then checked with \n \n",
+						"outputs obtained from MATLAB. \n \n"
+			);
+			
+			
+			if(testFailedFlag) begin
+				$display("Test results: FAILED \n \n");
+			end
+			else begin
+				$display("Test results: PASSED \n \n");
+			end
+			
+			
+			// Display all the expected and aquired results.
+			for (n = 0; n <= 29; n = n + 1) begin
+				$display("Real Data Out:     %d   Expected Value:%d   Obtained Value:%d", n+1, expectedOutBufRe[n], obtainedOutBufRe[n]);
+				$display("Imaginary Data Out:%d   Expected Value:%d   Obtained Value:%d", n+1, expectedOutBufIm[n], obtainedOutBufIm[n]);
+			end
+			
+			$stop;
 		end
 
 		
