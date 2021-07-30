@@ -20,11 +20,24 @@ localparam INPUT_DATA_WIDTH = 72;
 localparam OUTPUT_DATA_WIDTH = 36;
 
 
+
 // Local parameters for the dut module.
 reg clock;
 reg enableModule;
-reg [141:0] dataIn;
-wire [70:0] dataOut;
+reg [INPUT_DATA_WIDTH - 1:0] dataIn;
+wire [OUTPUT_DATA_WIDTH - 1:0] dataOut;
+
+
+
+
+// FSM
+reg [1:0] state;
+localparam IDLE = 0;
+localparam SEND_DATA = 1;
+localparam PRINT_RESULTS = 2;
+localparam STOP = 3;
+
+
 
 
 
@@ -32,7 +45,8 @@ wire [70:0] dataOut;
 initial begin
 	clock = 1'd0;
 	enableModule = 1'd0;
-	dataIn = 141'd1234;
+	dataIn = 72'd0;
+	state = IDLE;
 	
 	
 	// Set enableModule high after RST_CYCLES number of clock cycles.
@@ -41,6 +55,10 @@ initial begin
 end
 
 
+
+
+
+// Instantiating the dut module.
 square_root_cal #(
 	.INPUT_DATA_WIDTH		(INPUT_DATA_WIDTH),
 	.OUTPUT_DATA_WIDTH	(OUTPUT_DATA_WIDTH)
