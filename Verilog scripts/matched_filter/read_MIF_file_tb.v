@@ -153,7 +153,9 @@ always @ (posedge clock) begin
 		
 		
 		IDLE: begin
-		
+			if(enableModule) begin
+				state = READ_DATA;
+			end
 		end
 		
 		READ_DATA: begin
