@@ -53,6 +53,7 @@ wire dataFinishedFlag;
 // Local parameters for the test bench.
 reg signed [DATA_WIDTH - 1: 0] obtainedOutBuff [0:19];
 reg signed [DATA_WIDTH - 1: 0] expectedOutBuff [0:19];
+reg [9:0] MIFCounter;
 reg [4:0] counter;
 reg testFailedFlag;
 
@@ -73,6 +74,7 @@ initial begin
 	clock = 1'd0;
 	enableModule = 1'd0;
 	counter = 5'd0;
+	MIFCounter = 10'd0;
 	testFailedFlag = 1'd0;
 	state = IDLE;
 	
