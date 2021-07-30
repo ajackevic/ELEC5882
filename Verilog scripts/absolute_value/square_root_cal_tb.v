@@ -125,4 +125,32 @@ end
 
 
 
+always @ (posedge clock) begin
+	case(state)
+	
+		IDLE: begin
+		
+		end
+
+		SEND_DATA: begin
+		
+		end
+		
+		PRINT_RESULTS: begin
+		
+		end
+		
+		STOP: begin
+		
+		end
+		
+		default: begin
+		
+		end
+		
+	endcase
+end
+
+
+
 endmodule
