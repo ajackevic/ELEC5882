@@ -1,3 +1,21 @@
+/*
+
+ square_root_cal_tb.v
+ --------------
+ By: Augustas Jackevic
+ Date: July 2021
+
+ Module Description:
+ -------------------
+ This module is a test bench for the module square_root_cal. Values for dataInRe are sent 
+ from the set buffer in the inital begin block, with the obtained values then stored, and 
+ compared with the expected values. The scripts results are then printed in the scripts 
+ transcript.
+
+*/
+
+
+
 // Setting the time unit for this module.
 `timescale 1 ns/100 ps
 
@@ -57,6 +75,7 @@ initial begin
 	state = IDLE;
 	
 	
+	
 	// Setting the values of dataIn buffer.
 	dataInBuff[0] = 72'd45646;
 	dataInBuff[1] = 72'd454536;
@@ -71,6 +90,7 @@ initial begin
 
 	
 	
+	// Setting the expected values in the buffer.
 	expectedDataOutBuff[0] = 36'd213;
 	expectedDataOutBuff[1] = 36'd674;
 	expectedDataOutBuff[2] = 36'd508;
@@ -133,19 +153,28 @@ integer n;
 always @ (posedge clock) begin
 	case(state)
 	
+	
+		// State IDLE. This state waits until enableModule is set high before transistioning to SEND_DATA.
 		IDLE: begin
 			if(enableModule) begin
 				state = SEND_DATA;
 			end
 		end
 
+		
+		// State SEND_DATA. This state sends dataIn from the buffer using the counter variable, stores the corresponding output
+		// values in a buffer, and finally checks if the obtained value is equal to the expected value. If the obtained value is 
+		// not equal to the expected value set the flag testFailedFlag high. 
 		SEND_DATA: begin
+		
+			// When counter is equal to 12, transistion to the state PRINT_RESULTS and set counter to 0.
 			if(counter == 4'd12) begin
 				state = PRINT_RESULTS;
 				counter = 4'd0;
 			end
 			
 			
+			// If counter is less than or equal to 9, send the corresponding buffer values to dataIn, else set dataIn to 0.
 			if(counter <= 4'd9) begin
 				dataIn = dataInBuff[counter];
 			end
@@ -153,6 +182,9 @@ always @ (posedge clock) begin
 				dataIn = 72'd0;
 			end
 			
+			// The dut module takes 2 clock cycle to output values, hence only store the dataOut to the obtained buffer values
+			// after 2 clock cycles. One stored then check if the obtained values if equal to the expected value, if not set the 
+			// flag testFailedFlag high.
 			if(counter > 1) begin
 				obtainedDataOutBuff[counter - 5'd2] = dataOut;
 				
@@ -161,10 +193,13 @@ always @ (posedge clock) begin
 				end
 			end
 			
+			// Increment counter by 1.
 			counter = counter + 4'd1;
 		
 		end
 		
+		
+		// State PRINT_RESULTS. This state is responsiabe for printing the transcript of the test bench.
 		PRINT_RESULTS: begin
 			$display("This is a test bench for the module sqaure_root_cal. \n \n",
 						"It tests whether the non-restoring square root algorithm performs its main opperation correctly. \n",
@@ -190,10 +225,14 @@ always @ (posedge clock) begin
 			state = STOP;
 		end
 		
+		
+		// State STOP. This state stops the simulation.
 		STOP: begin
 			$stop;
 		end
 		
+		
+		// State default. This state is added just incase ther FSM is in an unkown state.
 		default: begin
 			clock = 1'd0;
 			enableModule = 1'd0;
