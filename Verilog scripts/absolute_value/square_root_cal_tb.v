@@ -166,7 +166,29 @@ always @ (posedge clock) begin
 		end
 		
 		PRINT_RESULTS: begin
-
+			$display("This is a test bench for the module sqaure_root_cal. \n \n",
+						"It tests whether the non-restoring square root algorithm performs its main opperation correctly. \n",
+						"Data is supplied to the module, with the corresponding output then being checked with the expected \n",
+						"outputs obtained from MATLAB. Additionally the expected outputs were also worked out by hand to confirm \n", 
+						"the MATLAB results. \n \n"
+			);
+			
+			// Check if testFailedFlag is high, is so print the test failed, else it passed.
+			if(testFailedFlag) begin
+				$display("Test results: FAILED \n \n");
+			end
+			else begin
+				$display("Test results: PASSED \n \n");
+			end
+			
+			
+			// Display all the expected and aquired results.
+			for (n = 0; n <= 9; n = n + 1) begin
+				$display("Data Out:     %d   Expected Value:%d   Obtained Value:%d", n+1, expectedDataOutBuff[n], obtainedDataOutBuff[n]);
+			end
+			
+			state = STOP;
+		end
 		
 		STOP: begin
 			$stop;
