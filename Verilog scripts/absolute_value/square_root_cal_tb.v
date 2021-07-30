@@ -129,11 +129,13 @@ always @ (posedge clock) begin
 	case(state)
 	
 		IDLE: begin
-		
+			if(enableModule) begin
+				state = SEND_DATA;
+			end
 		end
 
 		SEND_DATA: begin
-		
+			
 		end
 		
 		PRINT_RESULTS: begin
