@@ -33,6 +33,7 @@ reg signed [INPUT_DATA_WIDTH - 1:0] dataInBuff[0:9];
 reg signed [INPUT_DATA_WIDTH:0] obtainedDataOutBuff [0:9];
 reg signed [INPUT_DATA_WIDTH:0] expectedDataOutBuff [0:9];
 reg [3:0] counter;
+reg testFailedFlag;
 
 
 // FSM
@@ -50,6 +51,7 @@ localparam STOP = 3;
 initial begin
 	clock = 1'd0;
 	enableModule = 1'd0;
+	testFailedFlag = 1'd0;
 	dataIn = 72'd0;
 	counter = 4'd0;
 	state = IDLE;
@@ -126,6 +128,8 @@ end
 
 
 
+
+integer n;
 always @ (posedge clock) begin
 	case(state)
 	
@@ -136,15 +140,36 @@ always @ (posedge clock) begin
 		end
 
 		SEND_DATA: begin
-
+			if(counter == 4'd12) begin
+				state = PRINT_RESULTS;
+				counter = 4'd0;
+			end
+			
+			
+			if(counter <= 4'd9) begin
+				dataIn = dataInBuff[counter];
+			end
+			else begin
+				dataIn = 72'd0;
+			end
+			
+			if(counter > 1) begin
+				obtainedDataOutBuff[counter - 5'd2] = dataOut;
+				
+				if(obtainedDataOutBuff[counter] != expectedDataOutBuff[counter]) begin
+					testFailedFlag = 1'd1;
+				end
+			end
+			
+			counter = counter + 4'd1;
+		
 		end
 		
 		PRINT_RESULTS: begin
-		
-		end
+
 		
 		STOP: begin
-		
+			$stop;
 		end
 		
 		default: begin
