@@ -91,9 +91,9 @@ initial begin
 	expectedOutBuffRe[3] = -12'd1451;
 	expectedOutBuffIm[3] = 12'd424;
 	expectedOutBuffRe[4] = -12'd1037;
-	expectedOutBuffIm[4] = 12'd659;
+	expectedOutBuffIm[4] = -12'd659;
 	expectedOutBuffRe[5] = 12'd1377;
-	expectedOutBuffIm[5] = 12'd58;
+	expectedOutBuffIm[5] = -12'd58;
 	expectedOutBuffRe[6] = 12'd1410;
 	expectedOutBuffIm[6] = 12'd130;
 	expectedOutBuffRe[7] = 12'd1433;
@@ -191,11 +191,36 @@ always @ (posedge clock) begin
 		end
 		
 		PRINT_RESULTS: begin
-		
+			$display("This is a test bench for the module read_MIF_file. \n \n",
+						"It tests whether the first and last 5 values of the MIF file are read correctly by comparing \n",
+						"them to the expected values taken from MATLAB. \n \n"
+			);
+			
+			// Check if testFailedFlag is high, is so print the test failed, else it passed.
+			if(testFailedFlag) begin
+				$display("Test results: FAILED \n \n");
+			end
+			else begin
+				$display("Test results: PASSED \n \n");
+			end
+			
+			
+			// Display all the expected and aquired results.
+			for (n = 0; n <= 4; n = n + 1) begin
+				$display("MIF data value (real):     %d   Expected Value:%d   Obtained Value:%d", n+1, expectedOutBuffRe[n], obtainedOutBuffRe[n]);
+				$display("MIF data value (imag):     %d   Expected Value:%d   Obtained Value:%d", n+1, expectedOutBuffIm[n], obtainedOutBuffIm[n]);
+			end
+			
+			for (n = 0; n <= 4; n = n + 1) begin
+				$display("MIF data value (real):     %d   Expected Value:%d   Obtained Value:%d", n+796, expectedOutBuffRe[n], obtainedOutBuffRe[n]);
+				$display("MIF data value (imag):     %d   Expected Value:%d   Obtained Value:%d", n+796, expectedOutBuffIm[n], obtainedOutBuffIm[n]);
+			end
+			
+			state = STOP;
 		end
 		
 		STOP: begin
-		
+			$stop;
 		end
 		
 		default: begin
