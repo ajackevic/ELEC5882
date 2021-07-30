@@ -7,8 +7,10 @@
 
  Module Description:
  -------------------
- This module is a test bench for the module absolute_value. values for dataInRe are set and
- the values of dataOut are then the values of dataOut are observed in ModelSim.
+ This module is a test bench for the module absolute_value. Values for dataInRe are sent 
+ from the set buffer in the inital begin block, with the obtained values then stored, and 
+ compared with the expected values. The scripts results are then printed in the scripts 
+ transcript.
 
 */
 
@@ -16,7 +18,6 @@
 
 // Setting the time unit for this module.
 `timescale 1 ns/100 ps
-
 
 module absolute_value_tb;
 
@@ -27,7 +28,10 @@ localparam NUM_CYCLES = 1000000;
 localparam CLOCK_FREQ = 50000000;
 localparam RST_CYCLES = 10;
 
+// Parameter for the dut module.
 localparam DATA_WIDTH = 18;
+
+
 
 
 // Local parameters for the dut module.
@@ -39,6 +43,7 @@ wire signed [DATA_WIDTH:0] dataOut;
 
 
 
+// Local parameters used for test purposes.
 reg testFailedFlag;
 reg [4:0] counter;
 reg signed [DATA_WIDTH - 1:0] dataInBuffRe[0:19];
@@ -47,7 +52,7 @@ reg signed [DATA_WIDTH:0] obtainedDataOutBuff [0:19];
 reg signed [DATA_WIDTH:0] expectedDataOutBuff [0:19];
 
 
-
+// FSM
 reg [1:0] state;
 localparam IDLE = 0;
 localparam SEND_DATA = 1;
@@ -67,7 +72,7 @@ initial begin
 	testFailedFlag = 1'd0;
 	
 	
-	
+	// Set the dataIn values to the buffer.
 	dataInBuffRe[0] = 18'd59;
 	dataInBuffIm[0] = 18'd15683;
 	dataInBuffRe[1] = 18'd15683;
@@ -111,7 +116,7 @@ initial begin
 	
 	
 	
-	
+	// Setting the expected values to the buffer.
 	expectedDataOutBuff[0] = 18'd15697;
 	expectedDataOutBuff[1] = 18'd19616;
 	expectedDataOutBuff[2] = 18'd115035;
@@ -181,24 +186,31 @@ end
 
 
 
+
+// Always block for sending data, checking output, and printing the test results of the test bench.
 integer n;
 always @(posedge clock) begin
 	case(state)
 	
-	
+		// State IDLE. This state waits till the variable enableModule is high before transistioning to the state SEND_DATA.
 		IDLE: begin
 			if(enableModule) begin
 				state = SEND_DATA;
 			end
 		end
 		
-		
+			
+		// State SEND_DATA. This state sends dataIn from the buffer using the counter variable, stores the corresponding output
+		// values in a buffer, and finally checks if the obtained value is equal to the expected value. If the obtained value is 
+		// not equal to the expected value set the flag testFailedFlag high. 
 		SEND_DATA: begin
+			// When counter is equal to 22, reset the variable and then transistion to the state PRINT_RESULTS.
 			if(counter == 5'd22) begin
 				state = PRINT_RESULTS;
 				counter = 5'd0;
 			end
 			
+			// If counter is less than or equal to 19, send the corresponding buffer values to dataIn, else set dataIn to 0.
 			if(counter <= 5'd19) begin
 				dataInRe = dataInBuffRe[counter];
 				dataInIm = dataInBuffIm[counter];
@@ -209,6 +221,9 @@ always @(posedge clock) begin
 			end
 			
 			
+			// The dut module takes 2 clock cycle to output values, hence only store the dataOut to the obtained buffer values
+			// after 2 clock cycles. One stored then check if the obtained values if equal to the expected value, if not set the 
+			// flag testFailedFlag high.
 			if(counter > 5'd1) begin
 				obtainedDataOutBuff[counter - 5'd2] = dataOut;
 				
@@ -218,10 +233,12 @@ always @(posedge clock) begin
 				
 			end
 			
+			// Increment counter by 1.
 			counter = counter + 5'd1;
 		end
 
 		
+		// State PRINT_RESULTS. This state is responsiabe for printing the transcript of the test bench.
 		PRINT_RESULTS: begin
 			$display("This is a test bench for the module absolute_value. \n \n",
 						"It tests whether the abs module alpha max plus beta min performs its main opperation correctly. \n",
@@ -247,11 +264,13 @@ always @(posedge clock) begin
 		end
 		
 		
+		// State STOP. This state stops the simulation.
 		STOP: begin
 			$stop;
 		end
 		
 		
+		// State default. This state is added just incase ther FSM is in an unkown state.
 		default: begin
 			enableModule = 1'd0;
 			dataInRe = 18'd0;
