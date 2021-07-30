@@ -3,19 +3,21 @@
  read_MIF_file_tb.v
  --------------
  By: Augustas Jackevic
- Date: June 2021
+ Date: July 2021
 
  Module Description:
  -------------------
  This module is a test bench for the module setup_MF_coeff. It connects to the instantiated 
- module. The test bench as of now does not do any self-testing, only observing the signals 
- in ModelSim. It is vital that the MIF file is placed in <project directory>\simulation\modelsim, 
- otherwise ModelSim will no read the MIF data. To compile successfully in Quartus have a copy
- of the MIF file in <project directory>\ELEC5882\Verilog scripts\matched_filter too.
+ module. The test bench reads the first and last 5 values of the MIF files and checks wheather 
+ they are equal to the expected values. It is vital that the MIF file is placed in 
+ <project directory>\simulation\modelsim, otherwise ModelSim will no read the MIF data. 
+ To compile successfully in Quartus have a copy of the MIF file in 
+ <project directory>\ELEC5882\Verilog scripts\matched_filter too.
  
  Set DATA_TYPE to 1 to load the coeff and 2 to load the input data.
 
-
+ This test bench only tests the file MFImpulseCoeff.mif
+ 
 */
 
 
@@ -81,7 +83,7 @@ initial begin
 	state = IDLE;
 	
 	
-	
+	// Setting the expected buffer values. Taken from MATLAB. 
 	expectedOutBuffRe[0] = 12'd1026;
 	expectedOutBuffIm[0] = 12'd1769;
 	expectedOutBuffRe[1] = 12'd3;
@@ -105,7 +107,7 @@ initial begin
 	
 	
 	
-	// Set enableModule to 1 after RST_CYCLES clock cycles.
+	// Set enableModule high after RST_CYCLES clock cycles.
 	repeat(RST_CYCLES) @ (posedge clock);
 	enableModule = 1'd1;
 end
@@ -127,6 +129,8 @@ read_MIF_file #(
 	.outputRe			(outputValueRe),
 	.outputIm			(outputValueIm)
 );
+
+
 
 
 
@@ -156,40 +160,52 @@ always @ (posedge clock) begin
 	case(state)
 		
 		
+		// state IDLE. This state waits until enableModule is high befor transistioning to READ_DATA.
 		IDLE: begin
 			if(enableModule) begin
 				state = READ_DATA;
 			end
 		end
 		
+		
+		// State READ_DATA. This state read the first and last 5 MID data values. It then compares the obtained values
+		// with the expected values. If they don't match, testFailedFlag is set high. Once all the MIF files are read,
+		// (MIFCounter == 800) the state transistions to PRINT_RESULTS.
 		READ_DATA: begin
 			
+			// Once MIF counter is greater than 1, store the output values to the obtained buffer. Then check is the obtained
+			// values are equal to the expected values. If the values do not match, set testFailedFlag high.
 			if(MIFCounter >= 10'd1) begin
+			
+				// Read the first 5 and last 5 values from the MIF counter.
 				if((MIFCounter <= 10'd5) || (MIFCounter >= 10'd796)) begin
 				
-				
+					// Store the output values to the obtained out buffers.
 					obtainedOutBuffRe[counter] = outputValueRe;
 					obtainedOutBuffIm[counter] = outputValueIm;
 				
-				
+					// Check if the obtained values are equal to the expected values, if they don't match, set testFailedFlag.
 					if((obtainedOutBuffRe[counter] != expectedOutBuffRe[counter]) || (obtainedOutBuffIm[counter] != expectedOutBuffIm[counter])) begin
 						testFailedFlag = 1'd1;
 					end
 				
+					// Increment counter by 1. 
 					counter = counter + 5'd1;
 				end
 			end
 			
-			
+			// When MIFCounter is equal to 800, transistions to PRINT_RESULTS.
 			if(MIFCounter == 10'd800) begin
 				state = PRINT_RESULTS;
-				counter = 5'd0;
 			end
 			
 			
+			// Increment counter by 1. 
 			MIFCounter = MIFCounter + 10'd1;
 		end
 		
+		
+		// State PRINT_RESULTS. This state is responsiabe for printing the transcript of the test bench.
 		PRINT_RESULTS: begin
 			$display("This is a test bench for the module read_MIF_file. \n \n",
 						"It tests whether the first and last 5 values of the MIF file are read correctly by comparing \n",
@@ -219,10 +235,14 @@ always @ (posedge clock) begin
 			state = STOP;
 		end
 		
+		
+		// State STOP. This state stops the simulation.
 		STOP: begin
 			$stop;
 		end
 		
+		
+		// State default. This state is added just incase ther FSM is in an unkown state.
 		default: begin
 			clock = 1'd0;
 			enableModule = 1'd0;
