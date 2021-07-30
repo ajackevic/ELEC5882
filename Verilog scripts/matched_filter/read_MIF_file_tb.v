@@ -78,6 +78,26 @@ initial begin
 	
 	
 	
+	expectedOutBuff[0] = 12'd1026;
+	expectedOutBuff[1] = 12'd1769;
+	expectedOutBuff[2] = 12'd3;
+	expectedOutBuff[3] = 12'd2046;
+	expectedOutBuff[4] = -12'd1022;
+	expectedOutBuff[5] = 12'd1516;
+	expectedOutBuff[6] = -12'd1451;
+	expectedOutBuff[7] = 12'd424;
+	expectedOutBuff[8] = -12'd1037;
+	expectedOutBuff[9] = 12'd659;
+	expectedOutBuff[10] = 12'd1377;
+	expectedOutBuff[11] = 12'd58;
+	expectedOutBuff[12] = 12'd1410;
+	expectedOutBuff[13] = 12'd130;
+	expectedOutBuff[14] = 12'd1433;
+	expectedOutBuff[15] = 12'd358;
+	expectedOutBuff[16] = 12'd1446;
+	expectedOutBuff[17] = 12'd624;
+	expectedOutBuff[18] = 12'd1451;
+	expectedOutBuff[19] = 12'd1082;
 	
 	
 	
