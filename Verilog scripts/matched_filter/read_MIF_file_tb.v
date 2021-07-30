@@ -53,9 +53,18 @@ wire dataFinishedFlag;
 // Local parameters for the test bench.
 reg signed [DATA_WIDTH - 1: 0] obtainedOutBuff [0:19];
 reg signed [DATA_WIDTH - 1: 0] expectedOutBuff [0:19];
-reg [3:0] counter;
+reg [4:0] counter;
 reg testFailedFlag;
 
+
+
+
+// FSM
+reg [1:0] state;
+localparam IDLE = 0;
+localparam READ_DATA = 1;
+localparam PRINT_RESULTS = 2;
+localparam STOP = 3;
 
 
 
@@ -63,9 +72,9 @@ reg testFailedFlag;
 initial begin
 	clock = 1'd0;
 	enableModule = 1'd0;
-
-	
-	
+	counter = 5'd0;
+	testFailedFlag = 1'd0;
+	state = IDLE;
 	
 	
 	
