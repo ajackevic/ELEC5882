@@ -29,9 +29,10 @@ wire [OUTPUT_DATA_WIDTH - 1:0] dataOut;
 
 
 // Local parameters used for the test bench.
-reg signed [INPUT_DATA_WIDTH - 1:0] DataInBuff[0:19];
-reg signed [INPUT_DATA_WIDTH:0] obtainedDataOutBuff [0:19];
-reg signed [INPUT_DATA_WIDTH:0] expectedDataOutBuff [0:19];
+reg signed [INPUT_DATA_WIDTH - 1:0] dataInBuff[0:9];
+reg signed [INPUT_DATA_WIDTH:0] obtainedDataOutBuff [0:9];
+reg signed [INPUT_DATA_WIDTH:0] expectedDataOutBuff [0:9];
+
 
 
 // FSM
@@ -51,6 +52,33 @@ initial begin
 	enableModule = 1'd0;
 	dataIn = 72'd0;
 	state = IDLE;
+	
+	
+	// Setting the values of dataIn buffer.
+	dataInBuff[0] = 72'd45646;
+	dataInBuff[1] = 72'd454536;
+	dataInBuff[2] = 72'd258211;
+	dataInBuff[3] = 72'd213247;
+	dataInBuff[4] = 72'd25810;
+	dataInBuff[5] = 72'd4;
+	dataInBuff[6] = 72'd5688;
+	dataInBuff[7] = 72'd86542;
+	dataInBuff[8] = 72'd756787;
+	dataInBuff[9] = 72'd123;
+
+	
+	
+	expectedDataOutBuff[0] = 36'd213;
+	expectedDataOutBuff[1] = 36'd674;
+	expectedDataOutBuff[2] = 36'd508;
+	expectedDataOutBuff[3] = 36'd461;
+	expectedDataOutBuff[4] = 36'd160;
+	expectedDataOutBuff[5] = 36'd2;
+	expectedDataOutBuff[6] = 36'd75;
+	expectedDataOutBuff[7] = 36'd294;
+	expectedDataOutBuff[8] = 36'd869;
+	expectedDataOutBuff[9] = 36'd11;
+
 	
 	
 	// Set enableModule high after RST_CYCLES number of clock cycles.
