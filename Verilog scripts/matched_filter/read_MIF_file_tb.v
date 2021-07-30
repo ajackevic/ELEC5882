@@ -224,7 +224,11 @@ always @ (posedge clock) begin
 		end
 		
 		default: begin
-		
+			clock = 1'd0;
+			enableModule = 1'd0;
+			counter = 5'd0;
+			MIFCounter = 10'd0;
+			testFailedFlag = 1'd0;
 		end
 		
 	endcase
