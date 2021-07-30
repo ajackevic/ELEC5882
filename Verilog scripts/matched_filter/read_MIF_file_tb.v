@@ -144,4 +144,35 @@ always begin
 	end
 end
 
+
+
+
+integer n;
+always @ (posedge clock) begin
+	case(state)
+		
+		
+		IDLE: begin
+		
+		end
+		
+		READ_DATA: begin
+		
+		end
+		
+		PRINT_RESULTS: begin
+		
+		end
+		
+		STOP: begin
+		
+		end
+		
+		default: begin
+		
+		end
+		
+	endcase
+end
+
 endmodule
