@@ -28,6 +28,10 @@ reg [INPUT_DATA_WIDTH - 1:0] dataIn;
 wire [OUTPUT_DATA_WIDTH - 1:0] dataOut;
 
 
+// Local parameters used for the test bench.
+reg signed [INPUT_DATA_WIDTH - 1:0] DataInBuff[0:19];
+reg signed [INPUT_DATA_WIDTH:0] obtainedDataOutBuff [0:19];
+reg signed [INPUT_DATA_WIDTH:0] expectedDataOutBuff [0:19];
 
 
 // FSM
