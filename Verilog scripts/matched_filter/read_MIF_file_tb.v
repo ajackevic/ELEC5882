@@ -164,7 +164,30 @@ always @ (posedge clock) begin
 		
 		READ_DATA: begin
 			
+			if(MIFCounter >= 10'd1) begin
+				if((MIFCounter <= 10'd5) || (MIFCounter >= 10'd796)) begin
+				
+				
+					obtainedOutBuffRe[counter] = outputValueRe;
+					obtainedOutBuffIm[counter] = outputValueIm;
+				
+				
+					if((obtainedOutBuffRe[counter] != expectedOutBuffRe[counter]) || (obtainedOutBuffIm[counter] != expectedOutBuffIm[counter])) begin
+						testFailedFlag = 1'd1;
+					end
+				
+					counter = counter + 5'd1;
+				end
+			end
 			
+			
+			if(MIFCounter == 10'd800) begin
+				state = PRINT_RESULTS;
+				counter = 5'd0;
+			end
+			
+			
+			MIFCounter = MIFCounter + 10'd1;
 		end
 		
 		PRINT_RESULTS: begin
