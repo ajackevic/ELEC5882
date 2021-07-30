@@ -50,11 +50,28 @@ wire dataFinishedFlag;
 
 
 
+// Local parameters for the test bench.
+reg signed [DATA_WIDTH - 1: 0] obtainedOutBuff [0:19];
+reg signed [DATA_WIDTH - 1: 0] expectedOutBuff [0:19];
+reg [3:0] counter;
+reg testFailedFlag;
+
+
+
 
 // Setting the init values.
 initial begin
 	clock = 1'd0;
 	enableModule = 1'd0;
+
+	
+	
+	
+	
+	
+	
+	
+	
 	// Set enableModule to 1 after RST_CYCLES clock cycles.
 	repeat(RST_CYCLES) @ (posedge clock);
 	enableModule = 1'd1;
