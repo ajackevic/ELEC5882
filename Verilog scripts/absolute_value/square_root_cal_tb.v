@@ -195,7 +195,12 @@ always @ (posedge clock) begin
 		end
 		
 		default: begin
-		
+			clock = 1'd0;
+			enableModule = 1'd0;
+			testFailedFlag = 1'd0;
+			dataIn = 72'd0;
+			counter = 4'd0;
+			state = IDLE;
 		end
 		
 	endcase
