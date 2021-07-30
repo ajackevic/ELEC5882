@@ -13,6 +13,13 @@ localparam RST_CYCLES = 10;
 
 
 
+// Parameters for the dur module. 
+// INPUT_DATA_WIDTH = (log2(2 * MaxValue^2))) rounded up. Has to be an even number.
+// OUTPUT_DATA_WIDTH = INPUT_DATA_WIDTH / 2.
+localparam INPUT_DATA_WIDTH = 72;  
+localparam OUTPUT_DATA_WIDTH = 36;
+
+
 // Local parameters for the dut module.
 reg clock;
 reg enableModule;
@@ -34,12 +41,15 @@ initial begin
 end
 
 
-square_root_cal dut(
-	.clock		(clock),
-	.enable		(enableModule),
-	.inputData	(dataIn),
+square_root_cal #(
+	.INPUT_DATA_WIDTH		(INPUT_DATA_WIDTH),
+	.OUTPUT_DATA_WIDTH	(OUTPUT_DATA_WIDTH)
+) dut (
+	.clock					(clock),
+	.enable					(enableModule),
+	.inputData				(dataIn),
 	
-	.outputData	(dataOut)
+	.outputData				(dataOut)
 );
 
 
