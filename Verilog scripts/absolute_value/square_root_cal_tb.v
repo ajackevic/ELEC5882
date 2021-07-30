@@ -32,7 +32,7 @@ wire [OUTPUT_DATA_WIDTH - 1:0] dataOut;
 reg signed [INPUT_DATA_WIDTH - 1:0] dataInBuff[0:9];
 reg signed [INPUT_DATA_WIDTH:0] obtainedDataOutBuff [0:9];
 reg signed [INPUT_DATA_WIDTH:0] expectedDataOutBuff [0:9];
-
+reg [3:0] counter;
 
 
 // FSM
@@ -51,6 +51,7 @@ initial begin
 	clock = 1'd0;
 	enableModule = 1'd0;
 	dataIn = 72'd0;
+	counter = 4'd0;
 	state = IDLE;
 	
 	
@@ -135,7 +136,7 @@ always @ (posedge clock) begin
 		end
 
 		SEND_DATA: begin
-			
+
 		end
 		
 		PRINT_RESULTS: begin
