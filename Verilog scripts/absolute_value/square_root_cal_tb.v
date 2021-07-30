@@ -34,8 +34,8 @@ localparam RST_CYCLES = 10;
 // Parameters for the dur module. 
 // INPUT_DATA_WIDTH = (log2(2 * MaxValue^2))) rounded up. Has to be an even number.
 // OUTPUT_DATA_WIDTH = INPUT_DATA_WIDTH / 2.
-localparam INPUT_DATA_WIDTH = 72;  
-localparam OUTPUT_DATA_WIDTH = 36;
+localparam INPUT_DATA_WIDTH = 32;  
+localparam OUTPUT_DATA_WIDTH = 16;
 
 
 
@@ -70,37 +70,37 @@ initial begin
 	clock = 1'd0;
 	enableModule = 1'd0;
 	testFailedFlag = 1'd0;
-	dataIn = 72'd0;
+	dataIn = 32'd0;
 	counter = 4'd0;
 	state = IDLE;
 	
 	
 	
 	// Setting the values of dataIn buffer.
-	dataInBuff[0] = 72'd45646;
-	dataInBuff[1] = 72'd454536;
-	dataInBuff[2] = 72'd258211;
-	dataInBuff[3] = 72'd213247;
-	dataInBuff[4] = 72'd25810;
-	dataInBuff[5] = 72'd4;
-	dataInBuff[6] = 72'd5688;
-	dataInBuff[7] = 72'd86542;
-	dataInBuff[8] = 72'd756787;
-	dataInBuff[9] = 72'd123;
+	dataInBuff[0] = 32'd45646;
+	dataInBuff[1] = 32'd454536;
+	dataInBuff[2] = 32'd258211;
+	dataInBuff[3] = 32'd4294967295;
+	dataInBuff[4] = 32'd25810;
+	dataInBuff[5] = 32'd4;
+	dataInBuff[6] = 32'd5688;
+	dataInBuff[7] = 32'd86542;
+	dataInBuff[8] = 32'd0;
+	dataInBuff[9] = 32'd123;
 
 	
 	
 	// Setting the expected values in the buffer.
-	expectedDataOutBuff[0] = 36'd213;
-	expectedDataOutBuff[1] = 36'd674;
-	expectedDataOutBuff[2] = 36'd508;
-	expectedDataOutBuff[3] = 36'd461;
-	expectedDataOutBuff[4] = 36'd160;
-	expectedDataOutBuff[5] = 36'd2;
-	expectedDataOutBuff[6] = 36'd75;
-	expectedDataOutBuff[7] = 36'd294;
-	expectedDataOutBuff[8] = 36'd869;
-	expectedDataOutBuff[9] = 36'd11;
+	expectedDataOutBuff[0] = 16'd213;
+	expectedDataOutBuff[1] = 16'd674;
+	expectedDataOutBuff[2] = 16'd508;
+	expectedDataOutBuff[3] = 16'd65535;
+	expectedDataOutBuff[4] = 16'd160;
+	expectedDataOutBuff[5] = 16'd2;
+	expectedDataOutBuff[6] = 16'd75;
+	expectedDataOutBuff[7] = 16'd294;
+	expectedDataOutBuff[8] = 16'd0;
+	expectedDataOutBuff[9] = 16'd11;
 
 	
 	
