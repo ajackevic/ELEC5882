@@ -8,8 +8,9 @@
  Module Description:
  -------------------
  This module is a test bench for the module matched_filter_tb.v. The script
- as of now only enables the matched filter and observes the modules output in
- ModelSim.
+ imports the MATLAB pulse compression filter output MIF file and compares
+ if the obtained output from the matched_filter is the same as the MATLAB
+ implmentation.
 
 */
 
