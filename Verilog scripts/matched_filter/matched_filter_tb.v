@@ -47,6 +47,9 @@ reg [17:0] MIFBuffer [0:31];
 
 // Creating the local parameters for the testing purposes.
 reg [17:0] MIFCounter;
+reg [17:0] outputBuffer [0:31];
+reg testFailedFlag;
+
 
 
 
@@ -56,6 +59,7 @@ reg [17:0] MIFCounter;
 initial begin
 	clock = 1'd0;
 	enableModule = 1'd0;
+	testFailedFlag = 1'd0;
 	MIFCounter = 18'd0;
 	
 	repeat(RST_CYCLES) @ (posedge clock);
