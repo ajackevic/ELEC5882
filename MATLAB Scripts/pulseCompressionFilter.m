@@ -184,7 +184,12 @@ xlabel('Time (S)')
 
 
 %%
-% The following section is for the creation of the x_t MIF file.
+% The following section is for the creation of the x_t and y_t MIF files.
+% The files are created in this section as AWGN adds different kind of noise
+% everysingle time. Hence to compare the MATLAB and FPGA results the MIF files 
+% must be generatered in this script.
+
+
 
 % Name of the MIF file.
 MIFFile = 'MFInputData.mif';
@@ -202,6 +207,30 @@ for i = 1:1:length(receivedSignal)
     fprintf(fileID,'%s\n', binReceivedSignal(end-11:end));
 end
 
+% Close the opened MIF file.
+fclose(fileID);
+
+
+
+
+
+% Name of the MIF file.
+MIFFile = 'MFOutputData.mif';
+
+% Create or open (if file already exsists) the MIF file.
+fileID = fopen(MIFFile,'w');
+
+
+% Print the output data (y_t) to the MIF file. They are printed in 2's
+% compliment format, with the length of each value being 32 bits.
+for i = 1:1:length(y_t)
+    % Make the values first 52 bits long then trim it to 32. This is dones
+    % as MATLAB for some values just adds 10 or so 0's for no reason with 
+    % some values. Hence the trimming.
+    binReceivedSignal = dec2bin(y_t(i),52);
+    
+    fprintf(fileID,'%s\n', binReceivedSignal(end-31:end));
+end
 
 % Close the opened MIF file.
 fclose(fileID);
