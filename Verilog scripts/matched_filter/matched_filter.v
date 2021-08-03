@@ -149,7 +149,7 @@ read_MIF_file #(
 // Instantiating the module n_tap_complex_fir. This is used for the main opperation of the matched filter
 // between the complex input data and the complex impulse reponse of the matched filter.
 n_tap_complex_fir #(
-	.LENGTH					(COEFF_LENGTH * 2),
+	.LENGTH					(COEFF_LENGTH),
 	.DATA_WIDTH 			(DATA_WIDTH)
 ) coplexFIR (
 	.clock					(clock),
@@ -220,9 +220,12 @@ always @ (posedge clock) begin
 			if(coeffFinishedFlag) begin
 			
 				enableMFCoeff <= 1'd0;
-				state <= STOP;
+				enablecomplexFIRCoeff <= 1'd0;
+				
 				enableMFDataIn <= 1'd1;
 				enableHT <= 1'd1;
+				enableComplexFIRData <= 1'd1;
+				enableSquar <= 1'd1;
 				
 			end
 			else begin
