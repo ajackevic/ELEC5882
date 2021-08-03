@@ -72,6 +72,7 @@ initial begin
 	state = IDLE;
 	MIFCounter = 14'd0;
 	
+	// Set enableModule high after RST_CYCLES clock cycles.
 	repeat(RST_CYCLES) @ (posedge clock);
 	enableModule = 1'd1;
 end
@@ -126,6 +127,11 @@ end
 always @ (posedge clock) begin
 	case(state)
 	
+	
+		// State IDLE. This state waits until enableModule is high before 
+		// transistioning to COMAPRE_DATA. It waits 13 clock cycles as that
+		// is how long it takes before data is supplied and the output data
+		// is provided.
 		IDLE: begin
 			if(enableModule) begin
 				repeat(13) @ (posedge clock);
@@ -133,19 +139,31 @@ always @ (posedge clock) begin
 			end
 		end
 		
+		
+		// State COMAPRE_DATA. This state stores the output of the dut to 
+		// outputBuffer and then compares that output with the expected output
+		// from the MIFBuffer. If the values do not match it set testFailedFlag
+		// high. Once all the data is checked (14400), the state transisions to 
+		// PRINT_RESULTS.
 		COMAPRE_DATA: begin
+		
+			// Store and compare the obtained output and the expected output.
 			outputBuffer[MIFCounter] = MFOutput;
 			if(outputBuffer[MIFCounter] != MIFBuffer[MIFCounter]) begin
 				testFailedFlag = 1'd1;
 			end
 			
+			// Increment MIFCounter by 1.
 			MIFCounter = MIFCounter + 14'd1;
 			
+			// If MIFCounter is equal to 14400, transision to PRINT_RESULTS.
 			if(MIFCounter == 14'd14400) begin
 				state = PRINT_RESULTS;
 			end
 		end
 		
+		
+		// State PRINT_RESULTS. This state prints the transcript of the test bench.
 		PRINT_RESULTS: begin
 			$display("This is a test bench for the module matched_filter. \n",
 						"It tests whether the output of the pulse compression filter \n",
@@ -160,14 +178,19 @@ always @ (posedge clock) begin
 				$display("Test results: PASSED \n \n");
 			end
 
-			
+			// Transision to state STOP.
 			state = STOP;
 		end
 		
+		
+		// State STOP. This state stops the simulation.
 		STOP: begin
 			$stop;
 		end
 		
+		
+		// State default. This state sets the default values just incase the 
+		// FSM is in an unkown state.
 		default: begin
 			clock = 1'd0;
 			enableModule = 1'd0;
