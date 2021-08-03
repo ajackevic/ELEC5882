@@ -223,7 +223,7 @@ fileID = fopen(MIFFile,'w');
 
 % Print the output data (y_t) to the MIF file. They are printed in 2's
 % compliment format, with the length of each value being 32 bits.
-for i = 1:1:length(y_t)
+for i = 1:1:length(x_t)
     % Make the values first 52 bits long then trim it to 32. This is dones
     % as MATLAB for some values just adds 10 or so 0's for no reason with 
     % some values. Hence the trimming.
