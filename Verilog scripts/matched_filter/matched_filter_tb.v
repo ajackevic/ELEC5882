@@ -43,11 +43,11 @@ reg enableModule;
 wire [31:0] MFOutput;
 
 // Creating the local parameters for storing the MIF data.
-reg [17:0] MIFBuffer [0:31];
+reg [31:0] MIFBuffer [0:14399];
 
 // Creating the local parameters for the testing purposes.
-reg [17:0] MIFCounter;
-reg [17:0] outputBuffer [0:31];
+reg [13:0] MIFCounter;
+reg [31:0] outputBuffer [0:14399];
 reg testFailedFlag;
 
 
@@ -69,7 +69,7 @@ initial begin
 	enableModule = 1'd0;
 	testFailedFlag = 1'd0;
 	state = IDLE;
-	MIFCounter = 18'd0;
+	MIFCounter = 14'd0;
 	
 	repeat(RST_CYCLES) @ (posedge clock);
 	enableModule = 1'd1;
@@ -126,13 +126,23 @@ always @ (posedge clock) begin
 	case(state)
 	
 		IDLE: begin
-			if(enableModule)
+			if(enableModule) begin
+				repeat(13) @ (posedge clock);
 				state = COMAPRE_DATA;
 			end
 		end
 		
 		COMAPRE_DATA: begin
-		
+			outputBuffer[MIFCounter] = MFOutput;
+			if(outputBuffer[MIFCounter] != MIFBuffer[MIFCounter]) begin
+				testFailedFlag = 1'd1;
+			end
+			
+			MIFCounter = MIFCounter + 14'd1;
+			
+			if(MIFCounter == 14'd14400) begin
+				state = PRINT_RESULTS;
+			end
 		end
 		
 		PRINT_RESULTS: begin
@@ -147,7 +157,7 @@ always @ (posedge clock) begin
 		
 		end	
 	
-	endmodule
+	endcase
 end
 
 endmodule
