@@ -56,7 +56,7 @@ reg testFailedFlag;
 // FSM
 reg [1:0] state;
 localparam IDLE = 0;
-localparam SEND_AND_COMAPRE = 1;
+localparam COMAPRE_DATA = 1;
 localparam PRINT_RESULTS = 2;
 localparam STOP = 3;
 
@@ -126,10 +126,12 @@ always @ (posedge clock) begin
 	case(state)
 	
 		IDLE: begin
-		
+			if(enableModule)
+				state = COMAPRE_DATA;
+			end
 		end
 		
-		SEND_AND_COMAPRE: begin
+		COMAPRE_DATA: begin
 		
 		end
 		
