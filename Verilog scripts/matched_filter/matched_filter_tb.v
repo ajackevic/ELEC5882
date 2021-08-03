@@ -37,7 +37,7 @@ localparam DATA_WIDTH = 12;
 
 
 
-// Creating the lcoal parameters the DUT.
+// Creating the local parameters the DUT.
 reg clock;
 reg enableModule;
 wire [31:0] MFOutput;
@@ -53,6 +53,14 @@ reg testFailedFlag;
 
 
 
+// FSM
+reg [1:0] state;
+localparam IDLE = 0;
+localparam SEND_AND_COMAPRE = 1;
+localparam PRINT_RESULTS = 2;
+localparam STOP = 3;
+
+
 
 
 // Set the initial value of the clock.
@@ -60,6 +68,7 @@ initial begin
 	clock = 1'd0;
 	enableModule = 1'd0;
 	testFailedFlag = 1'd0;
+	state = IDLE;
 	MIFCounter = 18'd0;
 	
 	repeat(RST_CYCLES) @ (posedge clock);
