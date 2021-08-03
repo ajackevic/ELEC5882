@@ -49,6 +49,9 @@ reg [17:0] MIFBuffer [0:31];
 reg [17:0] MIFCounter;
 
 
+
+
+
 // Set the initial value of the clock.
 initial begin
 	clock = 1'd0;
@@ -58,6 +61,17 @@ initial begin
 	repeat(RST_CYCLES) @ (posedge clock);
 	enableModule = 1'd1;
 end
+
+
+
+// Transfer the data in the file MFOutputData.mif to MIFBuffer.
+// This MIF file contains the expected output of the matched filter
+// from the MATLAB simulation.
+initial begin
+	$readmemb("MFOutputData.mif", MIFBuffer);
+end
+
+
 
 
 
