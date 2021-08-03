@@ -37,16 +37,23 @@ localparam DATA_WIDTH = 12;
 
 
 
-// Creating the lcoal parameters.
+// Creating the lcoal parameters the DUT.
 reg clock;
 reg enableModule;
 wire [31:0] MFOutput;
+
+// Creating the local parameters for storing the MIF data.
+reg [17:0] MIFBuffer [0:31];
+
+// Creating the local parameters for the testing purposes.
+reg [17:0] MIFCounter;
 
 
 // Set the initial value of the clock.
 initial begin
 	clock = 1'd0;
 	enableModule = 1'd0;
+	MIFCounter = 18'd0;
 	
 	repeat(RST_CYCLES) @ (posedge clock);
 	enableModule = 1'd1;
