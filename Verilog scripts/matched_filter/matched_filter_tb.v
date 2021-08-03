@@ -146,11 +146,25 @@ always @ (posedge clock) begin
 		end
 		
 		PRINT_RESULTS: begin
-		
+			$display("This is a test bench for the module matched_filter. \n",
+						"It tests whether the output of the pulse compression filter \n",
+						"is the same as the obtained output from the MATLAB implmentation. \n \n"
+			);
+			
+			// Check if testFailedFlag is high, is so print the test failed, else it passed.
+			if(testFailedFlag) begin
+				$display("Test results: FAILED \n \n");
+			end
+			else begin
+				$display("Test results: PASSED \n \n");
+			end
+
+			
+			state = STOP;
 		end
 		
 		STOP: begin
-		
+			$stop;
 		end
 		
 		default: begin
