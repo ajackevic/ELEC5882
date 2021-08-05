@@ -1,15 +1,15 @@
 /*
 
- matched_filter_tb.v
+ pulse_compression_filter_tb.v
  --------------
  By: Augustas Jackevic
  Date: July 2021
 
  Module Description:
  -------------------
- This module is a test bench for the module matched_filter_tb.v. The script
+ This module is a test bench for the module pulse_compression_filter_tb.v. The script
  imports the MATLAB pulse compression filter output MIF file and compares
- if the obtained output from the matched_filter is the same as the MATLAB
+ if the obtained output from the pulse_compression_filter is the same as the MATLAB
  implmentation.
 
 */
@@ -20,12 +20,12 @@
 
 
 
-module matched_filter_tb;
+module pulse_compression_filter_tb;
 
 
-// Parameters for creating the 50MHz clock signal.
+// Parameters for creating the 80MHz clock signal.
 localparam NUM_CYCLES = 500000;
-localparam CLOCK_FREQ = 50000000;
+localparam CLOCK_FREQ = 80000000;
 localparam RST_CYCLES = 20;
 
 
@@ -92,7 +92,7 @@ end
 
 
 // Instantiated DUT module.
- matched_filter #(
+ pulse_compression_filter #(
 	.COEFF_LENGTH 		(COEFF_LENGTH),
 	.DATA_LENGTH 		(DATA_LENGTH),
 	.DATA_WIDTH 		(DATA_WIDTH)
@@ -165,9 +165,13 @@ always @ (posedge clock) begin
 		
 		// State PRINT_RESULTS. This state prints the transcript of the test bench.
 		PRINT_RESULTS: begin
-			$display("This is a test bench for the module matched_filter. \n",
-						"It tests whether the output of the pulse compression filter \n",
-						"is the same as the obtained output from the MATLAB implmentation. \n \n"
+			$display("This is a test bench for the module pulse_compression_filter. \n \n",
+						"It tests whether the output of the implimented pulse compression filter \n",
+						"on the FPGA is identical to the MATLAB implmentation. The matched filter \n",
+						"impulse response is loaded through MFImpulseCoeff.MIF whilst the input data \n",
+						"is loaded through the file MFInputData.MIF. The 14,400 obtained output values from\n", 
+						"the module are then compared with the MATLAB output which is stored in ",
+						"MFOutputData.MIF. \n \n"
 			);
 			
 			// Check if testFailedFlag is high, is so print the test failed, else it passed.
