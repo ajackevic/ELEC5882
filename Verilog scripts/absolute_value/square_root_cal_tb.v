@@ -205,7 +205,8 @@ always @ (posedge clock) begin
 						"It tests whether the non-restoring square root algorithm performs its main opperation correctly. \n",
 						"Data is supplied to the module, with the corresponding output then being checked with the expected \n",
 						"outputs obtained from MATLAB. Additionally the expected outputs were also worked out by hand to confirm \n", 
-						"the MATLAB results. \n \n"
+						"the MATLAB results. Maximum and minimum values were applied to the module to see if the opperation\n",
+						"DUT module handeled the values correctly. \n \n"
 			);
 			
 			// Check if testFailedFlag is high, is so print the test failed, else it passed.

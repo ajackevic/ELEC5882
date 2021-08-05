@@ -302,8 +302,8 @@ always @ (posedge clock) begin
 		// the simulation is stoped.
 		DISPLAY_RESULTS: begin
 			$display("This is a test bench for the module hilbert_transform_tb. \n \n",
-						"It tests whether the Hilbert transforms performs its main opperation correctly. \n",
-						"It utalises the setup_HT_coeff modules to set up the dut modules coefficients and then \n",
+						"It tests whether the Hilbert transforms performs its main operation correctly. \n",
+						"It utilises the setup_HT_coeff modules to set up the DUT modules coefficients and then \n",
 						"supplies the input data to the module. The corresponding output of the module is then checked with \n",
 						"outputs obtained from MATLAB. \n \n"
 			);

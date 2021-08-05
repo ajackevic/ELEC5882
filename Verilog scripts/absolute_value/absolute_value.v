@@ -7,9 +7,15 @@
 
  Module Description:
  -------------------
- This module obtaines the absolute value of dataIn. Once enable is set, if MSB of dataIn is 
- to 1 dataOut is set to - dataIn, else dataOut is equal to dataIn.
-
+ This module obtaines the absolute value of dataIn. It checks the provided inputs
+ dataInRe and dataInIm, makes them posative, and then uses the alpha max plus beta
+ min approximation to obtain the abs value of the provided complex input. The 
+ coefficients alpha is equal to 1, whilst beta is equal to 1/4. 
+ 
+ This module is not used in the main module (pulse_compression_filter). This module 
+ was created to compare the results and its resources when compared to calculating
+ the abs value through the module square_root_cal.
+ 
 */
 
 
@@ -54,7 +60,6 @@ always @ (posedge clock) begin
 			absDataInRe = dataInRe;
 		end
 		
-		
 		if(dataInIm[DATA_WIDTH - 1] == 1'd1) begin
 			absDataInIm = -dataInIm;
 		end
@@ -63,7 +68,10 @@ always @ (posedge clock) begin
 		end
 		
 		
-		
+		// Alpha (1/1) max plus beta (1/4) min. This if statment checks which value 
+		// absDataInRe or absDataInIm is larger than the other. The smaller value 
+		// if bit shifted twice to the right (same as * 1/4 rounded down) and then 
+		// added to the larger value to get an approximation of the abs value.
 		if(absDataInRe >= absDataInIm) begin
 			dataOut = absDataInRe + (absDataInIm  >> 2);
 		end
