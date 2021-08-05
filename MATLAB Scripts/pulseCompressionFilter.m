@@ -46,12 +46,12 @@ paddedChirpWaveAmp0_6 = [zeros(1,length(chirpWave)), chirpWave * 0.6, zeros(1,le
 
 
 % Creating chirp signals with different amount of noise.
-chirp1 = awgn(paddedChirpWaveAmp1, 25);
-chirp2 = awgn(paddedChirpWaveAmp0_9,15);
-chirp3 = awgn(paddedChirpWaveAmp0_8,10);
-chirp4 = awgn(paddedChirpWaveAmp0_7,5);
-chirp5 = awgn(paddedChirpWaveAmp0_6,0.001);
-chirp6 = awgn(paddedChirpWaveAmp1,-5);
+chirp1 = awgn(paddedChirpWaveAmp1, 25,1,1);
+chirp2 = awgn(paddedChirpWaveAmp0_9,15,1,1);
+chirp3 = awgn(paddedChirpWaveAmp0_8,10,1,1);
+chirp4 = awgn(paddedChirpWaveAmp0_7,5,1,1);
+chirp5 = awgn(paddedChirpWaveAmp0_6,0.001,1,1);
+chirp6 = awgn(paddedChirpWaveAmp1,-5,1,1);
 
 
 % Summing up the different chirp waveforms into one continous long input signal.
@@ -63,14 +63,14 @@ receivedSignal = [chirp1, chirp2, chirp3, chirp4, chirp5, chirp6];
 
 % Multiplying and rounding the receivedSignal so that the aquired signal in
 % FPGA can be comfirmed with the MATLAB results.
-receivedSignal = round(receivedSignal * 204.7);
+receivedSignal = round(receivedSignal * 204);
 
 
 % Creating the matched filter impulse response. This is equal to the complex
 % conjugate time reverse analytic signal of the chirp signal. Its
-% muiltiplied by 1000 and rounded so that the results from FPGA can be
+% muiltiplied by 1451 and rounded so that the results from FPGA can be
 % comfirmed in MATLAB.
-h_t = round(flip(conj(hilbert(chirpWave)))* 1451 );
+h_t = round(flip(conj(hilbert(chirpWave)))* 1451);
 
 
 % Creating the hilbert transform coefficients. This uses the firpm function
