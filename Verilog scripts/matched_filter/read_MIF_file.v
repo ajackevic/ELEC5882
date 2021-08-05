@@ -68,11 +68,11 @@ initial begin: initValues
 		$readmemb("MFInputData.mif", MIFBuffer);
 		
 		// Transfer the values of MIFBuffer to the buffer variables realCoeffBuffer 
-		// and imagCoeffBuffer. This is done for LENGTH*2 amount of times. Only need
-		// realCoeffBuffer, hence imagCoeffBuffer is set to 0.
+		// and imagCoeffBuffer. Since the MIF file only contains real values, all the
+		// values are passed through realCoeffBuffer. This is done for LENGTH*2 
+		// amount of times.
 		for (k = 0; k <= (LENGTH * 2) - 1 ; k = k + 1) begin
 			realCoeffBuffer[coeffBufferCounter] = MIFBuffer[k];
-			imagCoeffBuffer[coeffBufferCounter] = {(DATA_WIDTH){1'd0}};
 		
 			coeffBufferCounter = coeffBufferCounter + 20'd1;
 		end
