@@ -11,7 +11,7 @@
 
 
 
-% Clear any saved vairable from MATLAB's workspace section.
+% Clear any saved variable from MATLAB's workspace section.
 clear all
 
 
@@ -55,7 +55,7 @@ chirp5 = awgn(paddedChirpWaveAmp0_6,0.001,1,1);
 chirp6 = awgn(paddedChirpWaveAmp1,-5,1,1);
 
 
-% Summing up the different chirp waveforms into one continous long input signal.
+% Summing up the different chirp waveforms into one continuous long input signal.
 receivedSignalNoNoise = [paddedChirpWaveAmp1, paddedChirpWaveAmp0_9, paddedChirpWaveAmp0_8, ...
                          paddedChirpWaveAmp0_7, paddedChirpWaveAmp0_6, paddedChirpWaveAmp1];
 receivedSignal = [chirp1, chirp2, chirp3, chirp4, chirp5, chirp6];
@@ -67,8 +67,8 @@ h_t = flip(conj(hilbert(chirpWave)));
 x_t = hilbert(receivedSignal);
 
 
-% The matched filter opperation is a convelution between the input signal
-% and the matched filters impulse reponse.
+% The matched filter operation is a convolution between the input signal
+% and the matched filters impulse response.
 matchedFilterOut = conv(x_t,h_t);
 
 
@@ -126,7 +126,7 @@ tiledlayout(3,2);
 
 nexttile
 plot(tInput,real(x_t))
-title('Real part of the recivied signal XRe(t)')
+title('Real part of the received signal XRe(t)')
 ylabel('Amplitude')
 xlabel('Time (S)')
 xlim([0 9])
@@ -134,7 +134,7 @@ ylim([-10 10])
 
 nexttile
 plot(tInput,imag(x_t))
-title('Imaginary part of the recivied signal XIm(t)')
+title('Imaginary part of the received signal XIm(t)')
 ylabel('Amplitude')
 xlabel('Time (S)')
 xlim([0 9])
@@ -142,14 +142,14 @@ ylim([-10 10])
 
 nexttile
 plot(tChirp,real(h_t))
-title('Real part of the impulse reponse hRe(t)')
+title('Real part of the impulse response hRe(t)')
 ylabel('Amplitude')
 xlabel('Time (S)')
 
 
 nexttile
 plot(tChirp,imag(h_t))
-title('Imaginary part of the recivied signal hIm(t)')
+title('Imaginary part of the received signal hIm(t)')
 ylabel('Amplitude')
 xlabel('Time (S)')
 

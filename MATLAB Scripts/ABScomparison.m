@@ -8,17 +8,17 @@
 % (abs) of complex numbers. Three different sets of alpha max plus beta min
 % algorithms are implemented (bete = 1/2, 1/4, and 3/8), with a different 
 % type of abs method, non-restoring square root (called through squareRootCal
-% function)then implimented to compare the four results.
+% function)then implemented to compare the four results.
 %
 %
-% The alpha max plus beta min algorithm works in the folloing manner:
+% The alpha max plus beta min algorithm works in the following manner:
 % Output = Alpha(|max value|) + Beta(|min value|)
 % The larger abs value of the complex pair is multiplied by alpha whilst
 % the smaller abs value is multiplied by the beta value.
 %
 
 
-% Clear any saved vairable from MATLAB's workspace section.
+% Clear any saved variable from MATLAB's workspace section.
 clear all
 
 
@@ -68,7 +68,7 @@ for i = 1:1:dataLength
        absAlphaValue = abs(imag(complexData(i)));
        absBetaValue = abs(real(complexData(i)));
     end
-    % Bit shift absBetaValue by 1 to aquire the required 1/2 value. It
+    % Bit shift absBetaValue by 1 to acquire the required 1/2 value. It
     % should be noted that this value is rounded down.
     absBetaValue = bitshift(absBetaValue,-1);
     % Added the alpha and beta value to the output array.
@@ -101,7 +101,7 @@ for i = 1:1:dataLength
        absAlphaValue = abs(imag(complexData(i)));
        absBetaValue = abs(real(complexData(i)));
     end
-    % Bit shift absBetaValue by 2 to aquire the required 1/4 value. It
+    % Bit shift absBetaValue by 2 to acquire the required 1/4 value. It
     % should be noted that this value is rounded down.
     absBetaValue = bitshift(absBetaValue,-2);
     % Added the alpha and beta value to the output array.
@@ -134,9 +134,8 @@ for i = 1:1:dataLength
        absAlphaValue = abs(imag(complexData(i)));
        absBetaValue = abs(real(complexData(i)));
     end
-    % Bit shift absBetaValue by 3 to aquire the 1/8 value and then 
-    % muiltiply by 3 to aquire the 3/8 value. It should be noted that this 
-    % value is rounded down.
+    % Multiply the value by three and then bit shift absBetaValue by 3 to 
+    %acquire 3/8. It should be noted that this value is rounded down.
     absBetaValue = (bitshift(absBetaValue * 3,-3));
     % Added the alpha and beta value to the output array.
     alphaBetaOut3 = [alphaBetaOut3 (absAlphaValue + absBetaValue)];
@@ -163,7 +162,7 @@ end
 
 
 %%
-% Calculaing the error values from the obtianed alpha max plus beta min 
+% Calculating the error values from the obtained alpha max plus beta min 
 %algorithm and the non-restoring square root algorithm. The average and max
 %errors are also calculated.
 
