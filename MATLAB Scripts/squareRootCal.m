@@ -1,3 +1,22 @@
+% squareRootCal.m
+% --------------
+% By: Augustas Jackevic
+% Date: July 2021
+% Script Description:
+% -------------------
+% This script calculates the square root value of the provided inputData 
+% value. This is achieved through the usage of the non-restoring square root 
+% algorithm. This copies the same logic as applied to the Verilog scrip 
+% square_root_cal.m
+ 
+% To fully understand how the Non-Restoring Square Root method works pleas 
+% read the following:
+% - http://www.ijcte.org/papers/281-G850.pdf
+% - https://digitalsystemdesign.in/non-restoring-algorithm-for-square-root/
+% - http://www.ijceronline.com/papers/(NCASSGC)/W107-116.pdf
+%
+
+
 function outputData = squareRootCal(inputData)
     
     % Setting the default values of the parameters.

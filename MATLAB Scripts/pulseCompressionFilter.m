@@ -2,17 +2,24 @@
 % --------------
 % By: Augustas Jackevic
 % Date: April 2021
-% Script Description:
-% -------------------
-% This script shows the general concept of a matched filter. Observe the
-% different plots to see the required signals at different stages of the
-% system.
 
+% Script Description
+% -------------------
+% This script shows the general concept of a pulse compression filter.
+% Appart from the signal generation and the usage of FIR and complex FIR
+% filter (achived through conv()), the designed script is near ideantical
+% to the FPGA design.
+%
 
 
 % Clear any saved vairable from MATLAB's workspace section.
 clear all
 
+
+
+%%
+% Creating the input data and the matched filter impulse response signal.
+% These signals are saved to a MIF file will then be loaded to the FPGA.
 
 
 % Setting the cirp waveform start and end frequency, as well as its
@@ -73,6 +80,11 @@ receivedSignal = round(receivedSignal * 204);
 h_t = round(flip(conj(hilbert(chirpWave)))* 1451);
 
 
+
+%%
+% Main opperation that is implimented copied from the FPGA.
+
+
 % Creating the hilbert transform coefficients. This uses the firpm function
 % to create the HTCoeff array. Every second coefficient should be 0,
 % however due to the muiltiplication by 3200, some coefficients end up 1
@@ -107,7 +119,7 @@ end
 
 
 
-
+%%
 % Plotting the following graphs:
 %    Chirp waveform
 %    Received echoed back signal with no noise
@@ -137,12 +149,14 @@ ylabel('Amplitude')
 xlabel('Time (S)')
 
 
+
+%%
 % Plotting the following graphs:
 %    Real part of the received after the hilbert transform
 %    Imaginary part of the received after the hilbert transform
 %    Real part of the matched filter impulse response after the hilbert transform
 %    Imaginary part of the matched filter impulse response after the hilbert transform
-%    Matched filter output waveform
+%    Pulse compression filter output waveform
 
 figure(2)
 tiledlayout(3,2);
@@ -184,10 +198,36 @@ xlabel('Time (S)')
 
 
 %%
-% The following section is for the creation of the x_t and y_t MIF files.
+% The following section is for the creation of the h_t, x_t and, y_t MIF files.
 % The files are created in this section as AWGN adds different kind of noise
 % everysingle time. Hence to compare the MATLAB and FPGA results the MIF files 
-% must be generatered in this script.
+% must be generatered in this script. 
+
+
+
+% Name of the MIF file.
+MIFFile = 'MFImpulseCoeff.mif';
+
+% Create or open (if file already exsists) the MIF file.
+fileID = fopen(MIFFile,'w');
+
+
+% Print the coefficients (h_t) to the MIF file. The values that are printed
+% are the rounded real and imaginary parts. They are printed in 2's
+% compliment format. The length of each value is 16 bits.
+for i = 1:1:length(h_t)
+    binRealh_t = dec2bin(round(real(h_t(i))),16);
+    binImagh_t = dec2bin(round(imag(h_t(i))),16);
+    
+    fprintf(fileID,'%s\n', binRealh_t(end-11:end));
+    fprintf(fileID,'%s\n', binImagh_t(end-11:end));
+end
+
+
+% Close the opened MIF file.
+fclose(fileID);
+
+
 
 
 
@@ -209,6 +249,7 @@ end
 
 % Close the opened MIF file.
 fclose(fileID);
+
 
 
 
