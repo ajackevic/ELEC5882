@@ -1,6 +1,7 @@
 # The design of a pulse compression filter on an FPGA
 This repository contains the MATLAB and FPGA design and implementation of the pulse
 compression filter.
+&nbsp;
 
 ## What is a pulse compression filter and why do we need it?
 Whilst oversimplified, a pulse compression filter is used to drastically increase the
@@ -8,7 +9,8 @@ range resolution and more importantly the SNR of a radar system. This is achieve
 modulating the transmitted pulse and then cross correlating the transmitted signal with
 the received signal. More information on the pulse compression filter is explained in
 the following link:
-Wiki link pulse compression filter.
+https://en.wikipedia.org/wiki/Pulse_compression
+
 
 ## How does the pulse compression filter work?
 The first set of the pulse compression filter is modulating the transmitted pulse. This
@@ -29,10 +31,12 @@ FIR and a complex FIR filter operate is explained in the folder 'The workings of
 The absolute value of the matched filter is calculated to obtain the envelope of the signal, and
 thus the output of the pulse compression filter.
 
-More information on the matched filter, LFM, Hilbert transform
-Wiki link matched filter
-Wiki link LFM
-Wiki link HT
+More information on the matched filter, LFM, and Hilbert transform can be found in the following links:
+https://en.wikipedia.org/wiki/Matched_filter
+
+https://en.wikipedia.org/wiki/Chirp
+
+https://en.wikipedia.org/wiki/Hilbert_transform
 
 ## How does the FPGA implementation work?
 The echoed back input signal (synthetic data created in FPGAPulseCompressionFilter.m and loaded
@@ -74,9 +78,11 @@ The following table below outlines all the MATLAB + MIF scripts/files used in th
 | `MFInputData.mif` | This file is stores the synthetic data that is then applied to the FPGA filter.|
 | `MFOutputData.mif` | This file is stores the expected output of the MATLAB design. It is later used in a test bench to confirm the output of the FPGA design is identical to the MATLAB design.|
 
-
-
-
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
 
 The following table below outlines the functionality of each Verilog script used in this project.
 | File | Description |
