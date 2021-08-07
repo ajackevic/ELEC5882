@@ -7,7 +7,7 @@ compression filter.
 Whilst oversimplified, a pulse compression filter is used to drastically increase the
 range resolution and more importantly the SNR of a radar system. This is achieved by
 modulating the transmitted pulse and then cross correlating the transmitted signal with
-the received signal. More information on the pulse compression filter if explained following links:
+the received signal. More information on the pulse compression filter if explained here:
 https://en.wikipedia.org/wiki/Pulse_compression
 
 
