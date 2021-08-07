@@ -5,19 +5,20 @@
 % Script Description:
 % -------------------
 % This script compares the different methods of acquiring an absolute value
-% (abs) of complex numbers in a fixed-point number format. three different
-% sets of Alpha max plus Beta min algorithms are implemented (bete = 1/2,
-% 1/4, and 3/8) and compared.
+% (abs) of complex numbers. Three different sets of alpha max plus beta min
+% algorithms are implemented (bete = 1/2, 1/4, and 3/8), with a different 
+% type of abs method, non-restoring square root (called through squareRootCal
+% function)then implemented to compare the four results.
 %
 %
-% The algorithm works in the folloing manner:
+% The alpha max plus beta min algorithm works in the following manner:
 % Output = Alpha(|max value|) + Beta(|min value|)
 % The larger abs value of the complex pair is multiplied by alpha whilst
 % the smaller abs value is multiplied by the beta value.
+%
 
 
-
-% Clear any saved vairable from MATLAB's workspace section.
+% Clear any saved variable from MATLAB's workspace section.
 clear all
 
 
@@ -27,7 +28,7 @@ clear all
 % Creating the max and min bounds for the rand arrays.
 minBound = -100000000;
 maxBound = 100000000;
-dataLength = 10000;
+dataLength = 100000;
 
 % Creating the random real and imaginary array values using the max, min
 % bounds, array length.
@@ -67,7 +68,7 @@ for i = 1:1:dataLength
        absAlphaValue = abs(imag(complexData(i)));
        absBetaValue = abs(real(complexData(i)));
     end
-    % Bit shift absBetaValue by 1 to aquire the required 1/2 value. It
+    % Bit shift absBetaValue by 1 to acquire the required 1/2 value. It
     % should be noted that this value is rounded down.
     absBetaValue = bitshift(absBetaValue,-1);
     % Added the alpha and beta value to the output array.
@@ -100,7 +101,7 @@ for i = 1:1:dataLength
        absAlphaValue = abs(imag(complexData(i)));
        absBetaValue = abs(real(complexData(i)));
     end
-    % Bit shift absBetaValue by 2 to aquire the required 1/4 value. It
+    % Bit shift absBetaValue by 2 to acquire the required 1/4 value. It
     % should be noted that this value is rounded down.
     absBetaValue = bitshift(absBetaValue,-2);
     % Added the alpha and beta value to the output array.
@@ -133,10 +134,9 @@ for i = 1:1:dataLength
        absAlphaValue = abs(imag(complexData(i)));
        absBetaValue = abs(real(complexData(i)));
     end
-    % Bit shift absBetaValue by 3 to aquire the 1/8 value and then 
-    % muiltiply by 3 to aquire the 3/8 value. It should be noted that this 
-    % value is rounded down.
-    absBetaValue = (bitshift(absBetaValue,-3) * 3);
+    % Multiply the value by three and then bit shift absBetaValue by 3 to 
+    %acquire 3/8. It should be noted that this value is rounded down.
+    absBetaValue = (bitshift(absBetaValue * 3,-3));
     % Added the alpha and beta value to the output array.
     alphaBetaOut3 = [alphaBetaOut3 (absAlphaValue + absBetaValue)];
 end
@@ -162,7 +162,7 @@ end
 
 
 %%
-% Calculaing the error values from the obtianed alpha max plus beta min 
+% Calculating the error values from the obtained alpha max plus beta min 
 %algorithm and the non-restoring square root algorithm. The average and max
 %errors are also calculated.
 
@@ -193,6 +193,7 @@ for i = 1:1:dataLength
 end
 
 
+% Creating the avg and max error strings.
 avgError1str = "Avg error: " + string(round(mean(absOut1Error),2));
 avgError2str = "Avg error: " + string(round(mean(absOut2Error),2));
 avgError3str = "Avg error: " + string(round(mean(absOut3Error),2));
@@ -217,7 +218,7 @@ tiledlayout(3,1);
 
 nexttile
 scatter(xAxis, absOut1Error,3,'x');
-title('Aquired error through alpha (1/1) max plus beta (1/2) min alogirthm.')
+title('Acquired error through alpha (1/1) max plus beta (1/2) min algorithm.')
 ylabel('Error (%)')
 xlabel('Data points')
 ylim([0 13]);
@@ -229,7 +230,7 @@ annotation('textbox',[0.91 .67 .1 .2],'String',maxError1str,'EdgeColor','none')
 
 nexttile
 scatter(xAxis, absOut2Error,3,'x');
-title('Aquired error through alpha (1/1) max plus beta (1/4) min alogirthm.')
+title('Acquired error through alpha (1/1) max plus beta (1/4) min algorithm.')
 ylabel('Error (%)')
 xlabel('Data points')
 ylim([0 13]);
@@ -242,7 +243,7 @@ annotation('textbox',[0.91 .37 .1 .2],'String',maxError2str,'EdgeColor','none')
 
 nexttile
 scatter(xAxis, absOut3Error,3,'x');
-title('Aquired error through alpha (1/1) max plus beta (3/8) min alogirthm.')
+title('Acquired error through alpha (1/1) max plus beta (3/8) min algorithm.')
 ylabel('Error (%)')
 xlabel('Data points')
 ylim([0 8]);
@@ -251,7 +252,7 @@ annotation('textbox',[0.91 .05 .1 .2],'String',maxError3str,'EdgeColor','none')
 
 figure(2)
 scatter(xAxis, squrOutError,3,'x');
-title('Aquired error through non-restoring square root algorithm.')
+title('Acquired error through non-restoring square root algorithm.')
 ylabel('Error (%)')
 xlabel('Data points')
 annotation('textbox',[0.91 .45 .1 .2],'String',avgSquarErrorstr,'EdgeColor','none')
@@ -261,16 +262,31 @@ annotation('textbox',[0.91 .42 .1 .2],'String',maxSquarErrorstr,'EdgeColor','non
 
 figure(3)
 histogram(absOut1Error);
-title('Aquired error through alpha (1/1) max plus beta (1/2) min alogirthm.')
+title('Acquired error of alpha (1/1) max plus beta (1/2) min algorithm');
+ylabel('Number of data points');
+xlabel('Error (%)');
+set(gca,'FontSize',25);
+
 
 figure(4)
 histogram(absOut2Error);
-title('Aquired error through alpha (1/1) max plus beta (1/4) min alogirthm.')
+title('Aquired error of alpha (1/1) max plus beta (1/4) min algorithm')
+ylabel('Number of data points');
+xlabel('Error (%)');
+set(gca,'FontSize',25);
+
 
 figure(5)
 histogram(absOut3Error);
-title('Aquired error through alpha (1/1) max plus beta (3/8) min alogirthm.')
+title('Acquired error of alpha (1/1) max plus beta (3/8) min algorithm')
+ylabel('Number of data points');
+xlabel('Error (%)');
+set(gca,'FontSize',25);
+
 
 figure(6)
 histogram(squrOutError);
-title('Aquired error through non-restoring square root algorithm.')
+title('Acquired error of non-restoring square root algorithm')
+ylabel('Number of data points');
+xlabel('Error (%)');
+set(gca,'FontSize',25);

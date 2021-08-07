@@ -13,6 +13,8 @@
  coeffCounter. The coeff will be passed on as soon as enable is set, and once all
  the values are passed through coeffOut the coeffSetFlag is then set.
 
+ This modules is not used my the main module (pulse_compression_filter). It is only used
+ by n_tap_fir_tb to test the functionality of its DUT module.
 
 */
 
