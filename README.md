@@ -1,4 +1,4 @@
-# The design and implementation of a pulse compression filter on an FPGA
+# The design of a pulse compression filter on an FPGA
 This repository contains the MATLAB and FPGA design and implementation of the pulse
 compression filter.
 
@@ -73,6 +73,10 @@ The following table below outlines all the MATLAB + MIF scripts/files used in th
 | `MFImpulseCoeff.mif` | This file is stores the complex FIR filters coefficients.|
 | `MFInputData.mif` | This file is stores the synthetic data that is then applied to the FPGA filter.|
 | `MFOutputData.mif` | This file is stores the expected output of the MATLAB design. It is later used in a test bench to confirm the output of the FPGA design is identical to the MATLAB design.|
+
+
+
+
 
 The following table below outlines the functionality of each Verilog script used in this project.
 | File | Description |
