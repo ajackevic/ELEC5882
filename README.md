@@ -7,9 +7,7 @@ compression filter.
 Whilst oversimplified, a pulse compression filter is used to drastically increase the
 range resolution and more importantly the SNR of a radar system. This is achieved by
 modulating the transmitted pulse and then cross correlating the transmitted signal with
-the received signal. More information on the pulse compression filter is explained in
-the following link:
-
+the received signal. More information on the pulse compression filter if explained following links:
 https://en.wikipedia.org/wiki/Pulse_compression
 
 
@@ -39,6 +37,8 @@ https://en.wikipedia.org/wiki/Chirp
 
 https://en.wikipedia.org/wiki/Hilbert_transform
 
+
+
 ## How does the FPGA implementation work?
 The echoed back input signal (synthetic data created in FPGAPulseCompressionFilter.m and loaded
 to the FPGA design) is passed through a Hilbert transform module making it analytic.
@@ -67,6 +67,8 @@ filter design, conv() was used instead), and helps to visualise the results of t
 FPGA design. Furthermore, this also allows the user to apply and see the results of quick changes
 before the change is then applied to the FPGA design.
 
+
+
 ## Brief description of each script
 The following table below outlines all the MATLAB + MIF scripts/files used in this project and what they do.
 | File | Description |
@@ -84,6 +86,8 @@ The following table below outlines all the MATLAB + MIF scripts/files used in th
 &nbsp;
 &nbsp;
 &nbsp;
+
+
 
 The following table below outlines the functionality of each Verilog script used in this project.
 | File | Description |
