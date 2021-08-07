@@ -9,7 +9,7 @@ range resolution and more importantly the SNR of a radar system. This is achieve
 modulating the transmitted pulse and then cross correlating the transmitted signal with
 the received signal. More information on the pulse compression filter is explained in
 the following link:
-&nbsp;
+
 https://en.wikipedia.org/wiki/Pulse_compression
 
 
