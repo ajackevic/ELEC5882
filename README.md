@@ -1,4 +1,4 @@
-# ELEC5882
+# The design and implementation of a pulse compression filter on an FPGA
 This repository contains the MATLAB and FPGA design and implementation of the pulse
 compression filter.
 
@@ -68,8 +68,7 @@ The following table below outlines all the MATLAB + MIF scripts/files used in th
 | ---  | --- |
 | `idealPulseCompressionFilter.m` | This script shows the output of the pulse compression filter, using the ideal functions available in MATLAB (hilbert() and abs()).|
 | `FPGAPulseCompressionFilter.m` | This script is a near identical implementation of the FPGA design. It also creates the files MFImpulseCoeff.mif, MFInputData.mif, and MFOutputData.mif files which are then used in the FPGA design.|
-| `ABScomparison.m` | This script compares the accuracy results of alpha max plus beta min algorithm and the
-non-restoring square root algorithm.|
+| `ABScomparison.m` | This script compares the accuracy results of alpha max plus beta min algorithm and the non-restoring square root algorithm.|
 | `sqaureRootCal.m` | This script calculates the square root value using non-restoring square root algorithm.|
 | `MFImpulseCoeff.mif` | This file is stores the complex FIR filters coefficients.|
 | `MFInputData.mif` | This file is stores the synthetic data that is then applied to the FPGA filter.|
